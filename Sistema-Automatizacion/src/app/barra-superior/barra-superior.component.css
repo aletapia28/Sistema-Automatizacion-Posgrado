@@ -1,39 +1,31 @@
-.barraSuperior{
-    background-color: #1F2F5F;   
+.barraSuperior {
+    background-color: #1F2F5F;
     color: #ffffff;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-   
     font-family: 'Times New Roman';
-   
     width: 100%;
     height: 85px;
-   
-    /* display: inline;
-    flex-direction: row;
-    justify-content: space-evenly; */
-   
-   }
-   
-   
-   .Logo{
-       left: 0;
-       align-items: flex-start;
-   }
-   
-   
-   .barra-derecha{
-       width: 15%;
-   }
-   .Titulo-barra{
-        align-items: flex-end;
-       font-size: 20px;
-   }
-   
-   .LogoTec{
-   
-       height: 100%;
-       width: 300px;
-   
-   }
+    position: fixed;
+    top:0;
+}
+
+.Logo {
+    left: 0;
+    align-items: flex-start;
+}
+
+.barra-derecha {
+    width: 15%;
+}
+
+.Titulo-barra {
+    align-items: flex-end;
+    font-size: 20px;
+}
+
+.LogoTec {
+    height: 100%;
+    width: 300px;
+}

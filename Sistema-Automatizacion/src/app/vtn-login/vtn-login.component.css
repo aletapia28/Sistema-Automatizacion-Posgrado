@@ -1,0 +1,33 @@
+.tamano {
+    height: 100%;
+    width: 100%;
+}
+
+.blanco {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 85px;
+}
+
+.cuadro {
+    background-color: #2e2e2e;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    /* margin-top: 250px; */
+}
+
+.pass {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.tu {
+    width: 40px;
+    background-color: yellow;
+}
