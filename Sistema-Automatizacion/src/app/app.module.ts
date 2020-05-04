@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { BarraSuperiorComponent } from './barra-superior/barra-superior.component';
 import { BarraInferiorComponent } from './barra-inferior/barra-inferior.component';
 import { VtnLoginComponent } from './vtn-login/vtn-login.component';
+import { VtnImportarArchivoComponent } from './vtn-importar-archivo/vtn-importar-archivo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BarraSuperiorComponent,
     BarraInferiorComponent,
-    VtnLoginComponent
+    VtnLoginComponent,
+    VtnImportarArchivoComponent
     
   ],
   imports: [
