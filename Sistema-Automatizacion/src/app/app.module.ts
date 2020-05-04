@@ -12,7 +12,7 @@ import { VtnLoginComponent } from './vtn-login/vtn-login.component';
     AppComponent,
     BarraSuperiorComponent,
     BarraInferiorComponent,
-     VtnLoginComponent
+    VtnLoginComponent
     
   ],
   imports: [

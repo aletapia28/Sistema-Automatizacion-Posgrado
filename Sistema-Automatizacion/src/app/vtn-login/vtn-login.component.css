@@ -13,21 +13,55 @@
 }
 
 .cuadro {
-    background-color: #2e2e2e;
-    width: 50vw;
+    background-color: #E2E2E2;
+    width: 40vw;
+    height: 60%;
     display: flex;
     flex-direction: column;
-    /* margin-top: 250px; */
+    justify-content: space-evenly;
+    align-items: center;
 }
 
-.pass {
+.form {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    width: 100%;
+}
+.titulo{
+    color: #000000;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 23px;
+    padding: 15px;
+    text-align: center;
+}
+.letras {
+    font-size: 10px;
+    font-family: 'Times New Roman', Times, serif;
+    color: #000000;
+
+}
+input{
+    font-family: 'Times New Roman', Times, serif;
+    width: 50%;
+    border: 1px solid #000000;
+    
+}
+input::placeholder{
+    color: #000000;
+    font-size: 18px;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
 }
 
-.tu {
-    width: 40px;
-    background-color: yellow;
+.Boton{
+    background-color: #1F2F5F;
+    color: #ffffff;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+    border: none;
+    height: 30px;
+    /* width: 25%; */
+    text-align: center;
 }
