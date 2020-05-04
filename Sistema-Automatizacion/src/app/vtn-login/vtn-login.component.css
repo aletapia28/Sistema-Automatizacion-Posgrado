@@ -46,6 +46,7 @@ input{
     font-family: 'Times New Roman', Times, serif;
     width: 50%;
     border: 1px solid #000000;
+    text-align: center;
     
 }
 input::placeholder{
