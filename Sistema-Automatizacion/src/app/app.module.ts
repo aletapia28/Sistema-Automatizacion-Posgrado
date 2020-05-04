@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BarraSuperiorComponent } from './barra-superior/barra-superior.component';
 import { BarraInferiorComponent } from './barra-inferior/barra-inferior.component';
-import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
-import { LoginComponent } from './login/login.component';
 import { VtnLoginComponent } from './vtn-login/vtn-login.component';
 
 @NgModule({
@@ -14,9 +12,7 @@ import { VtnLoginComponent } from './vtn-login/vtn-login.component';
     AppComponent,
     BarraSuperiorComponent,
     BarraInferiorComponent,
-    InicioSesionComponent,
-    LoginComponent,
-    VtnLoginComponent
+     VtnLoginComponent
     
   ],
   imports: [
