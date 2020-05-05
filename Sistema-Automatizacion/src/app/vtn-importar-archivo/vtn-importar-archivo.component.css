@@ -24,14 +24,15 @@
 
 .titulo{
     font-family: 'Times New Roman', Times, serif;
-    font-size: 200%;
+    font-size: 2vw;
     text-align: center;
 }
 
 .subtitulo{
     font-family: 'Times New Roman', Times, serif;
-    font-size: 150%;
+    font-size: 1vw;
     text-align: center;
+    padding: 10px;
 }
 .archivo {
     display: flex;
@@ -70,7 +71,17 @@ input[type=file]{
     
   }
   
-
+.span{
+    display: flex;
+    height: 30px;
+    background-color: #1F2F5F;
+    color: #ffffff;
+    text-align: center;
+    align-items: center;
+    padding: 15px;
+    width: 100%;
+    
+}
 
 
 
