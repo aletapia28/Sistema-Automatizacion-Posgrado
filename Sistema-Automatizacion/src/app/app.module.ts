@@ -8,6 +8,7 @@ import { BarraInferiorComponent } from './barra-inferior/barra-inferior.componen
 import { VtnLoginComponent } from './vtn-login/vtn-login.component';
 import { VtnImportarArchivoComponent } from './vtn-importar-archivo/vtn-importar-archivo.component';
 import { VtnEditarPeriodoComponent } from './vtn-editar-periodo/vtn-editar-periodo.component';
+import { NuevoPeriodoComponent } from './nuevo-periodo/nuevo-periodo.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { VtnEditarPeriodoComponent } from './vtn-editar-periodo/vtn-editar-perio
     BarraInferiorComponent,
     VtnLoginComponent,
     VtnImportarArchivoComponent,
-    VtnEditarPeriodoComponent
+    VtnEditarPeriodoComponent,
+    NuevoPeriodoComponent
     
   ],
   imports: [
