@@ -1,0 +1,41 @@
+<div class="tamano">
+
+    <app-barra-superior></app-barra-superior>
+
+    <div class="cuerpo">
+
+        <div class="cuadro">
+            <h1 class="titulo">Crear nuevo Período de matrícula</h1>
+
+            <div class="componente perido">
+                <label for="perido">Nombre</label>
+                <input type="text" placeholder="período">
+                <select name="perido" id="perido">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+            <div class="componente">
+                <label for="Fecha-inicio">Fecha Inicio</label>
+                <input type="date" value="12/06/2020">
+            </div>
+            <div class="componente">
+                <label for="Fecha-fin">Fecha Final</label>
+                <input type="date" ng-model="date">
+            </div>
+        </div>
+        <div class="botones">
+            <button class="boton">Guardar Cambios</button>
+           <button class="boton">Cancelar</button>
+
+
+        </div>
+
+    </div>
+
+
+    <app-barra-inferior></app-barra-inferior>
+
+
+
+</div>
