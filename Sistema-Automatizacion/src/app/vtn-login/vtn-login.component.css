@@ -45,7 +45,7 @@
 input{
     font-family: 'Times New Roman', Times, serif;
     width: 50%;
-    border: 1px solid #000000;
+    /* border: 1px solid #000000; */
     text-align: center;
     
 }
@@ -65,4 +65,10 @@ input::placeholder{
     height: 30px;
     /* width: 25%; */
     text-align: center;
+}
+
+.recuperar{
+    font-family: 'Times New Roman', Times, serif ;
+    font-size: 15px;
+     color: #1F2F5F; /* DA3A2F */
 }

@@ -11,6 +11,7 @@ import { VtnEditarPeriodoComponent } from './vtn-editar-periodo/vtn-editar-perio
 import { VtnNuevoPeriodoComponent } from './vtn-nuevo-periodo/vtn-nuevo-periodo.component';
 import { VtnCrearUsuarioComponent } from './vtn-crear-usuario/vtn-crear-usuario.component';
 import { VtnImportarPeriodoComponent } from './vtn-importar-periodo/vtn-importar-periodo.component';
+import { VtnEditarPostulanteComponent } from './vtn-editar-postulante/vtn-editar-postulante.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { VtnImportarPeriodoComponent } from './vtn-importar-periodo/vtn-importar
     VtnEditarPeriodoComponent,
     VtnNuevoPeriodoComponent,
     VtnCrearUsuarioComponent,
-    VtnImportarPeriodoComponent
+    VtnImportarPeriodoComponent,
+    VtnEditarPostulanteComponent
     
   ],
   imports: [
