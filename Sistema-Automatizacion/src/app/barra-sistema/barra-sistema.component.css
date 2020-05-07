@@ -1,0 +1,56 @@
+.barraSuperior {
+    background-color: #1F2F5F;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: 'Times New Roman';
+    width: 100%;
+    height: 85px;
+    position: fixed;
+    top:0;
+}
+
+.Logo {
+    left: 0;
+    align-items: flex-start;
+}
+
+.barra-derecha {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Titulo-barra {
+    font-size: 20px;
+    width: 190px;
+}
+
+.logoTec {
+    height: 100%;
+    width: 300px;
+}
+
+.logoMenu {
+    height: 40%;
+    margin: 0px 20px;
+}
+
+.botonMenu {
+    height: 100%;
+    background-color: #1F2F5F;
+}
+
+.contenedorMenu {
+    background-color: #1F2F5F;
+}
+
+.opcionMenu {
+    font-family: 'Times New Roman';
+    font-size: 17px;
+    font-weight: bold;
+    color: #1F2F5F;
+    background-color: #ffffff;
+    text-align: center;
+}
