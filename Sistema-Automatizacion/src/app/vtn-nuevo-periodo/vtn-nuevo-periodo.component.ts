@@ -14,11 +14,6 @@ export class VtnNuevoPeriodoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-
   contactName: string = "";
   contactAddress: string = "";
   bimestreSource: string = "direct";

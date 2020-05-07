@@ -6,41 +6,10 @@
 
         <div class="cuadro">
             <h1 class="titulo">Crear nuevo Período de matrícula</h1>
-            <!-- <table>
-                <tr>
-                    <th class="etiqueta">
-                        <label for="periodo" class="">Período</label>
-                    </th>
-                    <th>
-                        <select name="periodo" id="periodo">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                    </th>
-                </tr>
-                <tr>
-                    <th class="etiqueta">
-                        <label for="Fecha-inicio">Fecha Inicio</label>
-                    </th>
-                    <th>
-                        <input type="date" value="12/06/2020">
-                    </th>
-                </tr>
-                <tr>
-                    <th class="etiqueta">
-                        <label for="Fecha-fin">Fecha Final</label>
-                    </th>
-                    <th>
-                        <input type="date" ng-model="date">
-                    </th>
-                </tr>
-            </table> -->
             <form class="periodo-form">
                 <mat-form-field class="inputVtn">
                     <mat-label>Bimestre</mat-label>
-                        <mat-select [(value)]="bimestreSource" placeholder="Bimestre">
+                    <mat-select [(value)]="bimestreSource" placeholder="Bimestre">
                         <mat-option value="Bimestre 1">Bimestre 1</mat-option>
                         <mat-option value="Bimestre 2">Bimestre 2</mat-option>
                         <mat-option value="Bimestre 3">Bimestre 3</mat-option>
@@ -66,11 +35,6 @@
 
             </form>
         </div>
-
-        <!-- <div class="botones">
-            <button class="boton">Guardar Cambios</button>
-            <button class="boton">Cancelar</button>
-        </div> -->
 
     </div>
 
