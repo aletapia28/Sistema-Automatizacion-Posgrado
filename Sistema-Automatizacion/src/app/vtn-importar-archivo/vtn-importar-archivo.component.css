@@ -76,6 +76,8 @@ input[type=file]{
     height: 30px;
     background-color: #1F2F5F;
     color: #ffffff;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
     text-align: center;
     align-items: center;
     padding: 15px;

@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vtn-login.component.css']
 })
 export class VtnLoginComponent implements OnInit {
+  hide = true;
 
   constructor() { }
 
