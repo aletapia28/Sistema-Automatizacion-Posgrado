@@ -27,7 +27,30 @@
     width: 190px;
 }
 
-.LogoTec {
+.logoTec {
     height: 100%;
     width: 300px;
+}
+
+.logoMenu {
+    height: 40%;
+    margin: 0px 20px;
+}
+
+.botonMenu {
+    height: 100%;
+    background-color: #1F2F5F;
+}
+
+.contenedorMenu {
+    background-color: #1F2F5F;
+}
+
+.opcionMenu {
+    font-family: 'Times New Roman';
+    font-size: 17px;
+    font-weight: bold;
+    color: #1F2F5F;
+    background-color: #ffffff;
+    text-align: center;
 }
