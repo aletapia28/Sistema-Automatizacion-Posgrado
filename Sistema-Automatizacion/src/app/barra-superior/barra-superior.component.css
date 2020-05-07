@@ -17,12 +17,14 @@
 }
 
 .barra-derecha {
-    width: 15%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .Titulo-barra {
-    align-items: flex-end;
     font-size: 20px;
+    width: 190px;
 }
 
 .LogoTec {
