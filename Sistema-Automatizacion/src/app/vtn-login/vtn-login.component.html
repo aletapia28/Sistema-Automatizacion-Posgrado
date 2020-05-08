@@ -6,26 +6,26 @@
         <div class="cuadro">
             <div>
                 <h1 class="titulo">
-                    Sistema de automatización de postulación e ingreso a
-                    la maestría en Gerencia de Proyectos
-                    del Tecnológico de Costa Rica</h1>
+                    Sistema de automatización de postulación e ingreso a la maestría en Gerencia de Proyectos del Tecnológico de Costa Rica</h1>
             </div>
-            <div class="form">
-                <input type="email" placeholder="Correo Electrónico">
-            </div>
-            <div class="form">
-                <input type="password" placeholder="Contraseña">
-            </div>
-            <div class="Boton">
-                <button class="Boton"> Iniciar Sesión </button>
-            </div>
-            <div>
-                <label for="forgot" class="recuperar">Olvidé mi contraseña</label>
-            </div>
+            <form class="periodo-form">
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input matInput placeholder="pat@example.com" [formControl]="email" required>
+                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                </mat-form-field>
+                <button mat-raised-button class="boton">Iniciar sesión</button>
+            </form>
+            <button mat-button color="primary">Olvidé mi contraseña</button>
         </div>
-
-
-
     </div>
     <app-barra-inferior></app-barra-inferior>
 </div>

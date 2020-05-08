@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-vtn-importar-periodo',
@@ -12,4 +13,7 @@ export class VtnImportarPeriodoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  bimestreSource: string = "direct";
+  fechaInicio = new FormControl(new Date());
+  fechaFinal = new FormControl(new Date());
 }
