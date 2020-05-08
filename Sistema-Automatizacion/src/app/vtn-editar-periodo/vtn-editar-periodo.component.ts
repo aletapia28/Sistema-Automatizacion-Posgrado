@@ -8,12 +8,13 @@ import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/fo
 })
 export class VtnEditarPeriodoComponent implements OnInit {
 
+  bimestreSource: string = "direct";
+  fechaInicio = new FormControl(new Date());
+  fechaFinal = new FormControl(new Date());
+
   constructor() { }
 
   ngOnInit(): void {
   }
-
-  bimestreSource: string = "direct";
-  fechaInicio = new FormControl(new Date());
-  fechaFinal = new FormControl(new Date());
+  
 }

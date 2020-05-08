@@ -15,28 +15,29 @@
 .cuadro {
     background-color: #E2E2E2;
     width: 40vw;
-    height: 60%;
+    height: 540px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
 }
 
-.titulo{
+.titulo {
     font-family: 'Times New Roman', Times, serif;
     font-size: 2vw;
     text-align: center;
 }
 
-.subtitulo{
+.subtitulo {
     font-family: 'Times New Roman', Times, serif;
     font-size: 1vw;
     text-align: center;
     padding: 10px;
 }
+
 .archivo {
     display: flex;
-    flex-direction: row ;
+    flex-direction: row;
     justify-content: space-around;
     /* align-items: center; */
 }
@@ -45,70 +46,67 @@
     background-color: #1F2F5F;
     color: #ffffff;
     font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
     font-size: 15px;
-    border: none;
-    height: 30px;
-    font-weight: normal;
-    width: 25%;
-    text-align: center;
+    margin-top: 18px;
 }
 
-.componente{
+.componente {
     display: flex;
     flex-direction: row;
     width: 50%;
     justify-content: space-around;
     align-items: flex-start;
-    
 }
 
-.componente input,select,label {
+.componente input,
+select,
+label {
     width: 100%;
     font-family: 'Times New Roman', Times, serif;
     font-weight: normal;
     text-align: left;
 }
 
-.botones{
+.periodo-form {
     display: flex;
-    flex-direction: row;
-    width: 45vw; 
-    justify-content:space-evenly;
-    align-items: flex-end;   
-    margin-top: 50px;
-    margin-left: 20%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.perido {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: flex-start;
+.example-full-width {
+    width: 100%;
+}
 
+.inputVtn {
+    width: 250px;
 }
-.perido input{
-    width: 35%;
-}
-.perido select{
-    width: 25%;
+
+input[type=file] {
+    display: none;
 }
 
 .upload_button {
     display: inline-block;
-  }
- .upload_button input[type=file] {
-     display: none;
-    
-  }
-  
-.span{
+}
+
+.upload_button input[type=file] {
+    display: none;
+}
+
+.span {
     display: flex;
     height: 30px;
     background-color: #1F2F5F;
     color: #ffffff;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
     text-align: center;
     align-items: center;
     padding: 15px;
     width: 100%;
-    
+    border-radius: 5px;
 }

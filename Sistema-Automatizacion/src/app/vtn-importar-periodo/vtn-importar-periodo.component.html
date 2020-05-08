@@ -6,7 +6,45 @@
 
         <div class="cuadro">
             <h1 class="titulo">Importar Período</h1>
-            <div class="componente perido">
+            <form class="periodo-form">
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Bimestre</mat-label>
+                    <mat-select [(value)]="bimestreSource" placeholder="Bimestre">
+                        <mat-option value="Bimestre 1">Bimestre 1</mat-option>
+                        <mat-option value="Bimestre 2">Bimestre 2</mat-option>
+                        <mat-option value="Bimestre 3">Bimestre 3</mat-option>
+                        <mat-option value="Bimestre 4">Bimestre 4</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Fecha de Inicio</mat-label>
+                    <input [value]="fechaInicio.value" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Fecha de Cierre</mat-label>
+                    <input [value]="fechaFinal.value" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <h2 class="subtitulo">
+                    Seleccione el archivo conformado por postulantes para la maestría que desea importar a la aplicación</h2>
+
+                <div class="upload_button">
+                    <label>
+                        <input type="file">
+                        <span class="span">Seleccionar Archivo</span>
+                    </label>
+                </div>
+
+                <button mat-raised-button class="boton">Importar período</button>
+
+            </form>
+            <!-- <div class="componente perido">
                 <label for="perido"> Período</label>
                 <input type="text" placeholder="período">
                 <select name="perido" id="perido">
@@ -31,7 +69,7 @@
         </div>
         <div class="botones">
             <button class="boton">Guardar Cambios</button>
-            <button class="boton">Cancelar</button>
+            <button class="boton">Cancelar</button> -->
         </div>
     </div>
 
