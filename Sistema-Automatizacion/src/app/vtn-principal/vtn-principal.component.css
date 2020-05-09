@@ -80,3 +80,7 @@ table {
     display: table-row;
 }
 
+.mat-row:nth-child(even){
+    background-color:#cdcdcd;
+    }
+
