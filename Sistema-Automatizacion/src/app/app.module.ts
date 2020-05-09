@@ -34,6 +34,7 @@ import { VtnEditarPostulanteComponent } from './vtn-editar-postulante/vtn-editar
 import { BarraSistemaComponent } from './barra-sistema/barra-sistema.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VtnPrincipalComponent } from './vtn-principal/vtn-principal.component';
+import { VtnEliminarAsistenteComponent } from './vtn-eliminar-asistente/vtn-eliminar-asistente.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { VtnPrincipalComponent } from './vtn-principal/vtn-principal.component';
     VtnImportarPeriodoComponent,
     VtnEditarPostulanteComponent,
     BarraSistemaComponent,
-    VtnPrincipalComponent
+    VtnPrincipalComponent,
+    VtnEliminarAsistenteComponent
     
   ],
   imports: [

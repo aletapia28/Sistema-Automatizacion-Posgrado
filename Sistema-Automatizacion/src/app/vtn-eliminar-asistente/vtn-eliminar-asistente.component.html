@@ -1,0 +1,53 @@
+<div class="tamano">
+    <app-barra-sistema></app-barra-sistema>
+
+    <div class="cuerpo">
+        <div class="encabezado">
+            <h1>Listado de Usuarios</h1>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <!-- nombre Column -->
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+            </ng-container>
+
+            <!-- cedula Column -->
+            <ng-container matColumnDef="cedula">
+                <th mat-header-cell *matHeaderCellDef> Cédula </th>
+                <td mat-cell *matCellDef="let element"> {{element.cedula}} </td>
+            </ng-container>
+
+
+            <!-- correo Column -->
+            <ng-container matColumnDef="correo">
+                <th mat-header-cell *matHeaderCellDef> Correo </th>
+                <td mat-cell *matCellDef="let element"> {{element.correo}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <button mat-icon-button color="warn">
+                        <mat-icon>delete_outline</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+
+        </table>
+        <mat-paginator [length]="10" [pageSize]="10" showFirstLastButtons>
+        </mat-paginator>
+
+
+    </div>
+
+    <app-barra-inferior></app-barra-inferior>
+</div>
