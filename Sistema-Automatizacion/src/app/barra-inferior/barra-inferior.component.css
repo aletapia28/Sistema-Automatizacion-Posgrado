@@ -1,9 +1,7 @@
-.barra-inferior{
+.barra-inferior {
     background-color: #DA3A2F;
     width: 100%;
     height: 55px;
-    color: #DA3A2F;
-    bottom: 0;
-    /* position: fixed; */
-
+    top: calc(100% - 55px);
+    position: fixed;
 }

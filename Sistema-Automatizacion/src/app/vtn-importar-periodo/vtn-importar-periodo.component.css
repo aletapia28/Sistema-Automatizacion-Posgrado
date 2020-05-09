@@ -8,31 +8,36 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    margin-top: 85px;
+    height: calc(100% - 140px);
+    top: 85px;
+    position: fixed;
+    width: 100%;
+    overflow: auto;
 }
 
 .cuadro {
     background-color: #E2E2E2;
-    width: 40vw;
-    height: 540px;
+    width: 500px;
+    height: 460px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    overflow: auto;
 }
 
 .titulo {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 2vw;
+    font-size: 25px;
     text-align: center;
+    margin: 20px;
 }
 
 .subtitulo {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1vw;
+    font-size: 16px;
     text-align: center;
-    padding: 10px;
+    padding: 0px 10px;
 }
 
 .archivo {
@@ -51,23 +56,6 @@
     margin-top: 18px;
 }
 
-.componente {
-    display: flex;
-    flex-direction: row;
-    width: 50%;
-    justify-content: space-around;
-    align-items: flex-start;
-}
-
-.componente input,
-select,
-label {
-    width: 100%;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: normal;
-    text-align: left;
-}
-
 .periodo-form {
     display: flex;
     flex-direction: column;
@@ -75,6 +63,7 @@ label {
     justify-content: space-between;
     width: 100%;
     margin-bottom: 20px;
+    overflow: auto;
 }
 
 .example-full-width {
