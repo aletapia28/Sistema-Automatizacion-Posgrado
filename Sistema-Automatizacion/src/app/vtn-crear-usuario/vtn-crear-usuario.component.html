@@ -1,13 +1,13 @@
 <div class="tamano">
 
-    <app-barra-superior></app-barra-superior>
+    <app-barra-sistema></app-barra-sistema>
 
     <div class="cuerpo">
 
         <div class="cuadro">
-            <h1 class="titulo">Crear Usuario Invitado</h1>
+            <h1 class="titulo">Crear usuario asistente</h1>
 
-            <div class="componente">
+            <!-- <div class="componente">
                 <label for="perido">Nombre</label>
                 <input type="text">
             </div>
@@ -29,11 +29,35 @@
            <button class="boton">Cancelar</button>
 
 
+        </div> -->
+            <form class="periodo-form">
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input matInput placeholder="pat@example.com" [formControl]="email" required>
+                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput required>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Cedula</mat-label>
+                    <input matInput required>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" required>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <button mat-raised-button class="boton">Crear usuario</button>
+            </form>
         </div>
-
     </div>
-
-
     <app-barra-inferior></app-barra-inferior>
 
 

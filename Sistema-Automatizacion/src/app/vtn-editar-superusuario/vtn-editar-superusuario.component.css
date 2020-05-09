@@ -3,7 +3,7 @@
     width: 100%;
 }
 
-.blanco {
+.cuerpo {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,52 +15,51 @@
 .cuadro {
     background-color: #E2E2E2;
     width: 40vw;
-    height: 60%;
+    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    padding-bottom: 20px;
-}
-
-.form {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
 }
 
 .titulo {
-    color: #000000;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 20px;
-    padding: 10px 40px;
+    font-size: 2vw;
     text-align: center;
 }
 
-.letras {
-    font-size: 10px;
+.subtitulo {
     font-family: 'Times New Roman', Times, serif;
-    color: #000000;
-}
-
-.Boton {
-    background-color: #1F2F5F;
-    color: #ffffff;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 15px;
-    border: none;
-    height: 30px;
-    /* width: 25%; */
+    font-size: 1vw;
     text-align: center;
+    padding: 10px;
 }
 
-.recuperar {
+.componente {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.componente input,
+select,
+label {
+    width: 100%;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 15px;
-    color: #1F2F5F;
-    /* DA3A2F */
+    font-weight: normal;
+    text-align: left;
+}
+
+.botones {
+    display: flex;
+    flex-direction: row;
+    width: 25vw;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    margin-top: 50px;
+    margin-left: 35%;
 }
 
 .inputVtn {
@@ -72,8 +71,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    min-width: 150px;
-    max-width: 500px;
     width: 100%;
     height: 60%;
     margin-bottom: 25px;

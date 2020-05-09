@@ -22,21 +22,22 @@
     align-items: center;
 }
 
-.titulo{
+.titulo {
     font-family: 'Times New Roman', Times, serif;
     font-size: 2vw;
     text-align: center;
 }
 
-.subtitulo{
+.subtitulo {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1vw;
+    font-size: 16px;
     text-align: center;
     padding: 10px;
 }
+
 .archivo {
     display: flex;
-    flex-direction: row ;
+    flex-direction: row;
     justify-content: space-around;
     /* align-items: center; */
 }
@@ -45,43 +46,37 @@
     background-color: #1F2F5F;
     color: #ffffff;
     font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
     font-size: 15px;
-    border: none;
-    height: 30px;
-    font-weight: normal;
-    /* width: 25%; */
-    text-align: center;
 }
 
 .buscar {
     text-align: left;
     color: blue;
-
 }
 
-input[type=file]{
+input[type=file] {
     display: none;
 }
 
 .upload_button {
     display: inline-block;
-  }
- .upload_button input[type=file] {
-     display: none;
-    
-  }
-  
-.span{
+}
+
+.upload_button input[type=file] {
+    display: none;
+}
+
+.span {
     display: flex;
     height: 30px;
     background-color: #1F2F5F;
     color: #ffffff;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
     text-align: center;
     align-items: center;
     padding: 15px;
     width: 100%;
-    
+    border-radius: 5px;
 }
-
-
-

@@ -1,6 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
+
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BarraSuperiorComponent } from './barra-superior/barra-superior.component';
@@ -12,6 +28,10 @@ import { VtnNuevoPeriodoComponent } from './vtn-nuevo-periodo/vtn-nuevo-periodo.
 import { VtnCrearUsuarioComponent } from './vtn-crear-usuario/vtn-crear-usuario.component';
 import { VtnImportarPeriodoComponent } from './vtn-importar-periodo/vtn-importar-periodo.component';
 import { VtnEditarPostulanteComponent } from './vtn-editar-postulante/vtn-editar-postulante.component';
+import { BarraSistemaComponent } from './barra-sistema/barra-sistema.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { VtnEditarSuperusuarioComponent } from './vtn-editar-superusuario/vtn-editar-superusuario.component';
+import { VtnEditarAsistenteComponent } from './vtn-editar-asistente/vtn-editar-asistente.component';
 
 @NgModule({
   declarations: [
@@ -24,12 +44,28 @@ import { VtnEditarPostulanteComponent } from './vtn-editar-postulante/vtn-editar
     VtnNuevoPeriodoComponent,
     VtnCrearUsuarioComponent,
     VtnImportarPeriodoComponent,
-    VtnEditarPostulanteComponent
+    VtnEditarPostulanteComponent,
+    BarraSistemaComponent,
+    VtnEditarSuperusuarioComponent,
+    VtnEditarAsistenteComponent
     
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

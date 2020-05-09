@@ -1,90 +1,113 @@
 <div class="tamano">
 
-    <app-barra-superior></app-barra-superior>
+    <app-barra-sistema></app-barra-sistema>
 
     <div class="cuerpo">
 
         <div class="cuadro">
-            <h1 class="titulo">Editar Postualante</h1>
-            <div class="campos">
-                <div class="componente">
-                    <label  for="perido">Nombre</label>
-                    <input type="text">
-                </div>
-                <div class="componente">
-                    <label  for="email">Correo de Usuario1</label>
-                    <input type="email">
-                </div>
-                <div class="componente">
-                    <label  for="cedula">Cédula</label>
-                    <input type="number">
-                </div>
-                <div class="componente">
-                    <label  for="password">Contraseña</label>
-                    <input type="password">
-                </div>
-                <div class="componente">
-                    <label  for="perido">Nombre</label>
-                    <input type="text">
-                </div>
-                <div class="componente">
-                    <label  for="email">Correo de Usuario</label>
-                    <input type="email">
-                </div>
-                <div class="componente">
-                    <label  for="cedula">Cédula</label>
-                    <input type="number">
-                </div>
-                <div class="componente">
-                    <label  for="password">Contraseña</label>
-                    <input type="password">
-                </div>
-                <div class="componente">
-                    <label  for="perido">Nombre</label>
-                    <input type="text">
-                </div>
-                <div class="componente">
-                    <label  for="email">Correo de Usuario</label>
-                    <input type="email">
-                </div>
-                <div class="componente">
-                    <label  for="cedula">Cédula</label>
-                    <input type="number">
-                </div>
-                <div class="componente">
-                    <label  for="password">Contraseña</label>
-                    <input type="password">
-                </div>
-                <div class="componente">
-                    <label  for="perido">Nombre</label>
-                    <input type="text">
-                </div>
-                <div class="componente">
-                    <label  for="email">Correo de Usuario</label>
-                    <input type="email">
-                </div>
-                <div class="componente">
-                    <label  for="cedula">Cédula</label>
-                    <input type="number">
-                </div>
-                <div class="componente">
-                    <label  for="password">Contraseña</label>
-                    <input type="password">
-                </div>
-            </div>
-        </div>
-        <div class="botones">
-            <button class="boton">Guardar Cambios</button>
-            <button class="boton">Cancelar</button>
+            <h1 class="titulo">Editar Postulante</h1>
+            <form class="periodo-form">
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Cedula</mat-label>
+                    <input matInput required>
+                </mat-form-field>
 
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput required>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Teléfono 1</mat-label>
+                    <input matInput required>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Teléfono 2</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Correo electrónico principal</mat-label>
+                    <input matInput placeholder="pat@example.com" [formControl]="email" required>
+                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Correo electrónico secundario</mat-label>
+                    <input matInput placeholder="pat@example.com" [formControl]="email2">
+                    <mat-error *ngIf="email2.invalid">{{getErrorMessage2()}}</mat-error>
+                </mat-form-field>
+
+                <mat-checkbox [checked]="nivelIngles">Nivel instrumental de inglés</mat-checkbox>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Máximo grado académico</mat-label>
+                    <mat-select [(value)]="gradoAcademico">
+                        <mat-option value="Bachillerato">Bachillerato</mat-option>
+                        <mat-option value="Licenciatura">Licenciatura</mat-option>
+                        <mat-option value="Maestría">Maestría</mat-option>
+                        <mat-option value="Doctorado">Doctorado</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Universidad</mat-label>
+                    <input matInput required>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Afinidad profesional</mat-label>
+                    <mat-select [(value)]="afinidad">
+                        <mat-option value="Administración">Administración de empresas</mat-option>
+                        <mat-option value="Ingenierías">Ingenierías</mat-option>
+                        <mat-option value="Economía">Economía</mat-option>
+                        <mat-option value="Ciencias">Ciencias</mat-option>
+                        <mat-option value="Letras">Letras</mat-option>
+                        <mat-option value="Arte">Ciencias</mat-option>
+                        <mat-option value="Diseño">Diseño</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-checkbox [checked]="acreditada">Carrera Acreditada</mat-checkbox>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Puesto actual</mat-label>
+                    <mat-select [(value)]="puesto">
+                        <mat-option value="Profesional sin personal a cargo">Profesional sin personal a cargo</mat-option>
+                        <mat-option value="Profesional miembro de equipo de proyectos">Profesional miembro de equipo de proyectos</mat-option>
+                        <mat-option value="Jefatura intermedia (coordinación/supervisión)">Jefatura intermedia (coordinación/supervisión)</mat-option>
+                        <mat-option value="Gerencia/Dirección General">Gerencia/Dirección General</mat-option>
+                        <mat-option value="Trabajor independiente/dueño de empresa">Trabajor independiente/dueño de empresa</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Experiencia Profesional</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Cantidad de cursos de aprovechamiento</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <mat-checkbox [checked]="tecnico">Título de técnico en el área de proyectos</mat-checkbox>
+
+                <mat-form-field appearance="fill" class="inputVtn">
+                    <mat-label>Cantidad de cursos a nivel de maestría</mat-label>
+                    <input matInput>
+                </mat-form-field>
+
+                <mat-checkbox [checked]="diplomado">Título de diplomado o especialista</mat-checkbox>
+
+                <button mat-raised-button class="boton">Guardar cambios</button>
+            </form>
 
         </div>
 
     </div>
 
-
     <app-barra-inferior></app-barra-inferior>
-
-
 
 </div>
