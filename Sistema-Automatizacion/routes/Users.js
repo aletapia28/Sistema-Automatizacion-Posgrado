@@ -10,7 +10,7 @@ usuarios.use(cors())
 process.env.SECRET_KEY = 'secret'
 
 //REGISTRAR
-
+//esto falta de revisar
 usuarios.post('/register',(req,res) =>{
     const userData = {
         correo : req.body.correo,
@@ -48,12 +48,12 @@ usuarios.post('/register',(req,res) =>{
         res.send('error: ' + err)
     })
 })
-/*
+
 //LOGIN
 usuarios.post('/login',(req,res) =>{
     User.findOne({
         where: {
-            email: req.body.email
+            correo: req.body.correo
         }
     })
     .then(user => {
@@ -70,6 +70,6 @@ usuarios.post('/login',(req,res) =>{
         res.send('error' + err)
     })
 
-})*/
+})
 
 module.exports = usuarios
