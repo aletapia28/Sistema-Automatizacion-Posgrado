@@ -10,28 +10,52 @@ table {
 .mat-form-field {
     font-size: 14px;
     width: 50%;
+    padding: 10px;
+}
+
+.titulo {
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .cuerpo {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: calc(100%-55px);
-    padding-top: 85px;
-    /* background-color: red; */
+    align-items: center;
+    height: calc(100% - 140px);
+    top: 85px;
 }
 
 .mat-sort-header-container {
     text-align: center;
 }
 
+.encabezado {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 50%;
+    position: fixed;
+    top: 85px;
+}
 
-.mat-table{
+.opciones {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    position: static;
+}
+
+.mat-table {
     text-align: center;
     padding: 10px;
     overflow: auto;
     align-self: stretch;
     overflow-x: scroll;
+    margin-top: 22%;
+    text-align: center;
 }
 
 .search {
@@ -39,20 +63,20 @@ table {
     justify-content: center;
 }
 
-.mat-cell,
-.mat-header-cell {
+.mat-cell, .mat-header-cell {
     word-wrap: initial;
     display: table-cell;
     padding: 0px 10px;
-    line-break:unset ;
+    line-break: unset;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
     vertical-align: middle;
     border-right: 1px solid grey;
-
+    text-align: center;
 }
-.mat-row,
-.mat-header-row {
+
+.mat-row, .mat-header-row {
     display: table-row;
 }
+
