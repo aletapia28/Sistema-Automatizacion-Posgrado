@@ -12,7 +12,10 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
-
+import {MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
@@ -30,6 +33,8 @@ import { VtnImportarPeriodoComponent } from './vtn-importar-periodo/vtn-importar
 import { VtnEditarPostulanteComponent } from './vtn-editar-postulante/vtn-editar-postulante.component';
 import { BarraSistemaComponent } from './barra-sistema/barra-sistema.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { VtnPrincipalComponent } from './vtn-principal/vtn-principal.component';
+import { VtnEliminarAsistenteComponent } from './vtn-eliminar-asistente/vtn-eliminar-asistente.component';
 import { VtnEditarSuperusuarioComponent } from './vtn-editar-superusuario/vtn-editar-superusuario.component';
 import { VtnEditarAsistenteComponent } from './vtn-editar-asistente/vtn-editar-asistente.component';
 
@@ -46,6 +51,8 @@ import { VtnEditarAsistenteComponent } from './vtn-editar-asistente/vtn-editar-a
     VtnImportarPeriodoComponent,
     VtnEditarPostulanteComponent,
     BarraSistemaComponent,
+    VtnPrincipalComponent,
+    VtnEliminarAsistenteComponent,
     VtnEditarSuperusuarioComponent,
     VtnEditarAsistenteComponent
     
@@ -65,7 +72,11 @@ import { VtnEditarAsistenteComponent } from './vtn-editar-asistente/vtn-editar-a
     MatRadioModule,
     MatSelectModule,
     MatNativeDateModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
