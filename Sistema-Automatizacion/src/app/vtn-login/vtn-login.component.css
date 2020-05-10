@@ -3,19 +3,22 @@
     width: 100%;
 }
 
-.blanco {
+.cuerpo {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    margin-top: 85px;
+    height: calc(100% - 140px);
+    top: 85px;
+    position: fixed;
+    width: 100%;
+    overflow: auto;
 }
 
 .cuadro {
     background-color: #E2E2E2;
-    width: 40vw;
-    height: 60%;
+    width: 500px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -61,23 +64,6 @@
     font-size: 15px;
     color: #1F2F5F;
     /* DA3A2F */
-}
-
-.example-container .mat-form-field+.mat-form-field {
-    margin-left: 8px;
-}
-
-.example-right-align {
-    text-align: right;
-}
-
-input.example-right-align::-webkit-outer-spin-button,
-input.example-right-align::-webkit-inner-spin-button {
-    display: none;
-}
-
-input.example-right-align {
-    -moz-appearance: textfield;
 }
 
 .inputVtn {

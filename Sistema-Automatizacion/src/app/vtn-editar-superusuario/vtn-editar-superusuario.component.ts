@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
-
 @Component({
-  selector: 'app-vtn-login',
-  templateUrl: './vtn-login.component.html',
-  styleUrls: ['./vtn-login.component.css']
+  selector: 'app-vtn-editar-superusuario',
+  templateUrl: './vtn-editar-superusuario.component.html',
+  styleUrls: ['./vtn-editar-superusuario.component.css']
 })
-export class VtnLoginComponent implements OnInit {
+export class VtnEditarSuperusuarioComponent implements OnInit {
   hide = true;
 
   constructor() { }

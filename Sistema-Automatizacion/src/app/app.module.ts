@@ -35,6 +35,8 @@ import { BarraSistemaComponent } from './barra-sistema/barra-sistema.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VtnPrincipalComponent } from './vtn-principal/vtn-principal.component';
 import { VtnEliminarAsistenteComponent } from './vtn-eliminar-asistente/vtn-eliminar-asistente.component';
+import { VtnEditarSuperusuarioComponent } from './vtn-editar-superusuario/vtn-editar-superusuario.component';
+import { VtnEditarAsistenteComponent } from './vtn-editar-asistente/vtn-editar-asistente.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { VtnEliminarAsistenteComponent } from './vtn-eliminar-asistente/vtn-elim
     VtnEditarPostulanteComponent,
     BarraSistemaComponent,
     VtnPrincipalComponent,
-    VtnEliminarAsistenteComponent
+    VtnEliminarAsistenteComponent,
+    VtnEditarSuperusuarioComponent,
+    VtnEditarAsistenteComponent
     
   ],
   imports: [

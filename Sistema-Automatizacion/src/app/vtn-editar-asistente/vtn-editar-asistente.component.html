@@ -5,25 +5,16 @@
     <div class="cuerpo">
 
         <div class="cuadro">
-            <h1 class="titulo">Crear usuario asistente</h1>
-
+            <h1 class="titulo">Editar asistente</h1>
             <form class="periodo-form">
-                <mat-form-field appearance="fill" class="inputVtn">
-                    <mat-label>Correo electrónico</mat-label>
-                    <input matInput placeholder="pat@example.com" [formControl]="email" required>
-                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-                </mat-form-field>
-
                 <mat-form-field appearance="fill" class="inputVtn">
                     <mat-label>Nombre</mat-label>
                     <input matInput required>
                 </mat-form-field>
-
                 <mat-form-field appearance="fill" class="inputVtn">
-                    <mat-label>Cedula</mat-label>
+                    <mat-label>Cédula</mat-label>
                     <input matInput required>
                 </mat-form-field>
-
                 <mat-form-field appearance="fill" class="inputVtn">
                     <mat-label>Contraseña</mat-label>
                     <input matInput [type]="hide ? 'password' : 'text'" required>
@@ -31,12 +22,10 @@
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
-                <button mat-raised-button class="boton">Crear usuario</button>
+                <button mat-raised-button class="boton">Guardar cambios</button>
             </form>
         </div>
     </div>
     <app-barra-inferior></app-barra-inferior>
-
-
 
 </div>

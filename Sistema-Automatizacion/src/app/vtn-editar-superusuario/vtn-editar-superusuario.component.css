@@ -18,7 +18,7 @@
 .cuadro {
     background-color: #E2E2E2;
     width: 500px;
-    height: 460px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -41,8 +41,8 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 370px;
-    overflow: auto;
+    height: 60%;
+    margin-bottom: 25px;
 }
 
 .boton {
@@ -51,5 +51,4 @@
     font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
     font-size: 15px;
-    margin-top: 10px;
 }
