@@ -3,9 +3,7 @@
 
     <div class="cuerpo">
         <div class="encabezado">
-            <div>
-                <h1>Listado de Estudiantes</h1>
-            </div>
+            <h1 class="titulo">Listado de Estudiantes</h1>
             <div class="opciones">
                 <mat-form-field>
                     <mat-label>Admitidos/Postulados</mat-label>
@@ -20,15 +18,12 @@
                         <mat-option>1</mat-option>
                     </mat-select>
                 </mat-form-field>
+                <button mat-icon-button class="icon1"><mat-icon>save_alt</mat-icon></button>
             </div>
-            <div class="search">
-                <mat-form-field>
-                    <mat-label>Buscar</mat-label>
-                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Pedro">
-                </mat-form-field>
-            </div>
-        </div>
 
+
+        </div>
+        <div class="contenedor-tabla">
             <table mat-table [dataSource]="dataSource" matSort>
 
                 <!-- cedula Column -->
@@ -51,7 +46,7 @@
 
                 <!-- correo1 Column -->
                 <ng-container matColumnDef="correo1">
-                    <th mat-header-cell *matHeaderCellDef> Correo </th>
+                    <th mat-header-cell *matHeaderCellDef> Correo Principal </th>
                     <td mat-cell *matCellDef="let element"> {{element.correo1}} </td>
                 </ng-container>
 
@@ -169,11 +164,23 @@
 
 
             </table>
-            <mat-paginator [length]="10" [pageSize]="10" showFirstLastButtons>
-            </mat-paginator>
 
 
+        </div>
+        <mat-paginator [length]="10" [pageSize]="10" showFirstLastButtons>
+        </mat-paginator>
+        <div class="botones">
+            <div class="izq">
+                <button mat-raised-button class="boton">Generar Gráficas</button>
+                <button mat-raised-button class="boton">Generar Tablas</button>
+            </div>
+            <div class="der">
+                <button mat-raised-button class="boton">Importar Archivo</button>
+                <button mat-raised-button class="boton">Generar Memo</button>
+            </div>
+        </div>
     </div>
+
 
     <app-barra-inferior></app-barra-inferior>
 </div>
