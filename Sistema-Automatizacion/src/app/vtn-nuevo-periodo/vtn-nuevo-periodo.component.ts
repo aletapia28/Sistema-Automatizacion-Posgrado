@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-vtn-nuevo-periodo',
@@ -14,16 +14,23 @@ export class VtnNuevoPeriodoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  contactName: string = "";
-  contactAddress: string = "";
   bimestreSource: string = "direct";
-  contactGender: string = "male";
-  isDeleted: boolean = false;
   fechaInicio = new FormControl(new Date());
   fechaFinal = new FormControl(new Date());
 
-  public saveCustomer() {
-    /* Typically this method will be used to send the contact form to a server to save it*/
+  nuevoPForm = new FormGroup ({
+    bimestre: new FormControl(''),
+    fechaI: new FormControl(''),
+    fechaF: new FormControl('')
+  });
+
+  onSubmit() {
+    // Conectar con la logica para el login
+
+    //Cuando ocupen sacar un solo dato es con
+    //console.log(this.loginForm.get('correo').value);
+    
+    console.log(this.nuevoPForm.value);
   }
 
 }

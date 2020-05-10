@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-vtn-editar-postulante',
@@ -7,14 +7,6 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./vtn-editar-postulante.component.css']
 })
 export class VtnEditarPostulanteComponent implements OnInit {
-  
-  nivelIngles: boolean = true;
-  acreditada: boolean = true;
-  tecnico: boolean = true;
-  diplomado: boolean = true;
-  gradoAcademico: string = "direct";
-  afinidad: string = "direct";
-  puesto: string = "direct";
 
   constructor() { }
 
@@ -30,6 +22,26 @@ export class VtnEditarPostulanteComponent implements OnInit {
     Validators.email,
   ]);
 
+  editarPosForm = new FormGroup ({
+    cedula: new FormControl(''),
+    nombre: new FormControl(''),
+    telefono1: new FormControl(''),
+    telefono2: new FormControl(''),
+    correo: new FormControl(''),
+    correo2: new FormControl(''),
+    ingles: new FormControl(true),
+    gradoAca: new FormControl(''),
+    universidad: new FormControl(''),
+    afinidad: new FormControl(''),
+    acreditada: new FormControl(false),
+    puesto: new FormControl(''),
+    experiencia: new FormControl(''),
+    cAprovechamiento: new FormControl(''),
+    tTecnico: new FormControl(true),
+    cMaestria: new FormControl(''),
+    tDiplomado: new FormControl(true)
+  });
+
   getErrorMessage() {
     if (this.email.hasError('required')) {
       return 'Debe ingresar un correo electrónico';
@@ -42,4 +54,7 @@ export class VtnEditarPostulanteComponent implements OnInit {
     return this.email2.hasError('email') ? 'Correo inválido' : '';
   }
 
+  onSubmit () {
+    console.log(this.editarPosForm.value);
+  }
 }

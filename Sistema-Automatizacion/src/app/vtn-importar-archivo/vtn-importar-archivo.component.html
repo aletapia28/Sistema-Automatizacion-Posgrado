@@ -8,19 +8,17 @@
             <h1 class="titulo">Importar Archivo de Postulantes</h1>
             <h2 class="subtitulo">
                 Seleccione el archivo conformado por postulantes para la maestría que desea importar a la aplicación</h2>
-
-            <div class="upload_button">
-                <label>
-                    <input type="file">
+            <form class="formI" (submit)="onSubmit()" [formGroup]="importarAForm">
+                <div class="upload_button">
+                    <label>
+                    <input type="file" formControlName="archivo">
                     <span class="span">Seleccionar Archivo</span>
                 </label>
-            </div>
-            <div>
-
-                <button mat-raised-button class="boton">Importar datos</button>
-
-            </div>
-
+                </div>
+                <div>
+                    <button mat-raised-button class="boton" type="submit">Importar datos</button>
+                </div>
+            </form>
         </div>
 
     </div>
