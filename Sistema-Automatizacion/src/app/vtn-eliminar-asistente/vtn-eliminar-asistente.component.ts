@@ -12,8 +12,8 @@ export interface Usuarios{
   correo: string;
 }
 const ELEMENT_DATA: Usuarios[] = [
-{cedula: '1828282',nombre:'Juan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
-{cedula: '1828282',nombre:'Juan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
+{cedula: '1828282',nombre:'Puan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
+{cedula: '1828282',nombre:'Juan A Rodriguez',correo: 'Juanrodriguez@gmail.com'},
 {cedula: '1828282',nombre:'Juan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
 {cedula: '1828282',nombre:'Juan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
 {cedula: '1828282',nombre:'Juan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
