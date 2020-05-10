@@ -54,22 +54,23 @@ usuarios.post('/register',(req,res) =>{
 usuarios.post('/login',(req,res) =>{
     User.findOne({
         where: {
-            correo: req.body.correo
+            correo: req.body.correo,
+            password: req.body.password
         }
     })
-    .then(user => {
-        if(bcrypt.compareSync(req.body.password, )){
-            let token = jwt.sign(user.dataValues,process.env.SECRET_KEY,{
-                expiresIn: 1440
-            })
-            res.send({token:token})
-        }else{
-            res.send('Usuario no existe')
-        }
-    })
-    .catch(err =>{
-        res.send('error' + err)
-    })
+        .then(user => {
+            if(user){
+                let token = jwt.sign(user.dataValues,process.env.SECRET_KEY,{
+                    expiresIn: 3000
+                })
+                res.json({token: token})
+            }else{
+                res.send('Usuario no existe')
+            }
+        })
+        .catch(err =>{
+            res.send('error' + err)
+        })
 
 })
 
