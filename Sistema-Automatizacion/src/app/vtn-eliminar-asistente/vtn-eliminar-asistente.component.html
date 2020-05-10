@@ -8,7 +8,7 @@
                 <div class="search">
                     <mat-form-field>
                         <mat-label>Buscar</mat-label>
-                        <input matInpult (keyup)="applyFilter($event)" placeholder="Ex. Pedro">
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Pedro">
                     </mat-form-field>
                 </div>
             </div>
@@ -38,8 +38,7 @@
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let row">
-                        <button mat-icon-button color="warn">
-                            <mat-icon>delete_outline</mat-icon>
+                        <button mat-icon-button (click)="onDelete(row.$key)" color="warn">                            <mat-icon>delete_outline</mat-icon>
                         </button>
                     </mat-cell>
                 </ng-container>
