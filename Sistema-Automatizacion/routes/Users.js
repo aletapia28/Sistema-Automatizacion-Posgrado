@@ -1,7 +1,7 @@
 const express = require("express")
 const usuarios = express.Router()
-const cors = require("cors")
-const jwt = require("jsonwebtoken")
+const cors = require('cors')
+const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt")
 
 const User = require("../models/User")
@@ -22,17 +22,18 @@ usuarios.post('/register',(req,res) =>{
             correo : req.body.correo
         }
     })
+        //bcrypt
         .then(usuario =>{
             if(!usuario){
-                const hash = bcrypt.hashSync(userData.password,30)
-                userData.password = hash
+                //const hash = bcrypt.hashSync(userData.password,30)
+               // userData.password = hash
                 User.create(userData)
                     .then(user =>{
                         let token = jwt.sign(user.dataValues, process.env.SECRET_KEY,{
                             expiresIn: 1440
 
                         })
-                        res.json({token:token})
+                        res.json({token: token})
 
                     })
                     .catch(err =>{
