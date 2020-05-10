@@ -18,35 +18,35 @@ usuarios.post('/register',(req,res) =>{
     }
 
     User.findOne({
-        where:{
-        correo : req.body.correo
+        where: {
+            correo : req.body.correo
         }
     })
-    .then(usuario =>{
-        if(!usuario){
-            const hash = bcrypt.hashSync(userData.password,20)
-            userData.password = hash
-            User.create(userData)
-            .then(user =>{
-                let token = jwt.sign(user.dataValues, process.env.SECRET_KEY,{
-                    expiresIn: 1440
+        .then(usuario =>{
+            if(!usuario){
+                const hash = bcrypt.hashSync(userData.password,30)
+                userData.password = hash
+                User.create(userData)
+                    .then(user =>{
+                        let token = jwt.sign(user.dataValues, process.env.SECRET_KEY,{
+                            expiresIn: 1440
 
-                })
-                res.json({token:token})
+                        })
+                        res.json({token:token})
 
-            })
-            .catch(err =>{
-                res.send('error: ' + err)
-            })
-            
-        }else{
-            res.json({error: 'Usuario ya existe'})
-        }
+                    })
+                    .catch(err =>{
+                        res.send('error: ' + err)
+                    })
+                
+            }else{
+                res.json({error: 'Usuario ya existe'})
+            }
 
-    })
-    .catch(err =>{
-        res.send('error: ' + err)
-    })
+        })
+        .catch(err =>{
+            res.send('error: ' + err)
+        })
 })
 
 //LOGIN
