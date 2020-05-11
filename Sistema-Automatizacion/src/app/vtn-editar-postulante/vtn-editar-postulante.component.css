@@ -8,69 +8,27 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    margin-top: 85px;
+    height: calc(100% - 140px);
+    top: 85px;
+    position: fixed;
+    width: 100%;
+    overflow: auto;
 }
 
 .cuadro {
     background-color: #E2E2E2;
-    width: 40vw;
-    height: 500px;
+    width: 500px;
+    height: 460px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-}
-
-.campos {
-    width: 40vw;
-    padding-top: 20vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    overflow: auto;
 }
 
 .titulo {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 2vw;
+    font-size: 25px;
     text-align: center;
-}
-
-.subtitulo {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1vw;
-    text-align: center;
-    padding: 10px;
-}
-
-.componente {
-    display: flex;
-    flex-direction: row;
-    width: 50%;
-    justify-content: space-around;
-    align-items: flex-start;
-}
-
-.componente input,
-select,
-label {
-    width: 50%;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: normal;
-    text-align: left;
-    margin: 2vh;
-}
-
-.botones {
-    display: flex;
-    flex-direction: row;
-    width: 25vw;
-    justify-content: space-evenly;
-    align-items: flex-end;
-    margin-top: 50px;
-    margin-left: 35%;
 }
 
 .inputVtn {

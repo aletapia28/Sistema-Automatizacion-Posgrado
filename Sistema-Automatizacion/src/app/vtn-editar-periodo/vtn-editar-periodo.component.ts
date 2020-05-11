@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-vtn-editar-periodo',
@@ -16,5 +16,14 @@ export class VtnEditarPeriodoComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  editarPeForm = new FormGroup ({
+    bimestre: new FormControl(''),
+    fechaInicio: new FormControl(''),
+    fechaFinal: new FormControl('')
+  });
   
+  onSubmit() {
+    console.log(this.editarPeForm.value);
+  }
 }

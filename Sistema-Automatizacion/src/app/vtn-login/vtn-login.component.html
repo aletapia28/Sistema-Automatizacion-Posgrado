@@ -1,28 +1,27 @@
 <div class="tamano">
     <app-barra-superior></app-barra-superior>
-
-    <div class="blanco">
-
+    <!-- <div class="blanco"></div> -->
+    <div class="cuerpo">
         <div class="cuadro">
             <div>
                 <h1 class="titulo">
                     Sistema de automatización de postulación e ingreso a la maestría en Gerencia de Proyectos del Tecnológico de Costa Rica</h1>
             </div>
-            <form class="periodo-form">
+            <form class="periodo-form" (submit)="onSubmit()" [formGroup]="loginForm">
                 <mat-form-field appearance="fill" class="inputVtn">
                     <mat-label>Correo electrónico</mat-label>
-                    <input matInput placeholder="pat@example.com" [formControl]="email" required>
+                    <input matInput placeholder="pat@example.com" [formControl]="email" formControlName="correo" required>
                     <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="inputVtn">
                     <mat-label>Contraseña</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'">
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwd">
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
                 </mat-form-field>
-                <button mat-raised-button class="boton">Iniciar sesión</button>
+                <button mat-raised-button class="boton" type="submit">Iniciar sesión</button>
             </form>
             <button mat-button color="primary">Olvidé mi contraseña</button>
         </div>
