@@ -37,6 +37,13 @@ import { VtnPrincipalComponent } from './vtn-principal/vtn-principal.component';
 import { VtnEliminarAsistenteComponent } from './vtn-eliminar-asistente/vtn-eliminar-asistente.component';
 import { VtnEditarSuperusuarioComponent } from './vtn-editar-superusuario/vtn-editar-superusuario.component';
 import { VtnEditarAsistenteComponent } from './vtn-editar-asistente/vtn-editar-asistente.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { Conditional } from '@angular/compiler';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
+
 
 @NgModule({
   declarations: [
@@ -54,7 +61,8 @@ import { VtnEditarAsistenteComponent } from './vtn-editar-asistente/vtn-editar-a
     VtnPrincipalComponent,
     VtnEliminarAsistenteComponent,
     VtnEditarSuperusuarioComponent,
-    VtnEditarAsistenteComponent
+    VtnEditarAsistenteComponent,
+    ConfirmDialogComponent
     
   ],
   imports: [
@@ -76,9 +84,13 @@ import { VtnEditarAsistenteComponent } from './vtn-editar-asistente/vtn-editar-a
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatSnackBarModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[ConfirmDialogComponent]
 })
 export class AppModule { }

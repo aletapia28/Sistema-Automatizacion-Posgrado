@@ -27,6 +27,10 @@
 .mat-sort-header-container {
     text-align: center;
 }
+::ng-deep .mat-sort-header-container{
+    justify-content: center;
+    /* other inheritable properties */
+}
 
 .encabezado {
     display: flex;
@@ -36,6 +40,16 @@
     min-width: 25%;
 }
 
+::ng-deep .mat-sort-header-sorted .mat-sort-header-arrow {
+    transform: none !important;
+    opacity: 1 !important;
+    
+  }
+  ::ng-deep  .mat-sort-header-arrow {
+    transform: none !important;
+    opacity: 0.90 !important;
+  }
+  
 .opciones {
     display: flex;
     flex-direction: row;

@@ -18,7 +18,10 @@
                         <mat-option>1</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <button mat-icon-button class="icon1"><mat-icon>save_alt</mat-icon></button>
+                <button mat-icon-button class="icon1"
+                matTooltip="Descargar Archivo"
+                matTooltipPosition= "after">
+                <mat-icon>save_alt</mat-icon></button>
             </div>
 
 
@@ -33,8 +36,8 @@
                 </ng-container>
 
                 <!-- nombre Column -->
-                <ng-container matColumnDef="nombre">
-                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <ng-container matColumnDef="nombre" >
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
                     <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
                 </ng-container>
 
@@ -124,7 +127,7 @@
 
                 <!-- promedioGeneral Column -->
                 <ng-container matColumnDef="promedioGeneral">
-                    <th mat-header-cell *matHeaderCellDef> Promedio General </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>  Promedio General </th>
                     <td mat-cell *matCellDef="let element"> {{element.promedioGeneral}} </td>
                 </ng-container>
 
@@ -142,17 +145,21 @@
 
                 <!-- nota Column -->
                 <ng-container matColumnDef="nota">
-                    <th mat-header-cell *matHeaderCellDef> Nota </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nota </th>
                     <td mat-cell *matCellDef="let element"> {{element.nota}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let row">
-                        <button mat-icon-button>
+                        <button mat-icon-button
+                            matTooltip="Editar Usuario"
+                            matTooltipPosition= "before">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        <button mat-icon-button color="warn">
+                        <button mat-icon-button color="warn"
+                            matTooltip="Eliminar Usuario"
+                            matTooltipPosition= "above">
                             <mat-icon>delete_outline</mat-icon>
                         </button>
                     </mat-cell>
