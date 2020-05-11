@@ -11,14 +11,14 @@
             <img src="/assets/img/menu.png" alt="imagen" class="logoMenu">
         </button>
         <mat-menu #beforeMenu="matMenu" xPosition="before" class="contenedorMenu">
-            <button mat-menu-item class="opcionMenu">Editar perfil</button>
-            <button mat-menu-item class="opcionMenu">Crear período</button>
-            <button mat-menu-item class="opcionMenu">Editar período</button>
-            <button mat-menu-item class="opcionMenu">Buscar postulante</button>
-            <button mat-menu-item class="opcionMenu">Crear usuario</button>
-            <button mat-menu-item class="opcionMenu">Editar fórmula</button>
-            <button mat-menu-item class="opcionMenu">Visualizar históricos</button>
-            <button mat-menu-item class="opcionMenu">Importar Período</button>
+            <button mat-menu-item class="opcionMenu" (click)="editarPerfil()">Editar perfil</button>
+            <button mat-menu-item class="opcionMenu" (click)="crearPeriodo()">Crear período</button>
+            <button mat-menu-item class="opcionMenu" (click)="editarPeriodo()">Editar período</button>
+            <button mat-menu-item class="opcionMenu" (click)="buscarPostulante()">Buscar postulante</button>
+            <button mat-menu-item class="opcionMenu" (click)="crearUsuario()">Crear usuario</button>
+            <button mat-menu-item class="opcionMenu" (click)="editFormula()">Editar fórmula</button>
+            <button mat-menu-item class="opcionMenu" (click)="verHistoricos()">Visualizar históricos</button>
+            <button mat-menu-item class="opcionMenu" (click)="importarPeriodo()">Importar Período</button>
             <button mat-menu-item class="opcionMenu" (click)="signOut()">Cerrar sesión</button>
         </mat-menu>
     </div>

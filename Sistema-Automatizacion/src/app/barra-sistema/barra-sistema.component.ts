@@ -14,11 +14,46 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   signOut() {
-    this.router.navigate([''])
+    this.router.navigate(['']);
   }
 
   principal() {
-    this.router.navigate(['principal'])
+    this.router.navigate(['principal']);
+  }
+
+  editarPerfil() {
+    // Si es de tipo superusuario
+    this.router.navigate(['editSup']);
+    // Si es asistente
+    // this.router.navigate(['editAsis']);
+  }
+
+  crearPeriodo() {
+    this.router.navigate(['crearP']);
+  }
+
+  editarPeriodo() {
+    this.router.navigate(['editPos']);
+  }
+
+  buscarPostulante() {
+    // this.router.navigate(['principal'])
+  }
+
+  crearUsuario() {
+    this.router.navigate(['crearU']);
+  }
+
+  editFormula() {
+    // this.router.navigate(['principal'])
+  }
+
+  verHistoricos() {
+    // this.router.navigate(['principal'])
+  }
+
+  importarPeriodo() {
+    this.router.navigate(['importP']);
   }
 
 }
