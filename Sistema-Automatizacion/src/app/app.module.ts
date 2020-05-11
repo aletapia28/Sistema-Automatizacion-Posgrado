@@ -40,6 +40,10 @@ import { VtnEditarAsistenteComponent } from './vtn-editar-asistente/vtn-editar-a
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { Conditional } from '@angular/compiler';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
+
 
 @NgModule({
   declarations: [
@@ -81,7 +85,9 @@ import { Conditional } from '@angular/compiler';
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

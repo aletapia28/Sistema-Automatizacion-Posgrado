@@ -5,6 +5,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { DialogService } from '../shared/dialog.service';
 import { TransitionCheckState } from '@angular/material/checkbox';
+import {TooltipPosition} from '@angular/material/tooltip';
+import {FormControl} from '@angular/forms';
+import {NotificationService} from '../shared/notification.service';
 
 
 
@@ -37,7 +40,10 @@ const ELEMENT_DATA: Usuarios[] = [
 export class VtnEliminarAsistenteComponent implements OnInit {
 
 constructor( 
-  private dialogService: DialogService){}
+  private dialogService: DialogService,
+  private notificationService: NotificationService
+  
+  ){}
 
 
 
@@ -50,6 +56,8 @@ constructor(
 dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   
+
+
 
 @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -67,6 +75,7 @@ onDelete($key){
   this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al usuario?")
   .afterClosed().subscribe(res =>{
     console.log(res);
+    this.notificationService.success('Eliminado Correctamente');
 
 
     // HACER LOGICA DE BORRDO
