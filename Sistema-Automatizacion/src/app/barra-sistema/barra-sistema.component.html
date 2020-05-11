@@ -1,12 +1,12 @@
 <div class=" barraSuperior">
 
     <div class="Logo">
-        <img src="/assets/img/marcaTec.png" alt="imagen" class="logoTec">
+        <img src="/assets/img/marcaTec.png" alt="imagen" class="logoTec" (click)="principal()">
     </div>
-    
-    <div class="barra-derecha" >
+
+    <div class="barra-derecha">
         <h1 class="Titulo-barra"> Área Académica de Gerencia de Proyectos </h1>
-        
+
         <button mat-button [matMenuTriggerFor]="beforeMenu" class="botonMenu">
             <img src="/assets/img/menu.png" alt="imagen" class="logoMenu">
         </button>
@@ -19,7 +19,7 @@
             <button mat-menu-item class="opcionMenu">Editar fórmula</button>
             <button mat-menu-item class="opcionMenu">Visualizar históricos</button>
             <button mat-menu-item class="opcionMenu">Importar Período</button>
-            <button mat-menu-item class="opcionMenu">Cerrar sesión</button>
+            <button mat-menu-item class="opcionMenu" (click)="signOut()">Cerrar sesión</button>
         </mat-menu>
     </div>
 

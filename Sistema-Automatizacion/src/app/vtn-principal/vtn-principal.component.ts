@@ -3,6 +3,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 
 export interface PeriodicElement {
@@ -107,11 +108,16 @@ export class VtnPrincipalComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  constructor(private router: Router) { }
+
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
+  goImportarArchivo() {
+    this.router.navigate(['importA']);
+  }
 }
 
 

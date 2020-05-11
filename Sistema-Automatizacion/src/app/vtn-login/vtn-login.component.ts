@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vtn-login',
@@ -11,7 +11,7 @@ export class VtnLoginComponent implements OnInit {
   
   hide = true;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -41,6 +41,7 @@ export class VtnLoginComponent implements OnInit {
     //console.log(this.loginForm.get('correo').value);
     
     console.log(this.loginForm.value);
+    this.router.navigate(['principal'])
   }
 
 }
