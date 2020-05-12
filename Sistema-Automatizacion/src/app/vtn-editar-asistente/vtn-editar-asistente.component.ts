@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ServicioDatosService } from '../shared/servicio-datos.service'
 
 @Component({
   selector: 'app-vtn-editar-asistente',
@@ -9,7 +10,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class VtnEditarAsistenteComponent implements OnInit {
   hide = true;
 
-  constructor() { }
+  correoA: string;
+
+  constructor(private servicioDatos: ServicioDatosService) {
+    this.correoA = servicioDatos.showCorreo;
+  }
 
   ngOnInit(): void {
   }
@@ -34,7 +39,8 @@ export class VtnEditarAsistenteComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.editarAForm.value);
+    console.log(this.correoA);
+    //console.log(this.editarAForm.value);
   }
 
 }
