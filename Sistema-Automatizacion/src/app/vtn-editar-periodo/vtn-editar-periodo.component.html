@@ -7,32 +7,32 @@
         <div class="cuadro">
             <h1 class="titulo">Editar período de matrícula</h1>
 
-            <form class="periodo-form">
+            <form class="periodo-form" (submit)="onSubmit()" [formGroup]="editarPeForm">
                 <mat-form-field appearance="fill" class="inputVtn">
                     <mat-label>Bimestre</mat-label>
-                    <mat-select [(value)]="bimestreSource" placeholder="Bimestre">
-                        <mat-option value="Bimestre 1">Bimestre 1 2015</mat-option>
-                        <mat-option value="Bimestre 2">Bimestre 2 2017</mat-option>
-                        <mat-option value="Bimestre 3">Bimestre 3 2018</mat-option>
-                        <mat-option value="Bimestre 4">Bimestre 4 2018</mat-option>
+                    <mat-select [(value)]="bimestreSource" placeholder="Bimestre" formControlName="bimestre">
+                        <mat-option value="Bimestre 1 2015">Bimestre 1 2015</mat-option>
+                        <mat-option value="Bimestre 2 2017">Bimestre 2 2017</mat-option>
+                        <mat-option value="Bimestre 3 2018">Bimestre 3 2018</mat-option>
+                        <mat-option value="Bimestre 4 2018">Bimestre 4 2018</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="inputVtn">
                     <mat-label>Fecha de Inicio</mat-label>
-                    <input [value]="fechaInicio.value" matInput [matDatepicker]="picker">
+                    <input [value]="fechaInicio.value" matInput [matDatepicker]="picker" formControlName="fechaInicio">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="inputVtn">
                     <mat-label>Fecha de Cierre</mat-label>
-                    <input [value]="fechaFinal.value" matInput [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <input [value]="fechaFinal.value" matInput [matDatepicker]="picker2" formControlName="fechaFinal">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
 
-                <button mat-raised-button class="boton">Guardar cambios</button>
+                <button mat-raised-button class="boton" type="submit">Guardar cambios</button>
 
             </form>
 

@@ -5,6 +5,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { DialogService } from '../shared/dialog.service';
 import {NotificationService} from '../shared/notification.service';
+import { Router } from '@angular/router';
+
 
 export interface PeriodicElement {
   cedula: string;
@@ -80,7 +82,8 @@ export class VtnPrincipalComponent {
 
   constructor( 
     private dialogService: DialogService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router
     
     ){}
   displayedColumns: string[] =
@@ -120,9 +123,14 @@ dataSource = new MatTableDataSource(ELEMENT_DATA);
 
 
 
+
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  goImportarArchivo() {
+    this.router.navigate(['importA']);
   }
 
 

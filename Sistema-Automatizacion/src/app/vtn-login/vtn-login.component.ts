@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vtn-login',
@@ -8,9 +8,10 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./vtn-login.component.css']
 })
 export class VtnLoginComponent implements OnInit {
+  
   hide = true;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -20,12 +21,27 @@ export class VtnLoginComponent implements OnInit {
     Validators.email,
   ]);
 
+  loginForm = new FormGroup ({
+    correo: new FormControl(''),
+    passwd: new FormControl('')
+  });
+
   getErrorMessage() {
     if (this.email.hasError('required')) {
       return 'Debe ingresar un correo electrónico';
     }
 
     return this.email.hasError('email') ? 'Correo inválido' : '';
+  }
+
+  onSubmit() {
+    // Conectar con la logica para el login
+
+    //Cuando ocupen sacar un solo dato es con
+    //console.log(this.loginForm.get('correo').value);
+    
+    console.log(this.loginForm.value);
+    this.router.navigate(['principal'])
   }
 
 }

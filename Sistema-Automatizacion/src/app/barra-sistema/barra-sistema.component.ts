@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-barra-sistema',
@@ -7,9 +8,52 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BarraSistemaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  signOut() {
+    this.router.navigate(['']);
+  }
+
+  principal() {
+    this.router.navigate(['principal']);
+  }
+
+  editarPerfil() {
+    // Si es de tipo superusuario
+    this.router.navigate(['editSup']);
+    // Si es asistente
+    // this.router.navigate(['editAsis']);
+  }
+
+  crearPeriodo() {
+    this.router.navigate(['crearP']);
+  }
+
+  editarPeriodo() {
+    this.router.navigate(['editPos']);
+  }
+
+  buscarPostulante() {
+    // this.router.navigate(['principal'])
+  }
+
+  crearUsuario() {
+    this.router.navigate(['crearU']);
+  }
+
+  editFormula() {
+    // this.router.navigate(['principal'])
+  }
+
+  verHistoricos() {
+    // this.router.navigate(['principal'])
+  }
+
+  importarPeriodo() {
+    this.router.navigate(['importP']);
   }
 
 }
