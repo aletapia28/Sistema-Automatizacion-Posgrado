@@ -33,7 +33,7 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   editarPeriodo() {
-    this.router.navigate(['editPos']);
+    this.router.navigate(['editPe']);
   }
 
   buscarPostulante() {
@@ -42,6 +42,10 @@ export class BarraSistemaComponent implements OnInit {
 
   crearUsuario() {
     this.router.navigate(['crearU']);
+  }
+
+  manejoAsistente() {
+    this.router.navigate(['eliminarAsis']);
   }
 
   editFormula() {

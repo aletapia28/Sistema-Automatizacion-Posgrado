@@ -3,6 +3,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { DialogService } from '../shared/dialog.service';
+import { TransitionCheckState } from '@angular/material/checkbox';
+import {TooltipPosition} from '@angular/material/tooltip';
+import {FormControl} from '@angular/forms';
+import {NotificationService} from '../shared/notification.service';
+
 
 
 
@@ -12,8 +18,8 @@ export interface Usuarios{
   correo: string;
 }
 const ELEMENT_DATA: Usuarios[] = [
-{cedula: '1828282',nombre:'Juan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
-{cedula: '1828282',nombre:'Juan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
+{cedula: '1828282',nombre:'Puan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
+{cedula: '1828282',nombre:'Juan A Rodriguez',correo: 'Juanrodriguez@gmail.com'},
 {cedula: '1828282',nombre:'Juan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
 {cedula: '1828282',nombre:'Juan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
 {cedula: '1828282',nombre:'Juan Perez Rodriguez',correo: 'Juanrodriguez@gmail.com'},
@@ -32,6 +38,15 @@ const ELEMENT_DATA: Usuarios[] = [
   styleUrls: ['./vtn-eliminar-asistente.component.css']
 })
 export class VtnEliminarAsistenteComponent implements OnInit {
+
+constructor( 
+  private dialogService: DialogService,
+  private notificationService: NotificationService
+  
+  ){}
+
+
+
   displayedColumns: string[] = [
   'cedula',
   'nombre',
@@ -41,6 +56,8 @@ export class VtnEliminarAsistenteComponent implements OnInit {
 dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   
+
+
 
 @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -54,5 +71,26 @@ ngOnInit() {
   this.dataSource.paginator = this.paginator;
 }
 
+onDelete($key){
+  this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al usuario?")
+  .afterClosed().subscribe(res =>{
+    console.log(res);
+    this.notificationService.success('Eliminado Correctamente');
+
+
+    // HACER LOGICA DE BORRDO
+    // if(res){
+    //   this.dialogService.delete($key);
+    //   this.notificationSERIVE.('DELETE');
+    
+  });
 
 }
+
+
+
+}
+
+
+
+
