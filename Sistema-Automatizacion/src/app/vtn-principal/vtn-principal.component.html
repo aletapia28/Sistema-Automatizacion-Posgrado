@@ -47,6 +47,12 @@
                     <td mat-cell *matCellDef="let element"> {{element.telefono1}} </td>
                 </ng-container>
 
+                <!-- telefono2 Column -->
+                <ng-container matColumnDef="telefono2">
+                    <th mat-header-cell *matHeaderCellDef> Telefono Alternartivo</th>
+                    <td mat-cell *matCellDef="let element"> {{element.telefono2}} </td>
+                </ng-container>
+
                 <!-- correo1 Column -->
                 <ng-container matColumnDef="correo1">
                     <th mat-header-cell *matHeaderCellDef> Correo Principal </th>
@@ -153,12 +159,13 @@
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let row">
                         <button mat-icon-button
-                            matTooltip="Editar Usuario"
+                            matTooltip="Editar Registro"
                             matTooltipPosition= "before">
                             <mat-icon>edit</mat-icon>
                         </button>
                         <button mat-icon-button color="warn"
-                            matTooltip="Eliminar Usuario"
+                            (click)="onDelete(row, $event)"
+                            matTooltip="Eliminar Registro"
                             matTooltipPosition= "above">
                             <mat-icon>delete_outline</mat-icon>
                         </button>
