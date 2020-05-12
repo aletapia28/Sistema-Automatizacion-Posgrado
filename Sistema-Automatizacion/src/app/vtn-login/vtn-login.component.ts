@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ServicioDatosService } from '../shared/servicio-datos.service'
+
 
 @Component({
   selector: 'app-vtn-login',
@@ -8,10 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./vtn-login.component.css']
 })
 export class VtnLoginComponent implements OnInit {
-  
+
   hide = true;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private servicioDatos: ServicioDatosService) { }
 
   ngOnInit(): void {
   }
@@ -21,7 +23,7 @@ export class VtnLoginComponent implements OnInit {
     Validators.email,
   ]);
 
-  loginForm = new FormGroup ({
+  loginForm = new FormGroup({
     correo: new FormControl(''),
     passwd: new FormControl('')
   });
@@ -35,13 +37,22 @@ export class VtnLoginComponent implements OnInit {
   }
 
   onSubmit() {
-    // Conectar con la logica para el login
+    //LOGIN
 
-    //Cuando ocupen sacar un solo dato es con
-    //console.log(this.loginForm.get('correo').value);
+    let email = this.loginForm.get('correo').value;
+    let contrasena = this.loginForm.get('passwd').value;
     
-    console.log(this.loginForm.value);
-    this.router.navigate(['principal'])
+    //if (los datos del usuario estan buenos)
+    //{
+      //if es superusuario
+        this.servicioDatos.showTipoUsuario = true;
+      //if es asistente
+        //this.servicioDatos.showTipoUsuario = false;
+
+      this.servicioDatos.showCorreo = email;
+      this.servicioDatos.showSesion = true;
+      this.router.navigate(['principal'])
+    //}
   }
 
 }
