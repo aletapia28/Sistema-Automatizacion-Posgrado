@@ -21,6 +21,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { BarraSuperiorComponent } from './barra-superior/barra-superior.component';
 import { BarraInferiorComponent } from './barra-inferior/barra-inferior.component';
@@ -42,6 +43,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { Conditional } from '@angular/compiler';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 
 

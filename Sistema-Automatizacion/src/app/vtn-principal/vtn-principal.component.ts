@@ -4,9 +4,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { DialogService } from '../shared/dialog.service';
-import {NotificationService} from '../shared/notification.service';
+import { NotificationService } from '../shared/notification.service';
 import { Router } from '@angular/router';
-
+import { FormControl, FormGroup } from '@angular/forms';
+import { ServicioDatosService } from '../shared/servicio-datos.service'
 
 export interface PeriodicElement {
   cedula: string;
@@ -80,12 +81,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class VtnPrincipalComponent {
 
-  constructor( 
+  // principalForm = new FormGroup({
+  //   datos: new FormControl('')
+  // });
+
+  show: boolean;
+  datos = new FormControl('');
+  periodo = new FormControl('');
+
+  constructor(
     private dialogService: DialogService,
     private notificationService: NotificationService,
-    private router: Router
-    
-    ){}
+    private router: Router,
+    private servicioDatos: ServicioDatosService 
+  ) { }
+
   displayedColumns: string[] =
     ['cedula',
       'nombre',
@@ -109,9 +119,8 @@ export class VtnPrincipalComponent {
       'sede',
       'nota',
       'actions',]
-  
-  
-dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -121,10 +130,8 @@ dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-
-
-
   ngOnInit() {
+    this.show = this.servicioDatos.showTipoUsuario;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
@@ -133,24 +140,30 @@ dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.router.navigate(['importA']);
   }
 
-
-  onDelete(row,key){
+  onDelete(row, key) {
     this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al estudiante?")
-    .afterClosed().subscribe(res =>{
-      console.log(res);
-      this.notificationService.success('Eliminado Correctamente');
+      .afterClosed().subscribe(res => {
+        console.log(res);
+        this.notificationService.success('Eliminado Correctamente');
 
-      console.log(row,key);
-      console.log("nota",row.nota);
-  
-      // HACER LOGICA DE BORRDO
-      // if(res){
-      //   this.dialogService.delete($key);
-      //   this.notificationSERIVE.('DELETE');
-      
-    });
+        console.log(row, key);
+        console.log("nota", row.nota);
 
-}
+        // HACER LOGICA DE BORRDO
+        // if(res){
+        //   this.dialogService.delete($key);
+        //   this.notificationSERIVE.('DELETE');
+
+      });
+  }
+
+  selectDatos() {
+    console.log(this.datos.value);
+  }
+
+  selectPeriodo() {
+    console.log(this.periodo.value);
+  }
 }
 
 

@@ -5,27 +5,25 @@
         <div class="encabezado">
             <h1 class="titulo">Listado de Estudiantes</h1>
             <div class="opciones">
-                <mat-form-field>
+                <mat-form-field class="inputVtn">
                     <mat-label>Admitidos/Postulados</mat-label>
-                    <mat-select required>
-                        <mat-option>Admitidos</mat-option>
-                        <mat-option>Postulados</mat-option>
+                    <mat-select [formControl]="datos">
+                        <mat-option value="Postulantes" (click)='selectDatos()'>Postulantes</mat-option>
+                        <mat-option value="Admitidos" (click)='selectDatos()'>Admitidos</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Escoger Periodo</mat-label>
-                    <mat-select required>
-                        <mat-option>1</mat-option>
+                <mat-form-field class="inputVtn">
+                    <mat-label>Elegir período</mat-label>
+                    <mat-select [formControl]="periodo">
+                        <mat-option value="Bimestre 1 2015" (click)='selectPeriodo()'>Bimestre 1 2015</mat-option>
+                        <mat-option value="Bimestre 4 2017" (click)='selectPeriodo()'>Bimestre 4 2017</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <button mat-icon-button class="icon1"
-                matTooltip="Descargar Archivo"
-                matTooltipPosition= "after">
+                <button mat-icon-button class="icon1" matTooltip="Descargar Archivo" matTooltipPosition="after">
                 <mat-icon>save_alt</mat-icon></button>
             </div>
-
-
         </div>
+
         <div class="contenedor-tabla">
             <table mat-table [dataSource]="dataSource" matSort>
 
@@ -36,7 +34,7 @@
                 </ng-container>
 
                 <!-- nombre Column -->
-                <ng-container matColumnDef="nombre" >
+                <ng-container matColumnDef="nombre">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
                     <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
                 </ng-container>
@@ -133,7 +131,7 @@
 
                 <!-- promedioGeneral Column -->
                 <ng-container matColumnDef="promedioGeneral">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>  Promedio General </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Promedio General </th>
                     <td mat-cell *matCellDef="let element"> {{element.promedioGeneral}} </td>
                 </ng-container>
 
@@ -158,15 +156,10 @@
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let row">
-                        <button mat-icon-button
-                            matTooltip="Editar Registro"
-                            matTooltipPosition= "before">
+                        <button mat-icon-button matTooltip="Editar Registro" matTooltipPosition="before">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        <button mat-icon-button color="warn"
-                            (click)="onDelete(row, $event)"
-                            matTooltip="Eliminar Registro"
-                            matTooltipPosition= "above">
+                        <button mat-icon-button color="warn" (click)="onDelete(row, $event)" matTooltip="Eliminar Registro" matTooltipPosition="above">
                             <mat-icon>delete_outline</mat-icon>
                         </button>
                     </mat-cell>
@@ -174,23 +167,19 @@
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-
-
             </table>
-
-
         </div>
-        <mat-paginator [length]="10" [pageSize]="10" showFirstLastButtons>
-        </mat-paginator>
+
+        <mat-paginator [length]="10" [pageSize]="10" showFirstLastButtons></mat-paginator>
+
         <div class="botones">
             <div class="izq">
                 <button mat-raised-button class="boton">Generar Gráficas</button>
                 <button mat-raised-button class="boton">Generar Tablas</button>
             </div>
             <div class="der">
-                <button mat-raised-button class="boton" (click)="goImportarArchivo()">Importar Archivo</button>
-                <button mat-raised-button class="boton">Generar Memo</button>
+                <button mat-raised-button class="boton" *ngIf="show" (click)="goImportarArchivo()">Importar Archivo</button>
+                <button mat-raised-button class="boton" *ngIf="show">Generar Memo</button>
             </div>
         </div>
     </div>

@@ -27,7 +27,8 @@
 .mat-sort-header-container {
     text-align: center;
 }
-::ng-deep .mat-sort-header-container{
+
+::ng-deep .mat-sort-header-container {
     justify-content: center;
     /* other inheritable properties */
 }
@@ -43,13 +44,13 @@
 ::ng-deep .mat-sort-header-sorted .mat-sort-header-arrow {
     transform: none !important;
     opacity: 1 !important;
-    
-  }
-  ::ng-deep  .mat-sort-header-arrow {
+}
+
+ ::ng-deep .mat-sort-header-arrow {
     transform: none !important;
     opacity: 0.90 !important;
-  }
-  
+}
+
 .opciones {
     display: flex;
     flex-direction: row;
@@ -72,7 +73,8 @@ table {
     justify-content: center;
 }
 
-.mat-cell, .mat-header-cell {
+.mat-cell,
+.mat-header-cell {
     word-wrap: initial;
     display: table-cell;
     padding: 0px 10px;
@@ -85,38 +87,41 @@ table {
     text-align: center;
 }
 
-.mat-row, .mat-header-row {
+.mat-row,
+.mat-header-row {
     display: table-row;
 }
-.mat-header-cell{
+
+.mat-header-cell {
     color: #000000;
 }
+
 .mat-header-row {
     background-color: #cdcdcd;
-
 }
 
 .mat-row:nth-child(even) {
     background-color: #cdcdcd;
 }
 
-
 .contenedor-tabla {
     width: 100vw;
     overflow-x: scroll;
     min-height: 550px;
-
 }
-.botones{
+
+.botones {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     width: 100%;
     margin-top: 50px;
 }
-.icon1{
+
+.icon1 {
     transform: scale(1.5);
 }
+
 .boton {
     background-color: #1F2F5F;
     color: #ffffff;
@@ -124,19 +129,20 @@ table {
     font-weight: bold;
     font-size: 15px;
     margin: 15px;
-
 }
-.izq{
+
+.izq {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-
-
-
 }
-.der{
+
+.der {
     display: flex;
     flex-direction: column;
     height: 100%;
+}
 
+.inputVtn {
+    width: 200px;
 }
