@@ -38,6 +38,11 @@
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let row">
+                        <button mat-icon-button
+                        matTooltip="Editar Usuario"
+                        matTooltipPosition= "before">
+                        <mat-icon>edit</mat-icon>
+                    </button>
                         <button 
                         mat-icon-button (click)="onDelete(row.$key)" 
                         color="warn" 

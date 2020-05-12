@@ -29,6 +29,15 @@
     justify-content: center;
     /* other inheritable properties */
 }
+::ng-deep .mat-sort-header-sorted .mat-sort-header-arrow {
+    transform: none !important;
+    opacity: 1 !important;
+    
+  }
+  ::ng-deep  .mat-sort-header-arrow {
+    transform: none !important;
+    opacity: 0.90 !important;
+  }
 
 
 .encabezado {
