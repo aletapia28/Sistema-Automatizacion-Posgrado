@@ -17,8 +17,10 @@
 
 .cuadro {
     background-color: #E2E2E2;
-    width: 500px;
-    height: 460px;
+    width: 36vw;
+    min-width: 500px;
+    height: 55vh;
+    min-height: 460px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -38,6 +40,7 @@
     font-size: 16px;
     text-align: center;
     padding: 0px 10px;
+    max-width: 400px;
 }
 
 .archivo {

@@ -17,8 +17,10 @@
 
 .cuadro {
     background-color: #E2E2E2;
-    width: 500px;
-    height: 400px;
+    width: 40vw;
+    min-width: 500px;
+    height: 50vh;
+    min-height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
