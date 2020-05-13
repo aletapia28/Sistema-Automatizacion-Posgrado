@@ -20,7 +20,8 @@
                     </mat-select>
                 </mat-form-field>
                 <button mat-icon-button class="icon1" matTooltip="Descargar Archivo" matTooltipPosition="after">
-                <mat-icon>save_alt</mat-icon></button>
+                    <mat-icon>save_alt</mat-icon>
+                </button>
             </div>
         </div>
 
@@ -156,8 +157,8 @@
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let row">
-
-                        <button mat-icon-button color="warn" (click)="onDelete(row, $event)" matTooltip="Eliminar Registro" matTooltipPosition="above">
+                        <button mat-icon-button color="warn" (click)="onDelete(row, $event)"
+                            matTooltip="Eliminar Registro" matTooltipPosition="above">
                             <mat-icon>delete_outline</mat-icon>
                         </button>
                     </mat-cell>
