@@ -7,15 +7,15 @@
         <div class="cuadro">
             <h1 class="titulo">Editar asistente</h1>
             <form class="periodo-form" (submit)="onSubmit()" [formGroup]="editarAForm">
-                <mat-form-field appearance="fill" class="inputVtn">
+                <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Nombre</mat-label>
                     <input matInput formControlName="nombre" required>
                 </mat-form-field>
-                <mat-form-field appearance="fill" class="inputVtn">
+                <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Cédula</mat-label>
                     <input matInput formControlName="cedula" required>
                 </mat-form-field>
-                <mat-form-field appearance="fill" class="inputVtn">
+                <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Contraseña</mat-label>
                     <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwd" required>
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
