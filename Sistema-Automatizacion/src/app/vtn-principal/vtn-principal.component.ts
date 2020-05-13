@@ -8,6 +8,7 @@ import { NotificationService } from '../shared/notification.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 export interface PeriodicElement {
   cedula: string;
@@ -131,6 +132,8 @@ export class VtnPrincipalComponent {
   }
 
   ngOnInit() {
+    //dataSource = new MatTableDataSource(GetDatos());
+    
     this.show = this.servicioDatos.showTipoUsuario;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -141,10 +144,11 @@ export class VtnPrincipalComponent {
   }
 
   onDelete(row, key) {
-    this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al estudiante?")
+    this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al postulante?","Una vez aceptado, será eliminado permanentemente del sistema")
       .afterClosed().subscribe(res => {
         console.log(res);
-        this.notificationService.success('Eliminado Correctamente');
+        // this.notificationService.warning('Error');
+         this.notificationService.success('Eliminado Correctamente');
 
         console.log(row, key);
         console.log("nota", row.nota);
