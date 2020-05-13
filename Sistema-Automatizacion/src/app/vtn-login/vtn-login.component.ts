@@ -42,7 +42,7 @@ export class VtnLoginComponent implements OnInit {
     let email = this.loginForm.get('correo').value;
     let contrasena = this.loginForm.get('passwd').value;
     
-    //if (los datos del usuario estan buenos)
+    //if (metodo BD validar que es usuario)
     //{
       //if es superusuario
         this.servicioDatos.showTipoUsuario = true;

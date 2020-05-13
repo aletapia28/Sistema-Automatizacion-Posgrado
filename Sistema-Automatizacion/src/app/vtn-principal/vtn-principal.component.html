@@ -3,16 +3,16 @@
 
     <div class="cuerpo">
         <div class="encabezado">
-            <h1 class="titulo">Listado de Estudiantes</h1>
+            <h1 class="titulo">Listado de Postulantes</h1>
             <div class="opciones">
-                <mat-form-field class="inputVtn">
+                <mat-form-field class="inputVtn" appearance="outline">
                     <mat-label>Admitidos/Postulados</mat-label>
                     <mat-select [formControl]="datos">
                         <mat-option value="Postulantes" (click)='selectDatos()'>Postulantes</mat-option>
                         <mat-option value="Admitidos" (click)='selectDatos()'>Admitidos</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field class="inputVtn">
+                <mat-form-field class="inputVtn" appearance="outline">
                     <mat-label>Elegir período</mat-label>
                     <mat-select [formControl]="periodo">
                         <mat-option value="Bimestre 1 2015" (click)='selectPeriodo()'>Bimestre 1 2015</mat-option>
@@ -20,7 +20,8 @@
                     </mat-select>
                 </mat-form-field>
                 <button mat-icon-button class="icon1" matTooltip="Descargar Archivo" matTooltipPosition="after">
-                <mat-icon>save_alt</mat-icon></button>
+                    <mat-icon>save_alt</mat-icon>
+                </button>
             </div>
         </div>
 
@@ -29,7 +30,7 @@
 
                 <!-- cedula Column -->
                 <ng-container matColumnDef="cedula" sticky>
-                    <th mat-header-cell *matHeaderCellDef> Cedula </th>
+                    <th mat-header-cell *matHeaderCellDef> Cédula </th>
                     <td mat-cell *matCellDef="let element"> {{element.cedula}} </td>
                 </ng-container>
 
@@ -41,13 +42,13 @@
 
                 <!-- telefono1 Column -->
                 <ng-container matColumnDef="telefono1">
-                    <th mat-header-cell *matHeaderCellDef> Telefono </th>
+                    <th mat-header-cell *matHeaderCellDef> Teléfono </th>
                     <td mat-cell *matCellDef="let element"> {{element.telefono1}} </td>
                 </ng-container>
 
                 <!-- telefono2 Column -->
                 <ng-container matColumnDef="telefono2">
-                    <th mat-header-cell *matHeaderCellDef> Telefono Alternartivo</th>
+                    <th mat-header-cell *matHeaderCellDef> Teléfono Alternartivo</th>
                     <td mat-cell *matCellDef="let element"> {{element.telefono2}} </td>
                 </ng-container>
 
@@ -65,7 +66,7 @@
 
                 <!-- ingles Column -->
                 <ng-container matColumnDef="ingles">
-                    <th mat-header-cell *matHeaderCellDef> Ingles </th>
+                    <th mat-header-cell *matHeaderCellDef> Inglés </th>
                     <td mat-cell *matCellDef="let element"> {{element.ingles}} </td>
                 </ng-container>
 
@@ -107,7 +108,7 @@
 
                 <!-- cursoAfin Column -->
                 <ng-container matColumnDef="cursoAfin">
-                    <th mat-header-cell *matHeaderCellDef> Curso Afin </th>
+                    <th mat-header-cell *matHeaderCellDef> Curso Afín </th>
                     <td mat-cell *matCellDef="let element"> {{element.cursoAfin}} </td>
                 </ng-container>
 
@@ -156,10 +157,8 @@
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let row">
-                        <button mat-icon-button matTooltip="Editar Registro" matTooltipPosition="before">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-icon-button color="warn" (click)="onDelete(row, $event)" matTooltip="Eliminar Registro" matTooltipPosition="above">
+                        <button mat-icon-button color="warn" (click)="onDelete(row, $event)"
+                            matTooltip="Eliminar Registro" matTooltipPosition="above">
                             <mat-icon>delete_outline</mat-icon>
                         </button>
                     </mat-cell>

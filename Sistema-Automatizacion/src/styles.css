@@ -19,18 +19,26 @@ html {
     margin: 5px 5px 15px 5px;
     color: #8f9cb5;
     display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-.cuerpo-dialog-container #close-icon {
-    margin-left: auto;
-    order: 2;
-    font-weight: bolder;
+.icono{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
-
 .cuerpo-dialog-container #close-icon:hover {
     cursor: pointer;
 }
+.contenido{
+    font-size: x-large;
+}
+.descrip{
+    padding: 2px;
+    font-size: small;
 
+}
 .cuerpo-dialog-container #boton-no {
     height: 50px;
     width: 50%;
@@ -56,6 +64,13 @@ html {
 .success {
     background-color: #cdcdcd;
     color: #1F2F5F;
+    text-align: center;
+    
+}
+
+.warning {
+    background-color: #cdcdcd;
+    color: #DA3A2F;
     text-align: center;
 }
 
