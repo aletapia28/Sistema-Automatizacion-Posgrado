@@ -7,7 +7,6 @@ module.exports = db.sequelize.define(
         correo: {
             type: Sequelize.STRING,
             primaryKey: true,
-            autoIncrement: false
             
         },
         password: {

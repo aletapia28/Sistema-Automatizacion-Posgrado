@@ -1,17 +1,17 @@
 const express = require("express")
-const usuarios = express.Router()
+const router = express.Router()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt")
-
+const bodyParser = require('body-parser')
 const User = require("../models/User")
-usuarios.use(cors())
+router.use(cors())
 
 process.env.SECRET_KEY = 'secret'
 
 //REGISTRAR
 //esto falta de revisar
-usuarios.post('/register',(req,res) =>{
+router.post('/register',(req,res) =>{
     const userData = {
         correo : req.body.correo,
         password : req.body.password
@@ -51,7 +51,7 @@ usuarios.post('/register',(req,res) =>{
 })
 
 //LOGIN
-usuarios.post('/login',(req,res) =>{
+router.post('/login',(req,res) =>{
     User.findOne({
         where: {
             correo: req.body.correo,
@@ -73,5 +73,33 @@ usuarios.post('/login',(req,res) =>{
         })
 
 })
+//ELIMINAR USUARIO
 
-module.exports = usuarios
+router.delete('/eliminarusuario',(req,res)=>{
+    const userData = {
+        correo : req.body.correo,
+        password : req.body.password
+    }
+    User.findOne({
+        where: {
+            correo: req.body.correo
+        }
+    })
+        .then(user =>{
+            if(user){
+                //delete user.dataValues
+                res.json({token : token})
+            }else{
+                res.send('Usuario no existe')
+            }
+
+        })
+        .catch(err =>{
+            res.send('error'+err)
+        })
+        
+})
+
+
+
+module.exports = router
