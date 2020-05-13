@@ -3,7 +3,6 @@
     color: #ffffff;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     font-family: 'Times New Roman';
     width: 100%;
     height: 85px;
@@ -14,12 +13,15 @@
 .Logo {
     left: 0;
     align-items: flex-start;
+    width: 50vw;
 }
 
 .barra-derecha {
+    width: 50vw;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .Titulo-barra {
@@ -34,12 +36,11 @@
 
 .logoMenu {
     height: 40%;
-    margin: 0px 20px;
 }
 
 .botonMenu {
     height: 100%;
-    background-color: #1F2F5F;
+    width: 80px;
 }
 
 .contenedorMenu {

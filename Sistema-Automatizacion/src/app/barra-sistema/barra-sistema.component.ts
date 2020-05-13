@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ServicioDatosService } from '../shared/servicio-datos.service'
 
 @Component({
   selector: 'app-barra-sistema',
@@ -8,12 +9,16 @@ import { Router } from '@angular/router';
 })
 export class BarraSistemaComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  show: boolean;
+
+  constructor(private router: Router, private servicioDatos: ServicioDatosService) { }
 
   ngOnInit(): void {
+    this.show = this.servicioDatos.showTipoUsuario;
   }
 
   signOut() {
+    this.servicioDatos.showSesion = false;
     this.router.navigate(['']);
   }
 
@@ -22,10 +27,14 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   editarPerfil() {
-    // Si es de tipo superusuario
-    this.router.navigate(['editSup']);
-    // Si es asistente
-    // this.router.navigate(['editAsis']);
+    if(this.servicioDatos.showTipoUsuario) {
+      //Si es de tipo superusuario
+      this.router.navigate(['editSup']);
+    }
+    else {
+      //Si es asistente
+      this.router.navigate(['editAsis']);
+    }
   }
 
   crearPeriodo() {
@@ -33,7 +42,11 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   editarPeriodo() {
-    this.router.navigate(['editPos']);
+    this.router.navigate(['editPe']);
+  }
+
+  cerrarPeriodo() {
+    
   }
 
   buscarPostulante() {
@@ -42,6 +55,10 @@ export class BarraSistemaComponent implements OnInit {
 
   crearUsuario() {
     this.router.navigate(['crearU']);
+  }
+
+  manejoAsistente() {
+    this.router.navigate(['eliminarAsis']);
   }
 
   editFormula() {
