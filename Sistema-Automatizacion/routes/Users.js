@@ -4,6 +4,7 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt")
 const bodyParser = require('body-parser')
+
 const User = require("../models/User")
 router.use(cors())
 
@@ -74,7 +75,6 @@ router.post('/login',(req,res) =>{
 
 })
 //ELIMINAR USUARIO
-
 router.delete('/eliminarusuario',(req,res)=>{
     const userData = {
         correo : req.body.correo,
@@ -99,7 +99,26 @@ router.delete('/eliminarusuario',(req,res)=>{
         })
         
 })
-
+//perfil
+router.get('/profile', (req, res) => {
+    var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
+  
+    User.findOne({
+      where: {
+        id: decoded.id
+      }
+    })
+      .then(user => {
+        if (user) {
+          res.json(user)
+        } else {
+          res.send('User does not exist')
+        }
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
 
 
 module.exports = router

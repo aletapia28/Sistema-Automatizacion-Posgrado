@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'
+import { RouterModule, Routes } from '@angular/router'
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -17,7 +19,7 @@ import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
+//import { FormsModule } from '@angular/forms'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -43,8 +45,20 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { Conditional } from '@angular/compiler';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { AuthenticationService } from './authentication.service'
+import { AuthGuardService } from './auth-guard.service'
 
 
+/*const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuardService]
+  }
+]*/
 
 
 @NgModule({
@@ -89,9 +103,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTooltipModule,
+    HttpClientModule,
     MatSnackBarModule
   ],
-  providers: [],
+  providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent],
   entryComponents:[ConfirmDialogComponent]
 })
