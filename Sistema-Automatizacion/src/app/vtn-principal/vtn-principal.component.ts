@@ -125,6 +125,8 @@ dataSource = new MatTableDataSource(ELEMENT_DATA);
 
 
   ngOnInit() {
+    //dataSource = new MatTableDataSource(GetDatos());
+    
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
@@ -133,15 +135,25 @@ dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.router.navigate(['importA']);
   }
 
+  onEdit(){
+    this.router.navigate(['editPos']);
+  }
+
 
   onDelete(row,key){
-    this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al estudiante?")
+    this.dialogService.openConfirmDialog(row.nota)
+
     .afterClosed().subscribe(res =>{
       console.log(res);
       this.notificationService.success('Eliminado Correctamente');
 
       console.log(row,key);
-      console.log("nota",row.nota);
+      console.log("nota",row.cedula);
+
+
+
+
+
   
       // HACER LOGICA DE BORRDO
       // if(res){
