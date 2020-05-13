@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
-
+import { AuthenticationService, TokenPayload } from '../authentication.service'
 
 @Component({
   selector: 'app-vtn-login',
@@ -10,10 +10,14 @@ import { ServicioDatosService } from '../shared/servicio-datos.service'
   styleUrls: ['./vtn-login.component.css']
 })
 export class VtnLoginComponent implements OnInit {
+  credentials: TokenPayload = {
+    correo: '',
+    password: ''
+  }
 
   hide = true;
 
-  constructor(private router: Router, private servicioDatos: ServicioDatosService) { }
+  constructor(private auth: AuthenticationService, private router: Router, private servicioDatos: ServicioDatosService) { }
 
   ngOnInit(): void {
   }
@@ -41,6 +45,18 @@ export class VtnLoginComponent implements OnInit {
 
     let email = this.loginForm.get('correo').value;
     let contrasena = this.loginForm.get('passwd').value;
+
+    this.auth.login(this.credentials).subscribe(
+      ()=>{
+       
+        this.router.navigate(['principal'])
+        
+      },
+      err => {
+        console.error(err)
+      }
+    )
+    
     
     //if (los datos del usuario estan buenos)
     //{
@@ -51,7 +67,7 @@ export class VtnLoginComponent implements OnInit {
 
       this.servicioDatos.showCorreo = email;
       this.servicioDatos.showSesion = true;
-      this.router.navigate(['principal'])
+      
     //}
   }
 
