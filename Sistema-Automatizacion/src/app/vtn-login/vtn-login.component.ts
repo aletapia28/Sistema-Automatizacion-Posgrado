@@ -11,8 +11,8 @@ import { AuthenticationService, TokenPayload } from '../authentication.service'
 })
 export class VtnLoginComponent implements OnInit {
   credentials: TokenPayload = {
-    correo: '',
-    password: ''
+    correo: 'kaka@fff.com',
+    password: 'pooqq'
   }
 
   hide = true;
