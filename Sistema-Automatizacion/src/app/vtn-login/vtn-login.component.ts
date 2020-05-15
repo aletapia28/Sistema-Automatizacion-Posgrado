@@ -11,8 +11,8 @@ import { AuthenticationService, TokenPayload } from '../authentication.service'
 })
 export class VtnLoginComponent implements OnInit {
   credentials: TokenPayload = {
-    correo: 'kaka@fff.com',
-    password: 'pooqq'
+    correo: '',
+    password: ''
   }
 
   hide = true;
@@ -45,6 +45,12 @@ export class VtnLoginComponent implements OnInit {
 
     let email = this.loginForm.get('correo').value;
     let contrasena = this.loginForm.get('passwd').value;
+
+    this.credentials.correo = email;
+    this.credentials.password = contrasena;
+
+    
+
 
     this.auth.login(this.credentials).subscribe(
       ()=>{

@@ -19,7 +19,7 @@ import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-//import { FormsModule } from '@angular/forms'
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -49,16 +49,16 @@ import { AuthenticationService } from './authentication.service'
 import { AuthGuardService } from './auth-guard.service'
 
 
-/*const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+const routes: Routes = [
+  { path: '', component: VtnPrincipalComponent },
+  { path: 'login', component: VtnLoginComponent},
+  { path: 'register', component: VtnCrearUsuarioComponent },
   {
     path: 'profile',
-    component: ProfileComponent,
+    component: VtnEditarSuperusuarioComponent,
     canActivate: [AuthGuardService]
   }
-]*/
+]
 
 
 @NgModule({
@@ -104,6 +104,7 @@ import { AuthGuardService } from './auth-guard.service'
     MatDialogModule,
     MatTooltipModule,
     HttpClientModule,
+    RouterModule.forRoot(routes),
     MatSnackBarModule
   ],
   providers: [AuthenticationService, AuthGuardService],
