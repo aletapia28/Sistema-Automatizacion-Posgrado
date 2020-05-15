@@ -46,7 +46,11 @@ export class VtnLoginComponent implements OnInit {
     let email = this.loginForm.get('correo').value;
     let contrasena = this.loginForm.get('passwd').value;
 
+    console.log(email);
+    console.log(contrasena);
+    
     this.credentials.correo = email;
+    
     this.credentials.password = contrasena;
 
     
