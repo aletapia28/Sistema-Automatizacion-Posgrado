@@ -10,8 +10,8 @@ app.use(
     bodyParser.urlencoded({extended:false})
 )
 
-var Users = require("./routes/Users.js")
-app.use("/router",Users)
+var Routes = require("./routes/Routes.js")
+app.use("/router",Routes)
 
 app.listen(port,function(){
     console.log("Server is running on port" + port)

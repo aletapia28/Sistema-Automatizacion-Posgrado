@@ -2,14 +2,14 @@ const Sequelize = require('sequelize')
 const db = require('../database/db.js')
 
 module.exports = db.sequelize.define(
-    'usuarios',
+    'superusuario',
     {
         correo: {
             type: Sequelize.STRING,
             primaryKey: true,
             
         },
-        password: {
+        correoenvio: {
             type: Sequelize.STRING
         }
     },

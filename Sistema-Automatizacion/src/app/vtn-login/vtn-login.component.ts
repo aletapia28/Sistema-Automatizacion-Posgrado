@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, NgForm, FormGroupDirective } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import { AuthenticationService, TokenPayload } from '../authentication.service'
@@ -12,7 +12,7 @@ import { AuthenticationService, TokenPayload } from '../authentication.service'
 export class VtnLoginComponent implements OnInit {
   credentials: TokenPayload = {
     correo: '',
-    password: ''
+    password: '',
   }
 
   hide = true;
@@ -45,40 +45,39 @@ export class VtnLoginComponent implements OnInit {
 
     let email = this.loginForm.get('correo').value;
     let contrasena = this.loginForm.get('passwd').value;
-
-    console.log(email);
-    console.log(contrasena);
     
     this.credentials.correo = email;
     
     this.credentials.password = contrasena;
 
-    
+    console.log(this.auth.isSuper(this.credentials.correo))
 
+       
 
     this.auth.login(this.credentials).subscribe(
       ()=>{
-       
+        
+        let boolus = this.auth.isSuper(this.credentials.correo)
+        if(boolus){
+          this.servicioDatos.showTipoUsuario = true;
+
+        }else{
+          this.servicioDatos.showTipoUsuario = false;
+
+        }
         this.router.navigate(['principal'])
+        
         
       },
       err => {
         console.error(err)
       }
     )
-    
-    
-    //if (los datos del usuario estan buenos)
-    //{
-      //if es superusuario
-        this.servicioDatos.showTipoUsuario = true;
-      //if es asistente
-        //this.servicioDatos.showTipoUsuario = false;
-
+   
       this.servicioDatos.showCorreo = email;
       this.servicioDatos.showSesion = true;
       
-    //}
+    
   }
 
 }

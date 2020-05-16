@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt")
 const bodyParser = require('body-parser')
 
 const User = require("../models/User")
+const Superuser = require('../models/Superusuario')
 router.use(cors())
 
 process.env.SECRET_KEY = 'secret'
@@ -120,5 +121,35 @@ router.get('/profile', (req, res) => {
       })
   })
 
+//get superusuario
+router.post('/isSuper', (req, res) => {
+    //console.log(await sequelize.query('SELECT * FROM supersuario where correo = "superusuario@gmail.com"', { raw: true }))
+    //console.log(await sequelize.query('SELECT * FROM supersuario where correo = "superusuaario@gmail.com"', { raw: true }))
+    
+    // Superuser.findOne({
+    //     where: {
+    //         correo: req.body.correo,
+    //     }
+    // })
+    //     .then(supuser => {
+    //         console.log(supuser.get({
+    //             plain: true
+    //         }))
+    //         if(supuser){
+                
+    //             res.send(true)
+    //         }else{
+    //             res.send(false)
+    //         }
+    //     })
+    //     .catch(err =>{
+    //         res.send('error' + err)
+    //     })
+    res.json(true)
+    
+
+
+
+})
 
 module.exports = router

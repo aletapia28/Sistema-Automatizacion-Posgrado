@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http'
 import { Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
+import { JsonPipe } from '@angular/common'
 
 export interface UserDetails {
   correo: string
   password: string
-  
+ 
 }
 
 interface TokenResponse {
@@ -17,12 +18,13 @@ interface TokenResponse {
 export interface TokenPayload {
     correo: string
     password: string
+
 }
 
 @Injectable()
 export class AuthenticationService {
   private token: string
-
+  boolsuperusuario: boolean
   constructor(private http: HttpClient, private router: Router) {}
 
   private saveToken(token: string): void {
@@ -64,17 +66,34 @@ export class AuthenticationService {
 
   public login(user: TokenPayload): Observable<any> {
     const base = this.http.post(`/router/login`, user)
-
+    
     const request = base.pipe(
       map((data: TokenResponse) => {
         if (data.token) {
           this.saveToken(data.token)
         }
+        
         return data
       })
     )
-
+    
     return request
+  }
+  
+  public  isSuper(supusr): boolean {
+    const superuser =  this.http.post('/router/isSuper',supusr)
+    //aqui quedamos
+    if (superuser) {
+
+      this.boolsuperusuario = true
+      return true
+    } 
+
+    else {
+      this.boolsuperusuario = false
+      return false
+    }
+    
   }
 
   public profile(): Observable<any> {

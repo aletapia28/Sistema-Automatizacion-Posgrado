@@ -2,21 +2,24 @@ const Sequelize = require('sequelize')
 const db = require('../database/db.js')
 
 module.exports = db.sequelize.define(
-    'usuarios',
+    'asistente',
     {
         correo: {
             type: Sequelize.STRING,
             primaryKey: true,
             
         },
-        password: {
+        nombre:{
+            type: Sequelize.STRING,
+
+        },
+        cedula: {
             type: Sequelize.STRING
         }
     },
 
     {
-        timestamps: false,
-        freezeTableName: true
+        timestamps: false
 
     }
 

@@ -10,7 +10,7 @@
             <form class="periodo-form" (submit)="onSubmit()" [formGroup]="loginForm">
                 <mat-form-field appearance="fill" class="inputVtn">
                     <mat-label>Correo electrónico</mat-label>
-                    <input matInput placeholder="pat@example.com" [formControl]="email" formControlName="correo" required>
+                    <input matInput placeholder="pat@example.com"  formControlName="correo" required>
                     <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
 
