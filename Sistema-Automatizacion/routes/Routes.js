@@ -17,8 +17,86 @@ router.use(cors())
 
 process.env.SECRET_KEY = 'secret'
 
+//get all usuarios
+router.get('/getallusers', function(req, res, next) {
+    User.findAll()
+      .then(tasks => {
+        res.json(tasks)
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
+
+//eliminar usuarios
+router.delete('/deleteuser', function(req, res, next) {
+    User.destroy({
+      where: {
+        correo: req.body.correo
+      }
+    })
+      .then(() => {
+        res.json({ status: 'Usuario Deleted!' })
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
+
+  //eliminar asistentes 
+  router.delete('/deleteasistant', function(req, res, next) {
+    Asistente.destroy({
+      where: {
+        correo: req.body.correo
+      }
+    })
+      .then(() => {
+        res.json({ status: 'Asistente Deleted!' })
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
+
+  //update superusuario
+  router.put('/updatesuper/:correo', function(req, res, next) {
+    if (!req.body.correoEnvio) {
+      res.status(400)
+      res.json({
+        error: 'Correo no existe'
+      })
+    } else {
+      Superuser.update(
+        { correoEnvio: req.body.correoEnvio },
+        { where: { correo: req.body.correo} }
+      )
+        .then(() => {
+          res.json({ status: 'Correo Actualizado' })
+        })
+        .error(err => handleError(err))
+    }
+  })
+
+    //update usuario contrasena
+    router.put('/updateusuario', function(req, res, next) {
+        if (!req.body.password) {
+          res.status(400)
+          res.json({
+            error: 'Bad data'
+          })
+        } else {
+          User.update(
+            { password: req.body.password },
+            { where: { correo: req.body.correo} }
+          )
+            .then(() => {
+              res.json({ status: 'Contrase;a actualizada' })
+            })
+            .error(err => handleError(err))
+        }
+      })
+
 //REGISTRAR
-//esto falta de revisar
 router.post('/register',(req,res) =>{
     const userData = {
         correo : req.body.correo,
@@ -80,25 +158,7 @@ router.post('/login',(req,res) =>{
         })
 
 })
-//ELIMINAR USUARIO
-router.post('/eliminarusuario',(req,res)=>{
-    
-    User.findOne({
-        where: {
-            correo: req.body.correo
-        }
-    }) 
-    .then(user => {
-        if (user) {
-          res.json(user)
-        } else {
-          res.send('User does not exist')
-        }
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })      
-})
+
 //perfil
 router.get('/perfil', (req, res) => {
     //set from client side, convierte el token al objecto
@@ -197,6 +257,7 @@ router.post('/registerpostulante',(req,res) =>{
         })
 })
 
+
 //insert periodo
 router.post('/registerperiodo',(req,res) =>{
     const userData = {
@@ -274,4 +335,42 @@ router.post('/registerasistente',(req,res) =>{
             res.send('error: ' + err)
         })
 })
+
+//insertar superusuario
+router.post('/registersuper',(req,res) =>{
+    const userData = {
+        correo: req.body.correo,
+        correoEnvio: req.body.correoEnvio
+    }
+    Superuser.findOne({
+        where: {
+            correo : req.body.correo,
+        }
+    })
+        .then(asistente =>{
+            if(!asistente){
+                Superuser.create(userData)
+                    .then(asistente =>{
+                        let token = jwt.sign(asistente.dataValues, process.env.SECRET_KEY,{
+                            expiresIn: 1440
+
+                        })
+                        res.json({token: token})
+
+                    })
+                    .catch(err =>{
+                        res.send('error: ' + err)
+                    })
+                
+            }else{
+                res.json({error: 'Superusuario ya existe'})
+            }
+
+        })
+        .catch(err =>{
+            res.send('error: ' + err)
+        })
+})
+
 module.exports = router
+
