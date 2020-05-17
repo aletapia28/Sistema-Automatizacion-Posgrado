@@ -10,7 +10,7 @@ export interface UserDetails {
   password: string
  
 }
-
+//contiene el token del backend al frontend
 interface TokenResponse {
   token: string
 }
@@ -39,6 +39,7 @@ export class AuthenticationService {
     return this.token
   }
 
+  //decodes roke
   public getUserDetails(): UserDetails {
     const token = this.getToken()
     let payload
@@ -79,22 +80,25 @@ export class AuthenticationService {
     
     return request
   }
-  
-  public  isSuper(supusr): boolean {
-    const superuser =  this.http.post('/router/isSuper',supusr)
-    //aqui quedamos
-    if (superuser) {
-
-      this.boolsuperusuario = true
-      return true
-    } 
-
-    else {
-      this.boolsuperusuario = false
-      return false
-    }
-    
+  public isSuper(user: TokenPayload): Observable<any> {
+    return this.http.post(`/router/isSuper`, user)
   }
+  
+  // public  isSuper(supusr): boolean {
+  //   const superuser =  this.http.post('/router/isSuper',supusr)
+  //   //aqui quedamos
+  //   if (superuser) {
+
+  //     this.boolsuperusuario = true
+  //     return true
+  //   } 
+
+  //   else {
+  //     this.boolsuperusuario = false
+  //     return false
+  //   }
+    
+  // }
 
   public profile(): Observable<any> {
     return this.http.get(`/router/profile`, {

@@ -4,9 +4,13 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt")
 const bodyParser = require('body-parser')
+const path = require('path');
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const User = require("../models/User")
 const Superuser = require('../models/Superusuario')
+const Postulant = require('../models/Postulante')
+const Periodo = require('../models/Periodo')
 router.use(cors())
 
 process.env.SECRET_KEY = 'secret'
@@ -18,7 +22,6 @@ router.post('/register',(req,res) =>{
         correo : req.body.correo,
         password : req.body.password
     }
-
     User.findOne({
         where: {
             correo : req.body.correo
@@ -81,14 +84,13 @@ router.delete('/eliminarusuario',(req,res)=>{
         correo : req.body.correo,
         password : req.body.password
     }
-    User.findOne({
+    User.deleteOne({
         where: {
             correo: req.body.correo
         }
     })
         .then(user =>{
             if(user){
-                //delete user.dataValues
                 res.json({token : token})
             }else{
                 res.send('Usuario no existe')
@@ -102,6 +104,7 @@ router.delete('/eliminarusuario',(req,res)=>{
 })
 //perfil
 router.get('/profile', (req, res) => {
+    //set from client side, convierte el token al objecto
     var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
   
     User.findOne({
@@ -123,33 +126,116 @@ router.get('/profile', (req, res) => {
 
 //get superusuario
 router.post('/isSuper', (req, res) => {
-    //console.log(await sequelize.query('SELECT * FROM supersuario where correo = "superusuario@gmail.com"', { raw: true }))
-    //console.log(await sequelize.query('SELECT * FROM supersuario where correo = "superusuaario@gmail.com"', { raw: true }))
     
-    // Superuser.findOne({
-    //     where: {
-    //         correo: req.body.correo,
-    //     }
-    // })
-    //     .then(supuser => {
-    //         console.log(supuser.get({
-    //             plain: true
-    //         }))
-    //         if(supuser){
+    Superuser.findOne({
+        where: {
+            correo: req.body.correo,
+        }
+    })
+        .then(supuser => {
+            if(supuser){
                 
-    //             res.send(true)
-    //         }else{
-    //             res.send(false)
-    //         }
-    //     })
-    //     .catch(err =>{
-    //         res.send('error' + err)
-    //     })
-    res.json(true)
-    
+                res.send(true)
+            }else{
+                res.send(false)
+            }
+        })
+        .catch(err =>{
+            res.send('error' + err)
+        })
 
+})
 
+//insert postulante 
+router.post('/registerpostulante',(req,res) =>{
+    const userData = {
+        cedula: req.body.cedula,
+        nombre: req.body.nombre,
+        telefono1: req.body.telefono1,
+        telefono2: req.body.telefono2,
+        correo1: req.body.correo1,
+        correo2: req.body.correo2,
+        ingles: req.body.ingles,
+        gradoAcademico: req.body.gradoAcademico,
+        universidad: req.body.universidad,
+        afinidad: req.body.afinidad,
+        acreditada: req.body.acreditada,
+        puestoActual: req.body.puestoActual,
+        experienciaProfesion: req.body.experienciaProfesion,
+        cursoAfin: req.body.cursoAfin,
+        tituloTecnico: req.body.tituloTecnico,
+        cursoAprovechamiento: req.body.cursoAprovechamiento,
+        tituloDiplomado: req.body.tituloDiplomado,
+        promedioGeneral: req.body.promedioGeneral,
+    }
+    Postulant.findOne({
+        where: {
+            cedula : req.body.cedula
+        }
+    })
+        .then(postulante =>{
+            if(!postulante){
+                Postulant.create(userData)
+                    .then(postulante =>{
+                        let token = jwt.sign(postulante.dataValues, process.env.SECRET_KEY,{
+                            expiresIn: 1440
 
+                        })
+                        res.json({token: token})
+
+                    })
+                    .catch(err =>{
+                        res.send('error: ' + err)
+                    })
+                
+            }else{
+                res.json({error: 'Postulante ya existe'})
+            }
+
+        })
+        .catch(err =>{
+            res.send('error: ' + err)
+        })
+})
+
+//insert periodo
+router.post('/registerperiodo',(req,res) =>{
+    const userData = {
+        periodo: req.body.periodo,
+        fechaInicio : req.body.fechaInicio,
+        fechaCierre: req.body.fechaCierre
+    }
+    Periodo.findOne({
+        where: {
+            periodo : req.body.periodo,
+        }
+    })
+        //bcrypt
+        .then(periodo =>{
+            if(!periodo){
+                //const hash = bcrypt.hashSync(userData.password,30)
+               // userData.password = hash
+                Periodo.create(userData)
+                    .then(periodo =>{
+                        let token = jwt.sign(periodo.dataValues, process.env.SECRET_KEY,{
+                            expiresIn: 1440
+
+                        })
+                        res.json({token: token})
+
+                    })
+                    .catch(err =>{
+                        res.send('error: ' + err)
+                    })
+                
+            }else{
+                res.json({error: 'Periodo ya existe'})
+            }
+
+        })
+        .catch(err =>{
+            res.send('error: ' + err)
+        })
 })
 
 module.exports = router

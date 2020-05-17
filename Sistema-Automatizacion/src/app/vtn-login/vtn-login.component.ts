@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, NgForm, FormGroupDirective } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
-import { AuthenticationService, TokenPayload } from '../authentication.service'
+import { AuthenticationService, TokenPayload, Tokenuser } from '../authentication.service'
 
 @Component({
   selector: 'app-vtn-login',
@@ -13,6 +13,9 @@ export class VtnLoginComponent implements OnInit {
   credentials: TokenPayload = {
     correo: '',
     password: '',
+  }
+  credsuperuser:Tokenuser ={
+    correo:''
   }
 
   hide = true;
@@ -50,14 +53,13 @@ export class VtnLoginComponent implements OnInit {
     
     this.credentials.password = contrasena;
 
-    console.log(this.auth.isSuper(this.credentials.correo))
+    this.credsuperuser.correo = email;
 
-       
-
+  
     this.auth.login(this.credentials).subscribe(
       ()=>{
         
-        let boolus = this.auth.isSuper(this.credentials.correo)
+        let boolus = this.auth.isSuper(this.credsuperuser)
         if(boolus){
           this.servicioDatos.showTipoUsuario = true;
 
