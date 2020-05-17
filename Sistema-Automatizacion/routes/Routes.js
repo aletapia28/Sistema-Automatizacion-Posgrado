@@ -11,6 +11,7 @@ const User = require("../models/User")
 const Superuser = require('../models/Superusuario')
 const Postulant = require('../models/Postulante')
 const Periodo = require('../models/Periodo')
+const Asistente = require('../models/Asistente')
 router.use(cors())
 
 process.env.SECRET_KEY = 'secret'
@@ -238,4 +239,41 @@ router.post('/registerperiodo',(req,res) =>{
         })
 })
 
+
+//insert asistente 
+router.post('/registerasistente',(req,res) =>{
+    const userData = {
+        correo: req.body.correo,
+        nombre : req.body.nombre,
+        cedula: req.body.cedula
+    }
+    Asistente.findOne({
+        where: {
+            correo : req.body.correo,
+        }
+    })
+        .then(asistente =>{
+            if(!asistente){
+                Asistente.create(userData)
+                    .then(asistente =>{
+                        let token = jwt.sign(asistente.dataValues, process.env.SECRET_KEY,{
+                            expiresIn: 1440
+
+                        })
+                        res.json({token: token})
+
+                    })
+                    .catch(err =>{
+                        res.send('error: ' + err)
+                    })
+                
+            }else{
+                res.json({error: 'Asistente ya existe'})
+            }
+
+        })
+        .catch(err =>{
+            res.send('error: ' + err)
+        })
+})
 module.exports = router
