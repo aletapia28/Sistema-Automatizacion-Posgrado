@@ -10,6 +10,9 @@ import { HttpClient } from '@angular/common/http'
   templateUrl: './vtn-crear-usuario.component.html',
   styleUrls: ['./vtn-crear-usuario.component.css']
 })
+
+
+
 export class VtnCrearUsuarioComponent implements OnInit {
   hide = true;
   

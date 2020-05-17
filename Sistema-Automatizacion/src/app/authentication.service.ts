@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
 import { JsonPipe } from '@angular/common'
-import { resolve } from 'dns'
+
 
 export interface UserDetails {
   correo: string
@@ -29,6 +29,12 @@ export interface Tokenasistant{
   correo:string
   nombre: string
   cedula:string
+
+}
+export interface TokenPeriod {
+  periodo: string
+  fechaInicio: Date
+  fechaCierre: Date
 
 }
 
@@ -98,6 +104,10 @@ export class AuthenticationService {
   }
   public registerasist(user: Tokenasistant): Observable<any> {
     return this.http.post(`/router/registerasistente`, user)
+    
+  }
+  public registerperiodo(user: TokenPeriod): Observable<any> {
+    return this.http.post(`/router/registerperiodo`, user)
     
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { AuthenticationService, TokenPayload, Tokenuser } from '../authentication.service'
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthenticationService,TokenPeriod } from '../authentication.service'
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http'
 
@@ -12,7 +12,13 @@ import { HttpClient } from '@angular/common/http'
 
 export class VtnNuevoPeriodoComponent implements OnInit {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  credentials: TokenPeriod = {
+    periodo: '',
+    fechaInicio: null,
+    fechaCierre: null
+  }
+
+  constructor(private auth: AuthenticationService, private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -32,8 +38,23 @@ export class VtnNuevoPeriodoComponent implements OnInit {
 
     //Cuando ocupen sacar un solo dato es con
     //console.log(this.loginForm.get('correo').value);
+    let period= this.nuevoPForm.get('bimestre').value;
+    let fechain= this.nuevoPForm.get('fechaI').value;
+    let fechafin= this.nuevoPForm.get('fechaF').value;
     
     console.log(this.nuevoPForm.value);
+
+    this.credentials.periodo = period
+    this.credentials.fechaInicio = fechain
+    this.credentials.fechaCierre = fechafin
+
+
+    this.auth.registerperiodo(this.credentials).subscribe(
+      (user) =>
+      {console.log('crear periodo' + user)}
+      //luego lo reg como asistente
+
+    )
   }
 
 }
