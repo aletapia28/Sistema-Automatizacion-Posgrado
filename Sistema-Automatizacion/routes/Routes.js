@@ -144,6 +144,7 @@ router.post('/isSuper', (req, res) => {
 
 })
 
+
 //insert postulante 
 router.post('/registerpostulante',(req,res) =>{
     const userData = {

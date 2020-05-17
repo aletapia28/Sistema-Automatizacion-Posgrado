@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, NgForm, FormGroupDirective } from '
 import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import { AuthenticationService, TokenPayload, Tokenuser } from '../authentication.service'
+import { HttpClient } from '@angular/common/http'
 
 
 @Component({
@@ -21,7 +22,7 @@ export class VtnLoginComponent implements OnInit {
 
   hide = true;
 
-  constructor(private auth: AuthenticationService, private router: Router, private servicioDatos: ServicioDatosService) { }
+  constructor( private http: HttpClient, private auth: AuthenticationService, private router: Router, private servicioDatos: ServicioDatosService) { }
 
   ngOnInit(): void {
   }
@@ -49,37 +50,45 @@ export class VtnLoginComponent implements OnInit {
 
     let email = this.loginForm.get('correo').value;
     let contrasena = this.loginForm.get('passwd').value;
-    
+
     this.credentials.correo = email;
     this.credentials.password = contrasena;
-    this.credsuperuser.correo = email;
 
-  
+    let boole
+
+
+    console.log("espero?")
     this.auth.login(this.credentials).subscribe(
-      ()=>{
-        
-        let boolus = this.auth.isSuper(this.credsuperuser)
-        console.log()
-        if(boolus){
-          this.servicioDatos.showTipoUsuario = true;
+      (res) => {
 
-        }else{
-          this.servicioDatos.showTipoUsuario = false;
+        const formData = { correo: email }
+        //EXPLICAR ESTO
+        this.http.post<any>('/router/isSuper', formData).subscribe(
+          (res) => {
+            if (res.answer) {
+              this.servicioDatos.showTipoUsuario = true;
 
-        }
-        this.router.navigate(['principal'])
-        
-        
+            } else {
+              this.servicioDatos.showTipoUsuario = false;
+
+            }
+            this.router.navigate(['principal'])
+          },
+          (err) => console.log(err)
+        );
+
+
+
+
       },
       err => {
         console.error(err)
       }
     )
-   
-      this.servicioDatos.showCorreo = email;
-      this.servicioDatos.showSesion = true;
-      
-    
-  }
 
+    this.servicioDatos.showCorreo = email;
+    this.servicioDatos.showSesion = true;
+
+
+}
 }

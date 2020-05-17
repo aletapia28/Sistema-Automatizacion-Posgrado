@@ -78,7 +78,7 @@ export class VtnCrearUsuarioComponent implements OnInit {
     this.auth.registerasist(this.asist).subscribe(
       (user) =>
       {console.log('crear asistente' + user)}
-      //luego lo reg como asistente
+      
 
     )
   }

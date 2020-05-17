@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from './authentication.service'
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-root',
