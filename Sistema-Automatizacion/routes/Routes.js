@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const path = require('path');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+
 const User = require("../models/User")
 const Superuser = require('../models/Superusuario')
 const Postulant = require('../models/Postulante')
@@ -80,37 +81,32 @@ router.post('/login',(req,res) =>{
 
 })
 //ELIMINAR USUARIO
-router.delete('/eliminarusuario',(req,res)=>{
-    const userData = {
-        correo : req.body.correo,
-        password : req.body.password
-    }
-    User.deleteOne({
+router.post('/eliminarusuario',(req,res)=>{
+    
+    User.findOne({
         where: {
             correo: req.body.correo
         }
-    })
-        .then(user =>{
-            if(user){
-                res.json({token : token})
-            }else{
-                res.send('Usuario no existe')
-            }
-
-        })
-        .catch(err =>{
-            res.send('error'+err)
-        })
-        
+    }) 
+    .then(user => {
+        if (user) {
+          res.json(user)
+        } else {
+          res.send('User does not exist')
+        }
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })      
 })
 //perfil
-router.get('/profile', (req, res) => {
+router.get('/perfil', (req, res) => {
     //set from client side, convierte el token al objecto
-    var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
+   // var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
   
     User.findOne({
       where: {
-        id: decoded.id
+        correo: req.body.correo
       }
     })
       .then(user => {
@@ -126,6 +122,7 @@ router.get('/profile', (req, res) => {
   })
 
 //get superusuario
+
 router.post('/isSuper', (req, res) => {
     
     Superuser.findOne({
@@ -136,9 +133,9 @@ router.post('/isSuper', (req, res) => {
         .then(supuser => {
             if(supuser){
                 
-                res.send(true)
+                res.send({answer:true})
             }else{
-                res.send(false)
+                res.send({answer:false})
             }
         })
         .catch(err =>{

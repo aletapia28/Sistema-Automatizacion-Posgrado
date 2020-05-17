@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('../database/db.js')
 
 module.exports = db.sequelize.define(
-    'asistente',
+    'asistentes',
     {
         correo: {
             type: Sequelize.STRING,
@@ -19,7 +19,8 @@ module.exports = db.sequelize.define(
     },
 
     {
-        timestamps: false
+        timestamps: false,
+        freezeTableName: true
 
     }
 

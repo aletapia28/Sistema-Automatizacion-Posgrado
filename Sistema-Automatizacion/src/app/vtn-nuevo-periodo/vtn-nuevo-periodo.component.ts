@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AuthenticationService, TokenPayload, Tokenuser } from '../authentication.service'
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-vtn-nuevo-periodo',
@@ -9,7 +12,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 export class VtnNuevoPeriodoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
   }

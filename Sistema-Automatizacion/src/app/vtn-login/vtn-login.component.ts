@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import { AuthenticationService, TokenPayload, Tokenuser } from '../authentication.service'
 
+
 @Component({
   selector: 'app-vtn-login',
   templateUrl: './vtn-login.component.html',
@@ -50,9 +51,7 @@ export class VtnLoginComponent implements OnInit {
     let contrasena = this.loginForm.get('passwd').value;
     
     this.credentials.correo = email;
-    
     this.credentials.password = contrasena;
-
     this.credsuperuser.correo = email;
 
   
@@ -60,6 +59,7 @@ export class VtnLoginComponent implements OnInit {
       ()=>{
         
         let boolus = this.auth.isSuper(this.credsuperuser)
+        console.log()
         if(boolus){
           this.servicioDatos.showTipoUsuario = true;
 

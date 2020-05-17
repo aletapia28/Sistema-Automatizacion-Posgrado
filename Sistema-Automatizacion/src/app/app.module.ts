@@ -48,7 +48,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthenticationService } from './authentication.service'
 import { AuthGuardService } from './auth-guard.service'
 
-
+//esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
   { path: '', component: VtnPrincipalComponent },
   { path: 'login', component: VtnLoginComponent},

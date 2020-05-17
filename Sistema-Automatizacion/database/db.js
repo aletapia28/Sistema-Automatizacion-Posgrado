@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 
+//conexion a la bd 
 const db = {}
 const sequelize = new Sequelize("sistpostulacion","root","MyNewPass",{
     host: "localhost",
