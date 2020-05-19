@@ -202,7 +202,7 @@ router.get('/getallasist', function(req, res, next) {
 
 //RETORNAR ASISTENTE BY CORREO
 //falta probar 
-router.get('/perfil', (req, res) => {
+router.get('/getasist', (req, res) => {
     Asistente.findOne({
       where: {
         correo: req.body.correo
@@ -212,7 +212,7 @@ router.get('/perfil', (req, res) => {
         if (user) {
           res.json(user)
         } else {
-          res.send('Asistente no existe')
+          res.send(user)
         }
       })
       .catch(err => {
