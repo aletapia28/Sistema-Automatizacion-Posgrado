@@ -1,6 +1,14 @@
 const Sequelize = require('sequelize')
-
+const mysql = require('mysql')
 //conexion a la bd 
+
+var mysqlconnection = mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    password:'MyNewPass',
+    database:'sistpostulacion'
+});
+
 const db = {}
 const sequelize = new Sequelize("sistpostulacion","root","MyNewPass",{
     host: "localhost",
@@ -18,4 +26,5 @@ const sequelize = new Sequelize("sistpostulacion","root","MyNewPass",{
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 
+db.mysqlConnection = mysqlconnection
 module.exports = db

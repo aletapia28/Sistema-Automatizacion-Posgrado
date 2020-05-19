@@ -111,6 +111,11 @@ export class AuthenticationService {
     
   }
 
+  public updateperiodo(user: TokenPeriod): Observable<any> {
+    return this.http.post(`/router/updateperiodo`, user)
+    
+  }
+
   public login(user: TokenPayload): Observable<any> {
     const base = this.http.post(`/router/login`, user)
     

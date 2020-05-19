@@ -11,7 +11,7 @@
             <form class="formI" (submit)="onSubmit()" [formGroup]="importarAForm">
                 <div class="upload_button">
                     <label>
-                    <input type="file" formControlName="archivo">
+                    <input type="file"  class="form-control" formControlName="archivo" (change)="addfile($event)" accept="application/vnd.ms-excel">
                     <span class="span">Seleccionar Archivo</span>
                 </label>
                 </div>

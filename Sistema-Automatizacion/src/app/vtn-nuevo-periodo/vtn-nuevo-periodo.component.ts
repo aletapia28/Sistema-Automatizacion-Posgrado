@@ -38,12 +38,14 @@ export class VtnNuevoPeriodoComponent implements OnInit {
 
     //Cuando ocupen sacar un solo dato es con
     //console.log(this.loginForm.get('correo').value);
+    //tenemos que sacar el ano
     let period= this.nuevoPForm.get('bimestre').value;
     let fechain= this.nuevoPForm.get('fechaI').value;
     let fechafin= this.nuevoPForm.get('fechaF').value;
     
     console.log(this.nuevoPForm.value);
 
+    //tenemos que agregar el ano a periodo
     this.credentials.periodo = period
     this.credentials.fechaInicio = fechain
     this.credentials.fechaCierre = fechafin
@@ -56,5 +58,7 @@ export class VtnNuevoPeriodoComponent implements OnInit {
 
     )
   }
+
+  //tenemos que meter el periodo en editar periodo
 
 }

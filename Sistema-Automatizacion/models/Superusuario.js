@@ -9,7 +9,7 @@ module.exports = db.sequelize.define(
             primaryKey: true,
             
         },
-        correoenvio: {
+        correoEnvio: {
             type: Sequelize.STRING
         }
     },

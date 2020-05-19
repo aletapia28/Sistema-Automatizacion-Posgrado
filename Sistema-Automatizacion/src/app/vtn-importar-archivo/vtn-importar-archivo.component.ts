@@ -12,6 +12,11 @@ import * as XLSX from 'xlsx';
 })
 export class VtnImportarArchivoComponent implements OnInit {
 
+  title = 'XlsRead';
+  file: File
+  arrayBuffer: any
+  filelist:any
+
   constructor() { }
 
   ngOnInit(): void {
@@ -20,7 +25,7 @@ export class VtnImportarArchivoComponent implements OnInit {
   importarAForm = new FormGroup ({
     archivo: new FormControl(''),
   });
-/*
+
   addfile(event)     
   {    
   this.file= event.target.files[0];     
@@ -42,8 +47,10 @@ export class VtnImportarArchivoComponent implements OnInit {
     
   }    
 }    
-*/
+
   onSubmit() {
     console.log(this.importarAForm.value);
+    this.addfile(this.importarAForm.value);
+    
   }
 }

@@ -35,6 +35,7 @@ export class VtnEditarSuperusuarioComponent implements OnInit {
 
   onSubmit() {
     console.log(this.editarSupForm.value);
+    // 
   }
 
 }

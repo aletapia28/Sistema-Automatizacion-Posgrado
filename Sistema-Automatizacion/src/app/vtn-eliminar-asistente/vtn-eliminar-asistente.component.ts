@@ -82,6 +82,8 @@ export class VtnEliminarAsistenteComponent implements OnInit {
   onEdit(row, key) {
     this.servicioDatos.showCorreo = row.correo;
     this.router.navigate(['editAsis']);
+
+    
   }
 
 }
