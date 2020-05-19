@@ -50,7 +50,7 @@ export class VtnImportarArchivoComponent implements OnInit {
 
   onSubmit() {
     console.log(this.importarAForm.value);
-    this.addfile(this.importarAForm.value);
+    
     
   }
 }

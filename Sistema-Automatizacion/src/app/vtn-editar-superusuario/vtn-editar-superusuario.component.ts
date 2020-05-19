@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, NgForm, FormGroupDirective } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ServicioDatosService } from '../shared/servicio-datos.service'
+import { AuthenticationService } from '../authentication.service'
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-vtn-editar-superusuario',
@@ -9,7 +13,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class VtnEditarSuperusuarioComponent implements OnInit {
   hide = true;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -35,7 +39,36 @@ export class VtnEditarSuperusuarioComponent implements OnInit {
 
   onSubmit() {
     console.log(this.editarSupForm.value);
-    // 
+
+    //falta agarrar correo superusuario 
+    let correopr = 'test';
+
+    let correnv = this.editarSupForm.get('correo').value;
+    let newpass = this.editarSupForm.get('passwd').value;
+
+    const formData = { correo: correopr, correoEnvio: correnv }
+    const formData2 = {correo: correopr, password: newpass}
+    this.http.put<any>('/router/updatesuper', formData).subscribe(
+      (res) => {
+        if (res.answer) {
+          console.log('Superusuario actualizado correo')
+        }
+      },
+      (err) => console.log(err)
+    );
+    //actualiza contrasena en tabla usuario
+    this.http.put<any>('/router/updateusuario', formData2).subscribe(
+      (res)=>{
+        if (res.answer){
+          console.log('Contrasena actualizada')
+        }
+      },
+      (err) => console.log(err)
+  );
+
+
+
+    
   }
 
 }
