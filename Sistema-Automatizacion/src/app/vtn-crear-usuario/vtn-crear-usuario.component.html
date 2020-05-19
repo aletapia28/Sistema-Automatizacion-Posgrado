@@ -8,26 +8,26 @@
             <h1 class="titulo">Crear usuario asistente</h1>
 
             <form class="periodo-form" (submit)="onSubmit()" [formGroup]="crearUsuForm">
-                <mat-form-field appearance="fill" class="inputVtn">
+                <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Correo electrónico</mat-label>
                     <input matInput placeholder="pat@example.com" formControlName="correo" required>
                     <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" class="inputVtn">
+                <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Nombre</mat-label>
                     <input matInput formControlName="nombre" required>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" class="inputVtn">
+                <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Cedula</mat-label>
                     <input matInput formControlName="cedula" required>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" class="inputVtn">
+                <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Contraseña</mat-label>
                     <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwd" required>
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>

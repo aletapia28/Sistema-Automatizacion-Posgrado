@@ -83,6 +83,21 @@ export class VtnLoginComponent implements OnInit {
     )
 
     
+<<<<<<< HEAD
+=======
+    //if (metodo BD validar que es usuario)
+    //{
+      //if es superusuario
+        this.servicioDatos.showTipoUsuario = true;
+      //if es asistente
+        //this.servicioDatos.showTipoUsuario = false;
+
+      this.servicioDatos.showCorreo = email;
+      this.servicioDatos.showSesion = true;
+      this.router.navigate(['principal'])
+    //}
+  }
+>>>>>>> desarrollo
 
 
 }

@@ -19,4 +19,10 @@ success(msg){
   this.config ['panelClass'] = ['notification','success']
   this.snackBar.open(msg,'',this.config);
 }
+
+warning(msg){
+  this.config ['panelClass'] = ['notification','warning']
+  this.snackBar.open(msg,'',this.config);
+}
+
 }

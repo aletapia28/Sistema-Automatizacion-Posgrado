@@ -10,14 +10,15 @@ export class DialogService {
 
   constructor(private dialog: MatDialog) { }
 
-  openConfirmDialog(msg){
+  openConfirmDialog(msg,des){
    return this.dialog.open(ConfirmDialogComponent,{
       width: "390px",
       panelClass: 'cuerpo-dialog-container',
       disableClose: true,
       position : {top: "250px"},
       data :{
-        message : msg
+        message : msg,
+        message1 : des
       }
     });
   }

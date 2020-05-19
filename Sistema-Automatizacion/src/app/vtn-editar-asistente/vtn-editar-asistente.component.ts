@@ -13,23 +13,30 @@ export class VtnEditarAsistenteComponent implements OnInit {
 
   correoA: string;
 
+<<<<<<< HEAD
   constructor(private servicioDatos: ServicioDatosService, private http: HttpClient) {
+=======
+  editarAForm = new FormGroup({
+    nombre: new FormControl(''),
+    cedula: new FormControl(''),
+    passwd: new FormControl('')
+  });
+
+  constructor(private servicioDatos: ServicioDatosService) {
+>>>>>>> desarrollo
     this.correoA = servicioDatos.showCorreo;
   }
 
   ngOnInit(): void {
+    //Llamar a la BD y obtener la informacion del asistente para presentarla en pantalla
+    this.editarAForm.get('nombre').setValue('Jose');
+    
   }
 
   email = new FormControl('', [
     Validators.required,
     Validators.email,
   ]);
-
-  editarAForm = new FormGroup({
-    nombre: new FormControl(''),
-    cedula: new FormControl(''),
-    passwd: new FormControl('')
-  });
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
@@ -41,6 +48,7 @@ export class VtnEditarAsistenteComponent implements OnInit {
 
   onSubmit() {
     console.log(this.correoA);
+<<<<<<< HEAD
     console.log(this.editarAForm.value);
     //necesito agarrar correo pred 
     let correopr = this.servicioDatos.showCorreo;
@@ -70,6 +78,10 @@ export class VtnEditarAsistenteComponent implements OnInit {
       (err) => console.log(err)
     );
 
+=======
+    //
+    //console.log(this.editarAForm.value);
+>>>>>>> desarrollo
   }
 
 }
