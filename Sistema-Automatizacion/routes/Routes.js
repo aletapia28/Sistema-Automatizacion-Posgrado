@@ -302,6 +302,37 @@ router.put('/updatesuper', function(req, res, next) {
 /////////////////////////////////////////////////////////
 //CRUD PERIODO
 
+//REGISTRAR PERIODO
+
+//EDITAR PERIODO
+
+//ELIMINAR PERIODO
+//falta probar 
+router.delete('/deleteperiodo', function(req, res, next) {
+    Periodo.destroy({
+        where: {
+        periodo: req.body.periodo
+        }
+    })
+        .then(() => {
+        res.json({ status: 'Periodo Eliminado' })
+        })
+        .catch(err => {
+        res.send('error: ' + err)
+        })
+})
+
+//GET ALL PERIODOS 
+//falta probar
+router.get('/getallperiodos', function(req, res, next) {
+    Periodo.findAll()
+      .then(tasks => {
+        res.json(tasks)
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
 
 /////////////////////////////////////////////////////////
 //CRUD POSTULANTES
@@ -355,6 +386,21 @@ router.post('/registerpostulante',(req,res) =>{
         })
         .catch(err =>{
             res.send('error: ' + err)
+        })
+})
+
+//ELIMINAR POSTULANTE 
+router.delete('/deletepostulante', function(req, res, next) {
+    Postulant.destroy({
+        where: {
+        cedula: req.body.cedula
+        }
+    })
+        .then(() => {
+        res.json({ status: 'Postulante Eliminado' })
+        })
+        .catch(err => {
+        res.send('error: ' + err)
         })
 })
 
