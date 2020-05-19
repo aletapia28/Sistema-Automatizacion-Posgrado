@@ -71,16 +71,16 @@ export class VtnCrearUsuarioComponent implements OnInit {
 
 
     this.auth.register(this.credentials).subscribe(
-      (user) =>
-      {console.log('crear usuario' + user)}
-
-    )
-    this.auth.registerasist(this.asist).subscribe(
-      (user) =>
-      {console.log('crear asistente' + user)}
+      (res) =>{
+        this.auth.registerasist(this.asist).subscribe(
+          (user) =>
+            {console.log('crear asistente' + user)}
+        )
+      },
+      (err) => console.log(err)
       
-
     )
+
   }
 
     

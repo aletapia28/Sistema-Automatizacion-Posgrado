@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http'
 export class VtnEditarSuperusuarioComponent implements OnInit {
   hide = true;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private servicioDatos: ServicioDatosService) { }
 
   ngOnInit(): void {
   }
@@ -40,14 +40,16 @@ export class VtnEditarSuperusuarioComponent implements OnInit {
   onSubmit() {
     console.log(this.editarSupForm.value);
 
-    //falta agarrar correo superusuario 
-    let correopr = 'test';
+    //agarrar correo superusuario 
+    let correopr = this.servicioDatos.showCorreo;
 
     let correnv = this.editarSupForm.get('correo').value;
     let newpass = this.editarSupForm.get('passwd').value;
 
     const formData = { correo: correopr, correoEnvio: correnv }
     const formData2 = {correo: correopr, password: newpass}
+
+    //actualiza correo en superusuario
     this.http.put<any>('/router/updatesuper', formData).subscribe(
       (res) => {
         if (res.answer) {

@@ -43,7 +43,7 @@ export class VtnEditarPeriodoComponent implements OnInit {
     this.credentials.fechaCierre = fechaCi
     
     const formData = { bim }
-        //EXPLICAR ESTO
+  
     this.auth.updateperiodo(this.credentials).subscribe(
       (res) => {
         if (res.answer) {
@@ -56,6 +56,17 @@ export class VtnEditarPeriodoComponent implements OnInit {
       },
       (err) => console.log(err)
     );
+
+    //llamada para retornar todos los periodos
+    /*
+    this.http.put<any>('/router/getallperiodos', bim).subscribe(
+      (res)=>{
+        if (res.answer){
+          console.log('Contrasena actualizada')
+        }
+      },
+      (err) => console.log(err)
+    );*/
 
 
   }

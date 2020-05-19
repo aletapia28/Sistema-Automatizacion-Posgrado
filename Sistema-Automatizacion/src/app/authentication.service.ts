@@ -131,18 +131,7 @@ export class AuthenticationService {
     
     return request
   }
-  
-  /*public isSuper(supuser): boolean {
 
-    const formData = new FormData();
-    formData.append('file', this.uploadForm.get('profile').value);
-
-    this.httpClient.post<any>(this.SERVER_URL, formData).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
-    return true
-  }*/
   public isSuper(user: Tokenuser): Observable<any> {
     return this.http.post(`/router/isSuper`, user)
     

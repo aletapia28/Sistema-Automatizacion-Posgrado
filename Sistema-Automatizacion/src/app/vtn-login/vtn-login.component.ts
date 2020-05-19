@@ -55,9 +55,6 @@ export class VtnLoginComponent implements OnInit {
     this.credentials.password = contrasena;
 
     let boole
-
-
-    console.log("espero?")
     this.auth.login(this.credentials).subscribe(
       (res) => {
 
@@ -72,13 +69,12 @@ export class VtnLoginComponent implements OnInit {
               this.servicioDatos.showTipoUsuario = false;
 
             }
+            this.servicioDatos.showCorreo = email;
+            this.servicioDatos.showSesion = true;
             this.router.navigate(['principal'])
           },
           (err) => console.log(err)
         );
-
-
-
 
       },
       err => {
@@ -86,8 +82,7 @@ export class VtnLoginComponent implements OnInit {
       }
     )
 
-    this.servicioDatos.showCorreo = email;
-    this.servicioDatos.showSesion = true;
+    
 
 
 }

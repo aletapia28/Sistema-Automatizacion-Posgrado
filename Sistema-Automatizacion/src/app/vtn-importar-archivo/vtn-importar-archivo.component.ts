@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthenticationService, TokenPayload, Tokenuser } from '../authentication.service'
 import { Router } from '@angular/router';
+import { Injectable } from '@angular/core'
+import { Observable, of } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { ServicioDatosService } from '../shared/servicio-datos.service';
+import { HttpClient } from '@angular/common/http'
 import * as XLSX from 'xlsx';
 
 
@@ -17,7 +22,9 @@ export class VtnImportarArchivoComponent implements OnInit {
   arrayBuffer: any
   filelist:any
 
-  constructor() { }
+  export interface
+
+  constructor(private http: HttpClient, private servicioDatos: ServicioDatosService) { }
 
   ngOnInit(): void {
   }
