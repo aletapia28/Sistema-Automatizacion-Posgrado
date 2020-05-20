@@ -201,7 +201,6 @@ router.get('/getallasist', function(req, res, next) {
   })
 
 //RETORNAR ASISTENTE BY CORREO
-//falta probar 
 router.get('/getasist', (req, res) => {
     Asistente.findOne({
       where: {
@@ -281,7 +280,6 @@ router.post('/isSuper', (req, res) => {
 })
 
 //ACTUALIZAR SUPERUSUARIO
-  //update superusuario
 router.put('/updatesuper', function(req, res, next) {
     if (!req.body.correo) {
         res.status(400)
@@ -459,27 +457,6 @@ router.post('/createpostulacion', (req, res) => {
         console.log(err);
     })
     
-})
-
-
-//update periodo
-router.put('/updateperiodo', function(req, res, next) {
-    if (!req.body.periodo) {
-      res.status(400)
-      res.json({
-        error: 'Bad data'
-      })
-    } else {
-      Periodo.update(
-        { fechaInicio: req.body.fechaInicio, fechaCierre: req.body.fechaCierre },
-        { where: { periodo: req.body.periodo} }
-        
-      )
-        .then(() => {
-          res.json({ status: 'Periodo Actualizado' })
-        })
-        .error(err => handleError(err))
-    }
 })
 
 

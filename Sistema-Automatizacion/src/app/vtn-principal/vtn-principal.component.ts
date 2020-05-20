@@ -10,6 +10,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
+
 export interface PeriodicElement {
   cedula: string;
   nombre: string;
@@ -144,7 +145,7 @@ export class VtnPrincipalComponent {
   }
 
   onDelete(row, key) {
-    this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al postulante?","Una vez aceptado, será eliminado permanentemente del sistema")
+    this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al postulante?","Una vez aceptado será eliminado permanentemente del sistema")
       .afterClosed().subscribe(res => {
         console.log(res);
         // this.notificationService.warning('Error');
