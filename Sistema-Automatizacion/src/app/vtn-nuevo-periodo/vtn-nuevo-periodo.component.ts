@@ -49,14 +49,19 @@ export class VtnNuevoPeriodoComponent implements OnInit {
     this.credentials.periodo = period
     this.credentials.fechaInicio = fechain
     this.credentials.fechaCierre = fechafin
+    
+
+    this.credentials.periodo = period
+    this.credentials.fechaInicio = fechain
+    this.credentials.fechaCierre = fechafin
+
+    const formData = { periodo: period, fechaInicio:fechain, fechaCierre: fechafin }
 
 
-    this.auth.registerperiodo(this.credentials).subscribe(
-      (user) =>
-      {console.log('crear periodo' + user)}
-      //luego lo reg como asistente
-
-    )
+    this.http.post<any>('/router/CrearPeriodo', formData).subscribe(
+      (res) => {console.log(res)},
+      (err) => console.log(err)
+    );
   }
 
   //tenemos que meter el periodo en editar periodo

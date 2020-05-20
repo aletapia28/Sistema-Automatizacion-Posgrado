@@ -30,315 +30,388 @@ db.mysqlConnection.connect((err) => {
 
 //CRUD USUARIOS
 //REGISTRAR  USUARIOS -> FALTA ENCRIPTAR PASSWORD
-router.post('/register',(req,res) =>{
+router.post('/register', (req, res) => {
     const userData = {
-        correo : req.body.correo,
-        password : req.body.password
+        correo: req.body.correo,
+        password: req.body.password
     }
     User.findOne({
         where: {
-            correo : req.body.correo
+            correo: req.body.correo
         }
     })
         //bcrypt
-        .then(usuario =>{
-            if(!usuario){
+        .then(usuario => {
+            if (!usuario) {
                 //const hash = bcrypt.hashSync(userData.password,30)
-               // userData.password = hash
+                // userData.password = hash
                 User.create(userData)
-                    .then(user =>{
-                        let token = jwt.sign(user.dataValues, process.env.SECRET_KEY,{
+                    .then(user => {
+                        let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
                             expiresIn: 1440
 
                         })
-                        res.json({token: token})
+                        res.json({ token: token })
 
                     })
-                    .catch(err =>{
+                    .catch(err => {
                         res.send('error: ' + err)
                     })
-                
-            }else{
-                res.json({error: 'Usuario ya existe'})
+
+            } else {
+                res.json({ error: 'Usuario ya existe' })
             }
 
         })
-        .catch(err =>{
+        .catch(err => {
             res.send('error: ' + err)
         })
 })
 
 //ELIMINAR USUARIOS
-router.delete('/deleteuser', function(req, res, next) {
+router.delete('/deleteuser', function (req, res, next) {
     User.destroy({
-      where: {
-        correo: req.body.correo
-      }
+        where: {
+            correo: req.body.correo
+        }
     })
-      .then(() => {
-        res.json({ status: 'Usuario Eliminado' })
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })
+        .then(() => {
+            res.json({ status: 'Usuario Eliminado' })
+        })
+        .catch(err => {
+            res.send('error: ' + err)
+        })
 })
 
 //ACTUALIZAR USUARIOS
-router.put('/updateusuario', function(req, res, next) {
+router.put('/updateusuario', function (req, res, next) {
     if (!req.body.correo) {
         res.status(400)
         res.json({
-        error: 'Bad data'
+            error: 'Bad data'
         })
     } else {
         User.update(
-        { password: req.body.password },
-        { where: { correo: req.body.correo} }
+            { password: req.body.password },
+            { where: { correo: req.body.correo } }
         )
-        .then(() => {
-            res.json({ status: 'Password actualizada' })
-        })
-        .error(err => handleError(err))
+            .then(() => {
+                res.json({ status: 'Password actualizada' })
+            })
+            .error(err => handleError(err))
     }
 })
 
 //RETORNAR TODOS LOS USUARIOS 
-router.get('/getallusers', function(req, res, next) {
+router.get('/getallusers', function (req, res, next) {
     User.findAll()
-      .then(tasks => {
-        res.json(tasks)
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })
-  })
+        .then(tasks => {
+            res.json(tasks)
+        })
+        .catch(err => {
+            res.send('error: ' + err)
+        })
+})
 
 /////////////////////////////////////////////////////////
 //CRUD ASISTENTES
 
 //REGISTRAR ASISTENTES
-router.post('/registerasistente',(req,res) =>{
+router.post('/registerasistente', (req, res) => {
     const userData = {
         correo: req.body.correo,
-        nombre : req.body.nombre,
+        nombre: req.body.nombre,
         cedula: req.body.cedula
     }
     Asistente.findOne({
         where: {
-            correo : req.body.correo,
+            correo: req.body.correo,
         }
     })
-        .then(asistente =>{
-            if(!asistente){
+        .then(asistente => {
+            if (!asistente) {
                 Asistente.create(userData)
-                    .then(asistente =>{
-                        let token = jwt.sign(asistente.dataValues, process.env.SECRET_KEY,{
+                    .then(asistente => {
+                        let token = jwt.sign(asistente.dataValues, process.env.SECRET_KEY, {
                             expiresIn: 1440
 
                         })
-                        res.json({token: token})
+                        res.json({ token: token })
 
                     })
-                    .catch(err =>{
+                    .catch(err => {
                         res.send('error: ' + err)
                     })
-                
-            }else{
-                res.json({error: 'Asistente ya existe'})
+
+            } else {
+                res.json({ error: 'Asistente ya existe' })
             }
 
         })
-        .catch(err =>{
+        .catch(err => {
             res.send('error: ' + err)
         })
 })
 
 //ELIMINAR ASISTENTES
-router.delete('/deleteasistant', function(req, res, next) {
+router.delete('/deleteasistant', function (req, res, next) {
     Asistente.destroy({
         where: {
-        correo: req.body.correo
+            correo: req.body.correo
         }
     })
         .then(() => {
-        res.json({ status: 'Asistente Eliminado' })
+            res.json({ status: 'Asistente Eliminado' })
         })
         .catch(err => {
-        res.send('error: ' + err)
+            res.send('error: ' + err)
         })
 })
 
 //ACTUALIZAR ASISTENTES
-router.put('/updateasistant', function(req, res, next) {
+router.put('/updateasistant', function (req, res, next) {
     if (!req.body.correo) {
-      res.status(400)
-      res.json({
-        error: 'Bad data'
-      })
-    } else {
-      Asistente.update(
-        { nombre: req.body.nombre, cedula: req.body.cedula},
-        { where: {correo: req.body.correo} }
-        
-      )
-        .then(() => {
-          res.json({ status: 'Asistente Actualizado' })
+        res.status(400)
+        res.json({
+            error: 'Bad data'
         })
-        .error(err => handleError(err))
+    } else {
+        Asistente.update(
+            { nombre: req.body.nombre, cedula: req.body.cedula },
+            { where: { correo: req.body.correo } }
+
+        )
+            .then(() => {
+                res.json({ status: 'Asistente Actualizado' })
+            })
+            .error(err => handleError(err))
     }
 })
 
 //RETORNAR ASISTENTES
 //falta probar
-router.get('/getallasist', function(req, res, next) {
+router.get('/getallasist', function (req, res, next) {
     Asistente.findAll()
-      .then(tasks => {
-        res.json(tasks)
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })
-  })
+        .then(tasks => {
+            res.json(tasks)
+        })
+        .catch(err => {
+            res.send('error: ' + err)
+        })
+})
 
 //RETORNAR ASISTENTE BY CORREO
 //falta probar 
 router.get('/getasist', (req, res) => {
     Asistente.findOne({
-      where: {
-        correo: req.body.correo
-      }
-    })
-      .then(user => {
-        if (user) {
-          res.json(user)
-        } else {
-          res.send(user)
+        where: {
+            correo: req.body.correo
         }
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })
+    })
+        .then(user => {
+            if (user) {
+                res.json(user)
+            } else {
+                res.send(user)
+            }
+        })
+        .catch(err => {
+            res.send('error: ' + err)
+        })
 })
 
 /////////////////////////////////////////////////////////
 //CRUD SUPERUSUARIOS 
 
 //CREATE  SUPERUSUARIO
-router.post('/registersuper',(req,res) =>{
+router.post('/registersuper', (req, res) => {
     const userData = {
         correo: req.body.correo,
         correoEnvio: req.body.correoEnvio
     }
     Superuser.findOne({
         where: {
-            correo : req.body.correo,
+            correo: req.body.correo,
         }
     })
-        .then(asistente =>{
-            if(!asistente){
+        .then(asistente => {
+            if (!asistente) {
                 Superuser.create(userData)
-                    .then(asistente =>{
-                        let token = jwt.sign(asistente.dataValues, process.env.SECRET_KEY,{
+                    .then(asistente => {
+                        let token = jwt.sign(asistente.dataValues, process.env.SECRET_KEY, {
                             expiresIn: 1440
 
                         })
-                        res.json({token: token})
+                        res.json({ token: token })
 
                     })
-                    .catch(err =>{
+                    .catch(err => {
                         res.send('error: ' + err)
                     })
-                
-            }else{
-                res.json({error: 'Superusuario ya existe'})
+
+            } else {
+                res.json({ error: 'Superusuario ya existe' })
             }
 
         })
-        .catch(err =>{
+        .catch(err => {
             res.send('error: ' + err)
         })
 })
 //GET SUPERUSUARIO 
 router.post('/isSuper', (req, res) => {
-    
+
     Superuser.findOne({
         where: {
             correo: req.body.correo,
         }
     })
         .then(supuser => {
-            if(supuser){
-                
-                res.send({answer:true})
-            }else{
-                res.send({answer:false})
+            if (supuser) {
+
+                res.send({ answer: true })
+            } else {
+                res.send({ answer: false })
             }
         })
-        .catch(err =>{
+        .catch(err => {
             res.send('error' + err)
         })
 
 })
 
 //ACTUALIZAR SUPERUSUARIO
-  //update superusuario
-router.put('/updatesuper', function(req, res, next) {
+//update superusuario
+router.put('/updatesuper', function (req, res, next) {
     if (!req.body.correo) {
         res.status(400)
         res.json({
-        error: 'Correo no existe'
+            error: 'Correo no existe'
         })
     } else {
         Superuser.update(
             { correoEnvio: req.body.correoEnvio },
-            { where: { correo: req.body.correo} }
+            { where: { correo: req.body.correo } }
         )
-        .then(() => {
-            res.json({ status: 'Correo Superusuario Actualizado' })
-        })
-        .error(err => handleError(err))
+            .then(() => {
+                res.json({ status: 'Correo Superusuario Actualizado' })
+            })
+            .error(err => handleError(err))
     }
 })
 /////////////////////////////////////////////////////////
 //CRUD PERIODO
 
 //REGISTRAR PERIODO
+router.post('/crearperiodo', (req, res) => {
+    db.mysqlConnection.query('CALL CrearPeriodo(?,?,?)', [req.body.periodo + " " + req.body.fechaInicio.slice(0,4), req.body.fechaInicio.slice(0,10), req.body.fechaCierre.slice(0,10)], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+
+})
+
 
 //EDITAR PERIODO
 
+router.post('/EditarPeriodo', (req, res) => {
+    db.mysqlConnection.query('CALL EditarPeriodo(?,?,?)', [req.body.periodo, req.body.fechaInicio.slice(0,10), req.body.fechaCierre.slice(0,10)], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+
+})
+
+
 //ELIMINAR PERIODO
+
+
+router.post('/EliminarPeriodo', (req, res) => {
+    db.mysqlConnection.query('CALL EliminarPeriodo(?)', [req.body.periodo], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+
+})
+
+//Ver Periodos
+
+router.get('/VerPeriodos', (req, res) => {
+    db.mysqlConnection.query('CALL VerPeriodo()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+
+})
+
+
+//Cerrar Periodo Actual
+
+router.post('/CerrarPeriodoActual', (req, res) => {
+    db.mysqlConnection.query('CALL CerrarPeriodoActual()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+
+})
+
+//get Periodo Actual
+
+router.get('/getPeriodoActual', (req, res) => {
+    db.mysqlConnection.query('CALL PeriodoActual()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+
+})
+
+
+
+
 //falta probar 
-router.delete('/deleteperiodo', function(req, res, next) {
+router.delete('/deleteperiodo', function (req, res, next) {
     Periodo.destroy({
         where: {
-        periodo: req.body.periodo
+            periodo: req.body.periodo
         }
     })
         .then(() => {
-        res.json({ status: 'Periodo Eliminado' })
+            res.json({ status: 'Periodo Eliminado' })
         })
         .catch(err => {
-        res.send('error: ' + err)
+            res.send('error: ' + err)
         })
 })
 
 //GET ALL PERIODOS 
 //falta probar
-router.get('/getallperiodos', function(req, res, next) {
+router.get('/getallperiodos', function (req, res, next) {
     Periodo.findAll()
-      .then(tasks => {
-        res.json(tasks)
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })
-  })
+        .then(tasks => {
+            res.json(tasks)
+        })
+        .catch(err => {
+            res.send('error: ' + err)
+        })
+})
 
 /////////////////////////////////////////////////////////
 //CRUD POSTULANTES
 
 //REGISTRAR POSTULANTE 
-router.post('/registerpostulante',(req,res) =>{
+router.post('/registerpostulante', (req, res) => {
     const userData = {
         cedula: req.body.cedula,
         nombre: req.body.nombre,
@@ -361,130 +434,129 @@ router.post('/registerpostulante',(req,res) =>{
     }
     Postulant.findOne({
         where: {
-            cedula : req.body.cedula
+            cedula: req.body.cedula
         }
     })
-        .then(postulante =>{
-            if(!postulante){
+        .then(postulante => {
+            if (!postulante) {
                 Postulant.create(userData)
-                    .then(postulante =>{
-                        let token = jwt.sign(postulante.dataValues, process.env.SECRET_KEY,{
+                    .then(postulante => {
+                        let token = jwt.sign(postulante.dataValues, process.env.SECRET_KEY, {
                             expiresIn: 1440
 
                         })
-                        res.json({token: token})
+                        res.json({ token: token })
 
                     })
-                    .catch(err =>{
+                    .catch(err => {
                         res.send('error: ' + err)
                     })
-                
-            }else{
-                res.json({error: 'Postulante ya existe'})
+
+            } else {
+                res.json({ error: 'Postulante ya existe' })
             }
 
         })
-        .catch(err =>{
+        .catch(err => {
             res.send('error: ' + err)
         })
 })
 
 //ELIMINAR POSTULANTE 
-router.delete('/deletepostulante', function(req, res, next) {
+router.delete('/deletepostulante', function (req, res, next) {
     Postulant.destroy({
         where: {
-        cedula: req.body.cedula
+            cedula: req.body.cedula
         }
     })
         .then(() => {
-        res.json({ status: 'Postulante Eliminado' })
+            res.json({ status: 'Postulante Eliminado' })
         })
         .catch(err => {
-        res.send('error: ' + err)
+            res.send('error: ' + err)
         })
 })
 
 /////////////////////////////////////////////////////////
 
 
-
-
-
 //edit superusuario
 router.put('/editSuper', (req, res) => {
-    db.mysqlConnection.query('CALL EditarSuperusuario(?, ?, ?)',(err,row,fields)=>{
-        if(!err)
-        res.send(row);
+    db.mysqlConnection.query('CALL EditarSuperusuario(?, ?, ?)', (err, row, fields) => {
+        if (!err)
+            res.send(row);
         else
-        console.log(err);
+            console.log(err);
     })
-    
+
 })
+
+
 //definido no implementado
 router.put('/editAsist', (req, res) => {
-    db.mysqlConnection.query('CALL EditarAsistente(?, ?, ?)',(err,row,fields)=>{
-        if(!err)
-        res.send(row);
+    db.mysqlConnection.query('CALL EditarAsistente(?, ?, ?)', (err, row, fields) => {
+        if (!err)
+            res.send(row);
         else
-        console.log(err);
+            console.log(err);
     })
-    
+
 })
 //definido no esta implementado
-router.get('/allpostulantes', (req,res) =>{
-    db.mysqlConnection.query('CALL SelectPostulantes', (err,row,fields)=>{
-        if(!err)
-        res.send(row);
+router.get('/allpostulantes', (req, res) => {
+    db.mysqlConnection.query('CALL SelectPostulantes', (err, row, fields) => {
+        if (!err)
+            res.send(row);
         else
-        console.log(err);
+            console.log(err);
 
     })
 })
 //definido no esta implementado
 router.post('/createSuper', (req, res) => {
-    db.mysqlConnection.query('CALL CrearSuperusuario(?, ?)',(err,row,fields)=>{
-        if(!err)
-        res.send(row);
+    db.mysqlConnection.query('CALL CrearSuperusuario(?, ?)', (err, row, fields) => {
+        if (!err)
+            res.send(row);
         else
-        console.log(err);
+            console.log(err);
     })
-    
+
 })
 //definido no esta implementado 
 router.post('/createpostulacion', (req, res) => {
-    db.mysqlConnection.query('CALL CrearPostulacion(?,?,?,?,?, ?)',(err,row,fields)=>{
-        if(!err)
-        res.send(row);
+    db.mysqlConnection.query('CALL CrearPostulacion(?,?,?,?,?, ?)', (err, row, fields) => {
+        if (!err)
+            res.send(row);
         else
-        console.log(err);
+            console.log(err);
     })
-    
+
 })
 
 
 //update periodo
-router.put('/updateperiodo', function(req, res, next) {
+router.put('/updateperiodo', function (req, res, next) {
     if (!req.body.periodo) {
-      res.status(400)
-      res.json({
-        error: 'Bad data'
-      })
-    } else {
-      Periodo.update(
-        { fechaInicio: req.body.fechaInicio, fechaCierre: req.body.fechaCierre },
-        { where: { periodo: req.body.periodo} }
-        
-      )
-        .then(() => {
-          res.json({ status: 'Periodo Actualizado' })
+        res.status(400)
+        res.json({
+            error: 'Bad data'
         })
-        .error(err => handleError(err))
+    } else {
+        Periodo.update(
+            { fechaInicio: req.body.fechaInicio, fechaCierre: req.body.fechaCierre },
+            { where: { periodo: req.body.periodo } }
+
+        )
+            .then(() => {
+                res.json({ status: 'Periodo Actualizado' })
+            })
+            .error(err => handleError(err))
     }
 })
 
 
 //LOGIN
-router.post('/login',(req,res) =>{
+router.post('/login', (req, res) => {
     User.findOne({
         where: {
             correo: req.body.correo,
@@ -492,16 +564,16 @@ router.post('/login',(req,res) =>{
         }
     })
         .then(user => {
-            if(user){
-                let token = jwt.sign(user.dataValues,process.env.SECRET_KEY,{
+            if (user) {
+                let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
                     expiresIn: 3000
                 })
-                res.json({token: token})
-            }else{
+                res.json({ token: token })
+            } else {
                 res.send('Usuario no existe')
             }
         })
-        .catch(err =>{
+        .catch(err => {
             res.send('error' + err)
         })
 
@@ -510,61 +582,61 @@ router.post('/login',(req,res) =>{
 //perfil
 router.get('/perfil', (req, res) => {
     //set from client side, convierte el token al objecto
-   // var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
-  
+    // var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
+
     User.findOne({
-      where: {
-        correo: req.body.correo
-      }
-    })
-      .then(user => {
-        if (user) {
-          res.json(user)
-        } else {
-          res.send('User does not exist')
+        where: {
+            correo: req.body.correo
         }
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })
+    })
+        .then(user => {
+            if (user) {
+                res.json(user)
+            } else {
+                res.send('User does not exist')
+            }
+        })
+        .catch(err => {
+            res.send('error: ' + err)
+        })
 })
 
 //insert periodo
-router.post('/registerperiodo',(req,res) =>{
+router.post('/registerperiodo', (req, res) => {
     const userData = {
         periodo: req.body.periodo,
-        fechaInicio : req.body.fechaInicio,
+        fechaInicio: req.body.fechaInicio,
         fechaCierre: req.body.fechaCierre
     }
     Periodo.findOne({
         where: {
-            periodo : req.body.periodo,
+            periodo: req.body.periodo,
         }
     })
         //bcrypt
-        .then(periodo =>{
-            if(!periodo){
+        .then(periodo => {
+            if (!periodo) {
                 //const hash = bcrypt.hashSync(userData.password,30)
-               // userData.password = hash
+                // userData.password = hash
                 Periodo.create(userData)
-                    .then(periodo =>{
-                        let token = jwt.sign(periodo.dataValues, process.env.SECRET_KEY,{
+                    .then(periodo => {
+                        let token = jwt.sign(periodo.dataValues, process.env.SECRET_KEY, {
                             expiresIn: 1440
 
                         })
-                        res.json({token: token})
+                        res.json({ token: token })
 
                     })
-                    .catch(err =>{
+                    .catch(err => {
                         res.send('error: ' + err)
                     })
-                
-            }else{
-                res.json({error: 'Periodo ya existe'})
+
+            } else {
+                res.json({ error: 'Periodo ya existe' })
             }
 
         })
-        .catch(err =>{
+        .catch(err => {
             res.send('error: ' + err)
         })
 })

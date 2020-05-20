@@ -22,7 +22,6 @@ export class VtnImportarArchivoComponent implements OnInit {
   arrayBuffer: any
   filelist:any
 
-  export interface
 
   constructor(private http: HttpClient, private servicioDatos: ServicioDatosService) { }
 
