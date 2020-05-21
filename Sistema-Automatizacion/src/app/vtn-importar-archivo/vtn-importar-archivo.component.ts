@@ -1,39 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthenticationService, TokenPayload, Tokenuser } from '../authentication.service'
-import { Router } from '@angular/router';
-import { Injectable } from '@angular/core'
-import { Observable, of } from 'rxjs'
-import { map } from 'rxjs/operators'
 import { ServicioDatosService } from '../shared/servicio-datos.service';
 import { HttpClient } from '@angular/common/http'
 import * as XLSX from 'xlsx';
-import { Key } from 'protractor';
-import { parse } from 'path';
 
 export interface Postulant{
-  //definir atributos postulante 
-  nombreCompleto: String;
-  nacionalidad: String; 
-  identificacion: String; 
+  cedula: String;
+  nombre: String;
   telefono1: String;
   telefono2: String;
   correo1: String;
   correo2: String; 
-  ingles: String; 
-  horario: String; 
-  enfasis: String; 
-  afinidad: String; 
+  ingles: number;
   gradoAcademico: String; 
-  universidad: String; 
-  promedio: String; 
-  acreditada: String;
-  cursoAprov: String;
-  titulotecnico: String;
-  tituloDiplomado: String;
+  universidad: String;
+  afinidad: String; 
+  acreditada: number;
   puestoActual: String; 
-  experiencia: String;
-  nota:String; 
+  experienciaProfesion:number;
+  cursoAfin: number;
+  tituloTecnico: number;
+  cursoAprovechamiento: number;
+  tituloDiplomado: number;
+  promedioGeneral: number;
+ 
+}
+export interface Postulacion{
+  periodo:String;
+  cedula: String;   
+  enfasis: String; 
+  sede:String; 
+  nota:String;
+  memo:boolean; 
 
 }
 
@@ -42,34 +41,39 @@ export interface Postulant{
   templateUrl: './vtn-importar-archivo.component.html',
   styleUrls: ['./vtn-importar-archivo.component.css']
 })
+
 export class VtnImportarArchivoComponent implements OnInit {
-  private records: any[]; 
 
   postul: Postulant = {
-    nombreCompleto: '',
-    nacionalidad: '',
-    identificacion:  '', 
-    telefono1:  '',
-    telefono2:  '',
-    correo1:  '',
-    correo2:  '', 
-    ingles:  '', 
-    horario:  '', 
-    enfasis:  '', 
-    afinidad:  '', 
-    gradoAcademico:  '', 
-    universidad:  '', 
-    promedio:  '',
-    acreditada:  '',
-    cursoAprov:  '',
-    titulotecnico:  '',
-    tituloDiplomado:  '',
-    puestoActual:  '', 
-    experiencia:  '',
-    nota: ''
+    cedula: '',
+    nombre: '',
+    telefono1: '',
+    telefono2: 'no indica',
+    correo1: '',
+    correo2: 'no indica',
+    ingles: 0,
+    gradoAcademico: '',
+    universidad: '',
+    afinidad: '',
+    acreditada: 0,
+    puestoActual: '', 
+    experienciaProfesion:0,
+    cursoAfin: 0,
+    tituloTecnico: 0,
+    cursoAprovechamiento: 0,
+    tituloDiplomado: 0,
+    promedioGeneral: 0
+   
+  }
+  postulacion: Postulacion = {
+    periodo:'I Bimestre 20201',
+    cedula:'',  
+    enfasis:'',
+    sede:'', 
+    nota:'',
+    memo:false, 
 
   }
-
 
   constructor(private http: HttpClient, private servicioDatos: ServicioDatosService) { }
 
@@ -82,81 +86,89 @@ export class VtnImportarArchivoComponent implements OnInit {
   
 
   addfile(event){
-    //toma el archivo excel 
+    //checks uploading file 
     const target:  DataTransfer = <DataTransfer> (event.target);
-    //verifica que solo se importe un archivo
     if(target.files.length !== 1) throw new Error('Solo debe importar un archivo a la vez');
     const reader: FileReader = new FileReader();
+    //reads file and converts to json 
     reader.onload = (e: any)=>{
       const bstr: string = e.target.result;
-      //lee el directorio del archivo 
       const wb: XLSX.WorkBook = XLSX.read(bstr,{type:'binary'})
-      //agarra el nombre de la pagina 'ej sheet 1'
       const wsname: string = wb.SheetNames[0];
-      //lee los campos del sheetname 
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-      //save data en json prettyyyy -> generates array of objects
       const datap = <XLSX.AOA2SheetOpts>(XLSX.utils.sheet_to_json(ws,{header:1}))
-      
-      console.log('datap')
+
       console.log(datap)
-
-      //esto lo tenemos que iterar 
-      console.log(datap[3])
-      var y = datap[3]
-
-      //agarra nombre
-      var keyname = '9'
-      console.log(y[keyname])
-
-      //nacionalidad
-      var keynation = '10'
-      console.log(y[keynation])
-      //identificacion
-      var keyid = '11'
-      console.log(y[keyid])
-      //tel1
-      var keytel1 = '13'
-      console.log(y[keytel1])
-      //tel2
-      var keytel2 = '14'
-      console.log(y[keytel2])
-      //corr1
-      var keycorr1 = '15'
-      console.log(y[keycorr1])
-      //corr2
-      var keycorr2 = '16'
-      console.log(y[keycorr2])
-      //ingles
-      var keying = '17'
-      console.log(y[keying])
-      //enfasis
-      var keyenf = '19'
-      console.log(y[keyenf])
-      //afinidad
-      var keyaf = '20'
-      console.log(y[keyaf])
-      //gacademico
-      var keyga = '21'
-      console.log(y[keyga])
+      const prueba = (XLSX.utils.sheet_to_json(ws,{header:1}))
+      var size = prueba.length
+      var cont,y,nfinal 
+      for (cont = 3; cont < size; cont++) {
+        console.log('dentro del for')
+        y = datap[cont]
+        var keyname = '9', keyid = '11', keytel1 = '13', keytel2 = '14', keycorr1 = '15', keycorr2 = '16',
+        keying = '17', keysede = '18', keyenf = '19', keyaf = '20', keyga = '21', keyuni = '23', keyprom = '24',
+        keyacred = '25', keyaprov = '30', keyttec = '31', keyafin = '32', keytdip = '33', keypact = '37', keyexp = '38'
+       
+        //postulante
+        this.postul.cedula = y[keyid]
+        this.postul.nombre = y[keyname]
+        this.postul.telefono1 = y[keytel1]
+        this.postul.telefono2= y[keytel2]
+        this.postul.correo1= y[keycorr1]
+        this.postul.correo2 = y[keycorr2]
+        this.postul.afinidad = y[keyaf]
+        this.postul.gradoAcademico = y[keyga]
+        this.postul.universidad = y[keyuni]
+        this.postul.promedioGeneral = parseInt(y[keyprom])
+        this.postul.cursoAprovechamiento=parseInt(y[keyaprov])
+        this.postul.cursoAfin = parseInt(y[keyafin])
+        this.postul.puestoActual = y[keypact]
+        this.postul.experienciaProfesion= parseInt(y[keyexp])
 
 
+        //conversiones a ints y validaciones de entradas vacias 
+        if(y[keytel2] = ''){this.postul.telefono2 ='no aplica'}else{this.postul.telefono2=y[keytel2]}
+        if(y[keycorr2] = ''){this.postul.correo2 ='no aplica'}else{this.postul.correo2=y[keycorr2]}
+        if(y[keying] = 'Si'){this.postul.ingles =1}else{this.postul.ingles=0}
+        if(y[keytdip] = 'Si'){this.postul.tituloDiplomado =1}else{this.postul.tituloDiplomado=0}
+        if(y[keyttec] = 'Si'){this.postul.tituloTecnico =1}else{this.postul.tituloTecnico=0}
+        if(y[keyacred] = 'Si'){this.postul.acreditada =1}else{this.postul.acreditada=0}
 
+        //llamada al post de insertar postulante 
+        this.http.post<any>('/router/registerpostulante',this.postul).subscribe(
+          (res) => {
+            if (res.answer) {
+              console.log('postulante ingresado')
+            }
+          },
+          (err) => console.log(err)
+        );
 
-      // console.log(JSON.stringify(datap[3]))
-      // var x= JSON.stringify(datap[3])
-      // console.log(typeof(x))
+        //////postulacion
+        this.postulacion.cedula= y[keyid]
+        this.postulacion.enfasis = y[keyenf]
+        this.postulacion.sede = y[keysede]
+        
 
-      //setear
-      //console.log(this.postul.nombreCompleto)
+        //calcular nota
+        nfinal = this.calcularnota(this.postul.ingles,this.postul.gradoAcademico, 
+          this.postul.afinidad, this.postul.puestoActual, this.postul.experienciaProfesion,
+          this.postul.cursoAfin, this.postul.tituloTecnico, this.postul.cursoAprovechamiento, this.postul.tituloDiplomado );
+        
+        this.postulacion.nota = nfinal
 
-      //calcular nota 
+        //llamada insert postulacion
+        this.http.post<any>('/router/registerpostulante',this.postul).subscribe(
+          (res) => {
+            if (res.answer) {
+              console.log('postulante ingresado')
+            }
+          },
+          (err) => console.log(err)
+        );
 
-      
-      
-      
-      
-      
+        
+      } 
 
     };
     reader.readAsBinaryString(target.files[0]);
@@ -172,7 +184,13 @@ export class VtnImportarArchivoComponent implements OnInit {
     XLSX.writeFile(wb, fileName + '.xlsx');
   }
   */
-   
+
+  public calcularnota(ingles:number,gradoAcademico:String,afinidad:String,puestoActual:String,
+    experiencia:number,cursoAfin:number, titulotec:number, cursoAprov:number, tituloDiplomado:number)
+  {
+    var nota = 59; 
+    return nota 
+  }
 
   onSubmit() {
     console.log(this.importarAForm.value);

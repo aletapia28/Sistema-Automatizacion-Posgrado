@@ -402,6 +402,21 @@ router.delete('/deletepostulante', function(req, res, next) {
         })
 })
 
+//GET ALL POSTULANTES 
+router.get('/getallpost', function(req, res, next) {
+    Postulant.findAll()
+      .then(postul => {
+        res.json(postul)
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
+
+//UPDATE POSTULANTE 
+
+
+
 /////////////////////////////////////////////////////////
 
 
