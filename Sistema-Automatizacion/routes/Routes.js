@@ -14,6 +14,7 @@ const Postulant = require('../models/Postulante')
 const Periodo = require('../models/Periodo')
 const Asistente = require('../models/Asistente')
 const Postulacion = require('../models/Postulacion')
+const Atributo = require('../models/Atributo')
 router.use(cors())
 
 process.env.SECRET_KEY = 'secret'
@@ -190,7 +191,6 @@ router.put('/updateasistant', function(req, res, next) {
 })
 
 //RETORNAR ASISTENTES
-//falta probar
 router.get('/getallasist', function(req, res, next) {
     Asistente.findAll()
       .then(tasks => {
@@ -415,9 +415,31 @@ router.get('/getallpost', function(req, res, next) {
   })
 
 //UPDATE POSTULANTE 
-
-
-
+router.put('/updatepostulant', function(req, res, next) {
+    if (!req.body.cedula) {
+      res.status(400)
+      res.json({
+        error: 'Bad data'
+      })
+    } else {
+      Postulant.update(
+        { nombre: req.body.nombre,telefono1:req.body.telefono1,
+            telefono2: req.body.telefono2,correo1: req.body.correo1,
+            correo2: req.body.correo2,ingles: req.body.ingles,gradoAcademico: req.body.gradoAcademico,
+            universidad: req.body.universidad,afinidad: req.body.afinidad,acreditada: req.body.acreditada,
+            puestoActual: req.body.puestoActual,experienciaProfesion: req.body.experienciaProfesion,
+            cursoAfin: req.body.cursoAfin,tituloTecnico: req.body.tituloTecnico,
+            cursoAprovechamiento: req.body.cursoAprovechamiento,tituloDiplomado: req.body.tituloDiplomado,
+            promedioGeneral: req.body.promedioGeneral},
+        { where: {cedula: req.body.cedula} }
+        
+      )
+        .then(() => {
+          res.json({ status: 'Postulante Actualizado' })
+        })
+        .error(err => handleError(err))
+    }
+})
 /////////////////////////////////////////////////////////
 //CRUD POSTULACION 
 router.post('/registerpostulacion',(req,res) =>{
@@ -460,6 +482,16 @@ router.post('/registerpostulacion',(req,res) =>{
             res.send('error: ' + err)
         })
 })
+//get atributos 
+router.get('/getallatributos', function(req, res, next) {
+    Atributo.findAll()
+      .then(tasks => {
+        res.json(tasks)
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
 
 
 
