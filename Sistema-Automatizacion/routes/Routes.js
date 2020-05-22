@@ -13,6 +13,7 @@ const Superuser = require('../models/Superusuario')
 const Postulant = require('../models/Postulante')
 const Periodo = require('../models/Periodo')
 const Asistente = require('../models/Asistente')
+const Postulacion = require('../models/Postulacion')
 router.use(cors())
 
 process.env.SECRET_KEY = 'secret'
@@ -418,8 +419,47 @@ router.get('/getallpost', function(req, res, next) {
 
 
 /////////////////////////////////////////////////////////
+//CRUD POSTULACION 
+router.post('/registerpostulacion',(req,res) =>{
+    const userData = {
+        periodo: req.body.periodo,
+        cedula: req.body.cedula,
+        enfasis: req.body.enfasis,
+        sede: req.body.sede,
+        nota: req.body.nota,
+        memo: req.body.memo
+    }
+    Postulacion.findOne({
+        where: {
+            periodo: req.body.periodo,
+            cedula : req.body.cedula, 
 
+        }
+    })
+        .then(postulante =>{
+            if(!postulante){
+                Postulacion.create(userData)
+                    .then(postulante =>{
+                        let token = jwt.sign(postulante.dataValues, process.env.SECRET_KEY,{
+                            expiresIn: 1440
 
+                        })
+                        res.json({token: token})
+
+                    })
+                    .catch(err =>{
+                        res.send('error: ' + err)
+                    })
+                
+            }else{
+                res.json({error: 'Postulacion ya existe'})
+            }
+
+        })
+        .catch(err =>{
+            res.send('error: ' + err)
+        })
+})
 
 
 

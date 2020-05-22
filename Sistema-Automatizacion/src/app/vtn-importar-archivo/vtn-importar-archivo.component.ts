@@ -31,8 +31,8 @@ export interface Postulacion{
   cedula: String;   
   enfasis: String; 
   sede:String; 
-  nota:String;
-  memo:boolean; 
+  nota:number;
+  memo:number; 
 
 }
 
@@ -66,12 +66,12 @@ export class VtnImportarArchivoComponent implements OnInit {
    
   }
   postulacion: Postulacion = {
-    periodo:'I Bimestre 20201',
+    periodo:'Bimestre 2 2017',
     cedula:'',  
     enfasis:'',
     sede:'', 
-    nota:'',
-    memo:false, 
+    nota:0,
+    memo:0, 
 
   }
 
@@ -155,18 +155,18 @@ export class VtnImportarArchivoComponent implements OnInit {
           this.postul.afinidad, this.postul.puestoActual, this.postul.experienciaProfesion,
           this.postul.cursoAfin, this.postul.tituloTecnico, this.postul.cursoAprovechamiento, this.postul.tituloDiplomado );
         
-        this.postulacion.nota = nfinal
+        this.postulacion.nota = 73
+        this.postulacion.memo = 2
 
         //llamada insert postulacion
-        this.http.post<any>('/router/registerpostulante',this.postul).subscribe(
+        this.http.post<any>('/router/registerpostulacion',this.postulacion).subscribe(
           (res) => {
             if (res.answer) {
-              console.log('postulante ingresado')
+              console.log('postulacion creada')
             }
           },
           (err) => console.log(err)
         );
-
         
       } 
 
