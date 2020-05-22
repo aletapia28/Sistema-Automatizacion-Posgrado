@@ -19,13 +19,14 @@
                         <mat-option value="Bimestre 4 2017" (click)='selectPeriodo()'>Bimestre 4 2017</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <button mat-icon-button class="icon1" matTooltip="Descargar Archivo" matTooltipPosition="after">
+                <button mat-icon-button class="icon1" matTooltip="Descargar Archivo" matTooltipPosition="after" (click)='descargarArchivo()'>
                     <mat-icon>save_alt</mat-icon>
                 </button>
             </div>
         </div>
 
-        <div class="contenedor-tabla">
+        <div class="contenedor-tabla"
+        #TABLE>
             <table mat-table [dataSource]="dataSource" matSort>
 
                 <!-- cedula Column -->
@@ -67,7 +68,7 @@
                 <!-- ingles Column -->
                 <ng-container matColumnDef="ingles">
                     <th mat-header-cell *matHeaderCellDef> Inglés </th>
-                    <td mat-cell *matCellDef="let element"> {{element.ingles}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.ingles?'Si':'No'}} </td>
                 </ng-container>
 
                 <!-- gradoAcademico Column -->
@@ -85,13 +86,13 @@
                 <!-- afinidad Column -->
                 <ng-container matColumnDef="afinidad">
                     <th mat-header-cell *matHeaderCellDef> Afinidad </th>
-                    <td mat-cell *matCellDef="let element"> {{element.afinidad}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.afinidad?'Si':'No'}} </td>
                 </ng-container>
 
                 <!-- acreditada Column -->
                 <ng-container matColumnDef="acreditada">
                     <th mat-header-cell *matHeaderCellDef> Acreditada </th>
-                    <td mat-cell *matCellDef="let element"> {{element.acreditada}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.acreditada?'Si':'No'}} </td>
                 </ng-container>
 
                 <!-- puestoActual Column -->
@@ -103,7 +104,7 @@
                 <!-- experiencia Column -->
                 <ng-container matColumnDef="experiencia">
                     <th mat-header-cell *matHeaderCellDef> Experiencia Laboral </th>
-                    <td mat-cell *matCellDef="let element"> {{element.experiencia}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.experienciaProfesion}} </td>
                 </ng-container>
 
                 <!-- cursoAfin Column -->
@@ -115,7 +116,7 @@
                 <!-- tituloTecnico Column -->
                 <ng-container matColumnDef="tituloTecnico">
                     <th mat-header-cell *matHeaderCellDef> TÍtulo Técnico </th>
-                    <td mat-cell *matCellDef="let element"> {{element.tituloTecnico}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.tituloTecnico?'Si':'No'}} </td>
                 </ng-container>
 
                 <!-- cursoAprovechamiento Column -->
@@ -127,7 +128,7 @@
                 <!-- tituloDiplomado Column -->
                 <ng-container matColumnDef="tituloDiplomado">
                     <th mat-header-cell *matHeaderCellDef> Título Diplomado </th>
-                    <td mat-cell *matCellDef="let element"> {{element.tituloDiplomado}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.tituloDiplomado?'Si':'No'}} </td>
                 </ng-container>
 
                 <!-- promedioGeneral Column -->

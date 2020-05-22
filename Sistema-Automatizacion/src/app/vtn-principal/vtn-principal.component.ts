@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -6,10 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { DialogService } from '../shared/dialog.service';
 import { NotificationService } from '../shared/notification.service';
 import { Router } from '@angular/router';
+import { HttpClient,HttpParams } from '@angular/common/http'
 import { FormControl, FormGroup } from '@angular/forms';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-
+import * as XLSX from 'xlsx';
 
 export interface PeriodicElement {
   cedula: string;
@@ -35,46 +36,8 @@ export interface PeriodicElement {
   nota: number;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { cedula: '1167400493', nombre: 'Juan Perez RodriguezJuan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad LatinaUniversidad LatinaUniversidad LatinaUniversidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 39 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '19', enfasis: 'Juan', sede: 'Juan', nota: 35 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '49', enfasis: 'Juan', sede: 'Juan', nota: 30 },
-];
-
+const ELEMENT_DATA: PeriodicElement[] = [];
+ 
 @Component({
   selector: 'app-vtn-principal',
   templateUrl: './vtn-principal.component.html',
@@ -90,12 +53,15 @@ export class VtnPrincipalComponent {
   show: boolean;
   datos = new FormControl('');
   periodo = new FormControl('');
+  @ViewChild('TABLE') table: ElementRef;
 
   constructor(
     private dialogService: DialogService,
     private notificationService: NotificationService,
     private router: Router,
-    private servicioDatos: ServicioDatosService 
+    private servicioDatos: ServicioDatosService,
+    private http: HttpClient, 
+
   ) { }
 
   displayedColumns: string[] =
@@ -129,15 +95,23 @@ export class VtnPrincipalComponent {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    //this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnInit() {
-    //dataSource = new MatTableDataSource(GetDatos());
     
+   
+    this.http.get<any>('/router/obtenerpostulantes').subscribe(
+      (respost )=> {
+        var prueb = respost[0]
+        this.dataSource = new MatTableDataSource(respost[0]);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      }
+      
+    );
     this.show = this.servicioDatos.showTipoUsuario;
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    
   }
 
   goImportarArchivo() {
@@ -168,6 +142,18 @@ export class VtnPrincipalComponent {
 
   selectPeriodo() {
     console.log(this.periodo.value);
+  }
+
+  descargarArchivo() {
+    const ws: XLSX.WorkSheet=XLSX.utils.table_to_sheet(this.table.nativeElement);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Perido');
+    
+    /* save to file */
+    XLSX.writeFile(wb, 'SheetJS.xlsx');
+    console.log(this.periodo.value);
+    
+  
   }
 }
 

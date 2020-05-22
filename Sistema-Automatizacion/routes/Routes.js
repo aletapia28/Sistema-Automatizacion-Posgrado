@@ -324,7 +324,7 @@ router.delete('/deleteperiodo', function(req, res, next) {
 //GET ALL PERIODOS 
 //falta probar
 router.get('/getallperiodos', function(req, res, next) {
-    Periodo.findAll()
+    Periodo.findOne()
       .then(tasks => {
         res.json(tasks)
       })
@@ -482,9 +482,39 @@ router.post('/registerpostulacion',(req,res) =>{
             res.send('error: ' + err)
         })
 })
+
+//get all postulaciones 
+router.get('/getallpostulaciones', function(req, res, next) {
+    Postulacion.findAll({
+        where: {
+          periodo: req.body.periodo
+        }
+      })
+      .then(tasks => {
+        res.json(tasks)
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
+
+/////////////////////////////////////////
+//CRUD ATRIBUTOS
 //get atributos 
 router.get('/getallatributos', function(req, res, next) {
     Atributo.findAll()
+      .then(tasks => {
+        res.json(tasks)
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
+
+///////////////////////////
+//CRUD PERIODOS 
+router.get('/getallperiodos', function(req, res, next) {
+    Periodo.findAll()
       .then(tasks => {
         res.json(tasks)
       })
@@ -505,29 +535,20 @@ router.put('/editSuper', (req, res) => {
     })
     
 })
-//definido no implementado
-router.put('/editAsist', (req, res) => {
-    db.mysqlConnection.query('CALL EditarAsistente(?, ?, ?)',(err,row,fields)=>{
-        if(!err)
-        res.send(row);
-        else
-        console.log(err);
-    })
-    
-})
-//definido no esta implementado
-router.get('/allpostulantes', (req,res) =>{
-    db.mysqlConnection.query('CALL SelectPostulantes', (err,row,fields)=>{
-        if(!err)
-        res.send(row);
-        else
-        console.log(err);
 
+//
+router.post('/crearperiodo', (req, res) => {
+    db.mysqlConnection.query('CALL CrearPeriodo(?,?,?)', [req.body.periodo + " " + req.body.fechaInicio.slice(0,4), req.body.fechaInicio.slice(0,10), req.body.fechaCierre.slice(0,10)], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
     })
+
 })
-//definido no esta implementado
-router.post('/createSuper', (req, res) => {
-    db.mysqlConnection.query('CALL CrearSuperusuario(?, ?)',(err,row,fields)=>{
+//obtener postulantes 
+router.get('/obtenerpostulantes', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerPostulaciones(?)',['Bimestre 2 2017'],(err,row,fields)=>{
         if(!err)
         res.send(row);
         else
@@ -535,9 +556,11 @@ router.post('/createSuper', (req, res) => {
     })
     
 })
-//definido no esta implementado 
-router.post('/createpostulacion', (req, res) => {
-    db.mysqlConnection.query('CALL CrearPostulacion(?,?,?,?,?, ?)',(err,row,fields)=>{
+
+//obtener asistentes 
+//obtener postulantes 
+router.get('/obtenerasistentes', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerAsistentes()',(err,row,fields)=>{
         if(!err)
         res.send(row);
         else
@@ -545,6 +568,7 @@ router.post('/createpostulacion', (req, res) => {
     })
     
 })
+
 
 
 //LOGIN

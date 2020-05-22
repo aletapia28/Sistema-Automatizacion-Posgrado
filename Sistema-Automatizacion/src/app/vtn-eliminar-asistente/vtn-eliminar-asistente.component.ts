@@ -63,6 +63,13 @@ export class VtnEliminarAsistenteComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.http.get<any>('/router/obtenerasistentes').subscribe(
+      (respost )=> {
+
+        this.dataSource = new MatTableDataSource(respost[0]);
+      }
+      
+    );
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }

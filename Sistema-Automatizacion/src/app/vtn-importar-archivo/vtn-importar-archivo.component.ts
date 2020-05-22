@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthenticationService, TokenPayload, Tokenuser } from '../authentication.service'
 import { ServicioDatosService } from '../shared/servicio-datos.service';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient,HttpParams } from '@angular/common/http'
+import { HttpHeaders } from '@angular/common/http'
+
 import * as XLSX from 'xlsx';
+import { Postulante } from '../vtn-importar-periodo/vtn-importar-periodo.component';
 
 export interface Postulant{
   cedula: String;
@@ -74,6 +77,8 @@ export class VtnImportarArchivoComponent implements OnInit {
     memo:0, 
 
   }
+  post: Postulante[]
+  getpostulacion: Postulacion[]
 
   constructor(private http: HttpClient, private servicioDatos: ServicioDatosService) { }
 
@@ -156,9 +161,13 @@ export class VtnImportarArchivoComponent implements OnInit {
           this.postul.cursoAfin, this.postul.tituloTecnico, this.postul.cursoAprovechamiento, this.postul.tituloDiplomado );
         
         this.postulacion.nota = 73
-        this.postulacion.memo = 2
+        this.postulacion.memo = 1
 
         //llamada insert postulacion
+        console.log(this.postulacion.cedula)
+        console.log(this.postulacion.periodo)
+
+
         this.http.post<any>('/router/registerpostulacion',this.postulacion).subscribe(
           (res) => {
             if (res.answer) {
@@ -174,26 +183,30 @@ export class VtnImportarArchivoComponent implements OnInit {
     reader.readAsBinaryString(target.files[0]);
 
   }
-  //funcion para convertir a excel que usaremos luego :)
-  /*
-   public exportToFile(fileName: string, element_id: string) {
-    if (!element_id) throw new Error('Element Id does not exists');
-
-    let tbl = document.getElementById(element_id);
-    let wb = XLSX.utils.table_to_book(tbl);
-    XLSX.writeFile(wb, fileName + '.xlsx');
-  }
-  */
+  
 
   public calcularnota(ingles:number,gradoAcademico:String,afinidad:String,puestoActual:String,
     experiencia:number,cursoAfin:number, titulotec:number, cursoAprov:number, tituloDiplomado:number)
   {
-    var nota = 59; 
+    var nota = 0; 
+    this.http.get<any>('/router/getallatributos').subscribe(
+      (res) => {
+        if (res.answer) {
+          console.log('postulacion creada')
+          
+        }
+      },
+      (err) => console.log(err)
+    );
     return nota 
   }
 
   onSubmit() {
     console.log(this.importarAForm.value);
+     //llamada insert postulacion
+    
+    
+     
     
   }
 }
