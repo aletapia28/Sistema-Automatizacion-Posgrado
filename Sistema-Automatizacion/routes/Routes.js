@@ -358,7 +358,10 @@ router.get('/VerPeriodos', (req, res) => {
 router.post('/CerrarPeriodoActual', (req, res) => {
     db.mysqlConnection.query('CALL CerrarPeriodoActual()', (err, row, fields) => {
         if (!err)
-            res.send(row);
+            if (row.affectedRows == 1)
+            res.send({response:true});
+            else
+            res.send({response:false})
         else
             console.log(err);
     })
