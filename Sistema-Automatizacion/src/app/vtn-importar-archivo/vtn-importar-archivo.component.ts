@@ -108,7 +108,6 @@ export class VtnImportarArchivoComponent implements OnInit {
       var size = prueba.length
       var cont,y,nfinal 
       for (cont = 3; cont < size; cont++) {
-        console.log('dentro del for')
         y = datap[cont]
         var keyname = '9', keyid = '11', keytel1 = '13', keytel2 = '14', keycorr1 = '15', keycorr2 = '16',
         keying = '17', keysede = '18', keyenf = '19', keyaf = '20', keyga = '21', keyuni = '23', keyprom = '24',
@@ -156,18 +155,12 @@ export class VtnImportarArchivoComponent implements OnInit {
         
 
         //calcular nota
-        nfinal = this.calcularnota(this.postul.ingles,this.postul.gradoAcademico, 
+        nfinal = this.calcularnota(this.postul.acreditada, this.postul.gradoAcademico, this.postul.promedioGeneral,
           this.postul.afinidad, this.postul.puestoActual, this.postul.experienciaProfesion,
           this.postul.cursoAfin, this.postul.tituloTecnico, this.postul.cursoAprovechamiento, this.postul.tituloDiplomado );
         
         this.postulacion.nota = 73
         this.postulacion.memo = 1
-
-        //llamada insert postulacion
-        console.log(this.postulacion.cedula)
-        console.log(this.postulacion.periodo)
-
-
         this.http.post<any>('/router/registerpostulacion',this.postulacion).subscribe(
           (res) => {
             if (res.answer) {
@@ -185,18 +178,47 @@ export class VtnImportarArchivoComponent implements OnInit {
   }
   
 
-  public calcularnota(ingles:number,gradoAcademico:String,afinidad:String,puestoActual:String,
+  public calcularnota(acreditada:number, gradoAcademico:String,promgeneral:number, afinidad:String,puestoActual:String,
     experiencia:number,cursoAfin:number, titulotec:number, cursoAprov:number, tituloDiplomado:number)
   {
     var nota = 0; 
     this.http.get<any>('/router/getallatributos').subscribe(
-      (res) => {
-        if (res.answer) {
-          console.log('postulacion creada')
-          
+      (respost )=> {
+        var prueb = respost[0]
+        console.log(prueb)
+        //grado academico 
+        var cont; 
+        for (cont = 0; cont < 4; cont++) {
+          if(gradoAcademico == respost[0][cont].nombre){
+            nota+= respost[0][cont].peso
+          }
         }
-      },
-      (err) => console.log(err)
+
+        if(experiencia >= 3 && experiencia < 6){nota+=10}
+        else if(experiencia >= 6 && experiencia <10){nota+=15}
+        else if(experiencia >=10){nota+=20}
+
+        for (cont = 8; cont < 13; cont++) {
+          if(puestoActual == respost[0][cont].nombre){
+            nota+= respost[0][cont].peso
+          }
+        }
+
+        for (cont = 13; cont < 19; cont++) {
+          if(afinidad == respost[0][cont].nombre){
+            nota+= respost[0][cont].peso
+          }
+        }
+        if(acreditada ==1){nota+=10}
+        nota+= ~~(promgeneral/10)
+        nota+=cursoAprov
+        if(titulotec == 1){nota+=respost[0][23].peso}
+        if(cursoAfin == 1){nota+=respost[0][24].peso}
+        if(tituloDiplomado == 1){nota+=10}
+        console.log(nota)
+        
+      }
+      
     );
     return nota 
   }
