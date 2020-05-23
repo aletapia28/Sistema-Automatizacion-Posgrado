@@ -46,7 +46,8 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   cerrarPeriodo() {
-    
+    //Valida en la BD si hay un periodo vigente, y lo cierra
+    //Retorna true o false si lo cerro
   }
 
   buscarPostulante() {

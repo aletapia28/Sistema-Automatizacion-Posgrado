@@ -46,7 +46,7 @@ export class VtnLoginComponent implements OnInit {
     console.log(email1);
     console.log(contrasena);
     
-    //if (los datos del usuario estan buenos)
+    //if (metodo BD validar que es usuario)
     //{
       //if es superusuario
         this.servicioDatos.showTipoUsuario = true;
