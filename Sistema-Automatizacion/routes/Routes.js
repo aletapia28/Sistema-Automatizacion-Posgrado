@@ -120,7 +120,7 @@ router.get('/getallusers', function (req, res, next) {
 
 //REGISTRAR ASISTENTES
 router.post('/registerasistente', (req, res) => {
-    db.mysqlConnection.query('CALL CrearAsistente(?,?,?)', [req.body.correo,req.body.password,req.body.nombre,req.body.cedula ], (err, row, fields) => {
+    db.mysqlConnection.query('CALL CrearAsistente(?,?,?,?)', [req.body.correo,req.body.password,req.body.nombre,req.body.cedula ], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -145,7 +145,7 @@ router.delete('/deleteasistant', function (req, res, next) {
 
 //ACTUALIZAR ASISTENTES
 router.put('/updateasistant', function (req, res, next) {
-    db.mysqlConnection.query('CALL EditarAsistente(?,?,?,?)', [req.body.correo, req.body.password, req.body.nombre, req.body.cedula], (err, row, fields) => {
+    db.mysqlConnection.query('CALL EditarAsistente(?,?,?,?)', [req.body.correo, req.body.password, req.body.cedula, req.body.nombre], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
