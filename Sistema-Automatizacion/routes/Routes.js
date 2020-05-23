@@ -120,39 +120,12 @@ router.get('/getallusers', function (req, res, next) {
 
 //REGISTRAR ASISTENTES
 router.post('/registerasistente', (req, res) => {
-    const userData = {
-        correo: req.body.correo,
-        nombre: req.body.nombre,
-        cedula: req.body.cedula
-    }
-    Asistente.findOne({
-        where: {
-            correo: req.body.correo,
-        }
+    db.mysqlConnection.query('CALL CrearAsistente(?,?,?)', [req.body.correo,req.body.password,req.body.nombre,req.body.cedula ], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
     })
-        .then(asistente => {
-            if (!asistente) {
-                Asistente.create(userData)
-                    .then(asistente => {
-                        let token = jwt.sign(asistente.dataValues, process.env.SECRET_KEY, {
-                            expiresIn: 1440
-
-                        })
-                        res.json({ token: token })
-
-                    })
-                    .catch(err => {
-                        res.send('error: ' + err)
-                    })
-
-            } else {
-                res.json({ error: 'Asistente ya existe' })
-            }
-
-        })
-        .catch(err => {
-            res.send('error: ' + err)
-        })
 })
 
 //ELIMINAR ASISTENTES
@@ -172,53 +145,16 @@ router.delete('/deleteasistant', function (req, res, next) {
 
 //ACTUALIZAR ASISTENTES
 router.put('/updateasistant', function (req, res, next) {
-    if (!req.body.correo) {
-        res.status(400)
-        res.json({
-            error: 'Bad data'
-        })
-    } else {
-        Asistente.update(
-            { nombre: req.body.nombre, cedula: req.body.cedula },
-            { where: { correo: req.body.correo } }
-
-        )
-            .then(() => {
-                res.json({ status: 'Asistente Actualizado' })
-            })
-            .error(err => handleError(err))
-    }
-})
-
-//RETORNAR ASISTENTES
-router.get('/getallasist', function(req, res, next) {
-    Asistente.findAll()
-        .then(tasks => {
-            res.json(tasks)
-        })
-        .catch(err => {
-            res.send('error: ' + err)
-        })
-})
-
-//RETORNAR ASISTENTE BY CORREO
-router.get('/getasist', (req, res) => {
-    Asistente.findOne({
-        where: {
-            correo: req.body.correo
-        }
+    db.mysqlConnection.query('CALL EditarAsistente(?,?,?,?)', [req.body.correo, req.body.password, req.body.nombre, req.body.cedula], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
     })
-        .then(user => {
-            if (user) {
-                res.json(user)
-            } else {
-                res.send(user)
-            }
-        })
-        .catch(err => {
-            res.send('error: ' + err)
-        })
+   
 })
+
+
 
 /////////////////////////////////////////////////////////
 //CRUD SUPERUSUARIOS 
@@ -397,18 +333,6 @@ router.delete('/deleteperiodo', function (req, res, next) {
         })
 })
 
-//GET ALL PERIODOS 
-//falta probar
-router.get('/getallperiodos', function(req, res, next) {
-    Periodo.findOne()
-      .then(tasks => {
-        res.json(tasks)
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })
-  })
-
 /////////////////////////////////////////////////////////
 //CRUD POSTULANTES
 
@@ -478,17 +402,6 @@ router.delete('/deletepostulante', function (req, res, next) {
             res.send('error: ' + err)
         })
 })
-
-//GET ALL POSTULANTES 
-router.get('/getallpost', function(req, res, next) {
-    Postulant.findAll()
-      .then(postul => {
-        res.json(postul)
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })
-  })
 
 //UPDATE POSTULANTE 
 router.put('/updatepostulant', function(req, res, next) {
@@ -578,13 +491,12 @@ router.get('/getallpostulaciones', function(req, res, next) {
 //CRUD ATRIBUTOS
 //get atributos 
 router.get('/getallatributos', function(req, res, next) {
-    Atributo.findAll()
-      .then(tasks => {
-        res.json(tasks)
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })
+    db.mysqlConnection.query('CALL ObtenerAtributos()',(err,row,fields)=>{
+        if(!err)
+        res.send(row);
+        else
+            console.log(err);
+    })
   })
 
 ///////////////////////////
@@ -603,7 +515,8 @@ router.get('/getallperiodos', function(req, res, next) {
 
 //edit superusuario
 router.put('/editSuper', (req, res) => {
-    db.mysqlConnection.query('CALL EditarSuperusuario(?, ?, ?)', (err, row, fields) => {
+    db.mysqlConnection.query('CALL EditarSuperusuario(?, ?, ?)',[req.body.correo, req.body.password,req.body.correoEnvio],
+    (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -631,11 +544,6 @@ router.get('/obtenerpostulantes', (req, res) => {
     db.mysqlConnection.query('CALL ObtenerPostulaciones(?)',['Bimestre 2 2017'],(err,row,fields)=>{
         if(!err)
         res.send(row);
-//definido no esta implementado
-// router.post('/createSuper', (req, res) => {
-//     db.mysqlConnection.query('CALL CrearSuperusuario(?, ?)', (err, row, fields) => {
-//         if (!err)
-//             res.send(row);
         else
             console.log(err);
     })
@@ -721,47 +629,6 @@ router.get('/perfil', (req, res) => {
             res.send('error: ' + err)
         })
 })
-
-//insert periodo
-router.post('/registerperiodo', (req, res) => {
-    const userData = {
-        periodo: req.body.periodo,
-        fechaInicio: req.body.fechaInicio,
-        fechaCierre: req.body.fechaCierre
-    }
-    Periodo.findOne({
-        where: {
-            periodo: req.body.periodo,
-        }
-    })
-        //bcrypt
-        .then(periodo => {
-            if (!periodo) {
-                //const hash = bcrypt.hashSync(userData.password,30)
-                // userData.password = hash
-                Periodo.create(userData)
-                    .then(periodo => {
-                        let token = jwt.sign(periodo.dataValues, process.env.SECRET_KEY, {
-                            expiresIn: 1440
-
-                        })
-                        res.json({ token: token })
-
-                    })
-                    .catch(err => {
-                        res.send('error: ' + err)
-                    })
-
-            } else {
-                res.json({ error: 'Periodo ya existe' })
-            }
-
-        })
-        .catch(err => {
-            res.send('error: ' + err)
-        })
-})
-
 
 
 module.exports = router

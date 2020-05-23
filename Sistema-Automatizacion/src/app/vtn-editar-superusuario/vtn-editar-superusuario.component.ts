@@ -46,31 +46,18 @@ export class VtnEditarSuperusuarioComponent implements OnInit {
     let correnv = this.editarSupForm.get('correo').value;
     let newpass = this.editarSupForm.get('passwd').value;
 
-    const formData = { correo: correopr, correoEnvio: correnv }
-    const formData2 = {correo: correopr, password: newpass}
+    const formData = { correo: correopr, password: newpass, correoEnvio: correnv }
 
     //actualiza correo en superusuario
-    this.http.put<any>('/router/updatesuper', formData).subscribe(
+    this.http.put<any>('/router/editSuper', formData).subscribe(
       (res) => {
         if (res.answer) {
-          console.log('Superusuario actualizado correo')
+          console.log('Superusuario actualizado')
         }
       },
       (err) => console.log(err)
     );
-    //actualiza contrasena en tabla usuario
-    this.http.put<any>('/router/updateusuario', formData2).subscribe(
-      (res)=>{
-        if (res.answer){
-          console.log('Contrasena actualizada')
-        }
-      },
-      (err) => console.log(err)
-  );
-
-
-
-    
+  
   }
 
 }
