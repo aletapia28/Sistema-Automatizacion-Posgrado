@@ -9,7 +9,8 @@ import { TooltipPosition } from '@angular/material/tooltip';
 import { FormControl } from '@angular/forms';
 import { NotificationService } from '../shared/notification.service';
 import { Router } from '@angular/router';
-import { ServicioDatosService } from '../shared/servicio-datos.service'
+import { ServicioDatosService } from '../shared/servicio-datos.service';
+import { HttpClient } from '@angular/common/http'
 
 export interface Usuarios {
   cedula: string;
@@ -42,7 +43,8 @@ export class VtnEliminarAsistenteComponent implements OnInit {
     private dialogService: DialogService,
     private notificationService: NotificationService,
     private router: Router,
-    private servicioDatos: ServicioDatosService 
+    private servicioDatos: ServicioDatosService,
+    private http: HttpClient 
   ) { }
 
   displayedColumns: string[] = [
@@ -61,6 +63,13 @@ export class VtnEliminarAsistenteComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.http.get<any>('/router/obtenerasistentes').subscribe(
+      (respost )=> {
+
+        this.dataSource = new MatTableDataSource(respost[0]);
+      }
+      
+    );
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
@@ -71,10 +80,20 @@ export class VtnEliminarAsistenteComponent implements OnInit {
         console.log(res);
         this.notificationService.success('Eliminado Correctamente');
 
+        let correopr = this.servicioDatos.showCorreo;
+        const formData = { correo:correopr }
+
         // HACER LOGICA DE BORRDO
-        // if(res){
-        //   this.dialogService.delete($key);
-        //   this.notificationSERIVE.('DELETE');
+        /*
+        this.http.delete<any>('/router/deleteasistant', correoactual).subscribe(
+          (res) => {
+            if (res.answer) {
+              this.dialogService.delete($key);
+              this.notificationSERIVE.('DELETE');
+            }
+          },
+          (err) => console.log(err)
+        );*/
 
       });
   }
@@ -82,6 +101,8 @@ export class VtnEliminarAsistenteComponent implements OnInit {
   onEdit(row, key) {
     this.servicioDatos.showCorreo = row.correo;
     this.router.navigate(['editAsis']);
+
+    
   }
 
 }
