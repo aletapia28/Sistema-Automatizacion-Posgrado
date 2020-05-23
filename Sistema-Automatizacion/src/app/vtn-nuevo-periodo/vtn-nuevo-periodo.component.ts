@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthenticationService,TokenPeriod } from '../authentication.service'
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-vtn-nuevo-periodo',
@@ -9,7 +12,13 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 export class VtnNuevoPeriodoComponent implements OnInit {
 
-  constructor() { }
+  credentials: TokenPeriod = {
+    periodo: '',
+    fechaInicio: null,
+    fechaCierre: null
+  }
+
+  constructor(private auth: AuthenticationService, private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -29,8 +38,32 @@ export class VtnNuevoPeriodoComponent implements OnInit {
 
     //Cuando ocupen sacar un solo dato es con
     //console.log(this.loginForm.get('correo').value);
+    //tenemos que sacar el ano
+    let period= this.nuevoPForm.get('bimestre').value;
+    let fechain= this.nuevoPForm.get('fechaI').value;
+    let fechafin= this.nuevoPForm.get('fechaF').value;
     
     console.log(this.nuevoPForm.value);
+
+    //tenemos que agregar el ano a periodo
+    this.credentials.periodo = period
+    this.credentials.fechaInicio = fechain
+    this.credentials.fechaCierre = fechafin
+    
+
+    this.credentials.periodo = period
+    this.credentials.fechaInicio = fechain
+    this.credentials.fechaCierre = fechafin
+
+    const formData = { periodo: period, fechaInicio:fechain, fechaCierre: fechafin }
+
+
+    this.http.post<any>('/router/CrearPeriodo', formData).subscribe(
+      (res) => {console.log(res)},
+      (err) => console.log(err)
+    );
   }
+
+  //tenemos que meter el periodo en editar periodo
 
 }

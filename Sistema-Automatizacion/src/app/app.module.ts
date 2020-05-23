@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'
+import { RouterModule, Routes } from '@angular/router'
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -43,8 +45,20 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { Conditional } from '@angular/compiler';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { AuthenticationService } from './authentication.service'
+import { AuthGuardService } from './auth-guard.service'
 
-
+//esto es para setear rutas para navigatebyurl en los components 
+const routes: Routes = [
+  { path: '', component: VtnPrincipalComponent },
+  { path: 'login', component: VtnLoginComponent},
+  { path: 'register', component: VtnCrearUsuarioComponent },
+  {
+    path: 'profile',
+    component: VtnEditarSuperusuarioComponent,
+    canActivate: [AuthGuardService]
+  }
+]
 
 
 @NgModule({
@@ -89,9 +103,11 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTooltipModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes),
     MatSnackBarModule
   ],
-  providers: [],
+  providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent],
   entryComponents:[ConfirmDialogComponent]
 })

@@ -17,7 +17,7 @@
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Correo para envío de notificaciones</mat-label>
-                    <input matInput placeholder="pat@example.com" [formControl]="email" formControlName="correo" required>
+                    <input matInput placeholder="pat@example.com" formControlName="correo" required>
                     <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
 
