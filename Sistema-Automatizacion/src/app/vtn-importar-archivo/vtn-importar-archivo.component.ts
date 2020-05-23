@@ -212,7 +212,7 @@ export class VtnImportarArchivoComponent implements OnInit {
         if(acreditada ==1){nota+=10}
         nota+= ~~(promgeneral/10)
         if(titulotec == 1){nota+=respost[0][23].peso}
-        if(cursoAfin == 1){nota+=respost[0][24].peso}
+        if(cursoAfin == 1){nota+=5}
         if(tituloDiplomado == 1){nota+=10}
         if(cursoAprov<6){nota+=cursoAprov}else{nota+=5}
         console.log(nota)
