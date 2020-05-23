@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
-
+// import {ErrorStateMatcher} from '@angular/material/core';
 
 @Component({
   selector: 'app-vtn-login',
@@ -19,8 +19,9 @@ export class VtnLoginComponent implements OnInit {
   }
 
   email = new FormControl('', [
-    Validators.required,
-    Validators.email,
+    // Validators.required,
+    // Validators.email,
+    
   ]);
 
   loginForm = new FormGroup({
@@ -39,8 +40,11 @@ export class VtnLoginComponent implements OnInit {
   onSubmit() {
     //LOGIN
 
-    let email = this.loginForm.get('correo').value;
+    let email1 = this.loginForm.get('correo').value;
     let contrasena = this.loginForm.get('passwd').value;
+
+    console.log(email1);
+    console.log(contrasena);
     
     //if (los datos del usuario estan buenos)
     //{
@@ -49,7 +53,7 @@ export class VtnLoginComponent implements OnInit {
       //if es asistente
         //this.servicioDatos.showTipoUsuario = false;
 
-      this.servicioDatos.showCorreo = email;
+      this.servicioDatos.showCorreo = email1;
       this.servicioDatos.showSesion = true;
       this.router.navigate(['principal'])
     //}
