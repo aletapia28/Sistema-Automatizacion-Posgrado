@@ -62,15 +62,15 @@ export class VtnLoginComponent implements OnInit {
         //EXPLICAR ESTO
         this.http.post<any>('/router/isSuper', formData).subscribe(
           (res) => {
+            sessionStorage.setItem('correo', email);
+            sessionStorage.setItem('sesion', 'true');
             if (res.answer) {
-              this.servicioDatos.showTipoUsuario = true;
+              sessionStorage.setItem('tipoUsuario', 'true');
 
             } else {
-              this.servicioDatos.showTipoUsuario = false;
-
+              sessionStorage.setItem('tipoUsuario', 'false');
+              sessionStorage.setItem('correoAsistente', email);
             }
-            this.servicioDatos.showCorreo = email;
-            this.servicioDatos.showSesion = true;
             this.router.navigate(['principal'])
           },
           (err) => console.log(err)

@@ -16,11 +16,11 @@ export class BarraSistemaComponent implements OnInit {
   constructor(private router: Router, private servicioDatos: ServicioDatosService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.show = this.servicioDatos.showTipoUsuario;
+    this.show = sessionStorage.getItem('tipoUsuario')=='true';
   }
 
   signOut() {
-    this.servicioDatos.showSesion = false;
+    sessionStorage.setItem('sesion', 'false');
     this.router.navigate(['']);
   }
 
@@ -29,7 +29,7 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   editarPerfil() {
-    if(this.servicioDatos.showTipoUsuario) {
+    if(sessionStorage.getItem('tipoUsuario') == 'true') {
       //Si es de tipo superusuario
       this.router.navigate(['editSup']);
     }
