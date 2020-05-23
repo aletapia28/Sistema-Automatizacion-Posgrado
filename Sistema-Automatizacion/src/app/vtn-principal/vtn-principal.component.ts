@@ -110,7 +110,7 @@ export class VtnPrincipalComponent {
       }
       
     );
-    this.show = this.servicioDatos.showTipoUsuario;
+    this.show = sessionStorage.getItem('tipoUsuario')=='true';
     
   }
 
@@ -147,7 +147,7 @@ export class VtnPrincipalComponent {
   descargarArchivo() {
     const ws: XLSX.WorkSheet=XLSX.utils.table_to_sheet(this.table.nativeElement);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Perido');
+    XLSX.utils.book_append_sheet(wb, ws, 'Periodo');
     
     /* save to file */
     XLSX.writeFile(wb, 'SheetJS.xlsx');
