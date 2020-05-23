@@ -159,7 +159,7 @@ export class VtnImportarArchivoComponent implements OnInit {
           this.postul.afinidad, this.postul.puestoActual, this.postul.experienciaProfesion,
           this.postul.cursoAfin, this.postul.tituloTecnico, this.postul.cursoAprovechamiento, this.postul.tituloDiplomado );
         
-        this.postulacion.nota = 73
+        this.postulacion.nota = nfinal
         this.postulacion.memo = 1
         this.http.post<any>('/router/registerpostulacion',this.postulacion).subscribe(
           (res) => {
@@ -211,10 +211,10 @@ export class VtnImportarArchivoComponent implements OnInit {
         }
         if(acreditada ==1){nota+=10}
         nota+= ~~(promgeneral/10)
-        nota+=cursoAprov
         if(titulotec == 1){nota+=respost[0][23].peso}
         if(cursoAfin == 1){nota+=respost[0][24].peso}
         if(tituloDiplomado == 1){nota+=10}
+        if(cursoAprov<6){nota+=cursoAprov}else{nota+=5}
         console.log(nota)
         
       }
