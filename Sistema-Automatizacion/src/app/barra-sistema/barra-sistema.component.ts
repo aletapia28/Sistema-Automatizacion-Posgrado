@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
+import { HttpClient } from '@angular/common/http'
+
 
 @Component({
   selector: 'app-barra-sistema',
@@ -11,7 +13,7 @@ export class BarraSistemaComponent implements OnInit {
 
   show: boolean;
 
-  constructor(private router: Router, private servicioDatos: ServicioDatosService) { }
+  constructor(private router: Router, private servicioDatos: ServicioDatosService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.show = this.servicioDatos.showTipoUsuario;
@@ -46,6 +48,11 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   cerrarPeriodo() {
+
+    this.http.post<any>('/router/CerrarPeriodoActual', {}).subscribe(
+      (res) => {console.log(res)},
+      (err) => console.log(err)
+    );
     //Valida en la BD si hay un periodo vigente, y lo cierra
     //Retorna true o false si lo cerro
   }

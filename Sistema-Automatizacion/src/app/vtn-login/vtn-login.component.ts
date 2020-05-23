@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, NgForm, FormGroupDirective } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
+import { AuthenticationService, TokenPayload, Tokenuser } from '../authentication.service'
+import { HttpClient } from '@angular/common/http'
 
 
 @Component({
@@ -10,10 +12,17 @@ import { ServicioDatosService } from '../shared/servicio-datos.service'
   styleUrls: ['./vtn-login.component.css']
 })
 export class VtnLoginComponent implements OnInit {
+  credentials: TokenPayload = {
+    correo: '',
+    password: '',
+  }
+  credsuperuser:Tokenuser ={
+    correo:''
+  }
 
   hide = true;
 
-  constructor(private router: Router, private servicioDatos: ServicioDatosService) { }
+  constructor( private http: HttpClient, private auth: AuthenticationService, private router: Router, private servicioDatos: ServicioDatosService) { }
 
   ngOnInit(): void {
   }
@@ -41,18 +50,37 @@ export class VtnLoginComponent implements OnInit {
 
     let email = this.loginForm.get('correo').value;
     let contrasena = this.loginForm.get('passwd').value;
-    
-    //if (metodo BD validar que es usuario)
-    //{
-      //if es superusuario
-        this.servicioDatos.showTipoUsuario = true;
-      //if es asistente
-        //this.servicioDatos.showTipoUsuario = false;
 
-      this.servicioDatos.showCorreo = email;
-      this.servicioDatos.showSesion = true;
-      this.router.navigate(['principal'])
-    //}
+    this.credentials.correo = email;
+    this.credentials.password = contrasena;
+
+    let boole
+    this.auth.login(this.credentials).subscribe(
+      (res) => {
+
+        const formData = { correo: email }
+        //EXPLICAR ESTO
+        this.http.post<any>('/router/isSuper', formData).subscribe(
+          (res) => {
+            if (res.answer) {
+              this.servicioDatos.showTipoUsuario = true;
+
+            } else {
+              this.servicioDatos.showTipoUsuario = false;
+
+            }
+            this.servicioDatos.showCorreo = email;
+            this.servicioDatos.showSesion = true;
+            this.router.navigate(['principal'])
+          },
+          (err) => console.log(err)
+        );
+
+      },
+      err => {
+        console.error(err)
+      }
+    )
+
   }
-
 }

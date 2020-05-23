@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, NgForm, FormGroupDirective } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ServicioDatosService } from '../shared/servicio-datos.service'
+import { AuthenticationService } from '../authentication.service'
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-vtn-editar-superusuario',
@@ -9,7 +13,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class VtnEditarSuperusuarioComponent implements OnInit {
   hide = true;
 
-  constructor() { }
+  constructor(private http: HttpClient, private servicioDatos: ServicioDatosService) { }
 
   ngOnInit(): void {
   }
@@ -35,6 +39,25 @@ export class VtnEditarSuperusuarioComponent implements OnInit {
 
   onSubmit() {
     console.log(this.editarSupForm.value);
+
+    //agarrar correo superusuario 
+    let correopr = this.servicioDatos.showCorreo;
+
+    let correnv = this.editarSupForm.get('correo').value;
+    let newpass = this.editarSupForm.get('passwd').value;
+
+    const formData = { correo: correopr, password: newpass, correoEnvio: correnv }
+
+    //actualiza correo en superusuario
+    this.http.put<any>('/router/editSuper', formData).subscribe(
+      (res) => {
+        if (res.answer) {
+          console.log('Superusuario actualizado')
+        }
+      },
+      (err) => console.log(err)
+    );
+  
   }
 
 }
