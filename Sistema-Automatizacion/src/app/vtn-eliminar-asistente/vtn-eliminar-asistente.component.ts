@@ -78,6 +78,10 @@ export class VtnEliminarAsistenteComponent implements OnInit {
     this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al usuario?","Una vez aceptado, será eliminado permanentemente del sistema")
       .afterClosed().subscribe(res => {
         console.log(res);
+
+        
+
+
        // this.notificationService.success('Eliminado Correctamente');
         let correopr = this.servicioDatos.showCorreo;
         const formData = { correo:correopr }
