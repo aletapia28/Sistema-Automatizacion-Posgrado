@@ -120,7 +120,7 @@ router.get('/getallusers', function (req, res, next) {
 
 //REGISTRAR ASISTENTES
 router.post('/registerasistente', (req, res) => {
-    db.mysqlConnection.query('CALL CrearAsistente(?,?,?)', [req.body.correo,req.body.password,req.body.nombre,req.body.cedula ], (err, row, fields) => {
+    db.mysqlConnection.query('CALL CrearAsistente(?,?,?)', [req.body.correo, req.body.password, req.body.nombre, req.body.cedula], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -151,7 +151,7 @@ router.put('/updateasistant', function (req, res, next) {
         else
             console.log(err);
     })
-   
+
 })
 
 
@@ -217,7 +217,7 @@ router.post('/isSuper', (req, res) => {
 })
 
 //ACTUALIZAR SUPERUSUARIO
-router.put('/updatesuper', function(req, res, next) {
+router.put('/updatesuper', function (req, res, next) {
     if (!req.body.correo) {
         res.status(400)
         res.json({
@@ -238,32 +238,28 @@ router.put('/updatesuper', function(req, res, next) {
 //CRUD PERIODO
 
 //REGISTRAR PERIODO
-router.post('/crearperiodo', (req, res) => {
-    db.mysqlConnection.query('CALL CrearPeriodo(?,?,?)', [req.body.periodo + " " + req.body.fechaInicio.slice(0,4), req.body.fechaInicio.slice(0,10), req.body.fechaCierre.slice(0,10)], (err, row, fields) => {
-        if (!err)
-            res.send(row);
-        else
-            console.log(err);
-    })
+// router.post('/crearperiodo', (req, res) => {
+//     db.mysqlConnection.query('CALL CrearPeriodo(?,?,?)', [req.body.periodo + " " + req.body.fechaInicio.slice(0,4), req.body.fechaInicio.slice(0,10), req.body.fechaCierre.slice(0,10)], (err, row, fields) => {
+//         if (!err)
+//             res.send(row);
+//         else
+//             console.log(err);
+//     })
 
-})
+// })
 
 
 //EDITAR PERIODO
 
 router.post('/EditarPeriodo', (req, res) => {
-    console.log(req.body.periodo.periodo);
-    console.log(req.body.fechaInicio.slice(0,10)); 
-    console.log(req.body.fechaCierre.slice(0,10));
-
-    db.mysqlConnection.query('CALL EditarPeriodo(?,?,?)', 
-    [req.body.periodo.periodo, req.body.fechaInicio.slice(0,10), req.body.fechaCierre.slice(0,10)],
-     (err, row, fields) => {
-        if (!err)
-            res.send(row);
-        else
-            console.log(err);
-    })
+    db.mysqlConnection.query('CALL EditarPeriodo(?,?,?)',
+        [req.body.periodo.periodo, req.body.fechaInicio.slice(0, 10), req.body.fechaCierre.slice(0, 10)],
+        (err, row, fields) => {
+            if (!err)
+                res.send(row);
+            else
+                console.log(err);
+        })
 
 })
 
@@ -300,9 +296,9 @@ router.post('/CerrarPeriodoActual', (req, res) => {
     db.mysqlConnection.query('CALL CerrarPeriodoActual()', (err, row, fields) => {
         if (!err)
             if (row.affectedRows == 1)
-            res.send({response:true});
+                res.send({ response: true });
             else
-            res.send({response:false})
+                res.send({ response: false })
         else
             console.log(err);
     })
@@ -410,34 +406,36 @@ router.delete('/deletepostulante', function (req, res, next) {
 })
 
 //UPDATE POSTULANTE 
-router.put('/updatepostulant', function(req, res, next) {
+router.put('/updatepostulant', function (req, res, next) {
     if (!req.body.cedula) {
-      res.status(400)
-      res.json({
-        error: 'Bad data'
-      })
-    } else {
-      Postulant.update(
-        { nombre: req.body.nombre,telefono1:req.body.telefono1,
-            telefono2: req.body.telefono2,correo1: req.body.correo1,
-            correo2: req.body.correo2,ingles: req.body.ingles,gradoAcademico: req.body.gradoAcademico,
-            universidad: req.body.universidad,afinidad: req.body.afinidad,acreditada: req.body.acreditada,
-            puestoActual: req.body.puestoActual,experienciaProfesion: req.body.experienciaProfesion,
-            cursoAfin: req.body.cursoAfin,tituloTecnico: req.body.tituloTecnico,
-            cursoAprovechamiento: req.body.cursoAprovechamiento,tituloDiplomado: req.body.tituloDiplomado,
-            promedioGeneral: req.body.promedioGeneral},
-        { where: {cedula: req.body.cedula} }
-        
-      )
-        .then(() => {
-          res.json({ status: 'Postulante Actualizado' })
+        res.status(400)
+        res.json({
+            error: 'Bad data'
         })
-        .error(err => handleError(err))
+    } else {
+        Postulant.update(
+            {
+                nombre: req.body.nombre, telefono1: req.body.telefono1,
+                telefono2: req.body.telefono2, correo1: req.body.correo1,
+                correo2: req.body.correo2, ingles: req.body.ingles, gradoAcademico: req.body.gradoAcademico,
+                universidad: req.body.universidad, afinidad: req.body.afinidad, acreditada: req.body.acreditada,
+                puestoActual: req.body.puestoActual, experienciaProfesion: req.body.experienciaProfesion,
+                cursoAfin: req.body.cursoAfin, tituloTecnico: req.body.tituloTecnico,
+                cursoAprovechamiento: req.body.cursoAprovechamiento, tituloDiplomado: req.body.tituloDiplomado,
+                promedioGeneral: req.body.promedioGeneral
+            },
+            { where: { cedula: req.body.cedula } }
+
+        )
+            .then(() => {
+                res.json({ status: 'Postulante Actualizado' })
+            })
+            .error(err => handleError(err))
     }
 })
 /////////////////////////////////////////////////////////
 //CRUD POSTULACION 
-router.post('/registerpostulacion',(req,res) =>{
+router.post('/registerpostulacion', (req, res) => {
     const userData = {
         periodo: req.body.periodo,
         cedula: req.body.cedula,
@@ -449,100 +447,108 @@ router.post('/registerpostulacion',(req,res) =>{
     Postulacion.findOne({
         where: {
             periodo: req.body.periodo,
-            cedula : req.body.cedula, 
+            cedula: req.body.cedula,
 
         }
     })
-        .then(postulante =>{
-            if(!postulante){
+        .then(postulante => {
+            if (!postulante) {
                 Postulacion.create(userData)
-                    .then(postulante =>{
-                        let token = jwt.sign(postulante.dataValues, process.env.SECRET_KEY,{
+                    .then(postulante => {
+                        let token = jwt.sign(postulante.dataValues, process.env.SECRET_KEY, {
                             expiresIn: 1440
 
                         })
-                        res.json({token: token})
+                        res.json({ token: token })
 
                     })
-                    .catch(err =>{
+                    .catch(err => {
                         res.send('error: ' + err)
                     })
-                
-            }else{
-                res.json({error: 'Postulacion ya existe'})
+
+            } else {
+                res.json({ error: 'Postulacion ya existe' })
             }
 
         })
-        .catch(err =>{
+        .catch(err => {
             res.send('error: ' + err)
         })
 })
 
 //get all postulaciones 
-router.get('/getallpostulaciones', function(req, res, next) {
+router.get('/getallpostulaciones', function (req, res, next) {
     Postulacion.findAll({
         where: {
-          periodo: req.body.periodo
+            periodo: req.body.periodo
         }
-      })
-      .then(tasks => {
-        res.json(tasks)
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })
-  })
+    })
+        .then(tasks => {
+            res.json(tasks)
+        })
+        .catch(err => {
+            res.send('error: ' + err)
+        })
+})
 
 /////////////////////////////////////////
 //CRUD ATRIBUTOS
 //get atributos 
-router.get('/getallatributos', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerAtributos()',(err,row,fields)=>{
-        if(!err)
-        res.send(row);
+router.get('/getallatributos', function (req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerAtributos()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
         else
             console.log(err);
     })
-  })
+})
 
 ///////////////////////////
 //CRUD PERIODOS 
-router.get('/getallperiodos', function(req, res, next) {
+router.get('/getallperiodos', function (req, res, next) {
     Periodo.findAll()
-      .then(tasks => {
-        res.json(tasks)
-      })
-      .catch(err => {
-        res.send('error: ' + err)
-      })
-  })
+        .then(tasks => {
+            res.json(tasks)
+        })
+        .catch(err => {
+            res.send('error: ' + err)
+        })
+})
 
 
 
 //edit superusuario
 router.put('/editSuper', (req, res) => {
-    db.mysqlConnection.query('CALL EditarSuperusuario(?, ?, ?)',[req.body.correo, req.body.password,req.body.correoEnvio],
-    (err, row, fields) => {
-        if (!err)
-            res.send(row);
-        else
-            console.log(err);
-    })
+    db.mysqlConnection.query('CALL EditarSuperusuario(?, ?, ?)', [req.body.correo, req.body.password, req.body.correoEnvio],
+        (err, row, fields) => {
+            if (!err)
+                res.send(row);
+            else
+                console.log(err);
+        })
 
 })
 
 //
-router.post('/crearperiodo', (req, res) => {
-    db.mysqlConnection.query('CALL CrearPeriodo(?,?,?)', [req.body.periodo + " " + req.body.fechaInicio.slice(0,4), req.body.fechaInicio.slice(0,10), req.body.fechaCierre.slice(0,10)], (err, row, fields) => {
+router.post('/CrearPeriodo', (req, res) => {
+    console.log(req.body.periodo + " " + req.body.fechaInicio.slice(0, 4));
+    console.log(req.body.fechaInicio.slice(0, 10));
+    console.log(req.body.fechaCierre.slice(0, 10));
 
-//definido no implementado
-//router.put('/editAsist', (req, res) => {
-    //db.mysqlConnection.query('CALL EditarAsistente(?, ?, ?)', (err, row, fields) => {
-        if (!err)
-            res.send(row);
-        else
-            console.log(err);
-    })
+    db.mysqlConnection.query('CALL CrearPeriodo(?,?,?)',
+    [req.body.periodo + " " + req.body.fechaInicio.slice(0, 4),
+    req.body.fechaInicio.slice(0, 10),
+    req.body.fechaCierre.slice(0, 10)],
+        
+        (err, row, fields) => {
+            if (!err) {
+                console.log(row);
+                 console.log(row[0]);
+                res.send(row);
+            }
+            else
+                console.log(err);
+        })
 
 })
 //obtener postulantes 
@@ -559,9 +565,9 @@ router.post('/obtenerpostulantes', (req, res) => {
 //obtener asistentes 
 //obtener postulantes 
 router.get('/obtenerasistentes', (req, res) => {
-    db.mysqlConnection.query('CALL ObtenerAsistentes()',(err,row,fields)=>{
-        if(!err)
-        res.send(row);
+    db.mysqlConnection.query('CALL ObtenerAsistentes()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
         else
             console.log(err);
     })
@@ -651,13 +657,13 @@ router.get('/getPeriodoAnterior', (req, res) => {
 //get Periodo Especifio
 
 router.post('/getPeriodoEspecifico', (req, res) => {
-    db.mysqlConnection.query('CALL PeriodoEspecifico(?)', [req.body.periodo] ,
-    (err, row, fields) => {
-        if (!err)
-            res.send(row);
-        else
-            console.log(err);
-    })
+    db.mysqlConnection.query('CALL PeriodoEspecifico(?)', [req.body.periodo],
+        (err, row, fields) => {
+            if (!err)
+                res.send(row);
+            else
+                console.log(err);
+        })
 
 })
 
