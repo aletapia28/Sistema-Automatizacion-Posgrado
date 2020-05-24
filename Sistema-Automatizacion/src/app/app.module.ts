@@ -46,7 +46,7 @@ import { Conditional } from '@angular/compiler';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthenticationService } from './authentication.service'
-import { AuthGuardService } from './auth-guard.service'
+import { AuthGuardService } from './auth-guard.service';
 
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
@@ -79,7 +79,6 @@ const routes: Routes = [
     VtnEditarSuperusuarioComponent,
     VtnEditarAsistenteComponent,
     ConfirmDialogComponent
-    
   ],
   imports: [
     BrowserModule,

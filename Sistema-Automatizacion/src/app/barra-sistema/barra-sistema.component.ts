@@ -48,9 +48,11 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   cerrarPeriodo() {
-
     this.http.post<any>('/router/CerrarPeriodoActual', {}).subscribe(
-      (res) => {console.log(res)},
+      (res) => {
+        console.log(res)
+        sessionStorage.setItem('periodoVigente', 'false');
+      },
       (err) => console.log(err)
     );
     //Valida en la BD si hay un periodo vigente, y lo cierra
