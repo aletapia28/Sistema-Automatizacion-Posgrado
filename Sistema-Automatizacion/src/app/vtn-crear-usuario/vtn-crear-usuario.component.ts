@@ -70,16 +70,13 @@ export class VtnCrearUsuarioComponent implements OnInit {
     this.asist.cedula = ced;
 
 
-    this.auth.register(this.credentials).subscribe(
-      (res) =>{
-        this.auth.registerasist(this.asist).subscribe(
-          (user) =>
-            {console.log('crear asistente' + user)}
-        )
-      },
+    const formData = {correo: email,password:contrasena,nombre:nomb,cedula:ced}
+
+
+    this.http.post<any>('/router/registerasistente', formData).subscribe(
+      (res) => {console.log(res)},
       (err) => console.log(err)
-      
-    )
+    );
 
   }
 
