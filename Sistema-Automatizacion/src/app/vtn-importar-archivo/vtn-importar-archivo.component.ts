@@ -122,6 +122,7 @@ export class VtnImportarArchivoComponent implements OnInit {
         this.postul.telefono1 = y[keytel1]
         //this.postul.telefono2= y[keytel2]
         this.postul.correo1= y[keycorr1]
+        
         //this.postul.correo2 = y[keycorr2]
         this.postul.afinidad = y[keyaf]
         this.postul.gradoAcademico = y[keyga]

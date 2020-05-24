@@ -120,17 +120,17 @@ export class VtnImportarPeriodoComponent implements OnInit {
         var keyname = '5', keyid = '1', keytel1 = '6', keytel2 = '7', keycorr1 = '9',
         keyenf = '10',keyga = '11', keyuni = '12', keyaf = '14',keyacred = '15',
         keypact = '16', keyexp = '19',keyaprov = '21',keyprom = '22', keynota = '30',keyaprov = '30'
-        
+        if(y[keyname] ===undefined){break;}
+        var corraux = y[keycorr1].split(';')
        
         //postulante
-        if(y[keyname] ===undefined){break;}
+        
         this.postul.cedula = y[keyid]
         console.log(this.postul.cedula)
         this.postul.nombre = y[keyname]
         this.postul.telefono1 = y[keytel1]
-        this.postul.telefono2= y[keytel2]
-        this.postul.correo1= y[keycorr1]
-        console.log(y[keycorr1])
+        
+        
 
       //   this.postul.correo2 = y[keycorr2]
         this.postul.afinidad = y[keyaf]
@@ -139,13 +139,14 @@ export class VtnImportarPeriodoComponent implements OnInit {
         this.postul.promedioGeneral = parseInt(y[keyprom])
         this.postul.cursoAprovechamiento=parseInt(y[keyaprov])
         //this.postul.cursoAfin = parseInt(y[keyafin])
-        if(y[keypact] === String){this.postul.puestoActual = y[keypact]}else{this.postul.puestoActual = 'No indica'}
+        if(typeof y[keypact] === 'string'){this.postul.puestoActual = y[keypact]}else{this.postul.puestoActual = 'No indica'}
         this.postul.experienciaProfesion= parseInt(y[keyexp])
 
 
         //conversiones a ints y validaciones de entradas vacias 
-        this.postul.telefono2 ='No aplica'
-        this.postul.correo2 ='No aplica'
+        if(typeof y[keytel2] === 'string'){this.postul.telefono2 = y[keytel2]}else{this.postul.telefono2 = 'No indica'}
+        if(typeof corraux[0] === 'string'){this.postul.correo1 = corraux[0]}else{this.postul.correo1 = 'No indica'}
+        if(typeof corraux[1] === 'string'){this.postul.correo2 = corraux[1]}else{this.postul.correo2 = 'No indica'}
         this.postul.ingles =0
         this.postul.tituloDiplomado =0
         this.postul.tituloTecnico =0
