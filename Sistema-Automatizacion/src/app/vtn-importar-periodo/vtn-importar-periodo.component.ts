@@ -92,8 +92,9 @@ export class VtnImportarPeriodoComponent implements OnInit {
   bimestreSource: string = "direct";
   fechaInicio = new FormControl(new Date());
   fechaFinal = new FormControl(new Date());
+  
   addfile(event){
-    //checks uploading file 
+    //checks uploading file /
     const target:  DataTransfer = <DataTransfer> (event.target);
     if(target.files.length !== 1) throw new Error('Solo debe importar un archivo a la vez');
     const reader: FileReader = new FileReader();
@@ -168,10 +169,8 @@ export class VtnImportarPeriodoComponent implements OnInit {
             }
           },
           (err) => console.log(err)
-        );
-        
+        );        
       } 
-
     };
     reader.readAsBinaryString(target.files[0]);
 

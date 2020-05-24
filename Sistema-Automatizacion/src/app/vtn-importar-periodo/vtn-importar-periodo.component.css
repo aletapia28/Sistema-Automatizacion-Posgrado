@@ -89,6 +89,13 @@ input[type=file] {
     display: none;
 }
 
+.archivo-subir{
+    color: red;
+    /* display: none; */
+}
+.archivo-subido{
+    color:red;
+}
 .span {
     display: flex;
     height: 30px;

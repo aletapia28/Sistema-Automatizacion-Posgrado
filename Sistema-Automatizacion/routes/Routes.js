@@ -129,18 +129,19 @@ router.post('/registerasistente', (req, res) => {
 })
 
 //ELIMINAR ASISTENTES
-router.delete('/deleteasistant', function (req, res, next) {
-    Asistente.destroy({
-        where: {
-            correo: req.body.correo
+router.post('/deleteasistant', function (req, res, next) {
+    console.log("req.body.correo");
+    console.log(req.body.correo);
+
+    db.mysqlConnection.query('CALL EliminarAsistente(?)', [req.body.correo],
+    (err, row, fields) => {
+        if (!err){
+            res.send(row);
+            console.log(row);
         }
+        else
+            res.send(err);
     })
-        .then(() => {
-            res.json({ status: 'Asistente Eliminado' })
-        })
-        .catch(err => {
-            res.send('error: ' + err)
-        })
 })
 
 //ACTUALIZAR ASISTENTES
@@ -536,14 +537,14 @@ router.post('/CrearPeriodo', (req, res) => {
     console.log(req.body.fechaCierre.slice(0, 10));
 
     db.mysqlConnection.query('CALL CrearPeriodo(?,?,?)',
-    [req.body.periodo + " " + req.body.fechaInicio.slice(0, 4),
-    req.body.fechaInicio.slice(0, 10),
-    req.body.fechaCierre.slice(0, 10)],
-        
+        [req.body.periodo + " " + req.body.fechaInicio.slice(0, 4),
+        req.body.fechaInicio.slice(0, 10),
+        req.body.fechaCierre.slice(0, 10)],
+
         (err, row, fields) => {
             if (!err) {
                 console.log(row);
-                 console.log(row[0]);
+                console.log(row[0]);
                 res.send(row);
             }
             else
