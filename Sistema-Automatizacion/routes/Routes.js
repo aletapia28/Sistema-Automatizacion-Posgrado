@@ -252,7 +252,13 @@ router.post('/crearperiodo', (req, res) => {
 //EDITAR PERIODO
 
 router.post('/EditarPeriodo', (req, res) => {
-    db.mysqlConnection.query('CALL EditarPeriodo(?,?,?)', [req.body.periodo, req.body.fechaInicio.slice(0,10), req.body.fechaCierre.slice(0,10)], (err, row, fields) => {
+    console.log(req.body.periodo.periodo);
+    console.log(req.body.fechaInicio.slice(0,10)); 
+    console.log(req.body.fechaCierre.slice(0,10));
+
+    db.mysqlConnection.query('CALL EditarPeriodo(?,?,?)', 
+    [req.body.periodo.periodo, req.body.fechaInicio.slice(0,10), req.body.fechaCierre.slice(0,10)],
+     (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -540,11 +546,11 @@ router.post('/crearperiodo', (req, res) => {
 
 })
 //obtener postulantes 
-router.get('/obtenerpostulantes', (req, res) => {
-    db.mysqlConnection.query('CALL ObtenerPostulaciones(?)',['Bimestre 2 2017'],(err,row,fields)=>{
-        if(!err)
-        res.send(row);
-        else
+router.post('/obtenerpostulantes', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerPostulaciones(?)', [req.body.periodo], (err, row, fields) => {
+        if (!err) {
+            res.send(row);
+        } else
             console.log(err);
     })
 
@@ -630,6 +636,34 @@ router.get('/perfil', (req, res) => {
         })
 })
 
+//get Periodo Anterior
+
+router.get('/getPeriodoAnterior', (req, res) => {
+    db.mysqlConnection.query('CALL PeriodoAnterior()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+
+})
+
+//get Periodo Especifio
+
+router.post('/getPeriodoEspecifico', (req, res) => {
+    db.mysqlConnection.query('CALL PeriodoEspecifico(?)', [req.body.periodo] ,
+    (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+
+})
+
+
 
 module.exports = router
+
+
 
