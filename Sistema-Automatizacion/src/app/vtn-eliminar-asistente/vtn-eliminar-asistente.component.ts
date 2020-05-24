@@ -44,7 +44,7 @@ export class VtnEliminarAsistenteComponent implements OnInit {
     private notificationService: NotificationService,
     private router: Router,
     private servicioDatos: ServicioDatosService,
-    private http: HttpClient 
+    private http: HttpClient
   ) { }
 
   displayedColumns: string[] = [
@@ -64,40 +64,39 @@ export class VtnEliminarAsistenteComponent implements OnInit {
 
   ngOnInit() {
     this.http.get<any>('/router/obtenerasistentes').subscribe(
-      (respost )=> {
+      (respost) => {
 
         this.dataSource = new MatTableDataSource(respost[0]);
       }
-      
+
     );
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    
   }
 
   onDelete(row, key) {
-    this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al usuario?","Una vez aceptado, será eliminado permanentemente del sistema")
+    this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al usuario?", "Una vez aceptado, será eliminado permanentemente del sistema")
       .afterClosed().subscribe(res => {
-        console.log(res);
+        if (res) {          
+          const formData = { correo: row.correo }          
+          this.http.post<any>('/router/deleteasistant', formData).subscribe(
+            (res)=>{
+              console.log(res);
+              console.log(res.affectedRows);
 
-        
+              if (res.affectedRows>0){
+                console.log("this.dataSource.data.indexOf(row.id)");
 
-
-       // this.notificationService.success('Eliminado Correctamente');
-        let correopr = this.servicioDatos.showCorreo;
-        const formData = { correo:correopr }
-
-        // HACER LOGICA DE BORRDO
-        /*
-        this.http.delete<any>('/router/deleteasistant', correoactual).subscribe(
-          (res) => {
-            if (res.answer) {
-              this.dialogService.delete($key);
-              this.notificationSERIVE.('DELETE');
-            }
-          },
-          (err) => console.log(err)
-        );*/
-
+                this.notificationService.success('Eliminado Correctamente');  
+                console.log(this.dataSource.data.indexOf(row.id));
+                this.dataSource.data.splice(this.dataSource.data.indexOf(row.id),1)
+                this.dataSource._updateChangeSubscription();             
+              }
+            },
+            (err) => this.notificationService.warning('Ha ocurrido un error')
+          );
+        }
       });
   }
 
@@ -105,7 +104,7 @@ export class VtnEliminarAsistenteComponent implements OnInit {
     sessionStorage.setItem('correoAsistente', row.correo);
     this.router.navigate(['editAsis']);
 
-    
+
   }
 
 }
