@@ -18,7 +18,7 @@
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Correo para envío de notificaciones</mat-label>
                     <input matInput placeholder="pat@example.com" formControlName="correo" required>
-                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                    <mat-error *ngIf="editarSupForm.get('correo').invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
 
                 <button mat-raised-button class="boton" type="submit">Guardar cambios</button>

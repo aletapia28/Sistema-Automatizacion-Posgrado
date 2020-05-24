@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import { AuthenticationService } from '../authentication.service'
 import { HttpClient } from '@angular/common/http'
+import { ErrorStateMatcher } from '@angular/material/core';
+import { NotificationService } from '../shared/notification.service';
 
 @Component({
   selector: 'app-vtn-editar-superusuario',
@@ -13,51 +15,52 @@ import { HttpClient } from '@angular/common/http'
 export class VtnEditarSuperusuarioComponent implements OnInit {
   hide = true;
 
-  constructor(private http: HttpClient, private servicioDatos: ServicioDatosService) { }
-
-  ngOnInit(): void {
-  }
-
-  email = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-
-  editarSupForm = new FormGroup ({
-    correo: new FormControl(''),
-    passwd: new FormControl('')
+  editarSupForm = new FormGroup({
+    correo: new FormControl('', [Validators.required, Validators.email]),
+    passwd: new FormControl('', [Validators.required])
   });
 
+  constructor(
+    private http: HttpClient, 
+    private notificationService: NotificationService) { }
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'Debe ingresar un correo electrónico';
-    }
-
-    return this.email.hasError('email') ? 'Correo inválido' : '';
-  }
-
-  onSubmit() {
-    console.log(this.editarSupForm.value);
-
-    //agarrar correo superusuario 
-    let correopr = this.servicioDatos.showCorreo;
-
-    let correnv = this.editarSupForm.get('correo').value;
-    let newpass = this.editarSupForm.get('passwd').value;
-
-    const formData = { correo: correopr, password: newpass, correoEnvio: correnv }
-
-    //actualiza correo en superusuario
-    this.http.put<any>('/router/editSuper', formData).subscribe(
+  ngOnInit(): void {
+    const formData = { correo: sessionStorage.getItem('correo') }
+    this.http.post<any>('/router/obtenerSuperusuario', formData).subscribe(
       (res) => {
-        if (res.answer) {
-          console.log('Superusuario actualizado')
-        }
+        let usuario = res[0][0];
+        this.editarSupForm.get('correo').setValue(usuario.correoEnvio);
+        this.editarSupForm.get('passwd').setValue(usuario.password);
       },
       (err) => console.log(err)
     );
-  
+  }
+
+  getErrorMessage() {
+    if (this.editarSupForm.get('correo').hasError('required')) {
+      return 'Debe ingresar un correo electrónico';
+    }
+
+    return this.editarSupForm.get('correo').hasError('email') ? 'Correo inválido' : '';
+  }
+
+  onSubmit() {
+    let correopr = sessionStorage.getItem('correo');
+
+    let correnv: string = this.editarSupForm.get('correo').value;
+    let newpass: string = this.editarSupForm.get('passwd').value;
+
+    if ((correnv.length > 0) && (newpass.length > 0)) {
+      const formData = { correo: correopr, password: newpass, correoEnvio: correnv }
+
+      //actualiza correo en superusuario
+      this.http.put<any>('/router/editSuper', formData).subscribe(
+        (res) => {
+          this.notificationService.success('Usuario actualizado'); 
+        },
+        (err) => console.log(err)
+      );
+    }
   }
 
 }

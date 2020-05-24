@@ -117,11 +117,11 @@ router.get('/getallusers', function(req, res, next) {
 
 //REGISTRAR ASISTENTES
 router.post('/registerasistente', (req, res) => {
-    db.mysqlConnection.query('CALL CrearAsistente(?,?,?)', [req.body.correo, req.body.password, req.body.nombre, req.body.cedula], (err, row, fields) => {
+    db.mysqlConnection.query('CALL CrearAsistente(?,?,?,?)', [req.body.correo, req.body.password, req.body.nombre, req.body.cedula], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
-            console.log(err);
+            console.log(err)
     })
 })
 
@@ -285,7 +285,7 @@ router.get('/VerPeriodos', (req, res) => {
 //Cerrar Periodo Actual
 
 router.post('/CerrarPeriodoActual', (req, res) => {
-    db.mysqlConnection.query('CALL CerrarPeriodoActual()', (err, row, fields) => {
+    db.mysqlConnection.query('CALL CerrarPeriodoActual(?)', [req.body.periodo], (err, row, fields) => {
         if (!err)
             if (row.affectedRows == 1)
                 res.send({ response: true });
@@ -658,6 +658,40 @@ router.post('/obtenerAdmitidos', (req, res) => {
         } else
             console.log(err);
     })
+
+})
+
+//obtener superusuario 
+router.post('/obtenerSuperusuario', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerSuperusuario(?)', [req.body.correo], (err, row, fields) => {
+        if (!err) {
+            res.send(row);
+        } else
+            console.log(err);
+    })
+
+})
+
+//obtener asistente 
+router.post('/obtenerAsistente', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerAsistente(?)', [req.body.correo], (err, row, fields) => {
+        if (!err) {
+            res.send(row);
+        } else
+            console.log(err);
+    })
+
+})
+
+//edit asistente
+router.put('/editAsist', (req, res) => {
+    db.mysqlConnection.query('CALL EditarAsistente(?, ?, ?, ?)', [req.body.correo, req.body.password, req.body.cedula, req.body.nombre],
+        (err, row, fields) => {
+            if (!err)
+                res.send(row);
+            else
+                console.log(err);
+        })
 
 })
 
