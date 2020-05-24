@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ServicioDatosService } from '../shared/servicio-datos.service';
 import { HttpClient } from '@angular/common/http'
 import * as XLSX from 'xlsx';
+import { isEmpty } from 'rxjs/operators';
 
 export interface Postulante{
   cedula: String;
@@ -120,9 +121,9 @@ export class VtnImportarPeriodoComponent implements OnInit {
         keyenf = '10',keyga = '11', keyuni = '12', keyaf = '14',keyacred = '15',
         keypact = '16', keyexp = '19',keyaprov = '21',keyprom = '22', keynota = '30',keyaprov = '30'
         
-       //  keycorr2 = 'no hya'keyttec = '31', keyafin = '32', keytdip = '33',
+       
         //postulante
-        if(y[keyid]=''){break;}
+        if(y[keyname] ===undefined){break;}
         this.postul.cedula = y[keyid]
         console.log(this.postul.cedula)
         this.postul.nombre = y[keyname]
@@ -138,7 +139,7 @@ export class VtnImportarPeriodoComponent implements OnInit {
         this.postul.promedioGeneral = parseInt(y[keyprom])
         this.postul.cursoAprovechamiento=parseInt(y[keyaprov])
         //this.postul.cursoAfin = parseInt(y[keyafin])
-        this.postul.puestoActual = y[keypact]
+        if(y[keypact] === String){this.postul.puestoActual = y[keypact]}else{this.postul.puestoActual = 'No indica'}
         this.postul.experienciaProfesion= parseInt(y[keyexp])
 
 

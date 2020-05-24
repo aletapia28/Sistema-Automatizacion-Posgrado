@@ -5,12 +5,12 @@ const mysql = require('mysql')
 var mysqlconnection = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'ag123321',
+    password:'MyNewPass',
     database:'sistpostulacion'
 });
 
 const db = {}
-const sequelize = new Sequelize("sistpostulacion","root","ag123321",{
+const sequelize = new Sequelize("sistpostulacion","root","MyNewPass",{
     host: "localhost",
     dialect: "mysql",
     operatorsAliases: false,

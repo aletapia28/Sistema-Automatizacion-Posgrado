@@ -39,6 +39,8 @@ export interface Postulacion{
 
 }
 
+
+
 @Component({
   selector: 'app-vtn-importar-archivo',
   templateUrl: './vtn-importar-archivo.component.html',
@@ -51,9 +53,9 @@ export class VtnImportarArchivoComponent implements OnInit {
     cedula: '',
     nombre: '',
     telefono1: '',
-    telefono2: 'no indica',
+    telefono2: 'No indica',
     correo1: '',
-    correo2: 'no indica',
+    correo2: 'No indica',
     ingles: 0,
     gradoAcademico: '',
     universidad: '',
@@ -79,6 +81,7 @@ export class VtnImportarArchivoComponent implements OnInit {
   }
   post: Postulante[]
   getpostulacion: Postulacion[]
+   
 
   constructor(private http: HttpClient, private servicioDatos: ServicioDatosService) { }
 
@@ -117,9 +120,9 @@ export class VtnImportarArchivoComponent implements OnInit {
         this.postul.cedula = y[keyid]
         this.postul.nombre = y[keyname]
         this.postul.telefono1 = y[keytel1]
-        this.postul.telefono2= y[keytel2]
+        //this.postul.telefono2= y[keytel2]
         this.postul.correo1= y[keycorr1]
-        this.postul.correo2 = y[keycorr2]
+        //this.postul.correo2 = y[keycorr2]
         this.postul.afinidad = y[keyaf]
         this.postul.gradoAcademico = y[keyga]
         this.postul.universidad = y[keyuni]
@@ -128,23 +131,18 @@ export class VtnImportarArchivoComponent implements OnInit {
         this.postul.cursoAfin = parseInt(y[keyafin])
         this.postul.puestoActual = y[keypact]
         this.postul.experienciaProfesion= parseInt(y[keyexp])
-        console.log('ingles')
-        console.log(y[keying])
-        console.log(typeof(y[keying]))
-        console.log('tecnico')
-        console.log(y[keyttec])
-        console.log('diplomado')
-        console.log(y[keytdip])
+
 
 
         //conversiones a ints y validaciones de entradas vacias 
         if(y[keytel2] == ''){this.postul.telefono2 ='no aplica'}else{this.postul.telefono2=y[keytel2]}
-        if(y[keycorr2] == ''){this.postul.correo2 ='no aplica'}else{this.postul.correo2=y[keycorr2]}
+        if(y[keycorr2] instanceof String){this.postul.correo2 =y[keycorr2]}else{this.postul.correo2='No indica'}
         if(y[keying] =='No'){this.postul.ingles =0}else{this.postul.ingles=1}
         if(y[keytdip] == 'No'){this.postul.tituloDiplomado =0}else{this.postul.tituloDiplomado=1}
         if(y[keyttec] == 'No'){this.postul.tituloTecnico =0}else{this.postul.tituloTecnico=1}
         if(y[keyacred] == 'No'){this.postul.acreditada =0}else{this.postul.acreditada=1}
 
+        
         //llamada al post de insertar postulante 
         this.http.post<any>('/router/registerpostulante',this.postul).subscribe(
           (res) => {
@@ -159,16 +157,8 @@ export class VtnImportarArchivoComponent implements OnInit {
         this.postulacion.cedula= y[keyid]
         this.postulacion.enfasis = y[keyenf]
         this.postulacion.sede = y[keysede]
-        
-
-        //calcular nota
-        var nota= this.calcularnota(this.postul.acreditada, this.postul.gradoAcademico, this.postul.promedioGeneral,
-          this.postul.afinidad, this.postul.puestoActual, this.postul.experienciaProfesion,
-          this.postul.cursoAfin, this.postul.tituloTecnico, this.postul.cursoAprovechamiento, this.postul.tituloDiplomado );
-        console.log('nota')
-        console.log(nota)
-        this.postulacion.nota = nota
         this.postulacion.memo = 1
+        
         this.http.post<any>('/router/registerpostulacion',this.postulacion).subscribe(
           (res) => {
             if (res.answer) {
@@ -177,7 +167,6 @@ export class VtnImportarArchivoComponent implements OnInit {
           },
           (err) => console.log(err)
         );
-        
       } 
 
     };
@@ -186,53 +175,57 @@ export class VtnImportarArchivoComponent implements OnInit {
   }
   
 
-    
   calcularnota(acreditada:number, gradoAcademico:String,promgeneral:number, afinidad:String,puestoActual:String,
-    experiencia:number,cursoAfin:number, titulotec:number, cursoAprov:number, tituloDiplomado:number)
+    experiencia:number,cursoAfin:number, titulotec:number, cursoAprov:number, tituloDiplomado:number) : number
   {
-    var nota = 0; 
+    var notacalc = 0;
+    
+    
     this.http.get<any>('/router/getallatributos').subscribe(
       (respost )=> {
+        
         var prueb = respost[0]
         console.log(prueb)
         //grado academico 
         var cont; 
         for (cont = 0; cont < 4; cont++) {
           if(gradoAcademico == respost[0][cont].nombre){
-            nota+= respost[0][cont].peso
+            notacalc+= respost[0][cont].peso
           }
         }
-
-        if(experiencia >= 3 && experiencia < 6){nota+=10}
-        else if(experiencia >= 6 && experiencia <10){nota+=15}
-        else if(experiencia >=10){nota+=20}
-
+  
+        if(experiencia >= 3 && experiencia < 6){notacalc+=10}
+        else if(experiencia >= 6 && experiencia <10){notacalc+=15}
+        else if(experiencia >=10){notacalc+=20}
+  
         for (cont = 8; cont < 13; cont++) {
           if(puestoActual == respost[0][cont].nombre){
-            nota+= respost[0][cont].peso
+            notacalc+= respost[0][cont].peso
           }
         }
-
+  
         for (cont = 13; cont < 19; cont++) {
           if(afinidad == respost[0][cont].nombre){
-            nota+= respost[0][cont].peso
+            notacalc+= respost[0][cont].peso
           }
         }
-        if(acreditada ==1){nota+=10}
-        nota+= ~~(promgeneral/10)
-        if(titulotec == 1){nota+=5}
-        if(cursoAfin <= 1){nota+=5}
-        if(tituloDiplomado == 1){nota+=10}
-        if(cursoAprov<6){nota+=cursoAprov}else{nota+=5}
-        console.log(nota)
-        return nota ;
+        if(acreditada ==1){notacalc+=10}
+        notacalc+= ~~(promgeneral/10)
+        if(titulotec == 1){notacalc+=5}
+        if(cursoAfin <= 1){notacalc+=5}
+        if(tituloDiplomado == 1){notacalc+=10}
+        if(cursoAprov<=5){notacalc+=cursoAprov}else{notacalc+=5}
+        console.log('nota dnetro de funcion')
+        this.postulacion.nota = notacalc
+        console.log(this.postulacion.nota) 
         
-      }
-      
-      
+      },
     );
-    return nota ;
+    'aqui'
+    console.log(notacalc)
+    return notacalc ;
   }
+  
 
   onSubmit() {
     console.log(this.importarAForm.value);
