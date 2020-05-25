@@ -71,7 +71,7 @@ export class VtnEliminarAsistenteComponent implements OnInit {
             (res)=>{
               if (res.affectedRows>0){
                 this.notificationService.success('Eliminado Correctamente');  
-                this.dataSource.data.splice(this.dataSource.data.indexOf(row.id),1)
+                this.dataSource.data.splice(this.dataSource.data.indexOf(row.id),0);
                 this.dataSource._updateChangeSubscription();             
               }
             },
