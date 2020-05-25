@@ -10,11 +10,9 @@
             <form class="periodo-form" (submit)="onSubmit()" [formGroup]="editarPeForm">
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Bimestre</mat-label>
-                    <mat-select [(value)]="bimestreSource" placeholder="Bimestre" formControlName="bimestre">
-                        <mat-option value="Bimestre 1 2015">Bimestre 1 2015</mat-option>
-                        <mat-option value="Bimestre 2 2017">Bimestre 2 2017</mat-option>
-                        <mat-option value="Bimestre 3 2018">Bimestre 3 2018</mat-option>
-                        <mat-option value="Bimestre 4 2018">Bimestre 4 2018</mat-option>
+                    <mat-select [(value)]="bimestreSource" placeholder="Bimestre" formControlName="bimestre" (selectionChange)="cargarFechas($event.value)">
+                        <mat-option *ngFor= "let periodo of periodos" [value]="periodo">{{periodo.periodo}}</mat-option>
+
                     </mat-select>
                 </mat-form-field>
 
