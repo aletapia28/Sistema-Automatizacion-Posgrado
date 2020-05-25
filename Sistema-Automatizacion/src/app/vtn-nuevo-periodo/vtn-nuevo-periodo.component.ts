@@ -49,25 +49,15 @@ export class VtnNuevoPeriodoComponent implements OnInit {
     let period = this.nuevoPForm.get('bimestre').value;
     let fechain = this.nuevoPForm.get('fechaI').value;
     let fechafin = this.nuevoPForm.get('fechaF').value;
-
-
-    //tenemos que agregar el ano a periodo
-    this.credentials.periodo = period
-    this.credentials.fechaInicio = fechain
-    this.credentials.fechaCierre = fechafin
-
-
-    this.credentials.periodo = period
-    this.credentials.fechaInicio = fechain
-    this.credentials.fechaCierre = fechafin
-
+   
     const formData = { periodo: period, fechaInicio: fechain, fechaCierre: fechafin }
 
     this.http.post<any>('/router/CrearPeriodo', formData).subscribe(
       (res) => {
         console.log(res);
-        if (res.affectedRows > 0) {
+        if (Array.isArray(res)) {
           this.notificationService.success('Datos guardados');
+          //metodod de mel
         } else
           this.notificationService.warning('Error al crear')
       },

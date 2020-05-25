@@ -134,14 +134,14 @@ router.post('/deleteasistant', function (req, res, next) {
     console.log(req.body.correo);
 
     db.mysqlConnection.query('CALL EliminarAsistente(?)', [req.body.correo],
-    (err, row, fields) => {
-        if (!err){
-            res.send(row);
-            console.log(row);
-        }
-        else
-            res.send(err);
-    })
+        (err, row, fields) => {
+            if (!err) {
+                res.send(row);
+                console.log(row);
+            }
+            else
+                res.send(err);
+        })
 })
 
 //ACTUALIZAR ASISTENTES
@@ -238,16 +238,6 @@ router.put('/updatesuper', function (req, res, next) {
 /////////////////////////////////////////////////////////
 //CRUD PERIODO
 
-//REGISTRAR PERIODO
-// router.post('/crearperiodo', (req, res) => {
-//     db.mysqlConnection.query('CALL CrearPeriodo(?,?,?)', [req.body.periodo + " " + req.body.fechaInicio.slice(0,4), req.body.fechaInicio.slice(0,10), req.body.fechaCierre.slice(0,10)], (err, row, fields) => {
-//         if (!err)
-//             res.send(row);
-//         else
-//             console.log(err);
-//     })
-
-// })
 
 
 //EDITAR PERIODO
@@ -257,9 +247,12 @@ router.post('/EditarPeriodo', (req, res) => {
         [req.body.periodo.periodo, req.body.fechaInicio.slice(0, 10), req.body.fechaCierre.slice(0, 10)],
         (err, row, fields) => {
             if (!err)
+            {
+                console.log(row);
                 res.send(row);
+            }
             else
-                console.log(err);
+                res.send(err);
         })
 
 })
@@ -339,7 +332,7 @@ router.delete('/deleteperiodo', function (req, res, next) {
 /////////////////////////////////////////////////////////
 //CRUD POSTULANTES
 
-//REGISTRAR POSTULANTE 
+//REGISTRAR PERIODO
 router.post('/registerpostulante', (req, res) => {
     const userData = {
         cedula: req.body.cedula,
@@ -361,34 +354,98 @@ router.post('/registerpostulante', (req, res) => {
         tituloDiplomado: req.body.tituloDiplomado,
         promedioGeneral: req.body.promedioGeneral,
     }
+    const userDataPost = {
+        periodo: req.body.periodo,
+        cedula: req.body.cedula,
+        enfasis: req.body.enfasis,
+        sede: req.body.sede,
+        nota: req.body.nota,
+        memo: req.body.memo
+    }
+
     Postulant.findOne({
         where: {
             cedula: req.body.cedula
         }
-    })
-        .then(postulante => {
-            if (!postulante) {
-                Postulant.create(userData)
-                    .then(postulante => {
-                        let token = jwt.sign(postulante.dataValues, process.env.SECRET_KEY, {
-                            expiresIn: 1440
+    }).then(postulante => {
+        if (!postulante) {
+            Postulant.create(userData)
+                .then(postulacion => {
+                    Postulacion.findOne({
+                        where: {
+                            periodo: req.body.periodo,
+                            cedula: req.body.cedula,
+
+                        }
+                    })
+                        .then(postulacion => {
+                            if (!postulacion) {
+                                console.log(req.body.cedula)
+                                Postulacion.create(userDataPost)
+                                    .then(postulacion => {
+                                        let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
+                                            expiresIn: 1440
+
+                                        })
+                                        res.json({ token: token })
+
+                                    })
+                                    .catch(err => {
+                                        res.send('error: ' + err)
+                                    })
+
+                            } else {
+
+                                res.json({ error: 'Postulacion ya existe' })
+                            }
 
                         })
-                        res.json({ token: token })
+                        .catch(err => {
+                            res.send('error: ' + err)
+                        })
+                })
+                .catch(err => {
+                    res.send('error: ' + err)
+                })
+        } else {
+            Postulacion.findOne({
+                where: {
+                    periodo: req.body.periodo,
+                    cedula: req.body.cedula,
 
-                    })
-                    .catch(err => {
-                        res.send('error: ' + err)
-                    })
+                }
+            })
+                .then(postulacion => {
+                    if (!postulacion) {
+                        console.log(req.body.cedula)
+                        Postulacion.create(userDataPost)
+                            .then(postulacion => {
+                                let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
+                                    expiresIn: 1440
 
-            } else {
-                res.json({ error: 'Postulante ya existe' })
-            }
+                                })
+                                res.json({ token: token })
 
-        })
+                            })
+                            .catch(err => {
+                                res.send('error: ' + err)
+                            })
+
+                    } else {
+                        res.json({ error: 'Postulacion ya existe' })
+                    }
+
+                })
+                .catch(err => {
+                    res.send('error: ' + err)
+                })
+
+        }
+    })
         .catch(err => {
             res.send('error: ' + err)
         })
+
 })
 
 //ELIMINAR POSTULANTE 
@@ -532,10 +589,6 @@ router.put('/editSuper', (req, res) => {
 
 //
 router.post('/CrearPeriodo', (req, res) => {
-    console.log(req.body.periodo + " " + req.body.fechaInicio.slice(0, 4));
-    console.log(req.body.fechaInicio.slice(0, 10));
-    console.log(req.body.fechaCierre.slice(0, 10));
-
     db.mysqlConnection.query('CALL CrearPeriodo(?,?,?)',
         [req.body.periodo + " " + req.body.fechaInicio.slice(0, 4),
         req.body.fechaInicio.slice(0, 10),
@@ -543,12 +596,10 @@ router.post('/CrearPeriodo', (req, res) => {
 
         (err, row, fields) => {
             if (!err) {
-                console.log(row);
-                console.log(row[0]);
                 res.send(row);
             }
             else
-                console.log(err);
+                res.send(err);
         })
 
 })
@@ -668,6 +719,124 @@ router.post('/getPeriodoEspecifico', (req, res) => {
 
 })
 
+//registrar importar archivo
+//REGISTRAR POSTULANTE 
+router.post('/registerpostulanteA', (req, res) => {
+    const userData = {
+        cedula: req.body.cedula,
+        nombre: req.body.nombre,
+        telefono1: req.body.telefono1,
+        telefono2: req.body.telefono2,
+        correo1: req.body.correo1,
+        correo2: req.body.correo2,
+        ingles: req.body.ingles,
+        gradoAcademico: req.body.gradoAcademico,
+        universidad: req.body.universidad,
+        afinidad: req.body.afinidad,
+        acreditada: req.body.acreditada,
+        puestoActual: req.body.puestoActual,
+        experienciaProfesion: req.body.experienciaProfesion,
+        cursoAfin: req.body.cursoAfin,
+        tituloTecnico: req.body.tituloTecnico,
+        cursoAprovechamiento: req.body.cursoAprovechamiento,
+        tituloDiplomado: req.body.tituloDiplomado,
+        promedioGeneral: req.body.promedioGeneral,
+    }
+    const userDataPost = {
+        periodo: req.body.periodo,
+        cedula: req.body.cedula,
+        enfasis: req.body.enfasis,
+        sede: req.body.sede,
+        nota: req.body.nota,
+        memo: req.body.memo
+    }
+
+    Postulant.findOne({
+        where: {
+            cedula: req.body.cedula
+        }
+    }).then(postulante => {
+        if (!postulante) {
+            Postulant.create(userData)
+                .then(postulacion => {
+                    Postulacion.findOne({
+                        where: {
+                            periodo: req.body.periodo,
+                            cedula: req.body.cedula,
+
+                        }
+                    })
+                        .then(postulacion => {
+                            if (!postulacion) {
+                                console.log(req.body.cedula)
+                                Postulacion.create(userDataPost)
+                                    .then(postulacion => {
+                                        let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
+                                            expiresIn: 1440
+
+                                        })
+                                        res.json({ token: token })
+
+                                    })
+                                    .catch(err => {
+                                        res.send('error: ' + err)
+                                    })
+
+                            } else {
+
+                                res.json({ error: 'Postulacion ya existe' })
+                            }
+
+                        })
+                        .catch(err => {
+                            res.send('error: ' + err)
+                        })
+                })
+                .catch(err => {
+                    res.send('error: ' + err)
+                })
+        } else {
+            Postulant.update(userData, { where: { cedula: req.body.cedula } })
+
+            Postulacion.findOne({
+                where: {
+                    periodo: req.body.periodo,
+                    cedula: req.body.cedula,
+
+                }
+            })
+                .then(postulacion => {
+                    if (!postulacion) {
+                        console.log(req.body.cedula)
+                        Postulacion.create(userDataPost)
+                            .then(postulacion => {
+                                let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
+                                    expiresIn: 1440
+
+                                })
+                                res.json({ token: token })
+
+                            })
+                            .catch(err => {
+                                res.send('error: ' + err)
+                            })
+
+                    } else {
+                        res.json({ error: 'Postulacion ya existe' })
+                    }
+
+                })
+                .catch(err => {
+                    res.send('error: ' + err)
+                })
+
+        }
+    })
+        .catch(err => {
+            res.send('error: ' + err)
+        })
+
+})
 
 
 module.exports = router
