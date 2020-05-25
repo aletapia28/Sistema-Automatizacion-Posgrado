@@ -6,7 +6,7 @@
 
         <div class="cuadro">
             <h1 class="titulo">Importar Período</h1>
-            <form class="periodo-form" (submit)="onSubmit()" [formGroup]="importarPForm">
+            <form class="periodo-form"  [formGroup]="importarPForm">
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Bimestre</mat-label>
                     <mat-select [(value)]="bimestreSource" formControlName="bimestre" placeholder="Bimestre">
@@ -35,18 +35,15 @@
 
                 <div class="upload_button">
                     <label>
-                        <input type="file" formControlName="archivo">
-                        <span id="archivo-subido" class="span">Seleccionar Archivo</span>
-
+                        <input type="file" formControlName="archivo" (change)="addfile($event)" accept="application/vnd.ms-excel" multiple="false">
+                        <span class="span">Seleccionar Archivo</span>
                     </label>
-                    <span></span>
-                    <!-- <label for="archivo" class="archivo-subir">Este es el arrhico</label> -->
                 </div>
 
-                <button mat-raised-button class="boton" type="submit">Importar período</button>
 
             </form>
-       </div>
+
+        </div>
     </div>
 
     <app-barra-inferior></app-barra-inferior>
