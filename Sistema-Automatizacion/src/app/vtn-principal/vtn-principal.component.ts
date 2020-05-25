@@ -109,6 +109,7 @@ export class VtnPrincipalComponent {
           let periodo: string = periodoActual[0].periodo;
           this.periodoShowing = periodo;
           sessionStorage.setItem('periodoVigente', 'true');
+          sessionStorage.setItem('periodoActual', periodo);
           const formData = { periodo: periodo }
           this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
             (respost) => {

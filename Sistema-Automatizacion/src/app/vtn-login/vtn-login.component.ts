@@ -58,8 +58,8 @@ export class VtnLoginComponent implements OnInit {
 
   onSubmit() {
     //LOGIN
-    let email:string = this.loginForm.get('correo').value;
-    let contrasena:string = this.loginForm.get('passwd').value;
+    let email:string = this.loginForm.get('correo').value.replace(/\s/g, "");
+    let contrasena:string = this.loginForm.get('passwd').value.replace(/\s/g, "");
     if ((email.length > 0) && (contrasena.length > 0)) {
 
       this.credentials.correo = email;
