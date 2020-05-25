@@ -70,8 +70,9 @@ export class VtnEliminarAsistenteComponent implements OnInit {
           this.http.post<any>('/router/deleteasistant', formData).subscribe(
             (res)=>{
               if (res.affectedRows>0){
-                this.notificationService.success('Eliminado Correctamente');  
-                this.dataSource.data.splice(this.dataSource.data.indexOf(row.id),0);
+                this.notificationService.success('Eliminado Correctamente'); 
+                let index = this.dataSource.data.indexOf(row); 
+                this.dataSource.data.splice(index,1);
                 this.dataSource._updateChangeSubscription();             
               }
             },
