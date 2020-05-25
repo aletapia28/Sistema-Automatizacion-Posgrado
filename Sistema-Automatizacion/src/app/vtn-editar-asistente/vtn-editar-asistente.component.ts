@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http'
 import { ServicioDatosService } from '../shared/servicio-datos.service'
+import { NotificationService } from '../shared/notification.service';
 
 @Component({
   selector: 'app-vtn-editar-asistente',
@@ -13,64 +14,46 @@ export class VtnEditarAsistenteComponent implements OnInit {
 
   correoA: string;
 
-  constructor(private servicioDatos: ServicioDatosService, private http: HttpClient) {
-    this.correoA = servicioDatos.showCorreo;
-  }
-
-  ngOnInit(): void {
-  }
-
-  email = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-
   editarAForm = new FormGroup({
-    nombre: new FormControl(''),
-    cedula: new FormControl(''),
-    passwd: new FormControl('')
+    nombre: new FormControl('', [Validators.required]),
+    cedula: new FormControl('', [Validators.required]),
+    passwd: new FormControl('', [Validators.required])
   });
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'Debe ingresar un correo electrónico';
-    }
+  constructor(
+    private notificationService: NotificationService,
+    private http: HttpClient) { }
 
-    return this.email.hasError('email') ? 'Correo inválido' : '';
+  ngOnInit(): void {
+    const formData = { correo: sessionStorage.getItem('correoAsistente') }
+    this.http.post<any>('/router/obtenerAsistente', formData).subscribe(
+      (res) => {
+        let usuario = res[0][0];
+        this.editarAForm.get('nombre').setValue(usuario.nombre);
+        this.editarAForm.get('passwd').setValue(usuario.password);
+        this.editarAForm.get('cedula').setValue(usuario.cedula);
+      },
+      (err) => console.log(err)
+    );
   }
 
   onSubmit() {
-    
-    console.log(this.correoA);
-    console.log(this.editarAForm.value);
-    //necesito agarrar correo pred 
-    let correopr = this.servicioDatos.showCorreo;
+    let correopr = sessionStorage.getItem('correoAsistente');
 
     let nombr = this.editarAForm.get('nombre').value;
     let ced = this.editarAForm.get('cedula').value;
     let newpass = this.editarAForm.get('passwd').value;
 
-    const formData = { correo: correopr, nombre: nombr, cedula: ced}
-    const formData2 = {correo: correopr, password: newpass}
-    //update asistente
-    this.http.put<any>('/router/updateasistant', formData).subscribe(
-      (res) => {
-        if (res.answer) {
-          console.log('Asistente actualizado nombre, ced')
-        }
-      },
-      (err) => console.log(err)
-    );
-    //actualiza contrasena en tabla usuario
-    this.http.put<any>('/router/updateusuario', formData2).subscribe(
-      (res)=>{
-        if (res.answer){
-          console.log('Contrasena actualizada')
-        }
-      },
-      (err) => console.log(err)
-    );
-
+    if ((correopr.length > 0) && (newpass.length > 0) && (ced.length > 0) && (nombr.length > 0)) {
+      const formData = { correo: correopr, password: newpass, nombre: nombr, cedula: ced }
+      //update asistente
+      this.http.put<any>('/router/editAsist', formData).subscribe(
+        (res) => {
+          this.notificationService.success('Usuario actualizado');
+        },
+        (err) => console.log(err)
+      );
+    }
   }
 
 }
