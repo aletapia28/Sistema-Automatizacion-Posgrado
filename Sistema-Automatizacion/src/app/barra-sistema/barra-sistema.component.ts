@@ -16,11 +16,11 @@ export class BarraSistemaComponent implements OnInit {
   constructor(private router: Router, private servicioDatos: ServicioDatosService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.show = this.servicioDatos.showTipoUsuario;
+    this.show = sessionStorage.getItem('tipoUsuario') == 'true';
   }
 
   signOut() {
-    this.servicioDatos.showSesion = false;
+    sessionStorage.setItem('sesion', 'false');
     this.router.navigate(['']);
   }
 
@@ -29,7 +29,7 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   editarPerfil() {
-    if(this.servicioDatos.showTipoUsuario) {
+    if (sessionStorage.getItem('tipoUsuario') == 'true') {
       //Si es de tipo superusuario
       this.router.navigate(['editSup']);
     }
@@ -48,13 +48,24 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   cerrarPeriodo() {
-
-    this.http.post<any>('/router/CerrarPeriodoActual', {}).subscribe(
-      (res) => {console.log(res)},
-      (err) => console.log(err)
-    );
-    //Valida en la BD si hay un periodo vigente, y lo cierra
-    //Retorna true o false si lo cerro
+    if (sessionStorage.getItem('periodoVigente') == 'true') {
+      this.http.get<any>('/router/getPeriodoActual').subscribe(
+        (respost) => {
+          let periodoActual = respost[0];
+          if (periodoActual.length == 1) {
+            let periodo: string = periodoActual[0].periodo;
+            const formData = { periodo: periodo }
+            this.http.post<any>('/router/CerrarPeriodoActual', formData).subscribe(
+              (res) => {
+                console.log(res)
+                sessionStorage.setItem('periodoVigente', 'false');
+              },
+              (err) => console.log(err)
+            );
+          }
+        }
+      );
+    }
   }
 
   buscarPostulante() {

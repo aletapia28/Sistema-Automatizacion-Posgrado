@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+// import { MatSelectChange} from '@angular/material/select';
 
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
@@ -46,7 +47,7 @@ import { Conditional } from '@angular/compiler';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthenticationService } from './authentication.service'
-import { AuthGuardService } from './auth-guard.service'
+import { AuthGuardService } from './auth-guard.service';
 
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
@@ -79,7 +80,6 @@ const routes: Routes = [
     VtnEditarSuperusuarioComponent,
     VtnEditarAsistenteComponent,
     ConfirmDialogComponent
-    
   ],
   imports: [
     BrowserModule,
@@ -105,7 +105,7 @@ const routes: Routes = [
     MatTooltipModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent],

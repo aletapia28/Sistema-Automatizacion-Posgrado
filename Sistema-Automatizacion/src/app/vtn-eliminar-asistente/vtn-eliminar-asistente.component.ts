@@ -17,20 +17,7 @@ export interface Usuarios {
   nombre: string;
   correo: string;
 }
-const ELEMENT_DATA: Usuarios[] = [
-  { cedula: '1828282', nombre: 'Puan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan A Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-
-];
+const ELEMENT_DATA: Usuarios[] = [];
 
 @Component({
   selector: 'app-vtn-eliminar-asistente',
@@ -44,7 +31,7 @@ export class VtnEliminarAsistenteComponent implements OnInit {
     private notificationService: NotificationService,
     private router: Router,
     private servicioDatos: ServicioDatosService,
-    private http: HttpClient 
+    private http: HttpClient
   ) { }
 
   displayedColumns: string[] = [
@@ -64,45 +51,42 @@ export class VtnEliminarAsistenteComponent implements OnInit {
 
   ngOnInit() {
     this.http.get<any>('/router/obtenerasistentes').subscribe(
-      (respost )=> {
+      (respost) => {
 
         this.dataSource = new MatTableDataSource(respost[0]);
       }
-      
+
     );
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    
   }
 
   onDelete(row, key) {
-    this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al usuario?","Una vez aceptado, será eliminado permanentemente del sistema")
+    this.dialogService.openConfirmDialog("¿Seguro que desea eliminar al usuario?", "Una vez aceptado, será eliminado permanentemente del sistema")
       .afterClosed().subscribe(res => {
-        console.log(res);
-        this.notificationService.success('Eliminado Correctamente');
-
-        let correopr = this.servicioDatos.showCorreo;
-        const formData = { correo:correopr }
-
-        // HACER LOGICA DE BORRDO
-        /*
-        this.http.delete<any>('/router/deleteasistant', correoactual).subscribe(
-          (res) => {
-            if (res.answer) {
-              this.dialogService.delete($key);
-              this.notificationSERIVE.('DELETE');
-            }
-          },
-          (err) => console.log(err)
-        );*/
-
+        if (res) {          
+          const formData = { correo: row.correo }          
+          this.http.post<any>('/router/deleteasistant', formData).subscribe(
+            (res)=>{
+              if (res.affectedRows>0){
+                this.notificationService.success('Eliminado Correctamente'); 
+                let index = this.dataSource.data.indexOf(row); 
+                this.dataSource.data.splice(index,1);
+                this.dataSource._updateChangeSubscription();             
+              }
+            },
+            (err) => this.notificationService.warning('Ha ocurrido un error')
+          );
+        }
       });
   }
 
   onEdit(row, key) {
-    this.servicioDatos.showCorreo = row.correo;
+    sessionStorage.setItem('correoAsistente', row.correo);
     this.router.navigate(['editAsis']);
 
-    
+
   }
 
 }
