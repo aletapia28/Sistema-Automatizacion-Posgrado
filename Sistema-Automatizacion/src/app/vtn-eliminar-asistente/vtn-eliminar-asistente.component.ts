@@ -17,20 +17,7 @@ export interface Usuarios {
   nombre: string;
   correo: string;
 }
-const ELEMENT_DATA: Usuarios[] = [
-  { cedula: '1828282', nombre: 'Puan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan A Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-  { cedula: '1828282', nombre: 'Juan Perez Rodriguez', correo: 'Juanrodriguez@gmail.com' },
-
-];
+const ELEMENT_DATA: Usuarios[] = [];
 
 @Component({
   selector: 'app-vtn-eliminar-asistente',
@@ -82,14 +69,8 @@ export class VtnEliminarAsistenteComponent implements OnInit {
           const formData = { correo: row.correo }          
           this.http.post<any>('/router/deleteasistant', formData).subscribe(
             (res)=>{
-              console.log(res);
-              console.log(res.affectedRows);
-
               if (res.affectedRows>0){
-                console.log("this.dataSource.data.indexOf(row.id)");
-
                 this.notificationService.success('Eliminado Correctamente');  
-                console.log(this.dataSource.data.indexOf(row.id));
                 this.dataSource.data.splice(this.dataSource.data.indexOf(row.id),1)
                 this.dataSource._updateChangeSubscription();             
               }
