@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from './authentication.service'
+import { AuthenticationService } from './authentication.service';
+import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -9,5 +10,14 @@ import * as XLSX from 'xlsx';
 })
 export class AppComponent {
   title = 'Sistema-Automatizacion';
-  constructor(public auth: AuthenticationService) {}
+  constructor(public auth: AuthenticationService, private router: Router) {
+    if(sessionStorage.length == 0) {
+      this.router.navigate(['']);
+    }
+    else {
+      if(sessionStorage.getItem('sesion') == 'false'){
+        this.router.navigate(['']);
+      }
+    }
+  }
 }
