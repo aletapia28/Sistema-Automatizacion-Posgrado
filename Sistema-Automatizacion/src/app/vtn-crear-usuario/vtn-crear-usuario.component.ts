@@ -51,10 +51,10 @@ export class VtnCrearUsuarioComponent implements OnInit {
   }
 
   onSubmit() {
-    let email:string = this.crearUsuForm.get('correo').value;
-    let nomb:string = this.crearUsuForm.get('nombre').value;
-    let ced:string = this.crearUsuForm.get('cedula').value;
-    let contrasena:string = this.crearUsuForm.get('passwd').value;
+    let email:string = this.crearUsuForm.get('correo').value.replace(/\s/g, "");
+    let nomb:string = this.crearUsuForm.get('nombre').value.replace(/\s/g, "");
+    let ced:string = this.crearUsuForm.get('cedula').value.replace(/\s/g, "");
+    let contrasena:string = this.crearUsuForm.get('passwd').value.replace(/\s/g, "");
 
     if ((email.length > 0) && (contrasena.length > 0) && (ced.length > 0) && (nomb.length > 0)) {
       const formData = { correo: email, password: contrasena, nombre: nomb, cedula: ced }

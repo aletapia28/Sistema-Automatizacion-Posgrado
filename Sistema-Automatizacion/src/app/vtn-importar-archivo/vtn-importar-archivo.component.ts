@@ -4,6 +4,7 @@ import { AuthenticationService, TokenPayload, Tokenuser } from '../authenticatio
 import { ServicioDatosService } from '../shared/servicio-datos.service';
 import { HttpClient,HttpParams } from '@angular/common/http'
 import { HttpHeaders } from '@angular/common/http'
+import { NotificationService } from '../shared/notification.service';
 
 import * as XLSX from 'xlsx';
 import { Postulante } from '../vtn-importar-periodo/vtn-importar-periodo.component';
@@ -82,7 +83,10 @@ export class VtnImportarArchivoComponent implements OnInit {
   atributos = []
    
 
-  constructor(private http: HttpClient, private servicioDatos: ServicioDatosService) { }
+  constructor(
+    private http: HttpClient, 
+    private notificationService: NotificationService
+    ) { }
 
   ngOnInit(): void {
     this.http.get<any>('/router/getallatributos').subscribe(
@@ -200,6 +204,7 @@ export class VtnImportarArchivoComponent implements OnInit {
         //llamada al post de insertar postulante 
         this.http.post<any>('/router/registerpostulanteA',formData).subscribe(
           (res) => {
+            this.notificationService.success('Postulante importado');
           },
           (err) => console.log(err)
         );

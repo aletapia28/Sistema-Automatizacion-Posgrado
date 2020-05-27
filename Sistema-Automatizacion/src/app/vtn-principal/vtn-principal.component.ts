@@ -215,8 +215,11 @@ export class VtnPrincipalComponent {
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
           XLSX.utils.book_append_sheet(wb, ws, this.periodoShowing); 
 
+          let nombre:string = this.periodoShowing;
+          console.log(nombre);
+          nombre = nombre.replace(/ /, '_');
           /* save to file */
-          XLSX.writeFile(wb, this.periodoShowing.replace(' ', '_') + '.xlsx');
+          XLSX.writeFile(wb, nombre + '.xlsx');
         }
       });
   }

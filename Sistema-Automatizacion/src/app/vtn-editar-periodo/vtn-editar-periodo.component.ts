@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators, NgForm, FormGroupDirective } from '@angular/forms';
 import { AuthenticationService, TokenPeriod } from '../authentication.service'
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -14,33 +14,26 @@ import { NotificationService } from '../shared/notification.service';
 export class VtnEditarPeriodoComponent implements OnInit {
 
   bimestreSource: string = "direct";
-  fechaInicio = new FormControl(new Date());
-  fechaFinal = new FormControl(new Date());
+  fechaInicio = new FormControl('', [Validators.required]);
+  fechaFinal = new FormControl('', [Validators.required]);
 
   periodos: [] = [];
 
-  credentials: TokenPeriod = {
-    periodo: '',
-    fechaInicio: null,
-    fechaCierre: null
-  }
-
-
   constructor(
-    private auth: AuthenticationService, 
+    private auth: AuthenticationService,
     private http: HttpClient,
     private notificationService: NotificationService,
 
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.cargarPeriodos();
   }
 
   editarPeForm = new FormGroup({
-    bimestre: new FormControl(''),
-    fechaInicio: new FormControl(''),
-    fechaFinal: new FormControl('')
+    bimestre: new FormControl('', [Validators.required]),
+    fechaInicio: new FormControl('', [Validators.required]),
+    fechaFinal: new FormControl('', [Validators.required])
   });
 
   cargarPeriodos() {
@@ -61,42 +54,21 @@ export class VtnEditarPeriodoComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.editarPeForm.value);
-
     let bim = this.editarPeForm.get('bimestre').value;
     let fechaIn = this.editarPeForm.get('fechaInicio').value;
     let fechaCi = this.editarPeForm.get('fechaFinal').value;
-
-    this.credentials.periodo = bim
-    this.credentials.fechaInicio = fechaIn
-    this.credentials.fechaCierre = fechaCi
-
-    const formData = { periodo: bim, fechaInicio: fechaIn, fechaCierre: fechaCi }
-
-
-    this.http.post<any>('/router/EditarPeriodo', formData).subscribe(
-      (res) => {
-        if (res.affectedRows >0) {
-          this.notificationService.success('Datos actualizaos');
-        } else {
-          this.notificationService.warning('Ocurrio un error');
-        }
-      },
-      (err) => this.notificationService.warning('Ocurrio un error')
-    );
-
-
-    //llamada para retornar todos los periodos
-    /*
-    this.http.put<any>('/router/getallperiodos', bim).subscribe(
-      (res)=>{
-        if (res.answer){
-          console.log('Contrasena actualizada')
-        }
-      },
-      (err) => console.log(err)
-    );*/
-
-
+    if (bim.periodo != null) {
+      const formData = { periodo: bim, fechaInicio: fechaIn, fechaCierre: fechaCi }
+      this.http.post<any>('/router/EditarPeriodo', formData).subscribe(
+        (res) => {
+          if (res.affectedRows > 0) {
+            this.notificationService.success('Datos actualizaos');
+          } else {
+            this.notificationService.warning('Ocurrio un error');
+          }
+        },
+        (err) => this.notificationService.warning('Ocurrio un error')
+      );
+    }
   }
 }

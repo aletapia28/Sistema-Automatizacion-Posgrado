@@ -40,9 +40,9 @@ export class VtnEditarAsistenteComponent implements OnInit {
   onSubmit() {
     let correopr = sessionStorage.getItem('correoAsistente');
 
-    let nombr = this.editarAForm.get('nombre').value;
-    let ced = this.editarAForm.get('cedula').value;
-    let newpass = this.editarAForm.get('passwd').value;
+    let nombr:string = this.editarAForm.get('nombre').value.replace(/\s/g, "");
+    let ced:string = this.editarAForm.get('cedula').value.replace(/\s/g, "");
+    let newpass:string = this.editarAForm.get('passwd').value.replace(/\s/g, "");
 
     if ((correopr.length > 0) && (newpass.length > 0) && (ced.length > 0) && (nombr.length > 0)) {
       const formData = { correo: correopr, password: newpass, nombre: nombr, cedula: ced }
