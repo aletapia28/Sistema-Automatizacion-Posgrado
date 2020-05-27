@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import { HttpClient } from '@angular/common/http'
-
+import { NotificationService } from '../shared/notification.service';
 
 @Component({
   selector: 'app-barra-sistema',
@@ -13,7 +13,11 @@ export class BarraSistemaComponent implements OnInit {
 
   show: boolean;
 
-  constructor(private router: Router, private servicioDatos: ServicioDatosService, private http: HttpClient) { }
+  constructor(
+    private router: Router, 
+    private servicioDatos: ServicioDatosService, 
+    private http: HttpClient,
+    private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.show = sessionStorage.getItem('tipoUsuario') == 'true';
@@ -57,14 +61,18 @@ export class BarraSistemaComponent implements OnInit {
             const formData = { periodo: periodo }
             this.http.post<any>('/router/CerrarPeriodoActual', formData).subscribe(
               (res) => {
-                console.log(res)
+                this.notificationService.success('Período cerrado con éxito');
                 sessionStorage.setItem('periodoVigente', 'false');
               },
               (err) => console.log(err)
             );
+          } else {
+            this.notificationService.warning('No existe un período vigente');
           }
         }
       );
+    } else {
+      this.notificationService.warning('No existe un período vigente'); 
     }
   }
 
