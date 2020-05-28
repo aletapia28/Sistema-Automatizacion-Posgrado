@@ -11,17 +11,29 @@
             <img src="/assets/img/menu.png" alt="imagen" class="logoMenu">
         </button>
         <mat-menu #beforeMenu="matMenu" xPosition="before" class="contenedorMenu">
-            <button mat-menu-item class="opcionMenu" (click)="editarPerfil()">Editar perfil</button>
-            <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="crearPeriodo()">Crear período</button>
-            <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="editarPeriodo()">Editar período</button>
-            <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="cerrarPeriodo()">Cerrar período</button>
+            <button mat-menu-item class="opcionMenu" [matMenuTriggerFor]="periodos" *ngIf="show">Períodos</button>
             <button mat-menu-item class="opcionMenu" (click)="buscarPostulante()">Buscar postulante</button>
+            <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="generarMemo()">Generar memo</button>
+            <button mat-menu-item class="opcionMenu" [matMenuTriggerFor]="asistentes" *ngIf="show">Asistentes</button>
+            <button mat-menu-item class="opcionMenu" [matMenuTriggerFor]="analisis">Análisis de datos</button>
+            <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="editFormula()">Editar fórmula</button>
+            <button mat-menu-item class="opcionMenu" (click)="signOut()">Cerrar sesión</button>
+        </mat-menu>
+        <mat-menu #periodos="matMenu" xPosition="before">
+            <button mat-menu-item class="opcionMenu" (click)="crearPeriodo()">Crear período</button>
+            <button mat-menu-item class="opcionMenu" (click)="editarPeriodo()">Editar período</button>
+            <button mat-menu-item class="opcionMenu" (click)="importarArchivo()">Importar Archivo</button>
+            <button mat-menu-item class="opcionMenu" (click)="importarPeriodo()">Importar Período</button>
+            <button mat-menu-item class="opcionMenu" (click)="cerrarPeriodo()">Cerrar período</button>
+        </mat-menu> 
+        <mat-menu #asistentes="matMenu" xPosition="before">
             <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="crearUsuario()">Crear asistente</button>
             <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="manejoAsistente()">Manejo de asistentes</button>
-            <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="editFormula()">Editar fórmula</button>
-            <button mat-menu-item class="opcionMenu" (click)="verHistoricos()">Visualizar históricos</button>
-            <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="importarPeriodo()">Importar Período</button>
-            <button mat-menu-item class="opcionMenu" (click)="signOut()">Cerrar sesión</button>
+        </mat-menu>
+        <mat-menu #analisis="matMenu" xPosition="before">
+            <button mat-menu-item class="opcionMenu" (click)="analisisTablas()">Análisis tabular</button>
+            <button mat-menu-item class="opcionMenu" (click)="analisisGraficas()">Análisis gráfico</button>
+            <button mat-menu-item class="opcionMenu" (click)="verHistoricos()">Análisis de históricos</button>
         </mat-menu>
     </div>
 

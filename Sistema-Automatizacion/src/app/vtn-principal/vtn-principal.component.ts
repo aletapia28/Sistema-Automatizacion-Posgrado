@@ -151,14 +151,6 @@ export class VtnPrincipalComponent {
 
   }
 
-  goImportarArchivo() {
-    let vigente = sessionStorage.getItem('periodoVigente');
-    if (vigente == 'true')
-      this.router.navigate(['importA']);
-    else
-      this.notificationService.warning('Actualmente no hay un período vigente\npara importar postulantes');
-  }
-
   cargarFechas(event) {
     let periodoShow = event.periodo;
     this.periodoShowing = periodoShow;

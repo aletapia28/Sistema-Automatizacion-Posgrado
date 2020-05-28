@@ -165,21 +165,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
-
         <mat-paginator [length]="10" [pageSize]="10" showFirstLastButtons></mat-paginator>
-
-        <div class="botones">
-            <div class="izq">
-                <button mat-raised-button class="boton">Generar Gráficas</button>
-                <button mat-raised-button class="boton">Generar Tablas</button>
-            </div>
-            <div class="der" *ngIf="show">
-                <button mat-raised-button class="boton" (click)="goImportarArchivo()">Importar Archivo</button>
-                <button mat-raised-button class="boton">Generar Memo</button>
-            </div>
-        </div>
     </div>
-
-
     <app-barra-inferior></app-barra-inferior>
 </div>
