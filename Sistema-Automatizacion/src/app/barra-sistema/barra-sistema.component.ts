@@ -100,4 +100,24 @@ export class BarraSistemaComponent implements OnInit {
     this.router.navigate(['importP']);
   }
 
+  importarArchivo() {
+    let vigente = sessionStorage.getItem('periodoVigente');
+    if (vigente == 'true')
+      this.router.navigate(['importA']);
+    else
+      this.notificationService.warning('Actualmente no hay un período vigente\npara importar postulantes');
+  }
+
+  analisisTablas() {
+    
+  }
+
+  analisisGraficas() {
+
+  }
+
+  generarMemo() {
+
+  }
+
 }
