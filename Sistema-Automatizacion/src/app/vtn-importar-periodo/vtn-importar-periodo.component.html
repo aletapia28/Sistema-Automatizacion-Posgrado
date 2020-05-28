@@ -19,14 +19,14 @@
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Fecha de Inicio</mat-label>
-                    <input [value]="fechaInicio.value" matInput [matDatepicker]="picker" formControlName="fechaI">
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="fechaI">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Fecha de Cierre</mat-label>
-                    <input [value]="fechaFinal.value" matInput [matDatepicker]="picker2" formControlName="fechaF">
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker2" formControlName="fechaF">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>

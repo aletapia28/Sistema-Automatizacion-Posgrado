@@ -65,7 +65,6 @@ export class VtnLoginComponent implements OnInit {
       this.credentials.correo = email;
       this.credentials.password = contrasena;
 
-
       this.auth.login(this.credentials).subscribe(
         (res) => {
           console.log(email);
