@@ -33,7 +33,7 @@ export class DialogService {
        data :{
          message : msg,
          message1 : des,
-         btn1 : 'XSLX',
+         btn1 : 'XLSX',
          btn2 : 'CSV' 
        } 
      });

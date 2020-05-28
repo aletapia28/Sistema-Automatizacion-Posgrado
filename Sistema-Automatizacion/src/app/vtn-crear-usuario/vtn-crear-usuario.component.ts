@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthenticationService, TokenPayload, Tokenasistant } from '../authentication.service'
+import { AuthenticationService, TokenPayload, Tokenasistant } from '../authentication.service';
 import { Router } from '@angular/router';
-import { ServicioDatosService } from '../shared/servicio-datos.service'
-import { HttpClient } from '@angular/common/http'
+import { ServicioDatosService } from '../shared/servicio-datos.service';
+import { HttpClient } from '@angular/common/http';
+import { NotificationService } from '../shared/notification.service';
 
 @Component({
   selector: 'app-vtn-crear-usuario',
@@ -11,11 +12,9 @@ import { HttpClient } from '@angular/common/http'
   styleUrls: ['./vtn-crear-usuario.component.css']
 })
 
-
-
 export class VtnCrearUsuarioComponent implements OnInit {
   hide = true;
-  
+
   credentials: TokenPayload = {
     correo: '',
     password: '',
@@ -28,60 +27,49 @@ export class VtnCrearUsuarioComponent implements OnInit {
     cedula: ''
   }
 
-  constructor(private auth: AuthenticationService, private http: HttpClient) { }
+  constructor(
+    private auth: AuthenticationService, 
+    private http: HttpClient,
+    private notificationService: NotificationService
+    ) { }
 
   ngOnInit(): void {
   }
 
-  email = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-
-  crearUsuForm = new FormGroup ({
-    correo: new FormControl(''),
-    nombre: new FormControl(''),
-    cedula: new FormControl(''),
-    passwd: new FormControl('')
+  crearUsuForm = new FormGroup({
+    correo: new FormControl('', [Validators.required, Validators.email]),
+    nombre: new FormControl('', [Validators.required]),
+    cedula: new FormControl('', [Validators.required]),
+    passwd: new FormControl('', [Validators.required])
   });
 
   getErrorMessage() {
-    if (this.email.hasError('required')) {
+    if (this.crearUsuForm.get('correo').hasError('required')) {
       return 'Debe ingresar un correo electrónico';
     }
-
-    return this.email.hasError('email') ? 'Correo inválido' : '';
+    return this.crearUsuForm.get('correo').hasError('email') ? 'Correo inválido' : '';
   }
-  
 
   onSubmit() {
-    console.log(this.crearUsuForm.value);
+    let email:string = this.crearUsuForm.get('correo').value.replace(/\s/g, "");
+    let nomb:string = this.crearUsuForm.get('nombre').value.replace(/\s/g, "");
+    let ced:string = this.crearUsuForm.get('cedula').value.replace(/\s/g, "");
+    let contrasena:string = this.crearUsuForm.get('passwd').value.replace(/\s/g, "");
 
-    let email = this.crearUsuForm.get('correo').value;
-    let nomb = this.crearUsuForm.get('nombre').value;
-    let ced = this.crearUsuForm.get('cedula').value;
-    let contrasena = this.crearUsuForm.get('passwd').value;
-    
-    this.credentials.correo = email;
-    this.credentials.password = contrasena;
-
-    this.asist.correo = email;
-    this.asist.nombre = nomb;
-    this.asist.cedula = ced;
-
-
-    const formData = {correo: email,password:contrasena,nombre:nomb,cedula:ced}
-
-
-    this.http.post<any>('/router/registerasistente', formData).subscribe(
-      (res) => {console.log(res)},
-      (err) => console.log(err)
-    );
+    if ((email.length > 0) && (contrasena.length > 0) && (ced.length > 0) && (nomb.length > 0)) {
+      const formData = { correo: email, password: contrasena, nombre: nomb, cedula: ced }
+      this.http.post<any>('/router/registerasistente', formData).subscribe(
+        (respost) => {
+          this.notificationService.success('Usuario creado');
+        },
+        (err) => this.notificationService.success('Los datos no son correctos,\nusuario no creado')
+      );
+    }
 
   }
 
-    
 
-    
+
+
 
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import { HttpClient } from '@angular/common/http'
-
+import { NotificationService } from '../shared/notification.service';
 
 @Component({
   selector: 'app-barra-sistema',
@@ -13,10 +13,14 @@ export class BarraSistemaComponent implements OnInit {
 
   show: boolean;
 
-  constructor(private router: Router, private servicioDatos: ServicioDatosService, private http: HttpClient) { }
+  constructor(
+    private router: Router, 
+    private servicioDatos: ServicioDatosService, 
+    private http: HttpClient,
+    private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this.show = sessionStorage.getItem('tipoUsuario')=='true';
+    this.show = sessionStorage.getItem('tipoUsuario') == 'true';
   }
 
   signOut() {
@@ -29,7 +33,7 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   editarPerfil() {
-    if(sessionStorage.getItem('tipoUsuario') == 'true') {
+    if (sessionStorage.getItem('tipoUsuario') == 'true') {
       //Si es de tipo superusuario
       this.router.navigate(['editSup']);
     }
@@ -48,15 +52,28 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   cerrarPeriodo() {
-    this.http.post<any>('/router/CerrarPeriodoActual', {}).subscribe(
-      (res) => {
-        console.log(res)
-        sessionStorage.setItem('periodoVigente', 'false');
-      },
-      (err) => console.log(err)
-    );
-    //Valida en la BD si hay un periodo vigente, y lo cierra
-    //Retorna true o false si lo cerro
+    if (sessionStorage.getItem('periodoVigente') == 'true') {
+      this.http.get<any>('/router/getPeriodoActual').subscribe(
+        (respost) => {
+          let periodoActual = respost[0];
+          if (periodoActual.length == 1) {
+            let periodo: string = periodoActual[0].periodo;
+            const formData = { periodo: periodo }
+            this.http.post<any>('/router/CerrarPeriodoActual', formData).subscribe(
+              (res) => {
+                this.notificationService.success('Período cerrado con éxito');
+                sessionStorage.setItem('periodoVigente', 'false');
+              },
+              (err) => console.log(err)
+            );
+          } else {
+            this.notificationService.warning('No existe un período vigente');
+          }
+        }
+      );
+    } else {
+      this.notificationService.warning('No existe un período vigente'); 
+    }
   }
 
   buscarPostulante() {
@@ -81,6 +98,26 @@ export class BarraSistemaComponent implements OnInit {
 
   importarPeriodo() {
     this.router.navigate(['importP']);
+  }
+
+  importarArchivo() {
+    let vigente = sessionStorage.getItem('periodoVigente');
+    if (vigente == 'true')
+      this.router.navigate(['importA']);
+    else
+      this.notificationService.warning('Actualmente no hay un período vigente\npara importar postulantes');
+  }
+
+  analisisTablas() {
+    
+  }
+
+  analisisGraficas() {
+
+  }
+
+  generarMemo() {
+
   }
 
 }

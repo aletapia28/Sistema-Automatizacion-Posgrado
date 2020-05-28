@@ -3,10 +3,10 @@
 
     <div class="cuerpo">
         <div class="encabezado">
-            <h1 class="titulo">Listado de Usuarios</h1>
+            <h1 class="titulo">Lista de Asistentes</h1>
             <div class="opciones">
                 <div class="search">
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
                         <mat-label>Buscar</mat-label>
                         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Pedro">
                     </mat-form-field>
@@ -38,10 +38,10 @@
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let row">
-                        <button mat-icon-button (click)="onEdit(row, $event)" matTooltip="Editar Usuario" matTooltipPosition="before">
+                        <button mat-icon-button (click)="onEdit(row, $event)" matTooltip="Editar Asistente" matTooltipPosition="before">
                         <mat-icon>edit</mat-icon>
                     </button>
-                        <button mat-icon-button (click)="onDelete(row, $event)" color="warn" matTooltip="Eliminar Usuario" matTooltipPosition="after">
+                        <button mat-icon-button (click)="onDelete(row, $event)" color="warn" matTooltip="Eliminar Asistente" matTooltipPosition="after">
                             <mat-icon>delete_outline</mat-icon>
                         </button>
                     </mat-cell>

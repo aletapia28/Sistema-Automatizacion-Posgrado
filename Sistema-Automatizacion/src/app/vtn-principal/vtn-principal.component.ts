@@ -109,6 +109,7 @@ export class VtnPrincipalComponent {
           let periodo: string = periodoActual[0].periodo;
           this.periodoShowing = periodo;
           sessionStorage.setItem('periodoVigente', 'true');
+          sessionStorage.setItem('periodoActual', periodo);
           const formData = { periodo: periodo }
           this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
             (respost) => {
@@ -148,14 +149,6 @@ export class VtnPrincipalComponent {
 
     this.show = sessionStorage.getItem('tipoUsuario') == 'true';
 
-  }
-
-  goImportarArchivo() {
-    let vigente = sessionStorage.getItem('periodoVigente');
-    if (vigente == 'true')
-      this.router.navigate(['importA']);
-    else
-      this.notificationService.warning('Actualmente no hay un período vigente\npara importar postulantes');
   }
 
   cargarFechas(event) {
@@ -214,8 +207,11 @@ export class VtnPrincipalComponent {
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
           XLSX.utils.book_append_sheet(wb, ws, this.periodoShowing); 
 
+          let nombre:string = this.periodoShowing;
+          console.log(nombre);
+          nombre = nombre.replace(/ /, '_');
           /* save to file */
-          XLSX.writeFile(wb, this.periodoShowing.replace(' ', '_') + '.xlsx');
+          XLSX.writeFile(wb, nombre + '.xlsx');
         }
       });
   }

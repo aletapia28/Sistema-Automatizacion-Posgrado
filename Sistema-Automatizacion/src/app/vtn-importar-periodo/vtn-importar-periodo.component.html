@@ -6,7 +6,7 @@
 
         <div class="cuadro">
             <h1 class="titulo">Importar Período</h1>
-            <form class="periodo-form" (submit)="onSubmit()" [formGroup]="importarPForm">
+            <form class="periodo-form"  [formGroup]="importarPForm">
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Bimestre</mat-label>
                     <mat-select [(value)]="bimestreSource" formControlName="bimestre" placeholder="Bimestre">
@@ -19,14 +19,14 @@
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Fecha de Inicio</mat-label>
-                    <input [value]="fechaInicio.value" matInput [matDatepicker]="picker" formControlName="fechaI" >
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="fechaI">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Fecha de Cierre</mat-label>
-                    <input [value]="fechaFinal.value" matInput [matDatepicker]="picker2" formControlName="fechaF">
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker2" formControlName="fechaF">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
@@ -40,35 +40,9 @@
                     </label>
                 </div>
 
-                <button mat-raised-button class="boton" type="submit">Importar período</button>
 
             </form>
-            <!-- <div class="componente perido">
-                <label for="perido"> Período</label>
-                <input type="text" placeholder="período">
-                <select name="perido" id="perido">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
-            </div>
-            <div class="componente">
-                <label for="Fecha-inicio">Fecha Inicio</label>
-                <input type="date" value="12/06/2020">
-            </div>
-            <div class="componente">
-                <label for="Fecha-fin">Fecha Final</label>
-                <input type="date" ng-model="date">
-            </div>
-        </div>
-        <div class="upload_button">
-            <label>
-                <input type="file">
-                <span class="span">Seleccionar Archivo</span>
-            </label>
-        </div>
-        <div class="botones">
-            <button class="boton">Guardar Cambios</button>
-            <button class="boton">Cancelar</button> -->
+
         </div>
     </div>
 
