@@ -1,0 +1,173 @@
+<div class="tamano">
+
+    <app-barra-sistema></app-barra-sistema>
+
+    <div class="cuerpo">
+
+        <div class="cuadro">
+            <h1 class="titulo">Editar Postulante</h1>
+            <form class="periodo-form" (submit)="onSubmit()" [formGroup]="editarFForm">
+                <mat-accordion class="formula-accordion">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Afinidad profesional
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Baja</mat-label>
+                                <input matInput formControlName="baja" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Media</mat-label>
+                                <input matInput formControlName="media" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Alta</mat-label>
+                                <input matInput formControlName="alta" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Carrera acreditada
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Carrera acreditada</mat-label>
+                                <input matInput formControlName="acreditada" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Carrera sin acreditar</mat-label>
+                                <input matInput formControlName="noAcreditada" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Experiencia profesional
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>De 3 a menos de 6 años</mat-label>
+                                <input matInput formControlName="de3a6" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>De 6 a menos de 10 años</mat-label>
+                                <input matInput formControlName="de6a10" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Más de 10 años</mat-label>
+                                <input matInput formControlName="masDe10" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Formulación complementaria
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Curso o taller de aprovechamiento</mat-label>
+                                <input matInput formControlName="cAprovechamiento" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Título de técnico en el área de proyectos</mat-label>
+                                <input matInput formControlName="tTecnico" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Curso a nivel de maestría o afín</mat-label>
+                                <input matInput formControlName="cMaestria" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Título de diplomado o especialista</mat-label>
+                                <input matInput formControlName="tDiplomado" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Máximo grado académico
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Bachillerato</mat-label>
+                                <input matInput formControlName="bachillerato" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Licenciatura</mat-label>
+                                <input matInput formControlName="licenciatura" type="number" min="0" max="100" required>
+                            </mat-form-field> 
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Maestría</mat-label>
+                                <input matInput formControlName="maestria" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Doctorado</mat-label>
+                                <input matInput formControlName="doctorado" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Promedio general
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Promedio general</mat-label>
+                                <input matInput formControlName="promedio" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Puesto actual
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Profesional sin personal a cargo</mat-label>
+                                <input matInput formControlName="profSinP" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Profesional miembro de equipo de proyectos</mat-label>
+                                <input matInput formControlName="profMiembro" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Jefatura intermedia (coordinación/supervisión)</mat-label>
+                                <input matInput formControlName="jefatura" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Gerencia/Dirección General</mat-label>
+                                <input matInput formControlName="gerencia" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="inputVtn">
+                                <mat-label>Trabajor independiente</mat-label>
+                                <input matInput formControlName="trabIndependiente" type="number" min="0" max="100" required>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                
+                <button mat-raised-button class="boton" type="submit" min>Guardar cambios</button>
+            </form>
+
+        </div>
+
+    </div>
+
+    <app-barra-inferior></app-barra-inferior>
+
+</div>

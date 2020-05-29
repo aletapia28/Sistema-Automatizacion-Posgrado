@@ -67,7 +67,6 @@ export class VtnLoginComponent implements OnInit {
 
       this.auth.login(this.credentials).subscribe(
         (res) => {
-          console.log(email);
           const formData = { correo: email }
           //EXPLICAR ESTO
           this.http.post<any>('/router/isSuper', formData).subscribe(
