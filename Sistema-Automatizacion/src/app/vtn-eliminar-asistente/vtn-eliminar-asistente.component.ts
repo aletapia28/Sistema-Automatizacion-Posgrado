@@ -19,6 +19,9 @@ export interface Usuarios {
 }
 const ELEMENT_DATA: Usuarios[] = [];
 
+
+
+
 @Component({
   selector: 'app-vtn-eliminar-asistente',
   templateUrl: './vtn-eliminar-asistente.component.html',

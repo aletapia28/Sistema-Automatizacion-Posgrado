@@ -48,6 +48,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthenticationService } from './authentication.service'
 import { AuthGuardService } from './auth-guard.service';
+import { VtnBuscarPostulanteComponent } from './vtn-buscar-postulante/vtn-buscar-postulante.component';
 
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
@@ -79,7 +80,8 @@ const routes: Routes = [
     VtnEliminarAsistenteComponent,
     VtnEditarSuperusuarioComponent,
     VtnEditarAsistenteComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    VtnBuscarPostulanteComponent
   ],
   imports: [
     BrowserModule,
