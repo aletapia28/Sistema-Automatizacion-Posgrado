@@ -99,11 +99,16 @@ export class VtnBuscarPostulanteComponent implements OnInit {
 
     }
   ngOnInit(): void {
-
-
     // this.dataSource.filterPredicate = (data: Element, filter: string) => {
     //   return data.nombre == filter;
     //  };
+  }
+
+  onEdit(row, key) {
+     sessionStorage.setItem('cedulaPostulante', row.cedula);
+    //this.router.navigate(['editAsis']);
+
+
   }
 
 }

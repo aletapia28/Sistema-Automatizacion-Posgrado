@@ -141,7 +141,7 @@
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let row">
-                        <button mat-icon-button  class="icon" matTooltip="Editar Postulante" matTooltipPosition="above">
+                        <button mat-icon-button  (click)="onEdit(row, $event)" class="icon" matTooltip="Editar Postulante" matTooltipPosition="above">
                             <mat-icon>edit</mat-icon>
                         </button>
                     </mat-cell>
