@@ -72,7 +72,7 @@ export class VtnImportarArchivoComponent implements OnInit {
    
   }
   postulacion: Postulacion = {
-    periodo:'Bimestre 2 2017',
+    periodo:'',
     cedula:'',  
     enfasis:'',
     sede:'', 
@@ -82,10 +82,7 @@ export class VtnImportarArchivoComponent implements OnInit {
   }
   post: Postulante[]
   getpostulacion: Postulacion[]
-<<<<<<< HEAD
-=======
   atributos = []
->>>>>>> desarrollo
    
 
   constructor(
@@ -169,52 +166,6 @@ export class VtnImportarArchivoComponent implements OnInit {
         keyacred = '25', keyaprov = '30', keyttec = '31', keyafin = '32', keytdip = '33', keypact = '37', keyexp = '38'
        
         //postulante
-<<<<<<< HEAD
-        this.postul.cedula = y[keyid]
-        this.postul.nombre = y[keyname]
-        this.postul.telefono1 = y[keytel1]
-        //this.postul.telefono2= y[keytel2]
-        this.postul.correo1= y[keycorr1]
-        
-        //this.postul.correo2 = y[keycorr2]
-        this.postul.afinidad = y[keyaf]
-        this.postul.gradoAcademico = y[keyga]
-        this.postul.universidad = y[keyuni]
-        this.postul.promedioGeneral = parseInt(y[keyprom])
-        this.postul.cursoAprovechamiento=parseInt(y[keyaprov])
-        this.postul.cursoAfin = parseInt(y[keyafin])
-        this.postul.puestoActual = y[keypact]
-        this.postul.experienciaProfesion= parseInt(y[keyexp])
-
-
-
-        //conversiones a ints y validaciones de entradas vacias 
-        if(y[keytel2] == ''){this.postul.telefono2 ='no aplica'}else{this.postul.telefono2=y[keytel2]}
-        if(y[keycorr2] instanceof String){this.postul.correo2 =y[keycorr2]}else{this.postul.correo2='No indica'}
-        if(y[keying] =='No'){this.postul.ingles =0}else{this.postul.ingles=1}
-        if(y[keytdip] == 'No'){this.postul.tituloDiplomado =0}else{this.postul.tituloDiplomado=1}
-        if(y[keyttec] == 'No'){this.postul.tituloTecnico =0}else{this.postul.tituloTecnico=1}
-        if(y[keyacred] == 'No'){this.postul.acreditada =0}else{this.postul.acreditada=1}
-
-        
-        //llamada al post de insertar postulante 
-        this.http.post<any>('/router/registerpostulante',this.postul).subscribe(
-          (res) => {
-            if (res.answer) {
-              console.log('postulante ingresado')
-            }
-          },
-          (err) => console.log(err)
-        );
-
-        //////postulacion
-        this.postulacion.cedula= y[keyid]
-        this.postulacion.enfasis = y[keyenf]
-        this.postulacion.sede = y[keysede]
-        this.postulacion.memo = 1
-        
-        this.http.post<any>('/router/registerpostulacion',this.postulacion).subscribe(
-=======
         let cedula = y[keyid]
         let nombre = y[keyname]
         let telefono1 = y[keytel1]
@@ -254,7 +205,6 @@ export class VtnImportarArchivoComponent implements OnInit {
         
         //llamada al post de insertar postulante 
         this.http.post<any>('/router/registerpostulanteA',formData).subscribe(
->>>>>>> desarrollo
           (res) => {
             this.notificationService.success('Postulante importado');
           },
@@ -266,62 +216,6 @@ export class VtnImportarArchivoComponent implements OnInit {
 
   }
   
-<<<<<<< HEAD
-
-  calcularnota(acreditada:number, gradoAcademico:String,promgeneral:number, afinidad:String,puestoActual:String,
-    experiencia:number,cursoAfin:number, titulotec:number, cursoAprov:number, tituloDiplomado:number) : number
-  {
-    var notacalc = 0;
-    
-    
-    this.http.get<any>('/router/getallatributos').subscribe(
-      (respost )=> {
-        
-        var prueb = respost[0]
-        console.log(prueb)
-        //grado academico 
-        var cont; 
-        for (cont = 0; cont < 4; cont++) {
-          if(gradoAcademico == respost[0][cont].nombre){
-            notacalc+= respost[0][cont].peso
-          }
-        }
-  
-        if(experiencia >= 3 && experiencia < 6){notacalc+=10}
-        else if(experiencia >= 6 && experiencia <10){notacalc+=15}
-        else if(experiencia >=10){notacalc+=20}
-  
-        for (cont = 8; cont < 13; cont++) {
-          if(puestoActual == respost[0][cont].nombre){
-            notacalc+= respost[0][cont].peso
-          }
-        }
-  
-        for (cont = 13; cont < 19; cont++) {
-          if(afinidad == respost[0][cont].nombre){
-            notacalc+= respost[0][cont].peso
-          }
-        }
-        if(acreditada ==1){notacalc+=10}
-        notacalc+= ~~(promgeneral/10)
-        if(titulotec == 1){notacalc+=5}
-        if(cursoAfin <= 1){notacalc+=5}
-        if(tituloDiplomado == 1){notacalc+=10}
-        if(cursoAprov<=5){notacalc+=cursoAprov}else{notacalc+=5}
-        console.log('nota dnetro de funcion')
-        this.postulacion.nota = notacalc
-        console.log(this.postulacion.nota) 
-        
-      },
-    );
-    'aqui'
-    console.log(notacalc)
-    return notacalc ;
-  }
-  
-
-=======
->>>>>>> desarrollo
   onSubmit() {
     console.log(this.importarAForm.value);
      //llamada insert postulacion
