@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import {DescargarMemoComponent} from '../descargar-memo/descargar-memo.component';
 
 @Injectable({
   providedIn: 'root'
@@ -38,4 +39,21 @@ export class DialogService {
        } 
      });
    }
+
+   openGenerateMemo(msg,des){
+    return this.dialog.open(DescargarMemoComponent,{
+      width: "390px",
+      panelClass: 'cuerpo-dialog-container',
+      disableClose: true,
+      position : {top: "250px"},
+      data :{
+        message : msg,
+        message1 : des,        
+        btn1 : 'PDF',
+        btn2 : 'DOC' ,
+        btn3 : 'Email'
+   }
+  });
+}
+
 }
