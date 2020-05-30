@@ -24,9 +24,9 @@ export class VtnEditarPostulanteComponent implements OnInit {
     acreditada: new FormControl(false, [Validators.required]),
     puesto: new FormControl('', [Validators.required]),
     experiencia: new FormControl('', [Validators.required]),
-    cAprovechamiento: new FormControl('', [Validators.required]),
-    tTecnico: new FormControl(false, [Validators.required]),
     cMaestria: new FormControl('', [Validators.required]),
+    tTecnico: new FormControl(false, [Validators.required]),
+    cAprovechamiento: new FormControl('', [Validators.required]),
     tDiplomado: new FormControl(false, [Validators.required]),
     promedio: new FormControl('', [Validators.required])
   });
@@ -38,32 +38,34 @@ export class VtnEditarPostulanteComponent implements OnInit {
 
   ngOnInit(): void {
     //Obtiene la informacion del backend del postulante
-    // let postulante = sessionStorage.getItem('cedulaPostulante');
-    // const formData = { cedula: postulante }
-    // this.http.post<any>('/router/obtenerPostulante', formData).subscribe(
-    //   (respost) => {
-    //     let postBack = respost[0]
-    //     let postulante = postBack[0]
-    //     this.editarPosForm.get('cedula').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('nombre').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('telefono1').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('telefono2').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('correo').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('correo2').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('ingles').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('gradoAca').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('universidad').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('afinidad').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('acreditada').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('puesto').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('experiencia').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('cAprovechamiento').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('tTecnico').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('cMaestria').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('tDiplomado').setValue(postulante.blablabla);
-    //     this.editarPosForm.get('promedio').setValue(postulante.blablabla);
-    //   }
-    // );
+    let postulante = sessionStorage.getItem('cedulaPostulante');
+    const formData = { cedula: postulante }
+    this.http.post<any>('/router/obtenerpostulate', formData).subscribe(
+      (respost) => {
+        let postulante = respost[0]
+        console.log(respost[0])
+        console.log(postulante[0].nombre)
+        this.editarPosForm.get('cedula').setValue(postulante[0].cedula);
+        this.editarPosForm.get('nombre').setValue(postulante[0].nombre);
+        this.editarPosForm.get('telefono1').setValue(postulante[0].telefono1);
+        this.editarPosForm.get('telefono2').setValue(postulante[0].telefono2);
+        this.editarPosForm.get('correo').setValue(postulante[0].correo1);
+        this.editarPosForm.get('correo2').setValue(postulante[0].correo2);
+        this.editarPosForm.get('ingles').setValue(postulante[0].ingles);
+        this.editarPosForm.get('gradoAca').setValue(postulante[0].gradoAcademico);
+        this.editarPosForm.get('universidad').setValue(postulante[0].universidad);
+        this.editarPosForm.get('afinidad').setValue(postulante[0].afinidad);
+        this.editarPosForm.get('acreditada').setValue(postulante[0].acreditada);
+        this.editarPosForm.get('puesto').setValue(postulante[0].puestoActual);
+        this.editarPosForm.get('experiencia').setValue(postulante[0].experienciaProfesion);
+        this.editarPosForm.get('cMaestria').setValue(postulante[0].cursoAfin);
+        this.editarPosForm.get('tTecnico').setValue(postulante[0].tituloTecnico);
+        this.editarPosForm.get('cAprovechamiento').setValue(postulante[0].cursosAprovechamiento);
+        this.editarPosForm.get('tDiplomado').setValue(postulante[0].tituloDiplomado);
+        this.editarPosForm.get('promedio').setValue(postulante[0].promedioGeneral);
+        
+      }
+    );
   }
 
   getErrorMessage() {

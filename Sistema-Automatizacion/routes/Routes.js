@@ -798,7 +798,7 @@ router.post('/registerpostulanteA', (req, res) => {
 
 //Obtener 
 //obtener postulantes 
-router.post('/obtenerpostulates', (req, res) => {
+router.get('/obtenerallpostulantes', (req, res) => {
     db.mysqlConnection.query('CALL ObtenerPostulantes()', (err, row, fields) => {
         if (!err) {
             res.send(row);
@@ -810,7 +810,7 @@ router.post('/obtenerpostulates', (req, res) => {
 
 //obtener postulante 
 router.post('/obtenerpostulate', (req, res) => {
-    db.mysqlConnection.query('CALL ObtenerPostulantes(?)',[req.body.cedula], (err, row, fields) => {
+    db.mysqlConnection.query('CALL ObtenerPostulante(?)',[req.body.cedula], (err, row, fields) => {
         if (!err) {
             res.send(row);
         } else
@@ -820,31 +820,6 @@ router.post('/obtenerpostulate', (req, res) => {
 
 //Editar formula
 router.post('/editarFormula', (req, res) => {
-    // const userData = {
-    //     bachillerato: req.body.bachillerato, //1
-    //     licenciatura: req.body.licenciatura, //2
-    //     maestria: req.body.maestria, //3
-    //     doctorado: req.body.doctorado, //4
-    //     promedio: req.body.promedio, //5
-    //     de3a6: req.body.de3a6, //6
-    //     de6a10: req.body.de6a10, //7
-    //     masDe10: req.body.masDe10, //8
-    //     profSinP: req.body.profSinP, //9
-    //     profMiembro: req.body.profMiembro, //10
-    //     jefatura: req.body.jefatura, //11
-    //     gerencia: req.body.gerencia, //12
-    //     trabIndependiente: req.body.trabIndependiente, //13
-    //     alta: req.body.alta, //14
-    //     media: req.body.media, //5
-    //     baja: req.body.baja, //16
-    //     acreditada: req.body.acreditada, //17
-    //     noAcreditada: req.body.noAcreditada, //8
-    //     cAprovechamiento: req.body.cAprovechamiento, //19
-    //     tTecnico: req.body.tTecnico, //20
-    //     cMaestria:req.body.cMaestria, //21
-    //     tDiplomado: req.body.tDiplomado //22
-        
-    // }
     db.mysqlConnection.query('CALL EditarFormula(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.bachillerato,req.body.licenciatura,req.body.maestria,req.body.doctorado,req.body.promedio,req.body.de3a6,req.body.de6a10,
         req.body.masDe10,req.body.profSinP,req.body.profMiembro,req.body.jefatura,req.body.gerencia,req.body.trabIndependiente,req.body.alta,req.body.media,
         req.body.baja,req.body.acreditada,req.body.noAcreditada,req.body.cAprovechamiento,req.body.tTecnico,req.body.cMaestria,req.body.tDiplomado ], (err, row, fields) => {

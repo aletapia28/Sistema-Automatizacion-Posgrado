@@ -34,14 +34,7 @@ export interface PostulanteElement {
   nota: number;
 }
 
-const ELEMENT_DATA: PostulanteElement[] =    [
-  { cedula: '1167400493', nombre: 'Juan Perez RodriguezJuan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad LatinaUniversidad LatinaUniversidad LatinaUniversidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-];    
+const ELEMENT_DATA: PostulanteElement[] =[];    
 
 
 
@@ -110,9 +103,16 @@ export class VtnBuscarPostulanteComponent implements OnInit {
 
     }
   ngOnInit(): void {
-    // this.dataSource.filterPredicate = (data: Element, filter: string) => {
-    //   return data.nombre == filter;
-    //  };
+    this.http.get<any>('/router/obtenerallpostulantes').subscribe(
+      (respost) => {
+
+        this.dataSource = new MatTableDataSource(respost[0]);
+      }
+
+    );
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    
   }
 
   onEdit(row, key) {    
