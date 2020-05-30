@@ -29,14 +29,14 @@
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Correo electrónico principal</mat-label>
-                    <input matInput placeholder="pat@example.com" [formControl]="email" formControlName="correo" required>
-                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                    <input matInput placeholder="pat@example.com" formControlName="correo" required>
+                    <mat-error *ngIf="editarPosForm.get('correo').invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Correo electrónico secundario</mat-label>
-                    <input matInput placeholder="pat@example.com" [formControl]="email2" formControlName="correo2">
-                    <mat-error *ngIf="email2.invalid">{{getErrorMessage2()}}</mat-error>
+                    <input matInput placeholder="pat@example.com" formControlName="correo2">
+                    <mat-error *ngIf="editarPosForm.get('correo2').invalid">{{getErrorMessage2()}}</mat-error>
                 </mat-form-field>
 
                 <mat-checkbox formControlName="ingles">Nivel instrumental de inglés</mat-checkbox>
@@ -84,24 +84,29 @@
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Experiencia Profesional</mat-label>
-                    <input matInput formControlName="experiencia">
+                    <input matInput formControlName="experiencia" type="number" min="0" max="100" required>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Cantidad de cursos de aprovechamiento</mat-label>
-                    <input matInput formControlName="cAprovechamiento">
+                    <input matInput formControlName="cAprovechamiento" type="number" min="0" max="100" required>
                 </mat-form-field>
 
                 <mat-checkbox formControlName="tTecnico">Título de técnico en el área de proyectos</mat-checkbox>
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Cantidad de cursos a nivel de maestría</mat-label>
-                    <input matInput formControlName="cMaestria">
+                    <input matInput formControlName="cMaestria" type="number" min="0" max="100" required>
                 </mat-form-field>
 
                 <mat-checkbox formControlName="tDiplomado">Título de diplomado o especialista</mat-checkbox>
 
-                <button mat-raised-button class="boton" type="submit">Guardar cambios</button>
+                <mat-form-field appearance="outline" class="inputVtn">
+                    <mat-label>Promedio general</mat-label>
+                    <input matInput formControlName="promedio" type="number" min="0" max="100" required>
+                </mat-form-field>
+
+                <button mat-raised-button class="boton" type="submit" min>Guardar cambios</button>
             </form>
 
         </div>

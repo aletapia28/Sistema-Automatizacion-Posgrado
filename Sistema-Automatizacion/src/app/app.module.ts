@@ -19,6 +19,7 @@ import {MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
+import {MatExpansionModule} from '@angular/material/expansion';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
@@ -48,6 +49,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthenticationService } from './authentication.service'
 import { AuthGuardService } from './auth-guard.service';
+import { VtnBuscarPostulanteComponent } from './vtn-buscar-postulante/vtn-buscar-postulante.component';
+import { DescargarMemoComponent } from './descargar-memo/descargar-memo.component';
+import { VtnEditarFormulaComponent } from './vtn-editar-formula/vtn-editar-formula.component';
 
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
@@ -79,7 +83,10 @@ const routes: Routes = [
     VtnEliminarAsistenteComponent,
     VtnEditarSuperusuarioComponent,
     VtnEditarAsistenteComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    VtnBuscarPostulanteComponent,
+    DescargarMemoComponent,
+    VtnEditarFormulaComponent
   ],
   imports: [
     BrowserModule,
@@ -106,9 +113,10 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     MatSnackBarModule,
+    MatExpansionModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent],
-  entryComponents:[ConfirmDialogComponent]
+  entryComponents:[ConfirmDialogComponent,DescargarMemoComponent]
 })
 export class AppModule { }
