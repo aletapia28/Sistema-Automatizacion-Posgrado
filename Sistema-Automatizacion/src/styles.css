@@ -54,7 +54,21 @@ html {
     color: white;
     border-radius: 0px;
 }
+.cuerpo-dialog-container #boton {
+    height: 45px;
+    width: 33%;
+    padding: 3px;
+    background-color: #1F2F5F;
+    color: white;
+    border-radius: 0px;
+}
 
+.cuerpo-dialog-container .botones{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    
+}
 .cuerpo-dialog-container span.content-span {
     padding: 35px 16px;
     text-align: center;
