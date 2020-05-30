@@ -89,7 +89,7 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   editFormula() {
-    // this.router.navigate(['principal'])
+    this.router.navigate(['editFor']);
   }
 
   verHistoricos() {
