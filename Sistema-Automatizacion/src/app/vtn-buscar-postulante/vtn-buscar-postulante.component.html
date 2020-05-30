@@ -142,7 +142,12 @@
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let row">
                         <button mat-icon-button  (click)="onEdit(row, $event)" class="icon" matTooltip="Editar Postulante" matTooltipPosition="above">
-                            <mat-icon>edit</mat-icon>
+                            <mat-icon>edit</mat-icon>                            
+                        </button>
+                        <button mat-icon-button  (click)="onRepost(row, $event)" class="icon" matTooltip="Repostular" matTooltipPosition="above" 
+                        *ngIf="visible">
+                            <mat-icon>school</mat-icon>
+                            
                         </button>
                     </mat-cell>
                 </ng-container> 
