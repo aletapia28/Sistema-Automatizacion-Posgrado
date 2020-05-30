@@ -85,7 +85,7 @@ const routes: Routes = [
     VtnEditarAsistenteComponent,
     ConfirmDialogComponent,
     VtnBuscarPostulanteComponent,
-    DescargarMemoComponent
+    DescargarMemoComponent,
     VtnEditarFormulaComponent
   ],
   imports: [
