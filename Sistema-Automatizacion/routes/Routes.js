@@ -395,37 +395,17 @@ router.delete('/deletepostulante', function(req, res, next) {
 })
 
 //UPDATE POSTULANTE 
-router.put('/updatepostulant', function(req, res, next) {
-    if (!req.body.cedula) {
-        res.status(400)
-        res.json({
-            error: 'Bad data'
-        })
-    } else {
-        Postulant.update({
-                nombre: req.body.nombre,
-                telefono1: req.body.telefono1,
-                telefono2: req.body.telefono2,
-                correo1: req.body.correo1,
-                correo2: req.body.correo2,
-                ingles: req.body.ingles,
-                gradoAcademico: req.body.gradoAcademico,
-                universidad: req.body.universidad,
-                afinidad: req.body.afinidad,
-                acreditada: req.body.acreditada,
-                puestoActual: req.body.puestoActual,
-                experienciaProfesion: req.body.experienciaProfesion,
-                cursoAfin: req.body.cursoAfin,
-                tituloTecnico: req.body.tituloTecnico,
-                cursoAprovechamiento: req.body.cursoAprovechamiento,
-                tituloDiplomado: req.body.tituloDiplomado,
-                promedioGeneral: req.body.promedioGeneral
-            }, { where: { cedula: req.body.cedula } })
-            .then(() => {
-                res.json({ status: 'Postulante Actualizado' })
-            })
-            .error(err => handleError(err))
-    }
+router.put('/EditPostulante', function(req, res, next) {
+    db.mysqlConnection.query('CALL EditarPostulante(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+    [req.body.cedula,req.body.nombre,req.body.telefono1,req.body.telefono,req.body.correo1,req.body.correo2,
+    req.body.ingles,req.body.gradoAcademico,req.body.universidad,req.body.afinidad,req.body.acreditada,req.body.puestoActual,req.body.experienciaProfesion,
+    req.body.cursoAfin,req.body.tituloTecnico,req.body.cursoAprovechamiento,req.body.tituloDiplomado,req.body.promedioGeneral ], (err, row, fields) => {
+        if (!err) {
+            res.send(row);
+        } else
+            console.log(err);
+    })
+  
 })
 
 /////////////////////////////////////////////////////////

@@ -29,8 +29,8 @@
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Correo electrónico principal</mat-label>
-                    <input matInput placeholder="pat@example.com" formControlName="correo" required>
-                    <mat-error *ngIf="editarPosForm.get('correo').invalid">{{getErrorMessage()}}</mat-error>
+                    <input matInput placeholder="pat@example.com" formControlName="correo1" required>
+                    <mat-error *ngIf="editarPosForm.get('correo1').invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="inputVtn">
@@ -73,7 +73,7 @@
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Puesto actual</mat-label>
-                    <mat-select formControlName="puesto">
+                    <mat-select formControlName="puestoActual">
                         <mat-option value="Profesional sin personal a cargo">Profesional sin personal a cargo</mat-option>
                         <mat-option value="Profesional miembro de equipo de proyectos">Profesional miembro de equipo de proyectos</mat-option>
                         <mat-option value="Jefatura intermedia (coordinación/supervisión)">Jefatura intermedia (coordinación/supervisión)</mat-option>
@@ -84,19 +84,19 @@
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Experiencia Profesional</mat-label>
-                    <input matInput formControlName="experiencia" type="number" min="0" max="100" required>
+                    <input matInput formControlName="experienciaProfesion" type="number" min="0" max="100" required>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Cantidad de cursos de aprovechamiento</mat-label>
-                    <input matInput formControlName="cAprovechamiento" type="number" min="0" max="100" required>
+                    <input matInput formControlName="cursoAprovechamiento" type="number" min="0" max="100" required>
                 </mat-form-field>
 
                 <mat-checkbox formControlName="tTecnico">Título de técnico en el área de proyectos</mat-checkbox>
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Cantidad de cursos a nivel de maestría</mat-label>
-                    <input matInput formControlName="cMaestria" type="number" min="0" max="100" required>
+                    <input matInput formControlName="cursoAfin" type="number" min="0" max="100" required>
                 </mat-form-field>
 
                 <mat-checkbox formControlName="tDiplomado">Título de diplomado o especialista</mat-checkbox>
