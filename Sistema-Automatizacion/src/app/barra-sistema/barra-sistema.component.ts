@@ -82,7 +82,7 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   buscarPostulante() {
-    // this.router.navigate(['principal'])
+    this.router.navigate(['buscarPos'])
   }
 
   crearUsuario() {

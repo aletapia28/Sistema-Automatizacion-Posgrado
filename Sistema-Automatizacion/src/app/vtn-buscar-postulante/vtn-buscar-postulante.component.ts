@@ -59,9 +59,20 @@ export class VtnBuscarPostulanteComponent implements OnInit {
   tipoShowing = true;
   @ViewChild('TABLE') table: ElementRef;
 
-  constructor() { }
+  constructor(
+    private dialogService: DialogService,
+    private notificationService: NotificationService,
+    private router: Router,
+    private servicioDatos: ServicioDatosService,
+    private http: HttpClient
 
+  ) {
+    let vigente = sessionStorage.getItem('periodoVigente');
+    this.visible = vigente == 'true';
 
+   }
+
+  visible: boolean;
   displayedColumns: string[] =
   ['cedula',
     'nombre',
@@ -104,11 +115,28 @@ export class VtnBuscarPostulanteComponent implements OnInit {
     //  };
   }
 
-  onEdit(row, key) {
+  onEdit(row, key) {    
      sessionStorage.setItem('cedulaPostulante', row.cedula);
-    //this.router.navigate(['editAsis']);
+    this.router.navigate(['editPos']);
 
 
+  }
+  onRepost(row,key){
+    this.dialogService.openConfirmDialog("¿Seguro que efectuar la repostulación?", "Será repostulado al período actual")
+    .afterClosed().subscribe(res => {
+      if (res) {          
+        // const formData = { cedula: row.cedula }          
+        // this.http.post<any>('/router/METDO-PARA-REPOSTULAR', formData).subscribe(
+        //   (res)=>{
+        //     if (res.affectedRows>0){
+        //       this.notificationService.success('Repostulación correcta'); 
+       
+        //     }
+        //   },
+        //   (err) => this.notificationService.warning('Ha ocurrido un error')
+        // );
+      }
+    });
   }
 
 }
