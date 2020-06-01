@@ -7,22 +7,20 @@
         <div class="cuadro">
             <h1 class="titulo">Importar Archivo de Postulantes</h1>
             <h2 class="subtitulo">
-                Seleccione el archivo conformado por postulantes para la maestría que desea importar a la aplicación</h2>
+                Seleccione el archivo conformado por postulantes para la maestría que desea importar a la aplicación
+            </h2>
             <form class="formI" (submit)="onSubmit()" [formGroup]="importarAForm">
                 <div class="upload_button">
                     <label>
-                    <input type="file"  class="form-control" formControlName="archivo" (change)="addfile($event)" accept="application/vnd.ms-excel" multiple="false">
-                    <span class="span">Seleccionar Archivo</span>
-                </label>
+                        <input type="file" class="form-control" formControlName="archivo" (change)="addfile($event)"
+                            accept=".xlsx" multiple="false">
+                        <span class="span">Seleccionar Archivo</span>
+                    </label>
                 </div>
             </form>
         </div>
-
     </div>
 
-
     <app-barra-inferior></app-barra-inferior>
-
-
 
 </div>
