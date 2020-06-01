@@ -152,8 +152,10 @@ export class VtnEditarPostulanteComponent implements OnInit {
     if (acreditada == true){acred ==1}else{acred ==0}
     if (tituloTecnico == true){ttec ==1}else{ttec ==0}
     if (tituloDiplomado == true){tdip ==1}else{tdip ==0}
-    let nota = this.calcularnota(acred,gradoAcademico,promedioGeneral,afinidad,puestoActual,experienciaProfesion,cursoAfin,ttec,cursoAprovechamiento,tdip )
-
+    
+    let notanw = this.calcularnota(acred,gradoAcademico,promedioGeneral,afinidad,puestoActual,experienciaProfesion,cursoAfin,ttec,cursoAprovechamiento,tdip )
+    console.log('nota')
+    console.log(notanw)
 
    
     if ((cedula.length > 0) && (nombre.length > 0) && (telefono1.length > 0) && (correo1.length > 0) && (gradoAcademico.length > 0)
@@ -163,7 +165,7 @@ export class VtnEditarPostulanteComponent implements OnInit {
       const formData = {
         cedula: cedula, nombre: nombre, telefono1: telefono1, telefono2: telefono2, correo1: correo1, correo2: correo2, ingles: ingles,
         gradoAcademico: gradoAcademico, universidad: universidad, afinidad: afinidad, acreditada: acreditada, puestoActual: puestoActual, experienciaProfesion: experienciaProfesion,
-        cursoAprovechamiento: cursoAprovechamiento, tituloTecnico: tituloTecnico, cursoAfin: cursoAfin, tituloDiplomado: tituloDiplomado, promedioGeneral: promedioGeneral, nota:nota
+        cursoAprovechamiento: cursoAprovechamiento, tituloTecnico: tituloTecnico, cursoAfin: cursoAfin, tituloDiplomado: tituloDiplomado, promedioGeneral: promedioGeneral, nota:notanw
       }
       this.http.put<any>('/router/EditPostulante', formData).subscribe(
         (res) => {

@@ -144,7 +144,7 @@ export class VtnBuscarPostulanteComponent implements OnInit {
                 let periodoact: string = periodoActual[0].periodo;
                 console.log(periodoact)
                 //get datos postulacion
-                const formData = { perido:periodoact, cedula: row.cedula, enfasis:row.enfasis, sede:row.sede, nota:row.nota, memo:row.memo} 
+                const formData = { periodo:periodoact, cedula: row.cedula, enfasis:row.enfasis, sede:row.sede, nota:row.nota, memo:row.memo} 
                 this.http.post<any>('/router/Repostulacion', formData).subscribe(
                   (res)=>{
                     if (res.affectedRows>0){
@@ -158,7 +158,10 @@ export class VtnBuscarPostulanteComponent implements OnInit {
               }
             }
           );
+        }else{
+          this.notificationService.warning('No hay un periodo vigente')
         }
+        
       }
     });
   }
