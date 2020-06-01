@@ -142,7 +142,6 @@ export class VtnBuscarPostulanteComponent implements OnInit {
               let periodoActual = respost[0];
               if (periodoActual.length == 1) {
                 let periodoact: string = periodoActual[0].periodo;
-                console.log(periodoact)
                 //get datos postulacion
                 const formData = { periodo:periodoact, cedula: row.cedula, enfasis:row.enfasis, sede:row.sede, nota:row.nota, memo:row.memo} 
                 this.http.post<any>('/router/Repostulacion', formData).subscribe(

@@ -154,10 +154,7 @@ export class VtnEditarPostulanteComponent implements OnInit {
     if (tituloDiplomado == true){tdip ==1}else{tdip ==0}
     
     let notanw = this.calcularnota(acred,gradoAcademico,promedioGeneral,afinidad,puestoActual,experienciaProfesion,cursoAfin,ttec,cursoAprovechamiento,tdip )
-    console.log('nota')
-    console.log(notanw)
 
-   
     if ((cedula.length > 0) && (nombre.length > 0) && (telefono1.length > 0) && (correo1.length > 0) && (gradoAcademico.length > 0)
       && (universidad.length > 0) && (afinidad.length > 0) && (puestoActual.length > 0) && (experienciaProfesion != null) && (cursoAprovechamiento != null)
       && (cursoAfin != null) && (promedioGeneral != null)) {
