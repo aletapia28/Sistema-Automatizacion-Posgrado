@@ -63,6 +63,7 @@ export class VtnBuscarPostulanteComponent implements OnInit {
   ) {
     let vigente = sessionStorage.getItem('periodoVigente');
     this.visible = vigente == 'true';
+    
 
    }
 
@@ -128,70 +129,36 @@ export class VtnBuscarPostulanteComponent implements OnInit {
 
 
   }
-  calcularnota(acreditada:number, gradoAcademico:String,promgeneral:number, afinidad:String,puestoActual:String,
-    experiencia:number,cursoAfin:number, titulotec:number, cursoAprov:number, tituloDiplomado:number) :number
-  {
-    var notacalc = 0;
-      //promedio
-      notacalc+= (promgeneral/10)
-      //grado academico 
-      var cont; 
-      for (cont = 0; cont < 4; cont++) {
-        if(gradoAcademico == this.atributos[cont].nombre){
-          notacalc+= this.atributos[cont].peso
-        }
-      }
-      //experiencia
-      if(experiencia >= 3 && experiencia < 6){notacalc+=this.atributos[5].peso}
-      else if(experiencia >= 6 && experiencia <10){notacalc+=this.atributos[6].peso}
-      else if(experiencia >=10){notacalc+=this.atributos[7].peso}
-      //puesto
-      for (cont = 8; cont < 13; cont++) {
-        if(puestoActual == this.atributos[cont].nombre){
-          notacalc+= this.atributos[cont].peso
-        }
-      }
-      //afinidad
-      for (cont = 13; cont < 19; cont++) {
-        if(afinidad == this.atributos[cont].nombre){
-          notacalc+= this.atributos[cont].peso
-        }
-      }
-      //acreditada
-      if(acreditada ==1){notacalc+=this.atributos[20].peso}
-
-      //formacion complementaria
-      if(titulotec == 1){notacalc+=this.atributos[23].peso}
-      if(cursoAfin <= 1){notacalc+=this.atributos[24].peso}
-      if(tituloDiplomado == 1){notacalc+=this.atributos[25].peso}
-      if(tituloDiplomado == 1 &&  cursoAfin ==1){notacalc -=5}
-      if(tituloDiplomado == 1 &&  titulotec ==1){notacalc -=5}
-      if(cursoAprov<=5){notacalc+=cursoAprov}else{notacalc+=5}
-      return notacalc
-     
-  }
+  
   
   onRepost(row,key){
     this.dialogService.openConfirmDialog("¿Seguro que efectuar la repostulación?", "Será repostulado al período actual")
     .afterClosed().subscribe(res => {
-      if (res) { 
-        //calcula la nota         
-        let nota=  this.calcularnota(row.acreditada, row.gradoAcademico, row.promedioGeneral, row.afinidad, row.puestoActual,
-        row.experiencia, row.cursoAfin, row.tituloTecnico, row.cursoAprovechamiento, row.tituloDiplomado)
+      if (res) {      
         //get  periodo
-        let periodo = sessionStorage.getItem('periodoActual')
-        //get datos postulacion
-        const formData = { perido:periodo, cedula: row.cedula, enfasis:row.enfasis, sede:row.sede, nota:nota, memo:row.memo}    
+        if (sessionStorage.getItem('periodoVigente') == 'true') {
+          this.http.get<any>('/router/getPeriodoActual').subscribe(
+            (respost) => {
+              let periodoActual = respost[0];
+              if (periodoActual.length == 1) {
+                let periodoact: string = periodoActual[0].periodo;
+                console.log(periodoact)
+                //get datos postulacion
+                const formData = { perido:periodoact, cedula: row.cedula, enfasis:row.enfasis, sede:row.sede, nota:row.nota, memo:row.memo} 
+                this.http.post<any>('/router/Repostulacion', formData).subscribe(
+                  (res)=>{
+                    if (res.affectedRows>0){
+                      this.notificationService.success('Repostulación correcta'); 
+        
+                    }
+                  },
+                  (err) => this.notificationService.warning('Ha ocurrido un error')
+                );   
           
-        this.http.post<any>('/router/editarPostulacion', formData).subscribe(
-          (res)=>{
-            if (res.affectedRows>0){
-              this.notificationService.success('Repostulación correcta'); 
-
+              }
             }
-          },
-          (err) => this.notificationService.warning('Ha ocurrido un error')
-        );
+          );
+        }
       }
     });
   }

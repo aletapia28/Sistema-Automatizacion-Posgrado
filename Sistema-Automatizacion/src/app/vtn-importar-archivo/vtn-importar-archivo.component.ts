@@ -94,7 +94,6 @@ export class VtnImportarArchivoComponent implements OnInit {
     this.http.get<any>('/router/getallatributos').subscribe(
       (respost )=> {
         this.atributos = respost[0]
-        console.log(respost[0])
 
       },
       );

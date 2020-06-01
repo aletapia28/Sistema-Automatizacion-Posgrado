@@ -30,6 +30,7 @@ export class VtnEditarPostulanteComponent implements OnInit {
     tDiplomado: new FormControl(false, [Validators.required]),
     promedio: new FormControl('', [Validators.required])
   });
+  atributos = []
 
   constructor(
     private notificationService: NotificationService,
@@ -43,8 +44,6 @@ export class VtnEditarPostulanteComponent implements OnInit {
     this.http.post<any>('/router/obtenerpostulate', formData).subscribe(
       (respost) => {
         let postulante = respost[0]
-        console.log(respost[0])
-        console.log(postulante[0].nombre)
         this.editarPosForm.get('cedula').setValue(postulante[0].cedula);
         this.editarPosForm.get('nombre').setValue(postulante[0].nombre);
         this.editarPosForm.get('telefono1').setValue(postulante[0].telefono1);
@@ -66,6 +65,13 @@ export class VtnEditarPostulanteComponent implements OnInit {
         
       }
     );
+
+    //obtiene los atributos
+    this.http.get<any>('/router/getallatributos').subscribe(
+      (respost )=> {
+        this.atributos = respost[0]
+      },
+      );
   }
 
   getErrorMessage() {
@@ -77,6 +83,48 @@ export class VtnEditarPostulanteComponent implements OnInit {
 
   getErrorMessage2() {
     return this.editarPosForm.get('correo2').hasError('email') ? 'Correo inválido' : '';
+  }
+  calcularnota(acreditada:number, gradoAcademico:String,promgeneral:number, afinidad:String,puestoActual:String,
+    experiencia:number,cursoAfin:number, titulotec:number, cursoAprov:number, tituloDiplomado:number) :number
+  {
+    var notacalc = 0;
+      //promedio
+      notacalc+= (promgeneral/10)
+      //grado academico 
+      var cont; 
+      for (cont = 0; cont < 4; cont++) {
+        if(gradoAcademico == this.atributos[cont].nombre){
+          notacalc+= this.atributos[cont].peso
+        }
+      }
+      //experiencia
+      if(experiencia >= 3 && experiencia < 6){notacalc+=this.atributos[5].peso}
+      else if(experiencia >= 6 && experiencia <10){notacalc+=this.atributos[6].peso}
+      else if(experiencia >=10){notacalc+=this.atributos[7].peso}
+      //puesto
+      for (cont = 8; cont < 13; cont++) {
+        if(puestoActual == this.atributos[cont].nombre){
+          notacalc+= this.atributos[cont].peso
+        }
+      }
+      //afinidad
+      for (cont = 13; cont < 19; cont++) {
+        if(afinidad == this.atributos[cont].nombre){
+          notacalc+= this.atributos[cont].peso
+        }
+      }
+      //acreditada
+      if(acreditada ==1){notacalc+=this.atributos[20].peso}
+
+      //formacion complementaria
+      if(titulotec == 1){notacalc+=this.atributos[23].peso}
+      if(cursoAfin <= 1){notacalc+=this.atributos[24].peso}
+      if(tituloDiplomado == 1){notacalc+=this.atributos[25].peso}
+      if(tituloDiplomado == 1 &&  cursoAfin ==1){notacalc -=5}
+      if(tituloDiplomado == 1 &&  titulotec ==1){notacalc -=5}
+      if(cursoAprov<=5){notacalc+=cursoAprov}else{notacalc+=5}
+      return notacalc
+     
   }
 
   onSubmit() {
@@ -99,14 +147,23 @@ export class VtnEditarPostulanteComponent implements OnInit {
     let tituloDiplomado: boolean = this.editarPosForm.get('tDiplomado').value;
     let promedioGeneral = this.editarPosForm.get('promedio').value;
 
+    //conversion de titulos a integer
+    let acred,ttec,tdip;
+    if (acreditada == true){acred ==1}else{acred ==0}
+    if (tituloTecnico == true){ttec ==1}else{ttec ==0}
+    if (tituloDiplomado == true){tdip ==1}else{tdip ==0}
+    let nota = this.calcularnota(acred,gradoAcademico,promedioGeneral,afinidad,puestoActual,experienciaProfesion,cursoAfin,ttec,cursoAprovechamiento,tdip )
+
+
+   
     if ((cedula.length > 0) && (nombre.length > 0) && (telefono1.length > 0) && (correo1.length > 0) && (gradoAcademico.length > 0)
       && (universidad.length > 0) && (afinidad.length > 0) && (puestoActual.length > 0) && (experienciaProfesion != null) && (cursoAprovechamiento != null)
       && (cursoAfin != null) && (promedioGeneral != null)) {
-
+      
       const formData = {
         cedula: cedula, nombre: nombre, telefono1: telefono1, telefono2: telefono2, correo1: correo1, correo2: correo2, ingles: ingles,
         gradoAcademico: gradoAcademico, universidad: universidad, afinidad: afinidad, acreditada: acreditada, puestoActual: puestoActual, experienciaProfesion: experienciaProfesion,
-        cursoAprovechamiento: cursoAprovechamiento, tituloTecnico: tituloTecnico, cursoAfin: cursoAfin, tituloDiplomado: tituloDiplomado, promedioGeneral: promedioGeneral
+        cursoAprovechamiento: cursoAprovechamiento, tituloTecnico: tituloTecnico, cursoAfin: cursoAfin, tituloDiplomado: tituloDiplomado, promedioGeneral: promedioGeneral, nota:nota
       }
       this.http.put<any>('/router/EditPostulante', formData).subscribe(
         (res) => {
