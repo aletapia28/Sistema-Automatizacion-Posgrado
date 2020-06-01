@@ -397,7 +397,7 @@ router.delete('/deletepostulante', function(req, res, next) {
 //UPDATE POSTULANTE 
 router.put('/EditPostulante', function(req, res, next) {
     db.mysqlConnection.query('CALL EditarPostulante(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-    [req.body.cedula,req.body.nombre,req.body.telefono1,req.body.telefono,req.body.correo1,req.body.correo2,
+    [req.body.cedula,req.body.nombre,req.body.telefono1,req.body.telefono2,req.body.correo1,req.body.correo2,
     req.body.ingles,req.body.gradoAcademico,req.body.universidad,req.body.afinidad,req.body.acreditada,req.body.puestoActual,req.body.experienciaProfesion,
     req.body.cursoAfin,req.body.tituloTecnico,req.body.cursoAprovechamiento,req.body.tituloDiplomado,req.body.promedioGeneral ], (err, row, fields) => {
         if (!err) {
@@ -803,6 +803,16 @@ router.post('/editarFormula', (req, res) => {
     db.mysqlConnection.query('CALL EditarFormula(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.bachillerato,req.body.licenciatura,req.body.maestria,req.body.doctorado,req.body.promedio,req.body.de3a6,req.body.de6a10,
         req.body.masDe10,req.body.profSinP,req.body.profMiembro,req.body.jefatura,req.body.gerencia,req.body.trabIndependiente,req.body.alta,req.body.media,
         req.body.baja,req.body.acreditada,req.body.noAcreditada,req.body.cAprovechamiento,req.body.tTecnico,req.body.cMaestria,req.body.tDiplomado ], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+//Editar postulacion
+router.post('/editarPostulacion', (req, res) => {
+    db.mysqlConnection.query('CALL EditarPostulacion(?,?,?,?,?)',[req.body.periodo, req.body.cedula,req.body.enfasis,req.body.sede,req.body.nota,req.body.memo], (err, row, fields) => {
         if (!err)
             res.send(row);
         else

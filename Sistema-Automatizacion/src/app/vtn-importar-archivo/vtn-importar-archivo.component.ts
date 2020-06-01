@@ -94,6 +94,7 @@ export class VtnImportarArchivoComponent implements OnInit {
     this.http.get<any>('/router/getallatributos').subscribe(
       (respost )=> {
         this.atributos = respost[0]
+        console.log(respost[0])
 
       },
       );
@@ -107,6 +108,8 @@ export class VtnImportarArchivoComponent implements OnInit {
     experiencia:number,cursoAfin:number, titulotec:number, cursoAprov:number, tituloDiplomado:number) :number
   {
     var notacalc = 0;
+      //promedio
+      notacalc+= (promgeneral/10)
       //grado academico 
       var cont; 
       for (cont = 0; cont < 4; cont++) {
@@ -114,27 +117,31 @@ export class VtnImportarArchivoComponent implements OnInit {
           notacalc+= this.atributos[cont].peso
         }
       }
-
-      if(experiencia >= 3 && experiencia < 6){notacalc+=10}
-      else if(experiencia >= 6 && experiencia <10){notacalc+=15}
-      else if(experiencia >=10){notacalc+=20}
-
+      //experiencia
+      if(experiencia >= 3 && experiencia < 6){notacalc+=this.atributos[5].peso}
+      else if(experiencia >= 6 && experiencia <10){notacalc+=this.atributos[6].peso}
+      else if(experiencia >=10){notacalc+=this.atributos[7].peso}
+      //puesto
       for (cont = 8; cont < 13; cont++) {
         if(puestoActual == this.atributos[cont].nombre){
           notacalc+= this.atributos[cont].peso
         }
       }
-
+      //afinidad
       for (cont = 13; cont < 19; cont++) {
         if(afinidad == this.atributos[cont].nombre){
           notacalc+= this.atributos[cont].peso
         }
       }
-      if(acreditada ==1){notacalc+=10}
-      notacalc+= ~~(promgeneral/10)
-      if(titulotec == 1){notacalc+=5}
-      if(cursoAfin <= 1){notacalc+=5}
-      if(tituloDiplomado == 1){notacalc+=10}
+      //acreditada
+      if(acreditada ==1){notacalc+=this.atributos[20].peso}
+
+      //formacion complementaria
+      if(titulotec == 1){notacalc+=this.atributos[23].peso}
+      if(cursoAfin <= 1){notacalc+=this.atributos[24].peso}
+      if(tituloDiplomado == 1){notacalc+=this.atributos[25].peso}
+      if(tituloDiplomado == 1 &&  cursoAfin ==1){notacalc -=5}
+      if(tituloDiplomado == 1 &&  titulotec ==1){notacalc -=5}
       if(cursoAprov<=5){notacalc+=cursoAprov}else{notacalc+=5}
       return notacalc
      
