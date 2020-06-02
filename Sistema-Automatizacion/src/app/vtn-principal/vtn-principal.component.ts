@@ -108,6 +108,7 @@ export class VtnPrincipalComponent {
         if (periodoActual.length == 1) {
           let periodo: string = periodoActual[0].periodo;
           this.periodoShowing = periodo;
+          this.periodo.setValue(periodo);
           sessionStorage.setItem('periodoVigente', 'true');
           sessionStorage.setItem('periodoActual', periodo);
           const formData = { periodo: periodo }
@@ -126,6 +127,7 @@ export class VtnPrincipalComponent {
               if (periodoAnterior.length >= 1) {
                 let periodo: string = periodoAnterior[0].periodo;
                 this.periodoShowing = periodo;
+                this.periodo.setValue(periodo);
                 const formData = { periodo: periodo }
                 this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
                   (respost) => {
@@ -160,7 +162,7 @@ export class VtnPrincipalComponent {
   }
 
   cargarFechas(event) {
-    let periodoShow = event.periodo;
+    let periodoShow = event;
     this.periodoShowing = periodoShow;
     const formData = { periodo: periodoShow }
     if (this.tipoShowing) {
@@ -183,7 +185,7 @@ export class VtnPrincipalComponent {
   }
 
   cargarPost(event) {
-    let tipoPost = event.tipo;
+    let tipoPost = event;
     const formData = { periodo: this.periodoShowing }
     if (tipoPost == 'Postulantes') {
       this.tipoShowing = true;

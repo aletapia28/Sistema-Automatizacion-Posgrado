@@ -8,13 +8,13 @@
                 <mat-form-field class="inputVtn" appearance="outline">
                     <mat-label>Admitidos/Postulantes</mat-label>
                     <mat-select [formControl]="tipo" (selectionChange)="cargarPost($event.value)">
-                        <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{tipo.tipo}}</mat-option>
+                        <mat-option *ngFor="let tipo of tipos" [value]="tipo.tipo">{{tipo.tipo}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field class="inputVtn" appearance="outline">
                     <mat-label>Elegir período</mat-label>
                     <mat-select [formControl]="periodo" (selectionChange)="cargarFechas($event.value)">
-                        <mat-option *ngFor="let periodo of periodos" [value]="periodo">{{periodo.periodo}}</mat-option>
+                        <mat-option *ngFor="let periodo of periodos" [value]="periodo.periodo">{{periodo.periodo}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <button mat-icon-button class="icon1" matTooltip="Descargar Archivo" matTooltipPosition="after" (click)="exporter.exportTable('xlsx', {fileName:'Periodo', sheet: 'Periodo'})"> 
