@@ -47,6 +47,8 @@ export class VtnEditarPeriodoComponent implements OnInit {
       (respost) => {
         let periodo = respost[0];
         if (periodo.length == 1) {
+          console.log(periodo[0].fechaInicio)
+          console.log(periodo[0].fechaCierre)
           this.editarPeForm.get("fechaInicio").setValue(periodo[0].fechaInicio);
           this.editarPeForm.get("fechaFinal").setValue(periodo[0].fechaCierre);
         }
