@@ -17,14 +17,17 @@
                         <mat-option *ngFor="let periodo of periodos" [value]="periodo">{{periodo.periodo}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <button mat-icon-button class="icon1" matTooltip="Descargar Archivo" matTooltipPosition="after" (click)='descargarArchivo()'>
-                    <mat-icon>save_alt</mat-icon>
+                <button mat-icon-button class="icon1" matTooltip="Descargar Archivo" matTooltipPosition="after" (click)="exporter.exportTable('xlsx', {fileName:'Periodo', sheet: 'Periodo'})"> 
+                    <img class="imageIcon" src="/assets/img/excel.png">
+                </button>
+                <button mat-icon-button class="icon1" matTooltip="Descargar Archivo" matTooltipPosition="after" (click)="exporter.exportTable('csv', {fileName:'Periodo'})">
+                    <img class="imageIcon" src="/assets/img/csv.png">
                 </button>
             </div>
         </div>
 
         <div class="contenedor-tabla" #TABLE>
-            <table mat-table [dataSource]="dataSource" matSort>
+            <table mat-table matTableExporter [dataSource]="dataSource" matSort #exporter="matTableExporter">
 
                 <!-- cedula Column -->
                 <ng-container matColumnDef="cedula" sticky>

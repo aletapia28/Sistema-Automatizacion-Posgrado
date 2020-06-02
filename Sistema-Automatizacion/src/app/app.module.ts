@@ -48,6 +48,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthenticationService } from './authentication.service'
 import { AuthGuardService } from './auth-guard.service';
+import { MatTableExporterModule } from 'mat-table-exporter';
 
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
@@ -106,6 +107,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     MatSnackBarModule,
+    MatTableExporterModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent],

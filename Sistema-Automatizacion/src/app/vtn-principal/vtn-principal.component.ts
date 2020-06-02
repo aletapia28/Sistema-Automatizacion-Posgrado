@@ -217,7 +217,7 @@ export class VtnPrincipalComponent {
 
           let nombre:string = this.periodoShowing;
           console.log(nombre);
-          nombre = nombre.replace(/ /, '_');
+          nombre = nombre.replace(/ /g, '_');
           /* save to file */
           XLSX.writeFile(wb, nombre + '.xlsx');
         }
