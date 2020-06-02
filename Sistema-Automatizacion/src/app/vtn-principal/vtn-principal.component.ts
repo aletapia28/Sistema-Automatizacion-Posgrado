@@ -109,6 +109,7 @@ export class VtnPrincipalComponent {
         if (periodoActual.length == 1) {
           let periodo: string = periodoActual[0].periodo;
           this.periodoShowing = periodo;
+          this.periodo.setValue(periodo);
           sessionStorage.setItem('periodoVigente', 'true');
           sessionStorage.setItem('periodoActual', periodo);
           this.periodo.setValue(periodo);
