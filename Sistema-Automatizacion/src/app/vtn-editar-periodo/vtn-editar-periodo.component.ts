@@ -64,7 +64,7 @@ export class VtnEditarPeriodoComponent implements OnInit {
       this.http.post<any>('/router/EditarPeriodo', formData).subscribe(
         (res) => {
           if (res.affectedRows > 0) {
-            this.notificationService.success('Datos actualizaos');
+            this.notificationService.success('Datos actualizados');
           } else {
             this.notificationService.warning('Ocurrio un error');
           }
