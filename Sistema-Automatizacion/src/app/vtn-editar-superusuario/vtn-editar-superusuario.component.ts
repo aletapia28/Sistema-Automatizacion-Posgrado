@@ -47,8 +47,8 @@ export class VtnEditarSuperusuarioComponent implements OnInit {
   onSubmit() {
     let correopr = sessionStorage.getItem('correo');
 
-    let correnv: string = this.editarSupForm.get('correo').value;
-    let newpass: string = this.editarSupForm.get('passwd').value;
+    let correnv: string = this.editarSupForm.get('correo').value.replace(/\s/g, "");
+    let newpass: string = this.editarSupForm.get('passwd').value.replace(/\s/g, "");
 
     if ((correnv.length > 0) && (newpass.length > 0)) {
       const formData = { correo: correopr, password: newpass, correoEnvio: correnv }

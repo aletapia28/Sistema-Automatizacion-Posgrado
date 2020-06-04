@@ -137,7 +137,7 @@ export class VtnImportarPeriodoComponent implements OnInit {
                 y = datap[cont]
                 var keyname = '5', keyid = '1', keytel1 = '6', keytel2 = '7', keycorr1 = '9',
                   keyenf = '10', keyga = '11', keyuni = '12', keyaf = '14', keyacred = '15',
-                  keypact = '16', keyexp = '19', keyaprov = '21', keyprom = '22', keynota = '30', keyaprov = '30'
+                  keypact = '26', keyexp = '19', keyprom = '22', keynota = '30', keycursos = '20', keyaprov = '21', keyacred = '25'
                 if (y[keyname] === undefined) { break; }
                 var corraux = y[keycorr1].split(';')
 
@@ -153,10 +153,24 @@ export class VtnImportarPeriodoComponent implements OnInit {
                 let gradoAcademico = y[keyga]
                 let universidad = y[keyuni]
                 let promedioGeneral = parseInt(y[keyprom])
-                let cursoAprovechamiento = parseInt(y[keyaprov])
                 let cursoAfin = 0
                 let puestoActual = ''
-                if (typeof y[keypact] === 'string') { puestoActual = y[keypact] } else { puestoActual = 'No indica' }
+                if (y[keypact] == 0) {
+                  puestoActual = 'Profesional sin personal a cargo'
+                } else {
+                  if (y[keypact] == 10) {
+                    puestoActual = 'Profesional miembro de equipo de proyectos'
+                  } else {
+                    if (y[keypact] == 15) {
+                      puestoActual = 'Jefatura intermedia (coordinación/supervisión)'
+                    } else {
+                      if (y[keypact] == 20) {
+                        puestoActual = 'Gerencia/Dirección General'
+                      }
+                    }
+
+                  }
+                }
                 let experienciaProfesion = parseInt(y[keyexp])
 
                 let telefono2 = ''
@@ -169,8 +183,15 @@ export class VtnImportarPeriodoComponent implements OnInit {
                 let ingles = 0
                 let tituloDiplomado = 0
                 let tituloTecnico = 0
+                let cursoAprovechamiento = 0
+                if (typeof y[keycursos] === 'string') {
+                  if (y[keycursos] == 'Aprov') cursoAprovechamiento = y[keyaprov]
+                  else
+                    if (y[keycursos] == 'Esp') tituloDiplomado = 1
+                }
+                
                 let acreditada = 0
-
+                if (y[keyacred] == 10) acreditada = 1
 
                 let periodo = period;
                 let enfasis = y[keyenf]
