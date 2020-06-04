@@ -60,14 +60,14 @@ export class VtnEditarFormulaComponent implements OnInit {
         this.editarFForm.get('gerencia').setValue(atributo[11].peso);
         this.editarFForm.get('trabIndependiente').setValue(atributo[12].peso);
         this.editarFForm.get('alta').setValue(atributo[13].peso);
-        this.editarFForm.get('media').setValue(atributo[17].peso);
-        this.editarFForm.get('baja').setValue(atributo[18].peso);
-        this.editarFForm.get('acreditada').setValue(atributo[20].peso);
-        this.editarFForm.get('noAcreditada').setValue(atributo[21].peso);
-        this.editarFForm.get('cAprovechamiento').setValue(atributo[22].peso);
-        this.editarFForm.get('tTecnico').setValue(atributo[23].peso);
-        this.editarFForm.get('cMaestria').setValue(atributo[24].peso);
-        this.editarFForm.get('tDiplomado').setValue(atributo[25].peso);
+        this.editarFForm.get('media').setValue(atributo[14].peso);
+        this.editarFForm.get('baja').setValue(atributo[15].peso);
+        this.editarFForm.get('acreditada').setValue(atributo[16].peso);
+        this.editarFForm.get('noAcreditada').setValue(atributo[17].peso);
+        this.editarFForm.get('cAprovechamiento').setValue(atributo[18].peso);
+        this.editarFForm.get('tTecnico').setValue(atributo[19].peso);
+        this.editarFForm.get('cMaestria').setValue(atributo[20].peso);
+        this.editarFForm.get('tDiplomado').setValue(atributo[21].peso);
         
       }
     );
