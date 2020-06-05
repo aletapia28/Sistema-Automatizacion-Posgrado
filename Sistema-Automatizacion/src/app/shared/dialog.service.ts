@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import {DescargarMemoComponent} from '../descargar-memo/descargar-memo.component';
-
+import {VtnRecuperarPassComponent} from '../vtn-recuperar-pass/vtn-recuperar-pass.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -55,5 +55,18 @@ export class DialogService {
    }
   });
 }
+
+openRecoverPass(msg,des){
+  return this.dialog.open(VtnRecuperarPassComponent,{
+     width: "390px",
+     panelClass: 'cuerpo-dialog-container',
+     disableClose: true,
+     position : {top: "250px"},
+     data :{
+       message : msg,
+       message1 : des,
+     } 
+   });
+ }
 
 }
