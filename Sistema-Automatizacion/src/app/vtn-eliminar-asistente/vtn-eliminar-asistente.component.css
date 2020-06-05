@@ -24,21 +24,20 @@
     width: 100vw;
 }
 
-
-::ng-deep .mat-sort-header-container{
+::ng-deep .mat-sort-header-container {
     justify-content: center;
     /* other inheritable properties */
 }
+
 ::ng-deep .mat-sort-header-sorted .mat-sort-header-arrow {
     transform: none !important;
     opacity: 1 !important;
-    
-  }
-  ::ng-deep  .mat-sort-header-arrow {
+}
+
+::ng-deep .mat-sort-header-arrow {
     transform: none !important;
     opacity: 0.90 !important;
-  }
-
+}
 
 .encabezado {
     display: flex;
@@ -137,4 +136,9 @@ table {
     display: flex;
     flex-direction: column;
     height: 100%;
+}
+
+th {
+    font-weight: bold;
+    font-size: 14px;
 }

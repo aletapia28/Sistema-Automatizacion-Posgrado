@@ -52,6 +52,7 @@ import { AuthGuardService } from './auth-guard.service';
 import { VtnBuscarPostulanteComponent } from './vtn-buscar-postulante/vtn-buscar-postulante.component';
 import { DescargarMemoComponent } from './descargar-memo/descargar-memo.component';
 import { VtnEditarFormulaComponent } from './vtn-editar-formula/vtn-editar-formula.component';
+import { MatTableExporterModule } from 'mat-table-exporter';
 
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
@@ -113,7 +114,8 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     MatSnackBarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTableExporterModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent],

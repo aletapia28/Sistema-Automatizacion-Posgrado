@@ -46,7 +46,7 @@
     opacity: 1 !important;
 }
 
- ::ng-deep .mat-sort-header-arrow {
+::ng-deep .mat-sort-header-arrow {
     transform: none !important;
     opacity: 0.90 !important;
 }
@@ -73,8 +73,7 @@ table {
     justify-content: center;
 }
 
-.mat-cell,
-.mat-header-cell {
+.mat-cell, .mat-header-cell {
     word-wrap: initial;
     display: table-cell;
     padding: 0px 10px;
@@ -87,8 +86,7 @@ table {
     text-align: center;
 }
 
-.mat-row,
-.mat-header-row {
+.mat-row, .mat-header-row {
     display: table-row;
 }
 
@@ -119,7 +117,9 @@ table {
 }
 
 .icon1 {
-    transform: scale(1.5);
+    height: fit-content;
+    width: fit-content;
+    margin: 0px 5px 8px 5px;
 }
 
 .boton {
@@ -145,4 +145,13 @@ table {
 
 .inputVtn {
     width: 220px;
+}
+
+.imageIcon {
+    height: 40px;
+}
+
+th {
+    font-weight: bold;
+    font-size: 14px;
 }

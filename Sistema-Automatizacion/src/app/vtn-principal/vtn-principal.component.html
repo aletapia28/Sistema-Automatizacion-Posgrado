@@ -8,23 +8,26 @@
                 <mat-form-field class="inputVtn" appearance="outline">
                     <mat-label>Admitidos/Postulantes</mat-label>
                     <mat-select [formControl]="tipo" (selectionChange)="cargarPost($event.value)">
-                        <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{tipo.tipo}}</mat-option>
+                        <mat-option *ngFor="let tipo of tipos" [value]="tipo.tipo">{{tipo.tipo}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field class="inputVtn" appearance="outline">
                     <mat-label>Elegir período</mat-label>
                     <mat-select [formControl]="periodo" (selectionChange)="cargarFechas($event.value)">
-                        <mat-option *ngFor="let periodo of periodos" [value]="periodo">{{periodo.periodo}}</mat-option>
+                        <mat-option *ngFor="let periodo of periodos" [value]="periodo.periodo">{{periodo.periodo}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <button mat-icon-button class="icon1" matTooltip="Descargar Archivo" matTooltipPosition="after" (click)='descargarArchivo()'>
-                    <mat-icon>save_alt</mat-icon>
+                <button mat-icon-button class="icon1" matTooltip="Descargar XLSX" matTooltipPosition="after" (click)="exporter.exportTable('xlsx', {fileName:'Periodo', sheet: 'Periodo'})"> 
+                    <img class="imageIcon" src="/assets/img/excel.png">
+                </button>
+                <button mat-icon-button class="icon1" matTooltip="Descargar CSV" matTooltipPosition="after" (click)="exporter.exportTable('csv', {fileName:'Periodo'})">
+                    <img class="imageIcon" src="/assets/img/csv.png">
                 </button>
             </div>
         </div>
 
         <div class="contenedor-tabla" #TABLE>
-            <table mat-table [dataSource]="dataSource" matSort>
+            <table mat-table matTableExporter [dataSource]="dataSource" matSort #exporter="matTableExporter">
 
                 <!-- cedula Column -->
                 <ng-container matColumnDef="cedula" sticky>
@@ -46,19 +49,19 @@
 
                 <!-- telefono2 Column -->
                 <ng-container matColumnDef="telefono2">
-                    <th mat-header-cell *matHeaderCellDef> Teléfono Alternartivo</th>
+                    <th mat-header-cell *matHeaderCellDef> Teléfono alternartivo</th>
                     <td mat-cell *matCellDef="let element"> {{element.telefono2}} </td>
                 </ng-container>
 
                 <!-- correo1 Column -->
                 <ng-container matColumnDef="correo1">
-                    <th mat-header-cell *matHeaderCellDef> Correo Principal </th>
+                    <th mat-header-cell *matHeaderCellDef> Correo principal </th>
                     <td mat-cell *matCellDef="let element"> {{element.correo1}} </td>
                 </ng-container>
 
                 <!-- correo2 Column -->
                 <ng-container matColumnDef="correo2">
-                    <th mat-header-cell *matHeaderCellDef> Correo Alternartivo </th>
+                    <th mat-header-cell *matHeaderCellDef> Correo alternartivo </th>
                     <td mat-cell *matCellDef="let element"> {{element.correo2}} </td>
                 </ng-container>
 
@@ -70,7 +73,7 @@
 
                 <!-- gradoAcademico Column -->
                 <ng-container matColumnDef="gradoAcademico">
-                    <th mat-header-cell *matHeaderCellDef> Máximo Grado Académico </th>
+                    <th mat-header-cell *matHeaderCellDef> Máximo grado académico </th>
                     <td mat-cell *matCellDef="let element"> {{element.gradoAcademico}} </td>
                 </ng-container>
 
@@ -83,7 +86,7 @@
                 <!-- afinidad Column -->
                 <ng-container matColumnDef="afinidad">
                     <th mat-header-cell *matHeaderCellDef> Afinidad </th>
-                    <td mat-cell *matCellDef="let element"> {{element.afinidad?'Sí':'No'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.afinidad}} </td>
                 </ng-container>
 
                 <!-- acreditada Column -->
@@ -94,43 +97,43 @@
 
                 <!-- puestoActual Column -->
                 <ng-container matColumnDef="puestoActual">
-                    <th mat-header-cell *matHeaderCellDef> Puesto Actual </th>
+                    <th mat-header-cell *matHeaderCellDef> Puesto actual </th>
                     <td mat-cell *matCellDef="let element"> {{element.puestoActual}} </td>
                 </ng-container>
 
                 <!-- experiencia Column -->
                 <ng-container matColumnDef="experiencia">
-                    <th mat-header-cell *matHeaderCellDef> Experiencia Laboral </th>
+                    <th mat-header-cell *matHeaderCellDef> Experiencia laboral </th>
                     <td mat-cell *matCellDef="let element"> {{element.experienciaProfesion}} </td>
                 </ng-container>
 
                 <!-- cursoAfin Column -->
                 <ng-container matColumnDef="cursoAfin">
-                    <th mat-header-cell *matHeaderCellDef> Curso Afín </th>
+                    <th mat-header-cell *matHeaderCellDef> Curso afín </th>
                     <td mat-cell *matCellDef="let element"> {{element.cursoAfin}} </td>
                 </ng-container>
 
                 <!-- tituloTecnico Column -->
                 <ng-container matColumnDef="tituloTecnico">
-                    <th mat-header-cell *matHeaderCellDef> TÍtulo Técnico </th>
+                    <th mat-header-cell *matHeaderCellDef> TÍtulo técnico </th>
                     <td mat-cell *matCellDef="let element"> {{element.tituloTecnico?'Sí':'No'}} </td>
                 </ng-container>
 
                 <!-- cursoAprovechamiento Column -->
                 <ng-container matColumnDef="cursoAprovechamiento">
-                    <th mat-header-cell *matHeaderCellDef> Curso Aprovechamiento </th>
+                    <th mat-header-cell *matHeaderCellDef> Curso de aprovechamiento </th>
                     <td mat-cell *matCellDef="let element"> {{element.cursoAprovechamiento}} </td>
                 </ng-container>
 
                 <!-- tituloDiplomado Column -->
                 <ng-container matColumnDef="tituloDiplomado">
-                    <th mat-header-cell *matHeaderCellDef> Título Diplomado </th>
+                    <th mat-header-cell *matHeaderCellDef> Título diplomado </th>
                     <td mat-cell *matCellDef="let element"> {{element.tituloDiplomado?'Sí':'No'}} </td>
                 </ng-container>
 
                 <!-- promedioGeneral Column -->
                 <ng-container matColumnDef="promedioGeneral">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Promedio General </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Promedio general </th>
                     <td mat-cell *matCellDef="let element"> {{element.promedioGeneral}} </td>
                 </ng-container>
 
