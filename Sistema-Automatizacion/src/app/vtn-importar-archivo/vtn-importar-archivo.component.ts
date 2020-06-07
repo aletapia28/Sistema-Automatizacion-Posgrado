@@ -40,6 +40,8 @@ export interface Postulacion {
 
 }
 
+
+
 @Component({
   selector: 'app-vtn-importar-archivo',
   templateUrl: './vtn-importar-archivo.component.html',
@@ -70,12 +72,12 @@ export class VtnImportarArchivoComponent implements OnInit {
 
   }
   postulacion: Postulacion = {
-    periodo: 'Bimestre 2 2017',
-    cedula: '',
-    enfasis: '',
-    sede: '',
-    nota: 0,
-    memo: 0,
+    periodo:'',
+    cedula:'',  
+    enfasis:'',
+    sede:'', 
+    nota:0,
+    memo:0, 
 
   }
   post: Postulante[]

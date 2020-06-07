@@ -15,6 +15,7 @@ export class VtnEditarFormulaComponent implements OnInit {
     licenciatura: new FormControl('', [Validators.required]),
     maestria: new FormControl('', [Validators.required]),
     doctorado: new FormControl('', [Validators.required]),
+    promedio: new FormControl('', [Validators.required]),
     de3a6: new FormControl('', [Validators.required]),
     de6a10: new FormControl('', [Validators.required]),
     masDe10: new FormControl('', [Validators.required]),
@@ -31,8 +32,8 @@ export class VtnEditarFormulaComponent implements OnInit {
     cAprovechamiento: new FormControl('', [Validators.required]),
     tTecnico: new FormControl('', [Validators.required]),
     cMaestria: new FormControl('', [Validators.required]),
-    tDiplomado: new FormControl('', [Validators.required]),
-    promedio: new FormControl('', [Validators.required])
+    tDiplomado: new FormControl('', [Validators.required])
+    
   });
 
   constructor(
@@ -42,34 +43,34 @@ export class VtnEditarFormulaComponent implements OnInit {
 
   ngOnInit(): void {
     //Obtiene la informacion del backend de los atributos
-    // this.http.post<any>('/router/obtenerMetricas').subscribe(
-    //   (respost) => {
-    //     let atriBack = respost[0]
-    //     let atributo = atriBack[0]
-    //     this.editarFForm.get('bachillerato').setValue(atributo.blablabla);
-    //     this.editarFForm.get('licenciatura').setValue(atributo.blablabla);
-    //     this.editarFForm.get('maestria').setValue(atributo.blablabla);
-    //     this.editarFForm.get('doctorado').setValue(atributo.blablabla);
-    //     this.editarFForm.get('de3a6').setValue(atributo.blablabla);
-    //     this.editarFForm.get('de6a10').setValue(atributo.blablabla);
-    //     this.editarFForm.get('masDe10').setValue(atributo.blablabla);
-    //     this.editarFForm.get('profSinP').setValue(atributo.blablabla);
-    //     this.editarFForm.get('profMiembro').setValue(atributo.blablabla);
-    //     this.editarFForm.get('jefatura').setValue(atributo.blablabla);
-    //     this.editarFForm.get('gerencia').setValue(atributo.blablabla);
-    //     this.editarFForm.get('trabIndependiente').setValue(atributo.blablabla);
-    //     this.editarFForm.get('alta').setValue(atributo.blablabla);
-    //     this.editarFForm.get('media').setValue(atributo.blablabla);
-    //     this.editarFForm.get('baja').setValue(atributo.blablabla);
-    //     this.editarFForm.get('acreditada').setValue(atributo.blablabla);
-    //     this.editarFForm.get('noAcreditada').setValue(atributo.blablabla);
-    //     this.editarFForm.get('cAprovechamiento').setValue(atributo.blablabla);
-    //     this.editarFForm.get('tTecnico').setValue(atributo.blablabla);
-    //     this.editarFForm.get('cMaestria').setValue(atributo.blablabla);
-    //     this.editarFForm.get('tDiplomado').setValue(atributo.blablabla);
-    //     this.editarFForm.get('promedio').setValue(atributo.blablabla);
-    //   }
-    // );
+    this.http.get<any>('/router/getallatributos').subscribe(
+      (respost) => {
+        let atributo = respost[0]
+        this.editarFForm.get('bachillerato').setValue(atributo[0].peso);
+        this.editarFForm.get('licenciatura').setValue(atributo[1].peso);
+        this.editarFForm.get('maestria').setValue(atributo[2].peso);
+        this.editarFForm.get('doctorado').setValue(atributo[3].peso);
+        this.editarFForm.get('promedio').setValue(atributo[4].peso);
+        this.editarFForm.get('de3a6').setValue(atributo[5].peso);
+        this.editarFForm.get('de6a10').setValue(atributo[6].peso);
+        this.editarFForm.get('masDe10').setValue(atributo[7].peso);
+        this.editarFForm.get('profSinP').setValue(atributo[8].peso);
+        this.editarFForm.get('profMiembro').setValue(atributo[9].peso);
+        this.editarFForm.get('jefatura').setValue(atributo[10].peso);
+        this.editarFForm.get('gerencia').setValue(atributo[11].peso);
+        this.editarFForm.get('trabIndependiente').setValue(atributo[12].peso);
+        this.editarFForm.get('alta').setValue(atributo[13].peso);
+        this.editarFForm.get('media').setValue(atributo[14].peso);
+        this.editarFForm.get('baja').setValue(atributo[15].peso);
+        this.editarFForm.get('acreditada').setValue(atributo[16].peso);
+        this.editarFForm.get('noAcreditada').setValue(atributo[17].peso);
+        this.editarFForm.get('cAprovechamiento').setValue(atributo[18].peso);
+        this.editarFForm.get('tTecnico').setValue(atributo[19].peso);
+        this.editarFForm.get('cMaestria').setValue(atributo[20].peso);
+        this.editarFForm.get('tDiplomado').setValue(atributo[21].peso);
+        
+      }
+    );
   }
 
   onSubmit() {
@@ -77,6 +78,7 @@ export class VtnEditarFormulaComponent implements OnInit {
     let licenciatura = this.editarFForm.get('licenciatura').value;
     let maestria = this.editarFForm.get('maestria').value;
     let doctorado = this.editarFForm.get('doctorado').value;
+    let promedio = this.editarFForm.get('promedio').value;
     let de3a6 = this.editarFForm.get('de3a6').value;
     let de6a10 = this.editarFForm.get('de6a10').value;
     let masDe10 = this.editarFForm.get('masDe10').value;
@@ -94,7 +96,8 @@ export class VtnEditarFormulaComponent implements OnInit {
     let tTecnico = this.editarFForm.get('tTecnico').value;
     let cMaestria = this.editarFForm.get('cMaestria').value;
     let tDiplomado = this.editarFForm.get('tDiplomado').value;
-    let promedio = this.editarFForm.get('promedio').value;
+    console.log(tDiplomado)
+    
 
     if ((bachillerato != null) && (licenciatura != null) && (maestria != null) && (doctorado != null) && (de3a6 != null)
       && (de6a10 != null) && (masDe10 != null) && (profSinP != null) && (profMiembro != null) && (jefatura != null)
@@ -103,17 +106,18 @@ export class VtnEditarFormulaComponent implements OnInit {
       && (cMaestria != null) && (tDiplomado != null) && (promedio != null)) {
 
       const formData = {
-        bachillerato: bachillerato, licenciatura: licenciatura, maestria: maestria, doctorado: doctorado, de3a6: de3a6, de6a10: de6a10, masDe10: masDe10,
+        bachillerato: bachillerato, licenciatura: licenciatura, maestria: maestria, doctorado: doctorado, promedio: promedio, de3a6: de3a6, de6a10: de6a10, masDe10: masDe10,
         profSinP: profSinP, profMiembro: profMiembro, jefatura: jefatura, gerencia: gerencia, trabIndependiente: trabIndependiente, alta: alta,
         media: media, baja: baja, acreditada: acreditada, noAcreditada: noAcreditada, cAprovechamiento: cAprovechamiento, tTecnico: tTecnico,
-        cMaestria: cMaestria, tDiplomado: tDiplomado, promedio: promedio
+        cMaestria: cMaestria, tDiplomado: tDiplomado
       }
-      // this.http.put<any>('/router/editFormula', formData).subscribe(
-      //   (res) => {
-      //     this.notificationService.success('Fórmula actualizada'); 
-      //   },
-      //   (err) => this.notificationService.warning('Ocurrió un error')
-      // );
+      console.log(formData)
+      this.http.post<any>('/router/editarFormula', formData).subscribe(
+        (res) => {
+          this.notificationService.success('Fórmula actualizada'); 
+        },
+        (err) => this.notificationService.warning('Ocurrió un error')
+      );
     }
   }
 
