@@ -828,6 +828,14 @@ router.post('/Repostulacion', (req, res) => {
             console.log(err);
     })
 })
-
+//ObtenerMemo
+router.get('/ObtenerMemo', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerMemo(?,?)',[req.body.periodo, req.body.sede], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
 
 module.exports = router
