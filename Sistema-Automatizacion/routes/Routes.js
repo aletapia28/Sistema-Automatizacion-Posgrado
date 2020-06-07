@@ -395,37 +395,17 @@ router.delete('/deletepostulante', function(req, res, next) {
 })
 
 //UPDATE POSTULANTE 
-router.put('/updatepostulant', function(req, res, next) {
-    if (!req.body.cedula) {
-        res.status(400)
-        res.json({
-            error: 'Bad data'
-        })
-    } else {
-        Postulant.update({
-                nombre: req.body.nombre,
-                telefono1: req.body.telefono1,
-                telefono2: req.body.telefono2,
-                correo1: req.body.correo1,
-                correo2: req.body.correo2,
-                ingles: req.body.ingles,
-                gradoAcademico: req.body.gradoAcademico,
-                universidad: req.body.universidad,
-                afinidad: req.body.afinidad,
-                acreditada: req.body.acreditada,
-                puestoActual: req.body.puestoActual,
-                experienciaProfesion: req.body.experienciaProfesion,
-                cursoAfin: req.body.cursoAfin,
-                tituloTecnico: req.body.tituloTecnico,
-                cursoAprovechamiento: req.body.cursoAprovechamiento,
-                tituloDiplomado: req.body.tituloDiplomado,
-                promedioGeneral: req.body.promedioGeneral
-            }, { where: { cedula: req.body.cedula } })
-            .then(() => {
-                res.json({ status: 'Postulante Actualizado' })
-            })
-            .error(err => handleError(err))
-    }
+router.put('/EditPostulante', function(req, res, next) {
+    db.mysqlConnection.query('CALL EditarPostulante(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+    [req.body.cedula,req.body.nombre,req.body.telefono1,req.body.telefono2,req.body.correo1,req.body.correo2,
+    req.body.ingles,req.body.gradoAcademico,req.body.universidad,req.body.afinidad,req.body.acreditada,req.body.puestoActual,req.body.experienciaProfesion,
+    req.body.cursoAfin,req.body.tituloTecnico,req.body.cursoAprovechamiento,req.body.tituloDiplomado,req.body.promedioGeneral,req.body.nota], (err, row, fields) => {
+        if (!err) {
+            res.send(row);
+        } else
+            console.log(err);
+    })
+  
 })
 
 /////////////////////////////////////////////////////////
@@ -794,6 +774,68 @@ router.post('/registerpostulanteA', (req, res) => {
         .catch(err => {
             res.send('error: ' + err)
         })
+})
+
+//Obtener 
+//obtener postulantes 
+router.get('/obtenerallpostulantes', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerPostulantes()', (err, row, fields) => {
+        if (!err) {
+            res.send(row);
+        } else
+            console.log(err);
+    })
+})
+
+
+//obtener postulante 
+router.post('/obtenerpostulate', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerPostulante(?)',[req.body.cedula], (err, row, fields) => {
+        if (!err) {
+            res.send(row);
+        } else
+            console.log(err);
+    })
+})
+
+//Editar formula
+router.post('/editarFormula', (req, res) => {
+    db.mysqlConnection.query('CALL EditarFormula(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.bachillerato,req.body.licenciatura,req.body.maestria,req.body.doctorado,req.body.promedio,req.body.de3a6,req.body.de6a10,
+        req.body.masDe10,req.body.profSinP,req.body.profMiembro,req.body.jefatura,req.body.gerencia,req.body.trabIndependiente,req.body.alta,req.body.media,
+        req.body.baja,req.body.acreditada,req.body.noAcreditada,req.body.cAprovechamiento,req.body.tTecnico,req.body.cMaestria,req.body.tDiplomado ], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+//Editar postulacion
+router.post('/editarPostulacion', (req, res) => {
+    db.mysqlConnection.query('CALL EditarPostulacion(?,?,?,?,?)',[req.body.periodo, req.body.cedula,req.body.enfasis,req.body.sede,req.body.nota,req.body.memo], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+//Editar postulacion
+router.post('/Repostulacion', (req, res) => {
+    db.mysqlConnection.query('CALL CrearPostulacion(?,?,?,?,?,?)',[req.body.periodo, req.body.cedula,req.body.enfasis,req.body.sede,req.body.nota,req.body.memo], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+//ObtenerMemo
+router.get('/ObtenerMemo', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerMemo(?,?)',[req.body.periodo, req.body.sede], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
 })
 
 module.exports = router
