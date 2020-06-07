@@ -34,14 +34,7 @@ export interface PostulanteElement {
   nota: number;
 }
 
-const ELEMENT_DATA: PostulanteElement[] =    [
-  { cedula: '1167400493', nombre: 'Juan Perez RodriguezJuan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad LatinaUniversidad LatinaUniversidad LatinaUniversidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-  { cedula: '1167400493', nombre: 'Juan Perez Rodriguez', telefono1: '785837728', telefono2: "499494", correo1: 'Juanrodriguez@gmail.com', correo2: 'Juanrodriguez@gmail.com', ingles: 'Juan', gradoAcademico: 'Juan', universidad: 'Universidad Latina', afinidad: 'Media', acreditada: 'No', puestoActual: 'Gerente', experiencia: 'Si', cursoAfin: 'Juan', tituloTecnico: 'Si', cursoAprovechamiento: 'No', tituloDiplomado: 'Juan', promedioGeneral: '89', enfasis: 'Juan', sede: 'Juan', nota: 3 },
-];    
+const ELEMENT_DATA: PostulanteElement[] =[];    
 
 
 
@@ -57,6 +50,7 @@ export class VtnBuscarPostulanteComponent implements OnInit {
   periodo = new FormControl('');
   periodoShowing: string;
   tipoShowing = true;
+  atributos = []
   @ViewChild('TABLE') table: ElementRef;
 
   constructor(
@@ -69,6 +63,7 @@ export class VtnBuscarPostulanteComponent implements OnInit {
   ) {
     let vigente = sessionStorage.getItem('periodoVigente');
     this.visible = vigente == 'true';
+    
 
    }
 
@@ -110,9 +105,22 @@ export class VtnBuscarPostulanteComponent implements OnInit {
 
     }
   ngOnInit(): void {
-    // this.dataSource.filterPredicate = (data: Element, filter: string) => {
-    //   return data.nombre == filter;
-    //  };
+    this.http.get<any>('/router/obtenerallpostulantes').subscribe(
+      (respost) => {
+
+        this.dataSource = new MatTableDataSource(respost[0]);
+      }
+
+    );
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+
+    this.http.get<any>('/router/getallatributos').subscribe(
+      (respost )=> {
+        this.atributos = respost[0]
+      },
+      );
+    
   }
 
   onEdit(row, key) {    
@@ -121,20 +129,38 @@ export class VtnBuscarPostulanteComponent implements OnInit {
 
 
   }
+  
+  
   onRepost(row,key){
     this.dialogService.openConfirmDialog("¿Seguro que efectuar la repostulación?", "Será repostulado al período actual")
     .afterClosed().subscribe(res => {
-      if (res) {          
-        // const formData = { cedula: row.cedula }          
-        // this.http.post<any>('/router/METDO-PARA-REPOSTULAR', formData).subscribe(
-        //   (res)=>{
-        //     if (res.affectedRows>0){
-        //       this.notificationService.success('Repostulación correcta'); 
-       
-        //     }
-        //   },
-        //   (err) => this.notificationService.warning('Ha ocurrido un error')
-        // );
+      if (res) {      
+        //get  periodo
+        if (sessionStorage.getItem('periodoVigente') == 'true') {
+          this.http.get<any>('/router/getPeriodoActual').subscribe(
+            (respost) => {
+              let periodoActual = respost[0];
+              if (periodoActual.length == 1) {
+                let periodoact: string = periodoActual[0].periodo;
+                //get datos postulacion
+                const formData = { periodo:periodoact, cedula: row.cedula, enfasis:row.enfasis, sede:row.sede, nota:row.nota, memo:row.memo} 
+                this.http.post<any>('/router/Repostulacion', formData).subscribe(
+                  (res)=>{
+                    if (res.affectedRows>0){
+                      this.notificationService.success('Repostulación correcta'); 
+        
+                    }
+                  },
+                  (err) => this.notificationService.warning('Ha ocurrido un error')
+                );   
+          
+              }
+            }
+          );
+        }else{
+          this.notificationService.warning('No hay un periodo vigente')
+        }
+        
       }
     });
   }
