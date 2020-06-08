@@ -29,12 +29,9 @@ export interface PostulanteElement {
   cursoAprovechamiento: string;
   tituloDiplomado: string;
   promedioGeneral: string;
-  enfasis: string;
-  sede: string;
-  nota: number;
 }
 
-const ELEMENT_DATA: PostulanteElement[] =[];    
+const ELEMENT_DATA: PostulanteElement[] = [];
 
 
 
@@ -63,52 +60,51 @@ export class VtnBuscarPostulanteComponent implements OnInit {
   ) {
     let vigente = sessionStorage.getItem('periodoVigente');
     this.visible = vigente == 'true';
-    
 
-   }
+
+  }
 
   visible: boolean;
   displayedColumns: string[] =
-  ['cedula',
-    'nombre',
-    'telefono1',
-    'telefono2',
-    'correo1',
-    'correo2',
-    'ingles',
-    'gradoAcademico',
-    'universidad',
-    'afinidad',
-    'acreditada',
-    'puestoActual',
-    'experiencia',
-    'cursoAfin',
-    'tituloTecnico',
-    'cursoAprovechamiento',
-    'tituloDiplomado',
-    'promedioGeneral',
-    'enfasis',
-    'sede',
-    'nota',
-    'actions']
+    ['cedula',
+      'nombre',
+      'telefono1',
+      'telefono2',
+      'correo1',
+      'correo2',
+      'ingles',
+      'gradoAcademico',
+      'universidad',
+      'afinidad',
+      'acreditada',
+      'puestoActual',
+      'experiencia',
+      'cursoAfin',
+      'tituloTecnico',
+      'cursoAprovechamiento',
+      'tituloDiplomado',
+      'promedioGeneral',
+      'actions']
 
-  
 
-    dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
-    applyFilter(event: Event) {
-      const filterValue = (event.target as HTMLInputElement).value;
-      this.dataSource.filter = filterValue.trim().toLowerCase();
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-    }
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+  }
   ngOnInit(): void {
     this.http.get<any>('/router/obtenerallpostulantes').subscribe(
       (respost) => {
-
+        
         this.dataSource = new MatTableDataSource(respost[0]);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       }
 
     );
@@ -116,53 +112,54 @@ export class VtnBuscarPostulanteComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
 
     this.http.get<any>('/router/getallatributos').subscribe(
-      (respost )=> {
+      (respost) => {
         this.atributos = respost[0]
       },
-      );
-    
+    );
+
   }
 
-  onEdit(row, key) {    
-     sessionStorage.setItem('cedulaPostulante', row.cedula);
+  onEdit(row, key) {
+    sessionStorage.setItem('cedulaPostulante', row.cedula);
     this.router.navigate(['editPos']);
 
 
   }
-  
-  
-  onRepost(row,key){
+
+
+  onRepost(row, key) {
     this.dialogService.openConfirmDialog("¿Seguro que efectuar la repostulación?", "Será repostulado al período actual")
-    .afterClosed().subscribe(res => {
-      if (res) {      
-        //get  periodo
-        if (sessionStorage.getItem('periodoVigente') == 'true') {
-          this.http.get<any>('/router/getPeriodoActual').subscribe(
-            (respost) => {
-              let periodoActual = respost[0];
-              if (periodoActual.length == 1) {
-                let periodoact: string = periodoActual[0].periodo;
-                //get datos postulacion
-                const formData = { periodo:periodoact, cedula: row.cedula, enfasis:row.enfasis, sede:row.sede, nota:row.nota, memo:row.memo} 
-                this.http.post<any>('/router/Repostulacion', formData).subscribe(
-                  (res)=>{
-                    if (res.affectedRows>0){
-                      this.notificationService.success('Repostulación correcta'); 
-        
-                    }
-                  },
-                  (err) => this.notificationService.warning('Ha ocurrido un error')
-                );   
-          
+      .afterClosed().subscribe(res => {
+        if (res) {
+          //get  periodo
+          if (sessionStorage.getItem('periodoVigente') == 'true') {
+            this.http.get<any>('/router/getPeriodoActual').subscribe(
+              (respost) => {
+                let periodoActual = respost[0];
+                if (periodoActual.length == 1) {
+                  let periodoact: string = periodoActual[0].periodo;
+                  //get datos postulacion
+                  //Llamar al SP de UltimaPostulacion() y de ahi sacar enfasis, sede y nota
+                  const formData = { periodo: periodoact, cedula: row.cedula, enfasis: row.enfasis, sede: row.sede, nota: row.nota, memo: row.memo }
+                  this.http.post<any>('/router/Repostulacion', formData).subscribe(
+                    (res) => {
+                      if (res.affectedRows > 0) {
+                        this.notificationService.success('Repostulación correcta');
+
+                      }
+                    },
+                    (err) => this.notificationService.warning('Ha ocurrido un error')
+                  );
+
+                }
               }
-            }
-          );
-        }else{
-          this.notificationService.warning('No hay un periodo vigente')
+            );
+          } else {
+            this.notificationService.warning('No hay un periodo vigente')
+          }
+
         }
-        
-      }
-    });
+      });
   }
 
 }

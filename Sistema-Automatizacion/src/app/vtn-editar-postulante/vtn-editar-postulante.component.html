@@ -8,7 +8,7 @@
             <h1 class="titulo">Editar Postulante</h1>
             <form class="periodo-form" (submit)="onSubmit()" [formGroup]="editarPosForm">
                 <mat-form-field appearance="outline" class="inputVtn">
-                    <mat-label>Cedula</mat-label>
+                    <mat-label>Cédula</mat-label>
                     <input matInput formControlName="cedula" required>
                 </mat-form-field>
 
@@ -59,17 +59,13 @@
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Afinidad profesional</mat-label>
                     <mat-select formControlName="afinidad">
-                        <mat-option value="Administración">Administración de empresas</mat-option>
-                        <mat-option value="Ingenierías">Ingenierías</mat-option>
-                        <mat-option value="Economía">Economía</mat-option>
-                        <mat-option value="Ciencias">Ciencias</mat-option>
-                        <mat-option value="Letras">Letras</mat-option>
-                        <mat-option value="Arte">Ciencias</mat-option>
-                        <mat-option value="Diseño">Diseño</mat-option>
+                        <mat-option value="Alta">Alta</mat-option> 
+                        <mat-option value="Media">Media</mat-option>
+                        <mat-option value="Baja">Baja</mat-option>
                     </mat-select>
                 </mat-form-field>
 
-                <mat-checkbox formControlName="acreditada">Carrera Acreditada</mat-checkbox>
+                <mat-checkbox formControlName="acreditada">Carrera acreditada</mat-checkbox>
 
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Puesto actual</mat-label>
@@ -83,7 +79,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="inputVtn">
-                    <mat-label>Experiencia Profesional</mat-label>
+                    <mat-label>Experiencia profesional</mat-label>
                     <input matInput formControlName="experienciaProfesion" type="number" min="0" max="100" required>
                 </mat-form-field>
 
