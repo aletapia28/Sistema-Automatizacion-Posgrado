@@ -101,7 +101,7 @@ export class VtnBuscarPostulanteComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<any>('/router/obtenerallpostulantes').subscribe(
       (respost) => {
-        
+
         this.dataSource = new MatTableDataSource(respost[0]);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -140,17 +140,36 @@ export class VtnBuscarPostulanteComponent implements OnInit {
                   let periodoact: string = periodoActual[0].periodo;
                   //get datos postulacion
                   //Llamar al SP de UltimaPostulacion() y de ahi sacar enfasis, sede y nota
-                  const formData = { periodo: periodoact, cedula: row.cedula, enfasis: row.enfasis, sede: row.sede, nota: row.nota, memo: row.memo }
-                  this.http.post<any>('/router/Repostulacion', formData).subscribe(
+                  this.http.post<any>('/router/UltimaPostulacion', { cedula: row.cedula }).subscribe(
                     (res) => {
-                      if (res.affectedRows > 0) {
-                        this.notificationService.success('Repostulación correcta');
+                      
+                        let datos = res[0];
+                        let enfasis = datos[0].enfasis;
+                        let nota = datos[0].nota;
+                        let sede = datos[0].sede;
+                        let memo=1;
+                        console.log("jad")
+                        const formData = { periodo: periodoact, cedula: row.cedula, enfasis: enfasis, sede: sede, nota:nota, memo: memo }
+                        
+                        this.http.post<any>('/router/Repostulacion', formData).subscribe(
+                          (res) => {
+                            console.log(res);
+                            if (Array.isArray(res)) {
+                              this.notificationService.success('Repostulación correcta');
+                              console.log("rep correcta")                             
+                            }
+                            else
+                            console.log("mal")
 
-                      }
-                    },
-                    (err) => this.notificationService.warning('Ha ocurrido un error')
-                  );
-
+                          },
+                          (err) => {this.notificationService.warning('Ha ocurrido un error')
+                          console.log("rep cnoorrecta")}
+                        );                        
+                      
+                        (err) => {this.notificationService.warning('Ha ocurrido un error')
+                        console.log("rep incorrecta")}
+                    }
+                  )
                 }
               }
             );
