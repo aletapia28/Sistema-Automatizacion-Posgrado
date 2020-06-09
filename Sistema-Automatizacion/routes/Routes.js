@@ -7,6 +7,8 @@ const bodyParser = require('body-parser')
 const path = require('path');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+const nodemailer = require('nodemailer'); 
+
 const User = require("../models/User")
 const Superuser = require('../models/Superusuario')
 const Postulant = require('../models/Postulante')
@@ -828,6 +830,44 @@ router.post('/Repostulacion', (req, res) => {
             console.log(err);
     })
 })
+//ObtenerMemo
+router.get('/ObtenerMemo', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerMemo(?,?)',[req.body.periodo, req.body.sede], (err, row, fields) => {
+        if (!err)
+            res.send(row[0]);
+        else
+            console.log(err);
+    })
+})
 
+//Enviar Correo
+router.put('/EnviarCorreo', (req, res) => {
 
+    var transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        auth: {
+        user: 'maesito4@gmail.com',
+        pass: 'eraolivenox1'
+        }
+    });
+
+    var mailOptions = {
+        from: 'maesito4@gmail.com',
+        to: req.body.para,
+        subject: req.body.asunto,
+        text: req.body.texto
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+        console.log(error);
+        } else {
+        console.log('Email sent: ' + info.response);
+        }
+        res.send({response:200})
+    }); 
+})
 module.exports = router
