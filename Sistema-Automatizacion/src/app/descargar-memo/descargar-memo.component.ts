@@ -98,13 +98,13 @@ export class DescargarMemoComponent implements OnInit {
           break;
       }
       let fechaFinal = `${fecha.getDate()} ` + mesNombre + ` ${fecha.getFullYear()}`;
-      let cuerpo = `MEMORANDO \n\n\nPara: ${destinatario}\n\nDe: ${destinatario}\n\nFecha: ${fechaFinal}\n\nAsunto: Admisión de estudiantes Maestría en Gerencia de Proyectos.\n\nAdjunto encontrará los documentos de los estudiantes que han sido admitidos para el ${this.periodoVigente} al Programa de Maestría en Gerencia de Proyectos, en la Sede de ${sede}. Favor incluirlos dentro del plan ${fecha.getFullYear()}.\n\nCualquier consulta estoy a la orden.`;
+      let cuerpo = `MEMORANDO \n\n\nPara: ${destinatario}\n\nDe: ${remitente}\n\nFecha: ${fechaFinal}\n\nAsunto: Admisión de estudiantes Maestría en Gerencia de Proyectos.\n\nAdjunto encontrará los documentos de los estudiantes que han sido admitidos para el ${this.periodoVigente} al Programa de Maestría en Gerencia de Proyectos, en la Sede de ${sede}. Favor incluirlos dentro del plan ${fecha.getFullYear()}.\n\nCualquier consulta estoy a la orden.`;
       let correo = "jgomezcasasola@gmail.com";
       let asunto = `Memorando Período ${this.periodoVigente}`;
       const formData = {para: correo, asunto: asunto, texto: cuerpo}
       this.http.put<any>('/router/EnviarCorreo', formData).subscribe(
         (respost) => {
-          
+           
         }
       );
     }
