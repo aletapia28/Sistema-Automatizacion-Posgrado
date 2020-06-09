@@ -59,7 +59,7 @@ export class VtnEditarPostulanteComponent implements OnInit {
         this.editarPosForm.get('experienciaProfesion').setValue(postulante[0].experienciaProfesion);
         this.editarPosForm.get('cursoAfin').setValue(postulante[0].cursoAfin);
         this.editarPosForm.get('tTecnico').setValue(postulante[0].tituloTecnico);
-        this.editarPosForm.get('cursoAprovechamiento').setValue(postulante[0].cursosAprovechamiento);
+        this.editarPosForm.get('cursoAprovechamiento').setValue(postulante[0].cursoAprovechamiento);
         this.editarPosForm.get('tDiplomado').setValue(postulante[0].tituloDiplomado);
         this.editarPosForm.get('promedio').setValue(postulante[0].promedioGeneral);
         
@@ -84,47 +84,52 @@ export class VtnEditarPostulanteComponent implements OnInit {
   getErrorMessage2() {
     return this.editarPosForm.get('correo2').hasError('email') ? 'Correo inválido' : '';
   }
-  calcularnota(acreditada:number, gradoAcademico:String,promgeneral:number, afinidad:String,puestoActual:String,
-    experiencia:number,cursoAfin:number, titulotec:number, cursoAprov:number, tituloDiplomado:number) :number
-  {
-    var notacalc = 0;
-      //promedio
-      notacalc+= (promgeneral/10)
-      //grado academico 
-      var cont; 
-      for (cont = 0; cont < 4; cont++) {
-        if(gradoAcademico == this.atributos[cont].nombre){
-          notacalc+= this.atributos[cont].peso
-        }
-      }
-      //experiencia
-      if(experiencia >= 3 && experiencia < 6){notacalc+=this.atributos[5].peso}
-      else if(experiencia >= 6 && experiencia <10){notacalc+=this.atributos[6].peso}
-      else if(experiencia >=10){notacalc+=this.atributos[7].peso}
-      //puesto
-      for (cont = 8; cont < 13; cont++) {
-        if(puestoActual == this.atributos[cont].nombre){
-          notacalc+= this.atributos[cont].peso
-        }
-      }
-      //afinidad
-      for (cont = 13; cont < 19; cont++) {
-        if(afinidad == this.atributos[cont].nombre){
-          notacalc+= this.atributos[cont].peso
-        }
-      }
-      //acreditada
-      if(acreditada ==1){notacalc+=this.atributos[20].peso}
 
-      //formacion complementaria
-      if(titulotec == 1){notacalc+=this.atributos[23].peso}
-      if(cursoAfin <= 1){notacalc+=this.atributos[24].peso}
-      if(tituloDiplomado == 1){notacalc+=this.atributos[25].peso}
-      if(tituloDiplomado == 1 &&  cursoAfin ==1){notacalc -=5}
-      if(tituloDiplomado == 1 &&  titulotec ==1){notacalc -=5}
-      if(cursoAprov<=5){notacalc+=cursoAprov}else{notacalc+=5}
-      return notacalc
-     
+  calcularnota(acreditada: number, gradoAcademico: String, promgeneral: number, afinidad: String, puestoActual: String,
+    experiencia: number, cursoAfin: number, titulotec: number, cursoAprov: number, tituloDiplomado: number): number {
+    var notacalc = 0;
+    //promedio
+    notacalc += (promgeneral / 10)
+    //grado academico 
+    var cont;
+    for (cont = 0; cont < 4; cont++) {
+      if (gradoAcademico == this.atributos[cont].nombre) {
+        notacalc += this.atributos[cont].peso
+      }
+    }
+    //experiencia
+    if (experiencia >= 3 && experiencia < 6) { notacalc += this.atributos[5].peso }
+    else if (experiencia >= 6 && experiencia < 10) { notacalc += this.atributos[6].peso }
+    else if (experiencia >= 10) { notacalc += this.atributos[7].peso }
+    //puesto
+    for (cont = 8; cont < 13; cont++) {
+      if (puestoActual == this.atributos[cont].nombre) {
+        notacalc += this.atributos[cont].peso
+      }
+    }
+    //afinidad
+    for (cont = 13; cont < 16; cont++) {
+      if (afinidad == this.atributos[cont].nombre) {
+        notacalc += this.atributos[cont].peso
+      }
+    }
+    //acreditada
+    if (acreditada == 1) { notacalc += this.atributos[16].peso }
+
+    //formacion complementaria
+    let formacion = 0;
+    if (tituloDiplomado == 1) { formacion += this.atributos[21].peso }
+    if (formacion == 0) {
+      formacion += cursoAfin * this.atributos[20].peso
+      if (titulotec == 1) { formacion += this.atributos[19].peso }
+      for (let cursos = 0; cursos < cursoAprov && formacion < 10; cursos++) {
+        formacion += this.atributos[18].peso
+      }
+      if (formacion > 10) formacion = 10
+    }
+    notacalc += formacion;
+    return notacalc
+
   }
 
   onSubmit() {
@@ -146,19 +151,16 @@ export class VtnEditarPostulanteComponent implements OnInit {
     let cursoAfin = this.editarPosForm.get('cursoAfin').value;
     let tituloDiplomado: boolean = this.editarPosForm.get('tDiplomado').value;
     let promedioGeneral = this.editarPosForm.get('promedio').value;
-
     //conversion de titulos a integer
     let acred,ttec,tdip;
-    if (acreditada == true){acred ==1}else{acred ==0}
-    if (tituloTecnico == true){ttec ==1}else{ttec ==0}
-    if (tituloDiplomado == true){tdip ==1}else{tdip ==0}
-    
-    let notanw = this.calcularnota(acred,gradoAcademico,promedioGeneral,afinidad,puestoActual,experienciaProfesion,cursoAfin,ttec,cursoAprovechamiento,tdip )
+    if (acreditada == true){acred=1}else{acred=0}
+    if (tituloTecnico == true){ttec=1}else{ttec=0}
+    if (tituloDiplomado == true){tdip=1}else{tdip=0}
 
+    let notanw = this.calcularnota(acred,gradoAcademico,promedioGeneral,afinidad,puestoActual,experienciaProfesion,cursoAfin,ttec,cursoAprovechamiento,tdip )
     if ((cedula.length > 0) && (nombre.length > 0) && (telefono1.length > 0) && (correo1.length > 0) && (gradoAcademico.length > 0)
       && (universidad.length > 0) && (afinidad.length > 0) && (puestoActual.length > 0) && (experienciaProfesion != null) && (cursoAprovechamiento != null)
       && (cursoAfin != null) && (promedioGeneral != null)) {
-      
       const formData = {
         cedula: cedula, nombre: nombre, telefono1: telefono1, telefono2: telefono2, correo1: correo1, correo2: correo2, ingles: ingles,
         gradoAcademico: gradoAcademico, universidad: universidad, afinidad: afinidad, acreditada: acreditada, puestoActual: puestoActual, experienciaProfesion: experienciaProfesion,
@@ -167,6 +169,15 @@ export class VtnEditarPostulanteComponent implements OnInit {
       this.http.put<any>('/router/EditPostulante', formData).subscribe(
         (res) => {
           this.notificationService.success('Postulante actualizado'); 
+          if(sessionStorage.getItem('periodoVigente') == 'true') {
+            let periodo = sessionStorage.getItem('periodoActual');
+            const formData2 = { cedula:cedula, periodo:periodo, nota:notanw}
+            this.http.put<any>('/router/EditNota', formData2).subscribe(
+              (res) => {
+              },
+              (err) => this.notificationService.warning('Ocurrió un error')
+            );
+          }
         },
         (err) => this.notificationService.warning('Ocurrió un error')
       );

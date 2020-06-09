@@ -870,4 +870,17 @@ router.put('/EnviarCorreo', (req, res) => {
         res.send({response:200})
     }); 
 })
+
+//UPDATE NOTA 
+router.put('/EditNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL EditarNota(?,?,?)',
+    [req.body.cedula,req.body.periodo,req.body.nota], (err, row, fields) => {
+        if (!err) {
+            res.send(row);
+        } else
+            console.log(err);
+    })
+  
+})
+
 module.exports = router
