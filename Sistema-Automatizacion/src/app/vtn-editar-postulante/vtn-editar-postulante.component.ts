@@ -133,7 +133,6 @@ export class VtnEditarPostulanteComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('1')
     let cedula: string = this.editarPosForm.get('cedula').value;
     let nombre: string = this.editarPosForm.get('nombre').value;
     let telefono1: string = this.editarPosForm.get('telefono1').value;
@@ -152,19 +151,16 @@ export class VtnEditarPostulanteComponent implements OnInit {
     let cursoAfin = this.editarPosForm.get('cursoAfin').value;
     let tituloDiplomado: boolean = this.editarPosForm.get('tDiplomado').value;
     let promedioGeneral = this.editarPosForm.get('promedio').value;
-    console.log('2')
     //conversion de titulos a integer
     let acred,ttec,tdip;
-    if (acreditada == true){acred ==1}else{acred ==0}
-    if (tituloTecnico == true){ttec ==1}else{ttec ==0}
-    if (tituloDiplomado == true){tdip ==1}else{tdip ==0}
-    console.log('3') 
+    if (acreditada == true){acred=1}else{acred=0}
+    if (tituloTecnico == true){ttec=1}else{ttec=0}
+    if (tituloDiplomado == true){tdip=1}else{tdip=0}
+
     let notanw = this.calcularnota(acred,gradoAcademico,promedioGeneral,afinidad,puestoActual,experienciaProfesion,cursoAfin,ttec,cursoAprovechamiento,tdip )
-    console.log('4')
     if ((cedula.length > 0) && (nombre.length > 0) && (telefono1.length > 0) && (correo1.length > 0) && (gradoAcademico.length > 0)
       && (universidad.length > 0) && (afinidad.length > 0) && (puestoActual.length > 0) && (experienciaProfesion != null) && (cursoAprovechamiento != null)
       && (cursoAfin != null) && (promedioGeneral != null)) {
-        console.log('5')
       const formData = {
         cedula: cedula, nombre: nombre, telefono1: telefono1, telefono2: telefono2, correo1: correo1, correo2: correo2, ingles: ingles,
         gradoAcademico: gradoAcademico, universidad: universidad, afinidad: afinidad, acreditada: acreditada, puestoActual: puestoActual, experienciaProfesion: experienciaProfesion,
@@ -173,6 +169,15 @@ export class VtnEditarPostulanteComponent implements OnInit {
       this.http.put<any>('/router/EditPostulante', formData).subscribe(
         (res) => {
           this.notificationService.success('Postulante actualizado'); 
+          if(sessionStorage.getItem('periodoVigente') == 'true') {
+            let periodo = sessionStorage.getItem('periodoActual');
+            const formData2 = { cedula:cedula, periodo:periodo, nota:notanw}
+            this.http.put<any>('/router/EditNota', formData2).subscribe(
+              (res) => {
+              },
+              (err) => this.notificationService.warning('Ocurrió un error')
+            );
+          }
         },
         (err) => this.notificationService.warning('Ocurrió un error')
       );
