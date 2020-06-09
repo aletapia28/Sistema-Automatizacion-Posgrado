@@ -140,34 +140,38 @@ export class VtnBuscarPostulanteComponent implements OnInit {
                   let periodoact: string = periodoActual[0].periodo;
                   //get datos postulacion
                   //Llamar al SP de UltimaPostulacion() y de ahi sacar enfasis, sede y nota
-                  this.http.post<any>('/router/UltimaPostulacion', { cedula: row.cedula }).subscribe(
+                  this.http.post<any>('/router/Ultimapostulacion', { cedula: row.cedula }).subscribe(
                     (res) => {
-                      
-                        let datos = res[0];
-                        let enfasis = datos[0].enfasis;
-                        let nota = datos[0].nota;
-                        let sede = datos[0].sede;
-                        let memo=1;
-                        console.log("jad")
-                        const formData = { periodo: periodoact, cedula: row.cedula, enfasis: enfasis, sede: sede, nota:nota, memo: memo }
-                        
-                        this.http.post<any>('/router/Repostulacion', formData).subscribe(
-                          (res) => {
-                            console.log(res);
-                            if (Array.isArray(res)) {
-                              this.notificationService.success('Repostulación correcta');
-                              console.log("rep correcta")                             
-                            }
-                            else
-                            console.log("mal")
 
-                          },
-                          (err) => {this.notificationService.warning('Ha ocurrido un error')
-                          console.log("rep cnoorrecta")}
-                        );                        
-                      
-                        (err) => {this.notificationService.warning('Ha ocurrido un error')
-                        console.log("rep incorrecta")}
+                      let datos = res[0];
+                      let enfasis = datos[0].enfasis;
+                      let nota = datos[0].nota;
+                      let sede = datos[0].sede;
+                      let memo = 1;
+                      const formData = { periodo: periodoact, cedula: row.cedula, enfasis: enfasis, sede: sede, nota: nota, memo: memo }
+
+                      this.http.post<any>('/router/Repostulacion', formData).subscribe(
+                        (res) => {
+                          console.log(res);
+                          console.log(res.error);
+                          if (res.error==false) {
+                            this.notificationService.success('Repostulación correcta');
+                            console.log("rep correcta")
+                          }
+                          else
+                            this.notificationService.warning('Repostulación no efectuada');
+
+                        },
+                        (err) => {
+                          this.notificationService.warning('Ha ocurrido un error')
+                          console.log("rep cnoorrecta")
+                        }
+                      );
+
+                      (err) => {
+                        this.notificationService.warning('Ha ocurrido un error')
+                        console.log("rep incorrecta")
+                      }
                     }
                   )
                 }
