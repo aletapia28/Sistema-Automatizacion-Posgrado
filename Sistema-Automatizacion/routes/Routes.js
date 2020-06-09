@@ -831,8 +831,18 @@ router.post('/Repostulacion', (req, res) => {
     })
 })
 //ObtenerMemo
-router.get('/ObtenerMemo', (req, res) => {
+router.post('/ObtenerMemo', (req, res) => {
     db.mysqlConnection.query('CALL ObtenerMemo(?,?)',[req.body.periodo, req.body.sede], (err, row, fields) => {
+        if (!err)
+            res.send(row[0]);
+        else
+            console.log(err);
+    })
+})
+
+//ObtenerSedes
+router.post('/ObtenerSedes', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerSedes(?)',[req.body.periodo], (err, row, fields) => {
         if (!err)
             res.send(row[0]);
         else
