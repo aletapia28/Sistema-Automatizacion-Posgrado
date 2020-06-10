@@ -11,6 +11,7 @@
             <img src="/assets/img/menu.png" alt="imagen" class="logoMenu">
         </button>
         <mat-menu #beforeMenu="matMenu" xPosition="before" class="contenedorMenu">
+            <button mat-menu-item class="opcionMenu" (click)="editarPerfil()">Editar perfil</button>
             <button mat-menu-item class="opcionMenu" [matMenuTriggerFor]="periodos" *ngIf="show">Períodos</button>
             <button mat-menu-item class="opcionMenu" (click)="buscarPostulante()">Buscar postulante</button>
             <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="generarMemo()">Generar memo</button>

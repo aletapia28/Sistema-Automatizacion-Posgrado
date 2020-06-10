@@ -825,9 +825,7 @@ router.post('/editarPostulacion', (req, res) => {
 router.post('/Repostulacion', (req, res) => {
     db.mysqlConnection.query('CALL CrearPostulacion(?,?,?,?,?,?)', [req.body.periodo, req.body.cedula, req.body.enfasis, req.body.sede, req.body.nota, req.body.memo], (err, row, fields) => {
         if (!err){
-            //res.send(row);
             res.json({error:false })
-            console.log('correcto')
         }
         else {
             res.json({error:true })
@@ -898,11 +896,29 @@ router.put('/EditNota', function(req, res, next) {
 })
 
 router.post('/UltimaPostulacion', (req, res) => {
-
-    console.log(req.body.cedula);
     db.mysqlConnection.query('CALL UltimaPostulacion(?)', req.body.cedula, (err, row, fields) => {
         if (!err)
             res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+router.post('/ObtenerCorreoEnvio', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerCorreoEnvio(?)', req.body.correo, (err, row, fields) => {
+        if (!err)
+            res.send(row[0][0]);
+        else
+            console.log(err);
+    })
+})
+
+router.post('/UpdatePassword', (req, res) => {
+    var generatePassword = require('password-generator'); 
+    let password = generatePassword();
+    db.mysqlConnection.query('CALL UpdatePassword(?, ?)', [req.body.correo, password], (err, row, fields) => {
+        if (!err)
+            res.json({password: password});
         else
             console.log(err);
     })

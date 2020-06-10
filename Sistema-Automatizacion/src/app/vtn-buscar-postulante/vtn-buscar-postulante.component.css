@@ -151,3 +151,8 @@ table {
 .inputVtn {
     width: 220px;
 }
+
+th {
+    font-weight: bold;
+    font-size: 14px;
+}
