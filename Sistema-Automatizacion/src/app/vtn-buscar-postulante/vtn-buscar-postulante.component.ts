@@ -152,11 +152,8 @@ export class VtnBuscarPostulanteComponent implements OnInit {
 
                       this.http.post<any>('/router/Repostulacion', formData).subscribe(
                         (res) => {
-                          console.log(res);
-                          console.log(res.error);
                           if (res.error==false) {
                             this.notificationService.success('Repostulación correcta');
-                            console.log("rep correcta")
                           }
                           else
                             this.notificationService.warning('Repostulación no efectuada');
@@ -164,14 +161,11 @@ export class VtnBuscarPostulanteComponent implements OnInit {
                         },
                         (err) => {
                           this.notificationService.warning('Ha ocurrido un error')
-                          console.log("rep cnoorrecta")
                         }
-                      );
-
-                      (err) => {
-                        this.notificationService.warning('Ha ocurrido un error')
-                        console.log("rep incorrecta")
-                      }
+                      );                      
+                    },
+                    (err) => {
+                      this.notificationService.warning('Ha ocurrido un error')
                     }
                   )
                 }
