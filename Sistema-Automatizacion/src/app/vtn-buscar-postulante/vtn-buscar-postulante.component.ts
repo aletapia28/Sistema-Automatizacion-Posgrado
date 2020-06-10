@@ -140,7 +140,7 @@ export class VtnBuscarPostulanteComponent implements OnInit {
                   let periodoact: string = periodoActual[0].periodo;
                   //get datos postulacion
                   //Llamar al SP de UltimaPostulacion() y de ahi sacar enfasis, sede y nota
-                  this.http.post<any>('/router/Ultimapostulacion', { cedula: row.cedula }).subscribe(
+                  this.http.post<any>('/router/UltimaPostulacion', { cedula: row.cedula }).subscribe(
                     (res) => {
 
                       let datos = res[0];
