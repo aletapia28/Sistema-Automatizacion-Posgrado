@@ -823,11 +823,15 @@ router.post('/editarPostulacion', (req, res) => {
 })
 //Editar postulacion
 router.post('/Repostulacion', (req, res) => {
-    db.mysqlConnection.query('CALL CrearPostulacion(?,?,?,?,?,?)',[req.body.periodo, req.body.cedula,req.body.enfasis,req.body.sede,req.body.nota,req.body.memo], (err, row, fields) => {
-        if (!err)
-            res.send(row);
-        else
-            console.log(err);
+    db.mysqlConnection.query('CALL CrearPostulacion(?,?,?,?,?,?)', [req.body.periodo, req.body.cedula, req.body.enfasis, req.body.sede, req.body.nota, req.body.memo], (err, row, fields) => {
+        if (!err){
+            //res.send(row);
+            res.json({error:false })
+            console.log('correcto')
+        }
+        else {
+            res.json({error:true })
+        }
     })
 })
 //ObtenerMemo
@@ -891,6 +895,17 @@ router.put('/EditNota', function(req, res, next) {
             console.log(err);
     })
   
+})
+
+router.post('/UltimaPostulacion', (req, res) => {
+
+    console.log(req.body.cedula);
+    db.mysqlConnection.query('CALL UltimaPostulacion(?)', req.body.cedula, (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
 })
 
 module.exports = router
