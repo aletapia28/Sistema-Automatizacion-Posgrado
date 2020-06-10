@@ -7,6 +7,8 @@ const bodyParser = require('body-parser')
 const path = require('path');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+const nodemailer = require('nodemailer'); 
+
 const User = require("../models/User")
 const Superuser = require('../models/Superusuario')
 const Postulant = require('../models/Postulante')
@@ -821,18 +823,102 @@ router.post('/editarPostulacion', (req, res) => {
 })
 //Editar postulacion
 router.post('/Repostulacion', (req, res) => {
-    db.mysqlConnection.query('CALL CrearPostulacion(?,?,?,?,?,?)',[req.body.periodo, req.body.cedula,req.body.enfasis,req.body.sede,req.body.nota,req.body.memo], (err, row, fields) => {
+    db.mysqlConnection.query('CALL CrearPostulacion(?,?,?,?,?,?)', [req.body.periodo, req.body.cedula, req.body.enfasis, req.body.sede, req.body.nota, req.body.memo], (err, row, fields) => {
+        if (!err){
+            res.json({error:false })
+        }
+        else {
+            res.json({error:true })
+        }
+    })
+})
+//ObtenerMemo
+router.post('/ObtenerMemo', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerMemo(?,?)',[req.body.periodo, req.body.sede], (err, row, fields) => {
+        if (!err)
+            res.send(row[0]);
+        else
+            console.log(err);
+    })
+})
+
+//ObtenerSedes
+router.post('/ObtenerSedes', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerSedes(?)',[req.body.periodo], (err, row, fields) => {
+        if (!err)
+            res.send(row[0]);
+        else
+            console.log(err);
+    })
+})
+
+//Enviar Correo
+router.put('/EnviarCorreo', (req, res) => {
+
+    var transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        auth: {
+        user: 'maesito4@gmail.com',
+        pass: 'eraolivenox1'
+        }
+    });
+
+    var mailOptions = {
+        from: 'maesito4@gmail.com',
+        to: req.body.para,
+        subject: req.body.asunto,
+        text: req.body.texto
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+        console.log(error);
+        } else {
+        console.log('Email sent: ' + info.response);
+        }
+        res.send({response:200})
+    }); 
+})
+
+//UPDATE NOTA 
+router.put('/EditNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL EditarNota(?,?,?)',
+    [req.body.cedula,req.body.periodo,req.body.nota], (err, row, fields) => {
+        if (!err) {
+            res.send(row);
+        } else
+            console.log(err);
+    })
+  
+})
+
+router.post('/UltimaPostulacion', (req, res) => {
+    db.mysqlConnection.query('CALL UltimaPostulacion(?)', req.body.cedula, (err, row, fields) => {
         if (!err)
             res.send(row);
         else
             console.log(err);
     })
 })
-//ObtenerMemo
-router.get('/ObtenerMemo', (req, res) => {
-    db.mysqlConnection.query('CALL ObtenerMemo(?,?)',[req.body.periodo, req.body.sede], (err, row, fields) => {
+
+router.post('/ObtenerCorreoEnvio', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerCorreoEnvio(?)', req.body.correo, (err, row, fields) => {
         if (!err)
-            res.send(row);
+            res.send(row[0][0]);
+        else
+            console.log(err);
+    })
+})
+
+router.post('/UpdatePassword', (req, res) => {
+    var generatePassword = require('password-generator'); 
+    let password = generatePassword();
+    db.mysqlConnection.query('CALL UpdatePassword(?, ?)', [req.body.correo, password], (err, row, fields) => {
+        if (!err)
+            res.json({password: password});
         else
             console.log(err);
     })

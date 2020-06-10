@@ -9,7 +9,7 @@
     </div>
 
     <div>
-        <form class="memo-form"  [formGroup]="memoForm">
+        <form class="memo-form"  [formGroup]="passForm">
             <mat-form-field appearance="outline" class="inputVtn">
                 <mat-label>Correo electrónico usuario</mat-label>
                 <input matInput placeholder="pat@example.com" formControlName="correo" required>
@@ -20,6 +20,6 @@
     </div>
 
     <div class="botones">
-    <button mat-flat-button id="boton" [mat-dialog-close]="false" (click)="onDoc()">Enviar</button>
+    <button mat-flat-button id="boton" [mat-dialog-close]="false" (click)="enviar()">Enviar</button>
     </div>  
 </div>
