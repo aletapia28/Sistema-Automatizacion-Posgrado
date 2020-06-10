@@ -7,6 +7,8 @@ const bodyParser = require('body-parser')
 const path = require('path');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+const nodemailer = require('nodemailer'); 
+
 const User = require("../models/User")
 const Superuser = require('../models/Superusuario')
 const Postulant = require('../models/Postulante')
@@ -36,10 +38,10 @@ router.post('/register', (req, res) => {
         password: req.body.password
     }
     User.findOne({
-        where: {
-            correo: req.body.correo
-        }
-    })
+            where: {
+                correo: req.body.correo
+            }
+        })
         //bcrypt
         .then(usuario => {
             if (!usuario) {
@@ -65,12 +67,12 @@ router.post('/register', (req, res) => {
 })
 
 //ELIMINAR USUARIOS
-router.delete('/deleteuser', function (req, res, next) {
+router.delete('/deleteuser', function(req, res, next) {
     User.destroy({
-        where: {
-            correo: req.body.correo
-        }
-    })
+            where: {
+                correo: req.body.correo
+            }
+        })
         .then(() => {
             res.json({ status: 'Usuario Eliminado' })
         })
@@ -80,7 +82,7 @@ router.delete('/deleteuser', function (req, res, next) {
 })
 
 //ACTUALIZAR USUARIOS
-router.put('/updateusuario', function (req, res, next) {
+router.put('/updateusuario', function(req, res, next) {
     if (!req.body.correo) {
         res.status(400)
         res.json({
@@ -96,7 +98,7 @@ router.put('/updateusuario', function (req, res, next) {
 })
 
 //RETORNAR TODOS LOS USUARIOS 
-router.get('/getallusers', function (req, res, next) {
+router.get('/getallusers', function(req, res, next) {
     User.findAll()
         .then(tasks => {
             res.json(tasks)
@@ -120,7 +122,7 @@ router.post('/registerasistente', (req, res) => {
 })
 
 //ELIMINAR ASISTENTES
-router.post('/deleteasistant', function (req, res, next) {
+router.post('/deleteasistant', function(req, res, next) {
     console.log("req.body.correo");
     console.log(req.body.correo);
     db.mysqlConnection.query('CALL EliminarAsistente(?)', [req.body.correo],
@@ -134,7 +136,7 @@ router.post('/deleteasistant', function (req, res, next) {
 })
 
 //ACTUALIZAR ASISTENTES
-router.put('/updateasistant', function (req, res, next) {
+router.put('/updateasistant', function(req, res, next) {
     db.mysqlConnection.query('CALL EditarAsistente(?,?,?,?)', [req.body.correo, req.body.password, req.body.nombre, req.body.cedula], (err, row, fields) => {
         if (!err)
             res.send(row);
@@ -153,10 +155,10 @@ router.post('/registersuper', (req, res) => {
         correoEnvio: req.body.correoEnvio
     }
     Superuser.findOne({
-        where: {
-            correo: req.body.correo,
-        }
-    })
+            where: {
+                correo: req.body.correo,
+            }
+        })
         .then(asistente => {
             if (!asistente) {
                 Superuser.create(userData)
@@ -182,10 +184,10 @@ router.post('/registersuper', (req, res) => {
 router.post('/isSuper', (req, res) => {
 
     Superuser.findOne({
-        where: {
-            correo: req.body.correo,
-        }
-    })
+            where: {
+                correo: req.body.correo,
+            }
+        })
         .then(supuser => {
             if (supuser) {
 
@@ -200,7 +202,7 @@ router.post('/isSuper', (req, res) => {
 })
 
 //ACTUALIZAR SUPERUSUARIO
-router.put('/updatesuper', function (req, res, next) {
+router.put('/updatesuper', function(req, res, next) {
     if (!req.body.correo) {
         res.status(400)
         res.json({
@@ -307,85 +309,85 @@ router.post('/registerpostulante', (req, res) => {
     }
 
     Postulant.findOne({
-        where: {
-            cedula: req.body.cedula
-        }
-    }).then(postulante => {
-        if (!postulante) {
-            Postulant.create(userData)
-                .then(postulacion => {
-                    Postulacion.findOne({
+            where: {
+                cedula: req.body.cedula
+            }
+        }).then(postulante => {
+            if (!postulante) {
+                Postulant.create(userData)
+                    .then(postulacion => {
+                        Postulacion.findOne({
+                                where: {
+                                    periodo: req.body.periodo,
+                                    cedula: req.body.cedula,
+                                }
+                            })
+                            .then(postulacion => {
+                                if (!postulacion) {
+                                    console.log(req.body.cedula)
+                                    Postulacion.create(userDataPost)
+                                        .then(postulacion => {
+                                            let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
+                                                expiresIn: 1440
+                                            })
+                                            res.json({ token: token })
+                                        })
+                                        .catch(err => {
+                                            res.send('error: ' + err)
+                                        })
+                                } else {
+
+                                    res.json({ error: 'Postulacion ya existe' })
+                                }
+                            })
+                            .catch(err => {
+                                res.send('error: ' + err)
+                            })
+                    })
+                    .catch(err => {
+                        res.send('error: ' + err)
+                    })
+            } else {
+                Postulacion.findOne({
                         where: {
                             periodo: req.body.periodo,
                             cedula: req.body.cedula,
                         }
                     })
-                        .then(postulacion => {
-                            if (!postulacion) {
-                                console.log(req.body.cedula)
-                                Postulacion.create(userDataPost)
-                                    .then(postulacion => {
-                                        let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
-                                            expiresIn: 1440
-                                        })
-                                        res.json({ token: token })
+                    .then(postulacion => {
+                        if (!postulacion) {
+                            console.log(req.body.cedula)
+                            Postulacion.create(userDataPost)
+                                .then(postulacion => {
+                                    let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
+                                        expiresIn: 1440
                                     })
-                                    .catch(err => {
-                                        res.send('error: ' + err)
-                                    })
-                            } else {
-
-                                res.json({ error: 'Postulacion ya existe' })
-                            }
-                        })
-                        .catch(err => {
-                            res.send('error: ' + err)
-                        })
-                })
-                .catch(err => {
-                    res.send('error: ' + err)
-                })
-        } else {
-            Postulacion.findOne({
-                where: {
-                    periodo: req.body.periodo,
-                    cedula: req.body.cedula,
-                }
-            })
-                .then(postulacion => {
-                    if (!postulacion) {
-                        console.log(req.body.cedula)
-                        Postulacion.create(userDataPost)
-                            .then(postulacion => {
-                                let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
-                                    expiresIn: 1440
+                                    res.json({ token: token })
                                 })
-                                res.json({ token: token })
-                            })
-                            .catch(err => {
-                                res.send('error: ' + err)
-                            })
-                    } else {
-                        res.json({ error: 'Postulacion ya existe' })
-                    }
-                })
-                .catch(err => {
-                    res.send('error: ' + err)
-                })
-        }
-    })
+                                .catch(err => {
+                                    res.send('error: ' + err)
+                                })
+                        } else {
+                            res.json({ error: 'Postulacion ya existe' })
+                        }
+                    })
+                    .catch(err => {
+                        res.send('error: ' + err)
+                    })
+            }
+        })
         .catch(err => {
             res.send('error: ' + err)
         })
 })
 
 //ELIMINAR POSTULANTE 
-router.delete('/deletepostulante', function (req, res, next) {
+router.delete('/deletepostulante', function(req, res, next) {
     Postulant.destroy({
-        where: {
-            cedula: req.body.cedula
-        }
-    })
+            where: {
+                cedula: req.body.cedula
+            }
+        })
         .then(() => {
             res.json({ status: 'Postulante Eliminado' })
         })
@@ -395,17 +397,17 @@ router.delete('/deletepostulante', function (req, res, next) {
 })
 
 //UPDATE POSTULANTE 
-router.put('/EditPostulante', function (req, res, next) {
+router.put('/EditPostulante', function(req, res, next) {
     db.mysqlConnection.query('CALL EditarPostulante(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-        [req.body.cedula, req.body.nombre, req.body.telefono1, req.body.telefono2, req.body.correo1, req.body.correo2,
-        req.body.ingles, req.body.gradoAcademico, req.body.universidad, req.body.afinidad, req.body.acreditada, req.body.puestoActual, req.body.experienciaProfesion,
-        req.body.cursoAfin, req.body.tituloTecnico, req.body.cursoAprovechamiento, req.body.tituloDiplomado, req.body.promedioGeneral, req.body.nota], (err, row, fields) => {
-            if (!err) {
-                res.send(row);
-            } else
-                console.log(err);
-        })
-
+    [req.body.cedula,req.body.nombre,req.body.telefono1,req.body.telefono2,req.body.correo1,req.body.correo2,
+    req.body.ingles,req.body.gradoAcademico,req.body.universidad,req.body.afinidad,req.body.acreditada,req.body.puestoActual,req.body.experienciaProfesion,
+    req.body.cursoAfin,req.body.tituloTecnico,req.body.cursoAprovechamiento,req.body.tituloDiplomado,req.body.promedioGeneral,req.body.nota], (err, row, fields) => {
+        if (!err) {
+            res.send(row);
+        } else
+            console.log(err);
+    })
+  
 })
 
 /////////////////////////////////////////////////////////
@@ -420,11 +422,11 @@ router.post('/registerpostulacion', (req, res) => {
         memo: req.body.memo
     }
     Postulacion.findOne({
-        where: {
-            periodo: req.body.periodo,
-            cedula: req.body.cedula,
-        }
-    })
+            where: {
+                periodo: req.body.periodo,
+                cedula: req.body.cedula,
+            }
+        })
         .then(postulante => {
             if (!postulante) {
                 Postulacion.create(userData)
@@ -448,12 +450,12 @@ router.post('/registerpostulacion', (req, res) => {
 })
 
 //get all postulaciones 
-router.get('/getallpostulaciones', function (req, res, next) {
+router.get('/getallpostulaciones', function(req, res, next) {
     Postulacion.findAll({
-        where: {
-            periodo: req.body.periodo
-        }
-    })
+            where: {
+                periodo: req.body.periodo
+            }
+        })
         .then(tasks => {
             res.json(tasks)
         })
@@ -465,7 +467,7 @@ router.get('/getallpostulaciones', function (req, res, next) {
 /////////////////////////////////////////
 //CRUD ATRIBUTOS
 //get atributos 
-router.get('/getallatributos', function (req, res, next) {
+router.get('/getallatributos', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerAtributos()', (err, row, fields) => {
         if (!err)
             res.send(row);
@@ -476,7 +478,7 @@ router.get('/getallatributos', function (req, res, next) {
 
 ///////////////////////////
 //CRUD PERIODOS 
-router.get('/getallperiodos', function (req, res, next) {
+router.get('/getallperiodos', function(req, res, next) {
     Periodo.findAll()
         .then(tasks => {
             res.json(tasks)
@@ -500,9 +502,9 @@ router.put('/editSuper', (req, res) => {
 //Crear periodo
 router.post('/CrearPeriodo', (req, res) => {
     db.mysqlConnection.query('CALL CrearPeriodo(?,?,?)', [req.body.periodo + " " + req.body.fechaInicio.slice(0, 4),
-    req.body.fechaInicio.slice(0, 10),
-    req.body.fechaCierre.slice(0, 10)
-    ],
+            req.body.fechaInicio.slice(0, 10),
+            req.body.fechaCierre.slice(0, 10)
+        ],
         (err, row, fields) => {
             if (!err)
                 res.send(row);
@@ -532,7 +534,7 @@ router.get('/obtenerasistentes', (req, res) => {
 })
 
 //update periodo
-router.put('/updateperiodo', function (req, res, next) {
+router.put('/updateperiodo', function(req, res, next) {
     if (!req.body.periodo) {
         res.status(400)
         res.json({
@@ -550,11 +552,11 @@ router.put('/updateperiodo', function (req, res, next) {
 //LOGIN
 router.post('/login', (req, res) => {
     User.findOne({
-        where: {
-            correo: req.body.correo,
-            password: req.body.password
-        }
-    })
+            where: {
+                correo: req.body.correo,
+                password: req.body.password
+            }
+        })
         .then(user => {
             if (user) {
                 let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
@@ -573,10 +575,10 @@ router.post('/login', (req, res) => {
 //perfil
 router.get('/perfil', (req, res) => {
     User.findOne({
-        where: {
-            correo: req.body.correo
-        }
-    })
+            where: {
+                correo: req.body.correo
+            }
+        })
         .then(user => {
             if (user) {
                 res.json(user)
@@ -651,7 +653,7 @@ router.put('/editAsist', (req, res) => {
 })
 
 //get atributos 
-router.get('/getallatributos', function (req, res, next) {
+router.get('/getallatributos', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerAtributos()', (err, row, fields) => {
         if (!err)
             res.send(row);
@@ -704,73 +706,73 @@ router.post('/registerpostulanteA', (req, res) => {
     }
 
     Postulant.findOne({
-        where: {
-            cedula: req.body.cedula
-        }
-    }).then(postulante => {
-        if (!postulante) {
-            Postulant.create(userData)
-                .then(postulacion => {
-                    Postulacion.findOne({
+            where: {
+                cedula: req.body.cedula
+            }
+        }).then(postulante => {
+            if (!postulante) {
+                Postulant.create(userData)
+                    .then(postulacion => {
+                        Postulacion.findOne({
+                                where: {
+                                    periodo: req.body.periodo,
+                                    cedula: req.body.cedula,
+                                }
+                            })
+                            .then(postulacion => {
+                                if (!postulacion) {
+                                    console.log(req.body.cedula)
+                                    Postulacion.create(userDataPost)
+                                        .then(postulacion => {
+                                            let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
+                                                expiresIn: 1440
+                                            })
+                                            res.json({ token: token })
+                                        })
+                                        .catch(err => {
+                                            res.send('error: ' + err)
+                                        })
+                                } else {
+                                    res.json({ error: 'Postulacion ya existe' })
+                                }
+                            })
+                            .catch(err => {
+                                res.send('error: ' + err)
+                            })
+                    })
+                    .catch(err => {
+                        res.send('error: ' + err)
+                    })
+            } else {
+                Postulant.update(userData, { where: { cedula: req.body.cedula } })
+                Postulacion.findOne({
                         where: {
                             periodo: req.body.periodo,
                             cedula: req.body.cedula,
                         }
                     })
-                        .then(postulacion => {
-                            if (!postulacion) {
-                                console.log(req.body.cedula)
-                                Postulacion.create(userDataPost)
-                                    .then(postulacion => {
-                                        let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
-                                            expiresIn: 1440
-                                        })
-                                        res.json({ token: token })
+                    .then(postulacion => {
+                        if (!postulacion) {
+                            console.log(req.body.cedula)
+                            Postulacion.create(userDataPost)
+                                .then(postulacion => {
+                                    let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
+                                        expiresIn: 1440
                                     })
-                                    .catch(err => {
-                                        res.send('error: ' + err)
-                                    })
-                            } else {
-                                res.json({ error: 'Postulacion ya existe' })
-                            }
-                        })
-                        .catch(err => {
-                            res.send('error: ' + err)
-                        })
-                })
-                .catch(err => {
-                    res.send('error: ' + err)
-                })
-        } else {
-            Postulant.update(userData, { where: { cedula: req.body.cedula } })
-            Postulacion.findOne({
-                where: {
-                    periodo: req.body.periodo,
-                    cedula: req.body.cedula,
-                }
-            })
-                .then(postulacion => {
-                    if (!postulacion) {
-                        console.log(req.body.cedula)
-                        Postulacion.create(userDataPost)
-                            .then(postulacion => {
-                                let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
-                                    expiresIn: 1440
+                                    res.json({ token: token })
                                 })
-                                res.json({ token: token })
-                            })
-                            .catch(err => {
-                                res.send('error: ' + err)
-                            })
-                    } else {
-                        res.json({ error: 'Postulacion ya existe' })
-                    }
-                })
-                .catch(err => {
-                    res.send('error: ' + err)
-                })
-        }
-    })
+                                .catch(err => {
+                                    res.send('error: ' + err)
+                                })
+                        } else {
+                            res.json({ error: 'Postulacion ya existe' })
+                        }
+                    })
+                    .catch(err => {
+                        res.send('error: ' + err)
+                    })
+            }
+        })
         .catch(err => {
             res.send('error: ' + err)
         })
@@ -790,7 +792,7 @@ router.get('/obtenerallpostulantes', (req, res) => {
 
 //obtener postulante 
 router.post('/obtenerpostulate', (req, res) => {
-    db.mysqlConnection.query('CALL ObtenerPostulante(?)', [req.body.cedula], (err, row, fields) => {
+    db.mysqlConnection.query('CALL ObtenerPostulante(?)',[req.body.cedula], (err, row, fields) => {
         if (!err) {
             res.send(row);
         } else
@@ -800,9 +802,9 @@ router.post('/obtenerpostulate', (req, res) => {
 
 //Editar formula
 router.post('/editarFormula', (req, res) => {
-    db.mysqlConnection.query('CALL EditarFormula(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [req.body.bachillerato, req.body.licenciatura, req.body.maestria, req.body.doctorado, req.body.promedio, req.body.de3a6, req.body.de6a10,
-    req.body.masDe10, req.body.profSinP, req.body.profMiembro, req.body.jefatura, req.body.gerencia, req.body.trabIndependiente, req.body.alta, req.body.media,
-    req.body.baja, req.body.acreditada, req.body.noAcreditada, req.body.cAprovechamiento, req.body.tTecnico, req.body.cMaestria, req.body.tDiplomado], (err, row, fields) => {
+    db.mysqlConnection.query('CALL EditarFormula(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[req.body.bachillerato,req.body.licenciatura,req.body.maestria,req.body.doctorado,req.body.promedio,req.body.de3a6,req.body.de6a10,
+        req.body.masDe10,req.body.profSinP,req.body.profMiembro,req.body.jefatura,req.body.gerencia,req.body.trabIndependiente,req.body.alta,req.body.media,
+        req.body.baja,req.body.acreditada,req.body.noAcreditada,req.body.cAprovechamiento,req.body.tTecnico,req.body.cMaestria,req.body.tDiplomado ], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -812,7 +814,7 @@ router.post('/editarFormula', (req, res) => {
 
 //Editar postulacion
 router.post('/editarPostulacion', (req, res) => {
-    db.mysqlConnection.query('CALL EditarPostulacion(?,?,?,?,?)', [req.body.periodo, req.body.cedula, req.body.enfasis, req.body.sede, req.body.nota, req.body.memo], (err, row, fields) => {
+    db.mysqlConnection.query('CALL EditarPostulacion(?,?,?,?,?)',[req.body.periodo, req.body.cedula,req.body.enfasis,req.body.sede,req.body.nota,req.body.memo], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -828,30 +830,82 @@ router.post('/Repostulacion', (req, res) => {
             console.log('correcto')
         }
         else {
-            console.log(err);
             res.json({error:true })
-           // res.send(err);
         }
     })
 })
 //ObtenerMemo
-router.get('/ObtenerMemo', (req, res) => {
-    db.mysqlConnection.query('CALL ObtenerMemo(?,?)', [req.body.periodo, req.body.sede], (err, row, fields) => {
+router.post('/ObtenerMemo', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerMemo(?,?)',[req.body.periodo, req.body.sede], (err, row, fields) => {
         if (!err)
-            res.send(row);
+            res.send(row[0]);
         else
             console.log(err);
     })
+})
+
+//ObtenerSedes
+router.post('/ObtenerSedes', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerSedes(?)',[req.body.periodo], (err, row, fields) => {
+        if (!err)
+            res.send(row[0]);
+        else
+            console.log(err);
+    })
+})
+
+//Enviar Correo
+router.put('/EnviarCorreo', (req, res) => {
+
+    var transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        auth: {
+        user: 'maesito4@gmail.com',
+        pass: 'eraolivenox1'
+        }
+    });
+
+    var mailOptions = {
+        from: 'maesito4@gmail.com',
+        to: req.body.para,
+        subject: req.body.asunto,
+        text: req.body.texto
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+        console.log(error);
+        } else {
+        console.log('Email sent: ' + info.response);
+        }
+        res.send({response:200})
+    }); 
+})
+
+//UPDATE NOTA 
+router.put('/EditNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL EditarNota(?,?,?)',
+    [req.body.cedula,req.body.periodo,req.body.nota], (err, row, fields) => {
+        if (!err) {
+            res.send(row);
+        } else
+            console.log(err);
+    })
+  
 })
 
 router.post('/UltimaPostulacion', (req, res) => {
 
     console.log(req.body.cedula);
-    db.mysqlConnection.query('CALL Ultimapostulacion(?)', req.body.cedula, (err, row, fields) => {
+    db.mysqlConnection.query('CALL UltimaPostulacion(?)', req.body.cedula, (err, row, fields) => {
         if (!err)
             res.send(row);
         else
             console.log(err);
     })
 })
+
 module.exports = router
