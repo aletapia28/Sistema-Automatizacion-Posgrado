@@ -128,9 +128,10 @@ export class VtnBuscarPostulanteComponent implements OnInit {
 
 
   onRepost(row, key) {
-    this.dialogService.openConfirmDialog("¿Seguro que efectuar la repostulación?", "Será repostulado al período actual")
+    this.dialogService.openRepostulate("¿Seguro que efectuar la repostulación?", "Será repostulado al período actual")
       .afterClosed().subscribe(res => {
         if (res) {
+          
           //get  periodo
           if (sessionStorage.getItem('periodoVigente') == 'true') {
             this.http.get<any>('/router/getPeriodoActual').subscribe(
@@ -144,12 +145,12 @@ export class VtnBuscarPostulanteComponent implements OnInit {
                     (res) => {
 
                       let datos = res[0];
-                      let enfasis = datos[0].enfasis;
+                      let enfasis = sessionStorage.getItem('enfasis'); 
                       let nota = datos[0].nota;
-                      let sede = datos[0].sede;
+                      let sede = sessionStorage.getItem('sede');
                       let memo = 1;
                       const formData = { periodo: periodoact, cedula: row.cedula, enfasis: enfasis, sede: sede, nota: nota, memo: memo }
-
+                      console.log(enfasis,sede);
                       this.http.post<any>('/router/Repostulacion', formData).subscribe(
                         (res) => {
                           if (res.error==false) {
