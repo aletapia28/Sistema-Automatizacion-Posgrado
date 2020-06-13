@@ -17,12 +17,11 @@ export class BarraSistemaComponent implements OnInit {
   show: boolean;
 
   constructor(
-    private router: Router, 
-    private servicioDatos: ServicioDatosService, 
+    private router: Router,
+    private servicioDatos: ServicioDatosService,
     private http: HttpClient,
     private notificationService: NotificationService,
-    private dialog: DialogService) 
-    { }
+    private dialog: DialogService) { }
 
   ngOnInit(): void {
     this.show = sessionStorage.getItem('tipoUsuario') == 'true';
@@ -77,7 +76,7 @@ export class BarraSistemaComponent implements OnInit {
         }
       );
     } else {
-      this.notificationService.warning('No existe un período vigente'); 
+      this.notificationService.warning('No existe un período vigente');
     }
   }
 
@@ -114,7 +113,7 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   analisisTablas() {
-    
+
   }
 
   analisisGraficas() {
@@ -122,8 +121,11 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   generarMemo() {
-
-    this.dialog.openGenerateMemo("Formato de descarga","Debe escoger uno de los siguientes tipos de descarga");
+    let vigente = sessionStorage.getItem('periodoVigente');
+    if (vigente == 'true')
+      this.dialog.openGenerateMemo("Formato de descarga", "Debe escoger uno de los siguientes tipos de descarga");
+    else
+      this.notificationService.warning('Actualmente no hay un período vigente para generar memos');
 
 
 
