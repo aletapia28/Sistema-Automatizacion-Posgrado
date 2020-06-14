@@ -128,9 +128,10 @@ export class VtnBuscarPostulanteComponent implements OnInit {
 
 
   onRepost(row, key) {
-    this.dialogService.openConfirmDialog("¿Seguro que efectuar la repostulación?", "Será repostulado al período actual")
+    this.dialogService.openRepostulate("¿Seguro que efectuar la repostulación?", "Será repostulado al período actual")
       .afterClosed().subscribe(res => {
         if (res) {
+
           //get  periodo
           if (sessionStorage.getItem('periodoVigente') == 'true') {
             this.http.get<any>('/router/getPeriodoActual').subscribe(
@@ -142,27 +143,29 @@ export class VtnBuscarPostulanteComponent implements OnInit {
                   //Llamar al SP de UltimaPostulacion() y de ahi sacar enfasis, sede y nota
                   this.http.post<any>('/router/UltimaPostulacion', { cedula: row.cedula }).subscribe(
                     (res) => {
-
                       let datos = res[0];
-                      let enfasis = datos[0].enfasis;
+                      let enfasis:string = sessionStorage.getItem('enfasis');
                       let nota = datos[0].nota;
-                      let sede = datos[0].sede;
+                      let sede:string = sessionStorage.getItem('sede');
                       let memo = 1;
-                      const formData = { periodo: periodoact, cedula: row.cedula, enfasis: enfasis, sede: sede, nota: nota, memo: memo }
 
-                      this.http.post<any>('/router/Repostulacion', formData).subscribe(
-                        (res) => {
-                          if (res.error==false) {
-                            this.notificationService.success('Repostulación correcta');
+                      if ((!(!enfasis || 0 === enfasis.length)) && (!(!sede || 0 === sede.length))) {
+                        const formData = { periodo: periodoact, cedula: row.cedula, enfasis: enfasis, sede: sede, nota: nota, memo: memo }
+                        this.http.post<any>('/router/Repostulacion', formData).subscribe(
+                          (res) => {
+                            if (res.error == false) {
+                              this.notificationService.success('Repostulación correcta');
+                            }
+                            else
+                              this.notificationService.warning('Repostulación no efectuada');
+                          },
+                          (err) => {
+                            this.notificationService.warning('Ha ocurrido un error');
                           }
-                          else
-                            this.notificationService.warning('Repostulación no efectuada');
-
-                        },
-                        (err) => {
-                          this.notificationService.warning('Ha ocurrido un error')
-                        }
-                      );                      
+                        );
+                      } else {
+                        this.notificationService.warning('Debe indicar la sede y el énfasis');
+                      }
                     },
                     (err) => {
                       this.notificationService.warning('Ha ocurrido un error')
