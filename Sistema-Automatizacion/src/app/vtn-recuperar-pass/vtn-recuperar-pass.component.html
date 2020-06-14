@@ -1,0 +1,25 @@
+<div>
+    <div class="cuerpo-dialog">
+        <div class="icono">
+            <mat-icon id="close-icon" (click)="closeDialog()">close</mat-icon>
+        </div>
+
+        <span class="contenido">{{data.message}}</span>
+        <span class="descrip">{{data.message1}}</span>
+    </div>
+
+    <div>
+        <form class="memo-form"  [formGroup]="passForm">
+            <mat-form-field appearance="outline" class="inputVtn">
+                <mat-label>Correo electrónico usuario</mat-label>
+                <input matInput placeholder="pat@example.com" formControlName="correo" required>
+            </mat-form-field>
+
+        </form>
+
+    </div>
+
+    <div class="botones">
+    <button mat-flat-button id="boton" [mat-dialog-close]="false" (click)="enviar()">Enviar</button>
+    </div>  
+</div>

@@ -10,6 +10,7 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { FormControl, FormGroup } from '@angular/forms';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 
 export interface PostulanteElement {
   cedula: string;
@@ -111,6 +112,7 @@ export class VtnPrincipalComponent {
           this.periodo.setValue(periodo);
           sessionStorage.setItem('periodoVigente', 'true');
           sessionStorage.setItem('periodoActual', periodo);
+          this.periodo.setValue(periodo);
           const formData = { periodo: periodo }
           this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
             (respost) => {
@@ -151,14 +153,6 @@ export class VtnPrincipalComponent {
 
     this.show = sessionStorage.getItem('tipoUsuario') == 'true';
 
-  }
-
-  goImportarArchivo() {
-    let vigente = sessionStorage.getItem('periodoVigente');
-    if (vigente == 'true')
-      this.router.navigate(['importA']);
-    else
-      this.notificationService.warning('Actualmente no hay un período vigente\npara importar postulantes');
   }
 
   cargarFechas(event) {
@@ -218,10 +212,30 @@ export class VtnPrincipalComponent {
           XLSX.utils.book_append_sheet(wb, ws, this.periodoShowing); 
 
           let nombre:string = this.periodoShowing;
-          console.log(nombre);
           nombre = nombre.replace(/ /g, '_');
           /* save to file */
           XLSX.writeFile(wb, nombre + '.xlsx');
+
+        } else {
+          const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+
+          let nombre:string = this.periodoShowing + '.csv';
+          nombre = nombre.replace(/ /g, '_');
+          var data = XLSX.utils.sheet_to_csv(ws);
+          data = data.replace(/á/g, 'a')
+          data = data.replace(/é/g, 'e')
+          data = data.replace(/í/g, 'i')
+          data = data.replace(/ó/g, 'o')
+          data = data.replace(/ú/g, 'u')
+          data = data.replace(/Á/g, 'A')
+          data = data.replace(/É/g, 'E')
+          data = data.replace(/Í/g, 'I')
+          data = data.replace(/Ó/g, 'O')
+          data = data.replace(/Ú/g, 'U')
+          
+          const blob = new Blob([data], { type: 'text/csv' });
+          FileSaver.saveAs(blob, nombre);
         }
       });
   }

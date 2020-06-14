@@ -1,0 +1,11 @@
+.memoForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+.inputVtn {
+    width: 300px;
+}

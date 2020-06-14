@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import { HttpClient } from '@angular/common/http'
 import { NotificationService } from '../shared/notification.service';
+import { DialogService } from '../shared/dialog.service';
+// import {MatDialog,MatDialogConfig} from '@angular/material/dialog';
+import { DescargarMemoComponent } from '../descargar-memo/descargar-memo.component';
 
 @Component({
   selector: 'app-barra-sistema',
@@ -14,10 +17,11 @@ export class BarraSistemaComponent implements OnInit {
   show: boolean;
 
   constructor(
-    private router: Router, 
-    private servicioDatos: ServicioDatosService, 
+    private router: Router,
+    private servicioDatos: ServicioDatosService,
     private http: HttpClient,
-    private notificationService: NotificationService) { }
+    private notificationService: NotificationService,
+    private dialog: DialogService) { }
 
   ngOnInit(): void {
     this.show = sessionStorage.getItem('tipoUsuario') == 'true';
@@ -72,12 +76,12 @@ export class BarraSistemaComponent implements OnInit {
         }
       );
     } else {
-      this.notificationService.warning('No existe un período vigente'); 
+      this.notificationService.warning('No existe un período vigente');
     }
   }
 
   buscarPostulante() {
-    // this.router.navigate(['principal'])
+    this.router.navigate(['buscarPos'])
   }
 
   crearUsuario() {
@@ -89,7 +93,7 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   editFormula() {
-    // this.router.navigate(['principal'])
+    this.router.navigate(['editFor']);
   }
 
   verHistoricos() {
@@ -98,6 +102,33 @@ export class BarraSistemaComponent implements OnInit {
 
   importarPeriodo() {
     this.router.navigate(['importP']);
+  }
+
+  importarArchivo() {
+    let vigente = sessionStorage.getItem('periodoVigente');
+    if (vigente == 'true')
+      this.router.navigate(['importA']);
+    else
+      this.notificationService.warning('Actualmente no hay un período vigente\npara importar postulantes');
+  }
+
+  analisisTablas() {
+
+  }
+
+  analisisGraficas() {
+
+  }
+
+  generarMemo() {
+    let vigente = sessionStorage.getItem('periodoVigente');
+    if (vigente == 'true')
+      this.dialog.openGenerateMemo("Formato de descarga", "Debe escoger uno de los siguientes tipos de descarga");
+    else
+      this.notificationService.warning('Actualmente no hay un período vigente para generar memos');
+
+
+
   }
 
 }

@@ -6,6 +6,8 @@ import { AuthenticationService, TokenPayload, Tokenuser } from '../authenticatio
 import { HttpClient } from '@angular/common/http'
 import { ErrorStateMatcher } from '@angular/material/core';
 import { NotificationService } from '../shared/notification.service';
+import { DialogService } from '../shared/dialog.service';
+
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -37,7 +39,8 @@ export class VtnLoginComponent implements OnInit {
     private auth: AuthenticationService,
     private router: Router,
     private servicioDatos: ServicioDatosService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private dialog: DialogService
   ) { }
 
   ngOnInit(): void {
@@ -67,7 +70,6 @@ export class VtnLoginComponent implements OnInit {
 
       this.auth.login(this.credentials).subscribe(
         (res) => {
-          console.log(email);
           const formData = { correo: email }
           //EXPLICAR ESTO
           this.http.post<any>('/router/isSuper', formData).subscribe(
@@ -92,5 +94,8 @@ export class VtnLoginComponent implements OnInit {
         }
       )
     }
+  }
+  recuperar(){
+    this.dialog.openRecoverPass("Recuperar contraseña","Digite el correo del usuario ");
   }
 }
