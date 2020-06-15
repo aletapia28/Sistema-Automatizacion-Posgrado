@@ -10,6 +10,7 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { FormControl, FormGroup } from '@angular/forms';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 
 export interface PostulanteElement {
   cedula: string;
@@ -108,8 +109,10 @@ export class VtnPrincipalComponent {
         if (periodoActual.length == 1) {
           let periodo: string = periodoActual[0].periodo;
           this.periodoShowing = periodo;
+          this.periodo.setValue(periodo);
           sessionStorage.setItem('periodoVigente', 'true');
           sessionStorage.setItem('periodoActual', periodo);
+          this.periodo.setValue(periodo);
           const formData = { periodo: periodo }
           this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
             (respost) => {
@@ -126,6 +129,7 @@ export class VtnPrincipalComponent {
               if (periodoAnterior.length >= 1) {
                 let periodo: string = periodoAnterior[0].periodo;
                 this.periodoShowing = periodo;
+                this.periodo.setValue(periodo);
                 const formData = { periodo: periodo }
                 this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
                   (respost) => {
@@ -152,7 +156,7 @@ export class VtnPrincipalComponent {
   }
 
   cargarFechas(event) {
-    let periodoShow = event.periodo;
+    let periodoShow = event;
     this.periodoShowing = periodoShow;
     const formData = { periodo: periodoShow }
     if (this.tipoShowing) {
@@ -175,7 +179,7 @@ export class VtnPrincipalComponent {
   }
 
   cargarPost(event) {
-    let tipoPost = event.tipo;
+    let tipoPost = event;
     const formData = { periodo: this.periodoShowing }
     if (tipoPost == 'Postulantes') {
       this.tipoShowing = true;
@@ -208,10 +212,30 @@ export class VtnPrincipalComponent {
           XLSX.utils.book_append_sheet(wb, ws, this.periodoShowing); 
 
           let nombre:string = this.periodoShowing;
-          console.log(nombre);
-          nombre = nombre.replace(/ /, '_');
+          nombre = nombre.replace(/ /g, '_');
           /* save to file */
           XLSX.writeFile(wb, nombre + '.xlsx');
+
+        } else {
+          const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+
+          let nombre:string = this.periodoShowing + '.csv';
+          nombre = nombre.replace(/ /g, '_');
+          var data = XLSX.utils.sheet_to_csv(ws);
+          data = data.replace(/á/g, 'a')
+          data = data.replace(/é/g, 'e')
+          data = data.replace(/í/g, 'i')
+          data = data.replace(/ó/g, 'o')
+          data = data.replace(/ú/g, 'u')
+          data = data.replace(/Á/g, 'A')
+          data = data.replace(/É/g, 'E')
+          data = data.replace(/Í/g, 'I')
+          data = data.replace(/Ó/g, 'O')
+          data = data.replace(/Ú/g, 'U')
+          
+          const blob = new Blob([data], { type: 'text/csv' });
+          FileSaver.saveAs(blob, nombre);
         }
       });
   }

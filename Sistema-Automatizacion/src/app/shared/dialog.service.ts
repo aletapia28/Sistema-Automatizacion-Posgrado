@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import {DescargarMemoComponent} from '../descargar-memo/descargar-memo.component';
-
+import {VtnRecuperarPassComponent} from '../vtn-recuperar-pass/vtn-recuperar-pass.component';
+import { VtnRepostularComponent } from '../vtn-repostular/vtn-repostular.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -55,5 +56,33 @@ export class DialogService {
    }
   });
 }
+
+openRecoverPass(msg,des){
+  return this.dialog.open(VtnRecuperarPassComponent,{
+     width: "390px",
+     panelClass: 'cuerpo-dialog-container',
+     disableClose: true,
+     position : {top: "25vh"},
+     data :{
+       message : msg,
+       message1 : des,
+     } 
+   });
+ }
+
+ openRepostulate(msg,des){
+   return this.dialog.open(VtnRepostularComponent,{
+    width: "390px",
+    panelClass: 'cuerpo-dialog-container',
+    disableClose: true,
+    position : {top: "20vh"},
+    data :{
+      message : msg,
+      message1 : des,
+      btn2 : 'No' ,
+      btn1 : 'Si',
+    }     
+   })
+ }
 
 }

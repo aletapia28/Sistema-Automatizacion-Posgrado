@@ -6,11 +6,30 @@
 
         <span class="contenido">{{data.message}}</span>
         <span class="descrip">{{data.message1}}</span>
-
     </div>
+
+    <div class="formulario">
+        <form class="memoForm" [formGroup]="memoForm">
+            <mat-form-field appearance="outline" class="inputVtn">
+                <mat-label>Nombre destinario</mat-label>
+                <input matInput formControlName="destinatario" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="inputVtn">
+                <mat-label>Nombre remintente</mat-label>
+                <input matInput formControlName="remitente" required>
+            </mat-form-field>
+            <mat-form-field class="inputVtn" appearance="outline">
+                <mat-label>Sede</mat-label>
+                <mat-select formControlName="sede" placeholder="Sede">
+                    <mat-option *ngFor="let sede of sedes" [value]="sede.sede">{{sede.sede}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+
     <div class="botones">
-    <button mat-flat-button id="boton" [mat-dialog-close]="false" (click)="onDoc()">{{data.btn2}}</button>
-    <button mat-flat-button id="boton" [mat-dialog-close]="true"(click)="onPDF()">{{data.btn1}}</button>
-    <button mat-flat-button id="boton" [mat-dialog-close]="true"(click)="onEmail()">{{data.btn3}}</button>
-    </div>  
+        <button mat-flat-button id="boton" [mat-dialog-close]="false" (click)="onDoc()">{{data.btn2}}</button>
+        <button mat-flat-button id="boton" [mat-dialog-close]="true" (click)="onPDF()">{{data.btn1}}</button>
+        <button mat-flat-button id="boton" [mat-dialog-close]="true" (click)="onEmail()">{{data.btn3}}</button>
+    </div>
 </div>
