@@ -158,7 +158,7 @@ export class VtnPrincipalComponent {
   cargarFechas(event) {
     let periodoShow = event;
     this.periodoShowing = periodoShow;
-    const formData = { periodo: periodoShow }
+    const formData = { periodo: periodoShow } //agregar nota
     if (this.tipoShowing) {
       this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
         (respost) => {
