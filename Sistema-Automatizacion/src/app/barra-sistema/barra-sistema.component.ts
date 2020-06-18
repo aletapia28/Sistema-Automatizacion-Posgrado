@@ -113,11 +113,11 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   analisisTablas() {
-
+    this.router.navigate(['analisisTabular']);
   }
 
   analisisGraficas() {
-
+    this.router.navigate(['analisisGrafico']);
   }
 
   generarMemo() {

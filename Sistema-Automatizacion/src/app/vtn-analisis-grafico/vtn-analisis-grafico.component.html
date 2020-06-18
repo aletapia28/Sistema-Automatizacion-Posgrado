@@ -1,0 +1,52 @@
+<div class="tamano">
+    <app-barra-sistema></app-barra-sistema>
+
+    <div class="cuerpo">
+        <div class="encabezado">
+            <h1 class="titulo">Análisis Gráfico</h1>
+            <form (submit)="onSubmit()" [formGroup]="anaGrafForm">
+                <div class="opciones">
+                    <mat-form-field class="inputVtn" appearance="outline">
+                        <mat-label>Distribución</mat-label>
+                        <mat-select formControlName="tipo" (selectionChange)="cargarDist($event.value)">
+                            <mat-option *ngFor="let tipo of tipos" [value]="tipo.tipo">{{tipo.tipo}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="inputVtn2" appearance="outline">
+                        <mat-label>Período</mat-label>
+                        <mat-select formControlName="periodo" (selectionChange)="cargarSedes($event.value)">
+                            <mat-option *ngFor="let periodo of periodos" [value]="periodo.periodo">{{periodo.periodo}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="inputVtn" appearance="outline">
+                        <mat-label>Sede</mat-label>
+                        <mat-select formControlName="sede" (selectionChange)="cargarDist($event.value)">
+                            <mat-option *ngFor="let sede of sedes" [value]="sede.sede">{{sede.sede}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="inputVtn3">
+                        <mat-label>Nota mínima</mat-label>
+                        <input matInput formControlName="nota" type="number" min="0" max="100" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="inputVtn">
+                        <mat-label>Cantidad de postulantes</mat-label>
+                        <input matInput formControlName="cantidad" type="number" min="0" max="500" required>
+                    </mat-form-field>
+                </div>
+                <button mat-raised-button class="boton" type="submit">Generar</button>
+            </form>
+        </div>
+        <div class="general" *ngIf="showGeneral">
+
+        </div>
+        <div class="evaluacion" *ngIf="showEvaluacion">
+            
+        </div>
+    </div>
+    <app-barra-inferior></app-barra-inferior>
+</div>

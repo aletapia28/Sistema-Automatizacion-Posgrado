@@ -14,6 +14,8 @@ import { VtnEliminarAsistenteComponent } from "./vtn-eliminar-asistente/vtn-elim
 import { VtnNuevoPeriodoComponent } from "./vtn-nuevo-periodo/vtn-nuevo-periodo.component"
 import { VtnEditarFormulaComponent } from "./vtn-editar-formula/vtn-editar-formula.component"
 import { VtnBuscarPostulanteComponent } from "./vtn-buscar-postulante/vtn-buscar-postulante.component"
+import { VtnAnalisisGraficoComponent } from "./vtn-analisis-grafico/vtn-analisis-grafico.component"
+import { VtnAnalisisTabularComponent } from "./vtn-analisis-tabular/vtn-analisis-tabular.component"
 
 const routes: Routes = [
   {path: '', component: VtnLoginComponent, pathMatch: 'full'},
@@ -29,6 +31,8 @@ const routes: Routes = [
   {path: 'editSup', component: VtnEditarSuperusuarioComponent, pathMatch: 'full'},
   {path: 'eliminarAsis', component: VtnEliminarAsistenteComponent, pathMatch: 'full'},
   {path: 'buscarPos', component: VtnBuscarPostulanteComponent, pathMatch: 'full'},
+  {path: 'analisisGrafico', component: VtnAnalisisGraficoComponent, pathMatch: 'full'},
+  {path: 'analisisTabular', component: VtnAnalisisTabularComponent, pathMatch: 'full'},
 ];
 
 @NgModule({
