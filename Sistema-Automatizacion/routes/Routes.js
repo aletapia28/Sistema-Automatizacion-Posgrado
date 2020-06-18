@@ -613,8 +613,8 @@ router.get('/getPeriodosTranscurridos', (req, res) => {
 
 //obtener postulantes 
 router.post('/obtenerAdmitidos', (req, res) => {
-    db.mysqlConnection.query('CALL ObtenerAdmitidos(?)', [req.body.periodo], (err, row, fields) => {
-        if (!err) {
+    db.mysqlConnection.query('CALL ObtenerAdmitidos(?, ?, ?)', [req.body.periodo, req.body.nota, req.body.sede], (err, row, fields) => {
+        if (!err) { 
             res.send(row);
         } else
             console.log(err);
