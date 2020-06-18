@@ -57,6 +57,7 @@ import { VtnRecuperarPassComponent } from './vtn-recuperar-pass/vtn-recuperar-pa
 import { VtnRepostularComponent } from './vtn-repostular/vtn-repostular.component';
 import { VtnAnalisisGraficoComponent } from './vtn-analisis-grafico/vtn-analisis-grafico.component';
 import { VtnAnalisisTabularComponent } from './vtn-analisis-tabular/vtn-analisis-tabular.component';
+import { AdmitidosDialogComponent } from './admitidos-dialog/admitidos-dialog.component';
 
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
@@ -95,7 +96,8 @@ const routes: Routes = [
     VtnRecuperarPassComponent,
     VtnRepostularComponent,
     VtnAnalisisGraficoComponent,
-    VtnAnalisisTabularComponent
+    VtnAnalisisTabularComponent,
+    AdmitidosDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -127,6 +129,6 @@ const routes: Routes = [
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent],
-  entryComponents:[ConfirmDialogComponent,DescargarMemoComponent,VtnRecuperarPassComponent,VtnRepostularComponent]
+  entryComponents:[ConfirmDialogComponent,DescargarMemoComponent,VtnRecuperarPassComponent,VtnRepostularComponent, AdmitidosDialogComponent]
 })
 export class AppModule { }

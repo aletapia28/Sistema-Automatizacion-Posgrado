@@ -1,0 +1,27 @@
+<div>
+    <div class="cuerpo-dialog">
+        <div class="icono">
+            <mat-icon id="close-icon" (click)="closeDialog()">close</mat-icon>
+        </div>
+
+        <span class="contenido">{{data.message}}</span>
+        <span class="descrip">{{data.message1}}</span>
+    </div>
+
+    <div class="formulario">
+        <form class="memoForm" [formGroup]="admiForm">
+            <mat-form-field class="inputVtn" appearance="outline">
+                <mat-label>Sede</mat-label>
+                <mat-select formControlName="sede" placeholder="Sede">
+                    <mat-option *ngFor="let sede of sedes" [value]="sede.sede">{{sede.sede}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="inputVtn">
+                <mat-label>Nota mínima</mat-label>
+                <input matInput formControlName="nota" type="number" min="0" max="100" required>
+            </mat-form-field>
+        </form>
+        <button mat-flat-button id="boton-si" [mat-dialog-close]="false">{{data.btn2}}</button>
+        <button mat-flat-button id="boton-no" (click)='admitidos()'[mat-dialog-close]="true">{{data.btn1}}</button>
+    </div>
+</div>
