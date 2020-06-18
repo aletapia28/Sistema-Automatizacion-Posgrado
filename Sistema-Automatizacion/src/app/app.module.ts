@@ -55,6 +55,8 @@ import { VtnEditarFormulaComponent } from './vtn-editar-formula/vtn-editar-formu
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { VtnRecuperarPassComponent } from './vtn-recuperar-pass/vtn-recuperar-pass.component';
 import { VtnRepostularComponent } from './vtn-repostular/vtn-repostular.component';
+import { VtnAnalisisGraficoComponent } from './vtn-analisis-grafico/vtn-analisis-grafico.component';
+import { VtnAnalisisTabularComponent } from './vtn-analisis-tabular/vtn-analisis-tabular.component';
 
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
@@ -91,7 +93,9 @@ const routes: Routes = [
     DescargarMemoComponent,
     VtnEditarFormulaComponent,
     VtnRecuperarPassComponent,
-    VtnRepostularComponent
+    VtnRepostularComponent,
+    VtnAnalisisGraficoComponent,
+    VtnAnalisisTabularComponent
   ],
   imports: [
     BrowserModule,
