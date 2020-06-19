@@ -12,6 +12,8 @@ import { ServicioDatosService } from '../shared/servicio-datos.service'
 
 export interface PostulanteElement {
   cedula: string;
+  genero: string;
+  fechaNacimiento: string;
   nombre: string;
   telefono1: string;
   telefono2: string;
@@ -56,18 +58,17 @@ export class VtnBuscarPostulanteComponent implements OnInit {
     private router: Router,
     private servicioDatos: ServicioDatosService,
     private http: HttpClient
-
   ) {
     let vigente = sessionStorage.getItem('periodoVigente');
     this.visible = vigente == 'true';
-
-
   }
 
   visible: boolean;
   displayedColumns: string[] =
     ['cedula',
       'nombre',
+      'genero',
+      'fechaNacimiento',
       'telefono1',
       'telefono2',
       'correo1',
@@ -99,6 +100,28 @@ export class VtnBuscarPostulanteComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    const rangoEspanol = (page: number, pageSize: number, length: number) => {
+      if (length == 0 || pageSize == 0) { return ``; }
+      
+      length = Math.max(length, 0);
+    
+      const startIndex = page * pageSize;
+    
+      // If the start index exceeds the list length, do not try and fix the end index to the end.
+      const endIndex = startIndex < length ?
+          Math.min(startIndex + pageSize, length) :
+          startIndex + pageSize;
+    
+      return `${startIndex + 1} - ${endIndex} de ${length}`;
+    }
+
+    this.paginator._intl.itemsPerPageLabel = 'Postulantes por página:';
+    this.paginator._intl.firstPageLabel = 'Primera página';
+    this.paginator._intl.previousPageLabel = 'Página Anterior';
+    this.paginator._intl.nextPageLabel = 'Siguiente página';
+    this.paginator._intl.lastPageLabel = 'Última página';
+    this.paginator._intl.getRangeLabel = rangoEspanol;
+
     this.http.get<any>('/router/obtenerallpostulantes').subscribe(
       (respost) => {
 
@@ -181,5 +204,12 @@ export class VtnBuscarPostulanteComponent implements OnInit {
         }
       });
   }
+
+  getFecha(fecha:string) {
+    let dia = fecha.slice(8, 10);
+    let mes = fecha.slice(5, 7);
+    let anho = fecha.slice(0, 4);
+    return(`${mes}/${dia}/${anho}`)
+  } 
 
 }

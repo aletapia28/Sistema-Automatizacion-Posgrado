@@ -55,6 +55,9 @@ import { VtnEditarFormulaComponent } from './vtn-editar-formula/vtn-editar-formu
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { VtnRecuperarPassComponent } from './vtn-recuperar-pass/vtn-recuperar-pass.component';
 import { VtnRepostularComponent } from './vtn-repostular/vtn-repostular.component';
+import { VtnAnalisisGraficoComponent } from './vtn-analisis-grafico/vtn-analisis-grafico.component';
+import { VtnAnalisisTabularComponent } from './vtn-analisis-tabular/vtn-analisis-tabular.component';
+import { AdmitidosDialogComponent } from './admitidos-dialog/admitidos-dialog.component';
 
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
@@ -91,7 +94,10 @@ const routes: Routes = [
     DescargarMemoComponent,
     VtnEditarFormulaComponent,
     VtnRecuperarPassComponent,
-    VtnRepostularComponent
+    VtnRepostularComponent,
+    VtnAnalisisGraficoComponent,
+    VtnAnalisisTabularComponent,
+    AdmitidosDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -123,6 +129,6 @@ const routes: Routes = [
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent],
-  entryComponents:[ConfirmDialogComponent,DescargarMemoComponent,VtnRecuperarPassComponent,VtnRepostularComponent]
+  entryComponents:[ConfirmDialogComponent,DescargarMemoComponent,VtnRecuperarPassComponent,VtnRepostularComponent, AdmitidosDialogComponent]
 })
 export class AppModule { }

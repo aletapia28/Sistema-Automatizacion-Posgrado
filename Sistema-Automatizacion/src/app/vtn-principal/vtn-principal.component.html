@@ -11,6 +11,10 @@
                         <mat-option *ngFor="let tipo of tipos" [value]="tipo.tipo">{{tipo.tipo}}</mat-option>
                     </mat-select>
                 </mat-form-field>
+                <button mat-icon-button  (click)="onFilt()" class="icon" matTooltip="Filtrar" matTooltipPosition="above" 
+                        *ngIf="!tipoShowing">
+                            <mat-icon>filter_alt</mat-icon>
+                        </button>
                 <mat-form-field class="inputVtn" appearance="outline">
                     <mat-label>Elegir período</mat-label>
                     <mat-select [formControl]="periodo" (selectionChange)="cargarFechas($event.value)">
@@ -39,6 +43,18 @@
                 <ng-container matColumnDef="nombre">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
                     <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                </ng-container>
+
+                <!-- genero Column -->
+                <ng-container matColumnDef="genero" sticky>
+                    <th mat-header-cell *matHeaderCellDef> Género </th>
+                    <td mat-cell *matCellDef="let element"> {{element.genero}} </td>
+                </ng-container>
+
+                <!-- fechaNacimiento Column -->
+                <ng-container matColumnDef="fechaNacimiento" sticky>
+                    <th mat-header-cell *matHeaderCellDef> Fecha de nacimiento </th>
+                    <td mat-cell *matCellDef="let element"> {{getFecha(element.fechaNacimiento)}} </td>
                 </ng-container>
 
                 <!-- telefono1 Column -->
@@ -154,15 +170,6 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Nota </th>
                     <td mat-cell *matCellDef="let element"> {{element.nota}} </td>
                 </ng-container>
-
-                <!-- <ng-container matColumnDef="actions">
-                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                    <mat-cell *matCellDef="let row">
-                        <button mat-icon-button color="warn" matTooltip="Eliminar Registro" matTooltipPosition="above">
-                            <mat-icon>delete_outline</mat-icon>
-                        </button>
-                    </mat-cell>
-                </ng-container> -->
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
