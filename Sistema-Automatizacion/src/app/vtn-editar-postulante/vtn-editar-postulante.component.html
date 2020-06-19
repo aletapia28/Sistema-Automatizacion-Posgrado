@@ -18,6 +18,22 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="inputVtn">
+                    <mat-label>Género</mat-label>
+                    <mat-select formControlName="genero">
+                        <mat-option value="Femenino">Femenino</mat-option> 
+                        <mat-option value="Masculino">Masculino</mat-option>
+                        <mat-option value="Otro">Otro</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="inputVtn">
+                    <mat-label>Fecha de Inicio</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Teléfono 1</mat-label>
                     <input matInput formControlName="telefono1" required>
                 </mat-form-field>

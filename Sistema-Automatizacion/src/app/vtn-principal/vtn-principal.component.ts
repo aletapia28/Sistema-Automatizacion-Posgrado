@@ -15,6 +15,8 @@ import * as FileSaver from 'file-saver';
 export interface PostulanteElement {
   cedula: string;
   nombre: string;
+  genero: string;
+  fechaNacimiento: Date;
   telefono1: string;
   telefono2: string;
   correo1: string;
@@ -71,6 +73,8 @@ export class VtnPrincipalComponent {
   displayedColumns: string[] =
     ['cedula',
       'nombre',
+      'genero',
+      'fechaNacimiento',
       'telefono1',
       'telefono2',
       'correo1',
@@ -303,6 +307,13 @@ export class VtnPrincipalComponent {
         }
       });
   }
+
+  getFecha(fecha:string) {
+    let dia = fecha.slice(8, 10);
+    let mes = fecha.slice(5, 7);
+    let anho = fecha.slice(0, 4);
+    return(`${mes}/${dia}/${anho}`)
+  } 
 }
 
 

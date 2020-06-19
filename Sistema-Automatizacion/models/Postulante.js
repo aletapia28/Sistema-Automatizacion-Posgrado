@@ -8,6 +8,12 @@ module.exports = db.sequelize.define(
             type: Sequelize.STRING,
             primaryKey: true
         },
+        genero: {
+            type: Sequelize.STRING
+        },
+        fechaNacimiento: {
+            type: Sequelize.DATE
+        },
         nombre: {
             type: Sequelize.STRING
         },

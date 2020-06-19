@@ -13,6 +13,8 @@ export class VtnEditarPostulanteComponent implements OnInit {
   editarPosForm = new FormGroup({
     cedula: new FormControl('', [Validators.required]),
     nombre: new FormControl('', [Validators.required]),
+    genero: new FormControl('', [Validators.required]),
+    fechaNacimiento: new FormControl('', [Validators.required]),
     telefono1: new FormControl('', [Validators.required]),
     telefono2: new FormControl(''),
     correo1: new FormControl('', [Validators.required, Validators.email]),
@@ -30,6 +32,7 @@ export class VtnEditarPostulanteComponent implements OnInit {
     tDiplomado: new FormControl(false, [Validators.required]),
     promedio: new FormControl('', [Validators.required])
   });
+
   atributos = []
 
   constructor(
@@ -46,6 +49,8 @@ export class VtnEditarPostulanteComponent implements OnInit {
         let postulante = respost[0]
         this.editarPosForm.get('cedula').setValue(postulante[0].cedula);
         this.editarPosForm.get('nombre').setValue(postulante[0].nombre);
+        this.editarPosForm.get('genero').setValue(postulante[0].genero);
+        this.editarPosForm.get('fechaNacimiento').setValue(postulante[0].fechaNacimiento);
         this.editarPosForm.get('telefono1').setValue(postulante[0].telefono1);
         this.editarPosForm.get('telefono2').setValue(postulante[0].telefono2);
         this.editarPosForm.get('correo1').setValue(postulante[0].correo1);
@@ -135,6 +140,8 @@ export class VtnEditarPostulanteComponent implements OnInit {
   onSubmit() {
     let cedula: string = this.editarPosForm.get('cedula').value;
     let nombre: string = this.editarPosForm.get('nombre').value;
+    let genero: string = this.editarPosForm.get('genero').value;
+    let fechaNacimiento = this.editarPosForm.get('fechaNacimiento').value;
     let telefono1: string = this.editarPosForm.get('telefono1').value;
     let telefono2: string = this.editarPosForm.get('telefono2').value;
     let correo1: string = this.editarPosForm.get('correo1').value;
@@ -164,7 +171,8 @@ export class VtnEditarPostulanteComponent implements OnInit {
       const formData = {
         cedula: cedula, nombre: nombre, telefono1: telefono1, telefono2: telefono2, correo1: correo1, correo2: correo2, ingles: ingles,
         gradoAcademico: gradoAcademico, universidad: universidad, afinidad: afinidad, acreditada: acreditada, puestoActual: puestoActual, experienciaProfesion: experienciaProfesion,
-        cursoAprovechamiento: cursoAprovechamiento, tituloTecnico: tituloTecnico, cursoAfin: cursoAfin, tituloDiplomado: tituloDiplomado, promedioGeneral: promedioGeneral, nota:notanw
+        cursoAprovechamiento: cursoAprovechamiento, tituloTecnico: tituloTecnico, cursoAfin: cursoAfin, tituloDiplomado: tituloDiplomado, promedioGeneral: promedioGeneral, nota:notanw,
+        genero: genero, fechaNacimiento: fechaNacimiento
       }
       this.http.put<any>('/router/EditPostulante', formData).subscribe(
         (res) => {
