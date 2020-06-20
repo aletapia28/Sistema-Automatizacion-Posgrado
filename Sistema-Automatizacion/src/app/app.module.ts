@@ -59,6 +59,8 @@ import { VtnAnalisisGraficoComponent } from './vtn-analisis-grafico/vtn-analisis
 import { VtnAnalisisTabularComponent } from './vtn-analisis-tabular/vtn-analisis-tabular.component';
 import { AdmitidosDialogComponent } from './admitidos-dialog/admitidos-dialog.component';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
   { path: '', component: VtnPrincipalComponent },
@@ -125,7 +127,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     MatSnackBarModule,
     MatExpansionModule,
-    MatTableExporterModule
+    MatTableExporterModule,
+    NgxChartsModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent],
