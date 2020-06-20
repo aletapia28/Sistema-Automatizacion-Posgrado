@@ -12,6 +12,8 @@ import { Postulante } from '../vtn-importar-periodo/vtn-importar-periodo.compone
 export interface Postulant {
   cedula: String;
   nombre: String;
+  genero: String;
+  fechaNacimiento: String;
   telefono1: String;
   telefono2: String;
   correo1: String;
@@ -53,6 +55,8 @@ export class VtnImportarArchivoComponent implements OnInit {
   postul: Postulant = {
     cedula: '',
     nombre: '',
+    genero: '',
+    fechaNacimiento: '',
     telefono1: '',
     telefono2: 'No indica',
     correo1: '',
@@ -168,15 +172,18 @@ export class VtnImportarArchivoComponent implements OnInit {
       const prueba = (XLSX.utils.sheet_to_json(ws, { header: 1 }))
       var size = prueba.length
       var cont, y
+      console.log(datap);
       for (cont = 3; cont < size; cont++) {
         y = datap[cont]
-        var keyname = '9', keyid = '11', keytel1 = '13', keytel2 = '14', keycorr1 = '15', keycorr2 = '16',
-          keying = '17', keysede = '18', keyenf = '19', keyaf = '20', keyga = '21', keyuni = '23', keyprom = '24',
-          keyacred = '25', keyaprov = '30', keyttec = '31', keyafin = '32', keytdip = '33', keypact = '37', keyexp = '38'
+        var keyname = '9',keyfecha = '10',keygen ='11',keyid = '13', keytel1 = '15', keytel2 = '16', keycorr1 = '17', keycorr2 = '18',
+          keying = '19', keysede = '20', keyenf = '21', keyaf = '22', keyga = '23', keyuni = '24', keyprom = '25',
+          keyacred = '26', keyaprov = '32', keyttec = '33', keyafin = '34', keytdip = '35', keypact = '39', keyexp = '40'
 
         //postulante
         let cedula = y[keyid]
         let nombre = y[keyname]
+        let genero = y[keygen]
+        let edad = y[keyfecha]
         let telefono1 = y[keytel1]
         let correo1 = y[keycorr1]
 
@@ -237,6 +244,6 @@ export class VtnImportarArchivoComponent implements OnInit {
 
   onSubmit() {
     console.log(this.importarAForm.value);
-    //llamada insert postulacion
+    
   }
 }
