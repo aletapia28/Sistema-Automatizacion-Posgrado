@@ -12,6 +12,8 @@ import { ServicioDatosService } from '../shared/servicio-datos.service'
 
 export interface PostulanteElement {
   cedula: string;
+  genero: string;
+  fechaNacimiento: string;
   nombre: string;
   telefono1: string;
   telefono2: string;
@@ -65,6 +67,8 @@ export class VtnBuscarPostulanteComponent implements OnInit {
   displayedColumns: string[] =
     ['cedula',
       'nombre',
+      'genero',
+      'fechaNacimiento',
       'telefono1',
       'telefono2',
       'correo1',
@@ -200,5 +204,12 @@ export class VtnBuscarPostulanteComponent implements OnInit {
         }
       });
   }
+
+  getFecha(fecha:string) {
+    let dia = fecha.slice(8, 10);
+    let mes = fecha.slice(5, 7);
+    let anho = fecha.slice(0, 4);
+    return(`${mes}/${dia}/${anho}`)
+  } 
 
 }
