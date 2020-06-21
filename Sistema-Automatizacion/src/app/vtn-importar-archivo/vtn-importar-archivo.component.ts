@@ -13,7 +13,7 @@ export interface Postulant {
   cedula: String;
   nombre: String;
   genero: String;
-  fechaNacimiento: String;
+  fechaNacimiento: Date;
   telefono1: String;
   telefono2: String;
   correo1: String;
@@ -56,7 +56,7 @@ export class VtnImportarArchivoComponent implements OnInit {
     cedula: '',
     nombre: '',
     genero: '',
-    fechaNacimiento: '',
+    fechaNacimiento: null,
     telefono1: '',
     telefono2: 'No indica',
     correo1: '',
@@ -183,7 +183,10 @@ export class VtnImportarArchivoComponent implements OnInit {
         let cedula = y[keyid]
         let nombre = y[keyname]
         let genero = y[keygen]
-        let edad = y[keyfecha]
+        var fechanacimiento = new Date();
+        console.log(fechanacimiento)
+        fechanacimiento  = y[keyfecha]
+        console.log(fechanacimiento )
         let telefono1 = y[keytel1]
         let correo1 = y[keycorr1]
 
@@ -226,7 +229,7 @@ export class VtnImportarArchivoComponent implements OnInit {
           cedula: cedula, nombre: nombre, telefono1: telefono1, afinidad: afinidad, gradoAcademico: gradoAcademico, universidad: universidad,
           promedioGeneral: promedioGeneral, cursoAprovechamiento: cursoAprovechamiento, puestoActual: puestoActual, experienciaProfesion: experienciaProfesion,
           telefono2: telefono2, correo1: correo1, correo2: correo2, ingles: ingles, tituloDiplomado: tituloDiplomado, tituloTecnico: tituloTecnico,
-          acreditada: acreditada, enfasis: enfasis, sede: sede, nota: nota, memo: memo, periodo: periodo, cursoAfin: cursoAfin
+          acreditada: acreditada, enfasis: enfasis, sede: sede, nota: nota, memo: memo, periodo: periodo, cursoAfin: cursoAfin, genero: genero, fechaNacimiento: fechanacimiento
         }
 
         //llamada al post de insertar postulante 

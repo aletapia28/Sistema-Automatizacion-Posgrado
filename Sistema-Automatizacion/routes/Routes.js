@@ -929,4 +929,37 @@ router.post('/UpdatePassword', (req, res) => {
     })
 })
 
+//Informacion General 
+
+// Universidad
+router.get('/ObtenerUniversidad', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerUniversidad()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Genero
+router.get('/ObtenerGenero', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerGenero()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Puesto Actual
+router.get('/ObtenerPuestoActual', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerPuestoActual()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+
 module.exports = router
