@@ -1,0 +1,170 @@
+<div class="tamano">
+    <app-barra-sistema></app-barra-sistema>
+
+    <div class="cuerpo">
+        <div class="encabezado">
+            <h1 class="titulo">Análisis de Históricos</h1>
+            <form (submit)="onSubmit()" [formGroup]="anaGrafForm">
+                <div class="opciones">
+                    <mat-form-field class="inputVtn2" appearance="outline">
+                        <mat-label>Período inicial</mat-label>
+                        <mat-select formControlName="periodo">
+                            <mat-option *ngFor="let periodo of periodos" [value]="periodo.periodo">{{periodo.periodo}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="inputVtn2" appearance="outline">
+                        <mat-label>Período final</mat-label>
+                        <mat-select formControlName="periodo2">
+                            <mat-option *ngFor="let periodo of periodos" [value]="periodo.periodo">{{periodo.periodo}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <button mat-raised-button class="boton" type="submit">Generar</button>
+            </form>
+        </div>
+        <div class="general" *ngIf="showGeneral">
+            <h2 class="titulo">Edad</h2>
+            <div class="grafica">
+                <ngx-charts-area-chart
+                    [legend]="legendEdad"
+                    [showXAxisLabel]="showXAxisLabelEdad"
+                    [showYAxisLabel]="showYAxisLabelEdad"
+                    [xAxis]="xAxisEdad"
+                    [yAxis]="yAxisEdad"
+                    [xAxisLabel]="xAxisLabelEdad"
+                    [yAxisLabel]="yAxisLabelEdad"
+                    [timeline]="timelineEdad"
+                    [results]="edadData"
+                    [legendTitle]="titleEdad">
+                </ngx-charts-area-chart>
+            </div>
+
+            <h2 class="titulo">Género</h2>
+            <div class="grafica">
+                <ngx-charts-bar-horizontal-2d
+                    [results]="generoData"
+                    [gradient]="gradientGen"
+                    [xAxis]="showXAxisGen"
+                    [yAxis]="showYAxisGen"
+                    [legend]="showLegendGen"
+                    [legendPosition]="legendPositionGen"
+                    [showXAxisLabel]="showXAxisLabelGen"
+                    [showYAxisLabel]="showYAxisLabelGen"
+                    [xAxisLabel]="xAxisLabelGen"
+                    [yAxisLabel]="yAxisLabelGen"
+                    [legendTitle]="titleGen">
+                </ngx-charts-bar-horizontal-2d>
+            </div>
+
+            <h2 class="titulo">Universidad</h2>
+            <div class="grafica">
+                <ngx-charts-bar-vertical-stacked [results]="universidadData" [gradient]="gradientUni" [xAxis]="showXAxisUni"
+                    [yAxis]="showYAxisUni" [legend]="showLegendUni" [showXAxisLabel]="showXAxisLabelUni"
+                    [showYAxisLabel]="showYAxisLabelUni" [xAxisLabel]="xAxisLabelUni" [yAxisLabel]="yAxisLabelUni"
+                    [animations]="animationsUni" [legendTitle]="titleUni">
+                </ngx-charts-bar-vertical-stacked>
+            </div>
+
+            <h2 class="titulo">Máximo grado académico</h2>
+            <div class="grafica">
+                <ngx-charts-bar-horizontal-stacked
+                    [results]="maxGradoData"
+                    [gradient]="gradientMax"
+                    [xAxis]="showXAxisMax"
+                    [yAxis]="showYAxisMax"
+                    [legend]="showLegendMax"
+                    [showXAxisLabel]="showXAxisLabelMax"
+                    [showYAxisLabel]="showYAxisLabelMax"
+                    [xAxisLabel]="xAxisLabelMax"
+                    [yAxisLabel]="yAxisLabelMax"
+                    [legendTitle]="titleMax">
+                </ngx-charts-bar-horizontal-stacked>
+            </div>
+
+            <h2 class="titulo">Experiencia laboral</h2>
+            <div class="grafica">
+                <ngx-charts-area-chart-stacked
+                [legend]="legendExp"
+                [showXAxisLabel]="showXAxisLabelExp"
+                [showYAxisLabel]="showYAxisLabelExp"
+                [xAxis]="xAxisExp"
+                [yAxis]="yAxisExp"
+                [xAxisLabel]="xAxisLabelExp"
+                [yAxisLabel]="yAxisLabelExp"
+                [timeline]="timelineExp"
+                [results]="experienciaData"
+                [legendTitle]="titleExp">
+              </ngx-charts-area-chart-stacked>
+            </div>
+
+            <h2 class="titulo">Nivel jerárquico</h2>
+            <div class="grafica">
+                <ngx-charts-line-chart
+                    [legend]="legendNiv"
+                    [showXAxisLabel]="showXAxisLabelNiv"
+                    [showYAxisLabel]="showYAxisLabelNiv"
+                    [xAxis]="xAxisNiv"
+                    [yAxis]="yAxisNiv"
+                    [xAxisLabel]="xAxisLabelNiv"
+                    [yAxisLabel]="yAxisLabelNiv"
+                    [timeline]="timelineNiv"
+                    [results]="nivelData"
+                    [legendTitle]="titleNiv">
+                </ngx-charts-line-chart>
+            </div>
+
+            <h2 class="titulo">Afinidad</h2>
+            <div class="grafica">
+                <ngx-charts-bar-horizontal-2d
+                    [results]="afinidadData"
+                    [gradient]="gradientAfin"
+                    [xAxis]="showXAxisAfin"
+                    [yAxis]="showYAxisAfin"
+                    [legend]="showLegendAfin"
+                    [legendPosition]="legendPositionAfin"
+                    [showXAxisLabel]="showXAxisLabelAfin"
+                    [showYAxisLabel]="showYAxisLabelAfin"
+                    [xAxisLabel]="xAxisLabelAfin"
+                    [yAxisLabel]="yAxisLabelAfin"
+                    [legendTitle]="titleAfin">
+                </ngx-charts-bar-horizontal-2d>
+            </div>
+
+            <h2 class="titulo">Acreditación</h2>
+            <div class="grafica">
+                <ngx-charts-bar-vertical-2d
+                [results]="acredData"
+                [gradient]="gradientAcred"
+                [xAxis]="showXAxisAcred"
+                [yAxis]="showYAxisAcred"
+                [legend]="showLegendAcred"
+                [showXAxisLabel]="showXAxisLabelAcred"
+                [showYAxisLabel]="showYAxisLabelAcred"
+                [xAxisLabel]="xAxisLabelAcred"
+                [yAxisLabel]="yAxisLabelAcred"
+                [legendTitle]="titleAcred">
+              </ngx-charts-bar-vertical-2d>
+            </div>
+
+            <h2 class="titulo">Nota obtenida</h2>
+            <div class="grafica2">
+                <ngx-charts-line-chart
+                    [legend]="legendNota"
+                    [showXAxisLabel]="showXAxisLabelNota"
+                    [showYAxisLabel]="showYAxisLabelNota"
+                    [xAxis]="xAxisNota"
+                    [yAxis]="yAxisNota"
+                    [xAxisLabel]="xAxisLabelNota"
+                    [yAxisLabel]="yAxisLabelNota"
+                    [timeline]="timelineNota"
+                    [results]="notaData"
+                    [legendTitle]="titleNota">
+                </ngx-charts-line-chart>
+            </div>
+        </div>
+    </div>
+    <app-barra-inferior></app-barra-inferior>
+</div>
