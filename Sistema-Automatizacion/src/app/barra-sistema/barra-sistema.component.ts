@@ -97,7 +97,7 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   verHistoricos() {
-    // this.router.navigate(['principal'])
+    this.router.navigate(['analisisHistorico']);
   }
 
   importarPeriodo() {

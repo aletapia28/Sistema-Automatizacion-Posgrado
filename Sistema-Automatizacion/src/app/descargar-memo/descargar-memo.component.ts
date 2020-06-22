@@ -18,9 +18,12 @@ import { DocumentCreator } from "./cv-generator";
 export class DescargarMemoComponent implements OnInit {
 
   memoForm = new FormGroup({
-    destinatario: new FormControl('', [Validators.required]),
-    remitente: new FormControl('', [Validators.required]),
-    sede: new FormControl('', [Validators.required])
+    mgp: new FormControl(null, [Validators.required]),
+    destinatario: new FormControl(null, [Validators.required]),
+    remitente: new FormControl(null, [Validators.required]),
+    sede: new FormControl(null, [Validators.required]),
+    plan: new FormControl(null, [Validators.required]),
+    iniciales: new FormControl(null, [Validators.required]),
   });
 
   periodoVigente: string;
@@ -53,10 +56,14 @@ export class DescargarMemoComponent implements OnInit {
   }
   
   onEmail() {
+    let mgp: string = this.memoForm.get('mgp').value;
     let destinatario: string = this.memoForm.get('destinatario').value;
     let remitente: string = this.memoForm.get('remitente').value;
     let sede: string = this.memoForm.get('sede').value;
-    if ((sede != null) && (destinatario != null) && (remitente != null)) {
+    let plan: string = this.memoForm.get('plan').value;
+    let iniciales: string = this.memoForm.get('iniciales').value;
+    if ((sede != null) && (destinatario != null) && (remitente != null) && (plan != null)
+    && (mgp != null) && (iniciales != null)) {
       let fecha: Date = new Date();
       let mes = fecha.getMonth()
       let mesNombre = ""
@@ -99,7 +106,7 @@ export class DescargarMemoComponent implements OnInit {
           break;
       }
       let fechaFinal = `${fecha.getDate()} ` + mesNombre + ` ${fecha.getFullYear()}`;
-      let cuerpo = `MEMORANDO \n\n\nPara: ${destinatario}\n\nDe: ${remitente}\n\nFecha: ${fechaFinal}\n\nAsunto: Admisión de estudiantes Maestría en Gerencia de Proyectos.\n\nAdjunto encontrará los documentos de los estudiantes que han sido admitidos para el ${this.periodoVigente} al Programa de Maestría en Gerencia de Proyectos, en la Sede de ${sede}. Favor incluirlos dentro del plan ${fecha.getFullYear()}.\n\nCualquier consulta estoy a la orden.`;
+      let cuerpo = `Área Académica de Gerencia de Proyectos\n\nTel : 2550-2182\n\nMGP-${mgp}\n\nMEMORANDO \n\n\nPara: ${destinatario}\n\nDe: ${remitente}\n\nFecha: ${fechaFinal}\n\nAsunto: Admisión de estudiantes Maestría en Gerencia de Proyectos.\n\nAdjunto encontrará los documentos de los estudiantes que han sido admitidos para el ${this.periodoVigente} al Programa de Maestría en Gerencia de Proyectos, en la Sede de ${sede}. Favor incluirlos dentro del plan ${fecha.getFullYear()}.\n\nCualquier consulta estoy a la orden.\n\n${iniciales}\n\nCI: Arch.`;
       let asunto = `Memorando Período ${this.periodoVigente}`;
       const formData2 = {correo: sessionStorage.getItem('correo')}
       this.http.post<any>('/router/ObtenerCorreoEnvio', formData2).subscribe(
@@ -117,20 +124,23 @@ export class DescargarMemoComponent implements OnInit {
   }
   
   onDoc() {
+    let mgp: string = this.memoForm.get('mgp').value;
     let destinatario: string = this.memoForm.get('destinatario').value;
     let remitente: string = this.memoForm.get('remitente').value;
     let sede: string = this.memoForm.get('sede').value;
-    if ((sede != null) && (destinatario != null) && (remitente != null)) {
-      // const formData = { periodo: this.periodoVigente, sede: sede }
-      // this.http.post<any>('/router/ObtenerMemo', formData).subscribe(
-      //   (respost) => {
-      const postulantes = []; //respost;
+    let plan: string = this.memoForm.get('plan').value;
+    let iniciales: string = this.memoForm.get('iniciales').value;
+    if ((sede != null) && (destinatario != null) && (remitente != null) && (plan != null)
+    && (mgp != null) && (iniciales != null)) {
+      const mgpE = {mgp: mgp};
+      const inicialesE = {iniciales: iniciales};
+      const planE = {plan: plan}; 
       const desti = { nombre: destinatario };
       const remi = { nombre: remitente };
       const period = { periodo: this.periodoVigente, sede: sede }
       const documentCreator = new DocumentCreator();
       const doc = documentCreator.create([
-        postulantes, desti, remi, period
+        desti, remi, period, planE, mgpE, inicialesE
       ]);
 
       Packer.toBlob(doc).then(blob => {
@@ -138,8 +148,6 @@ export class DescargarMemoComponent implements OnInit {
         saveAs(blob, `Memorando ${this.periodoVigente}.docx`);
         console.log("Document created successfully");
       });
-      //}
-      //);
     }
   }
 
