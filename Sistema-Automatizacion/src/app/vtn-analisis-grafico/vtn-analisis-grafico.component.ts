@@ -54,7 +54,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
       "value": 14
     },
     {
-      "name": "Otro",
+      "name": "Otros",
       "value": 2
     }
   ];
@@ -237,6 +237,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
       "value": 5000000
     } 
   ];
+  
 
   view: any[] = [700, 400];
   view2: any[] = [1000, 400];
@@ -308,16 +309,42 @@ export class VtnAnalisisGraficoComponent implements OnInit {
   showYAxisLabelNota = true;
   yAxisLabelNota = 'Cantidad';
 
+  //Obtener json del backend 
+  universidades = [];
+  generos = [];
+  puestoactual =[];
   constructor(
     private http: HttpClient,
   ) { }
-
+  
   ngOnInit(): void {
     this.http.get<any>('/router/getPeriodosTranscurridos').subscribe(
       (respost) => {
-        this.periodos = respost[0];
+        this.periodos = respost[0]
       }
     );
+
+    //generoData
+    this.http.get<any>('/router/ObtenerGenero').subscribe(
+      (respost) => {
+        this.generos = respost
+      },
+    );
+
+    //universidadData
+    this.http.get<any>('/router/ObtenerUniversidad').subscribe(
+      (respost) => {
+        this.universidades = respost
+      },
+    );
+    //puestoData
+    this.http.get<any>('/router/ObtenerPuestoActual').subscribe(
+      (respost) => {
+        this.puestoactual = respost
+        
+      },
+    );
+
   }
 
   cargarDist(event) {
@@ -348,9 +375,19 @@ export class VtnAnalisisGraficoComponent implements OnInit {
 
         //AQUI CARGAR LOS JSON DE DISTRIBUCION GENERAL, SON ESTOS:
         //edadData
+
         //generoData
+        //Masculino
+        this.generoData[0]['value'] = this.generos[1][0]['COUNT(*)']
+        //Femenino
+        this.generoData[1]['value'] = this.generos[0][0]['COUNT(*)']
+        //Otros
+        this.generoData[2]['value'] = this.generos[2][0]['COUNT(*)']
+       
         //universidadData
-        //puestoData
+        
+
+        //puestoActualData
 
       } else {
         this.showGeneral = false;
