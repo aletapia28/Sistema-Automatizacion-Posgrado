@@ -370,6 +370,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
   universidades = [];
   generos = [];
   puestoactual =[];
+
   constructor(
     private http: HttpClient,
   ) { }
@@ -429,12 +430,6 @@ export class VtnAnalisisGraficoComponent implements OnInit {
       if (distribucion == 'Distribución general') {
         this.showGeneral = true;
         this.showEvaluacion = false;
-        console.log('generos')
-        console.log(this.generos)
-        console.log('universidades')
-        console.log(this.universidades)
-        console.log('puesto')
-        console.log(this.puestoactual)
 
         //AQUI CARGAR LOS JSON DE DISTRIBUCION GENERAL, SON ESTOS:
         //edadData
