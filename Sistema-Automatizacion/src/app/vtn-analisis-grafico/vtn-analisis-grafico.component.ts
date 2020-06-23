@@ -61,21 +61,78 @@ export class VtnAnalisisGraficoComponent implements OnInit {
 
   universidadData = [
     {
-      "name": "TEC",
+      "name": "Universidad de Costa Rica",
       "value": 15
     },
     {
-      "name": "UCR",
+      "name": "Instituto Tecnológico de Costa Rica",
       "value": 7
     },
     {
-      "name": "UNA",
+      "name": "Universidad Nacional",
       "value": 2
     },
     {
-      "name": "Fidelitas",
+      "name": "Universidad Estatal a Distancia",
+      "value": 1
+    },
+    {
+      "name": "Universidad Hispanoamericana",
+      "value": 1
+    },
+    {
+      "name": "Universidad Castro Carazo",
+      "value": 1
+    },
+    {
+      "name": "Universidad Latinoamericana  de Ciencia y Tecnología",
+      "value": 1
+    },
+    {
+      "name": "Universidad Autónoma de Centro América",
+      "value": 1
+    },
+    {
+      "name": "Universidad Latina de Costa Rica",
+      "value": 1
+    },
+    {
+      "name": "Universidad Fidélitas",
+      "value": 1
+    },
+    {
+      "name": "Universidad Cenfotec",
+      "value": 1
+    },
+    {
+      "name": "Universidad Santa Lucía",
+      "value": 1
+    },
+    {
+      "name": "Universidad Florencio del Castillo",
+      "value": 1
+    },
+    {
+      "name": "Universidad Adventista de Centro América",
+      "value": 1
+    },
+    {
+      "name": "Universidad Juan Pablo II",
+      "value": 1
+    },
+    {
+      "name": "Universidad Centroamericana de Ciencias Sociales",
+      "value": 1
+    },
+    {
+      "name": "Universidad San Judas Tadeo",
+      "value": 1
+    },
+    {
+      "name": "Otros",
       "value": 1
     }
+
   ];
 
   puestoData = [
@@ -372,6 +429,12 @@ export class VtnAnalisisGraficoComponent implements OnInit {
       if (distribucion == 'Distribución general') {
         this.showGeneral = true;
         this.showEvaluacion = false;
+        console.log('generos')
+        console.log(this.generos)
+        console.log('universidades')
+        console.log(this.universidades)
+        console.log('puesto')
+        console.log(this.puestoactual)
 
         //AQUI CARGAR LOS JSON DE DISTRIBUCION GENERAL, SON ESTOS:
         //edadData
@@ -385,9 +448,31 @@ export class VtnAnalisisGraficoComponent implements OnInit {
         this.generoData[2]['value'] = this.generos[2][0]['COUNT(*)']
        
         //universidadData
-        
+        this.universidadData[0]['value'] = this.universidades[0][0]['COUNT(*)']
+        this.universidadData[1]['value'] = this.universidades[1][0]['COUNT(*)']
+        this.universidadData[2]['value'] = this.universidades[2][0]['COUNT(*)']
+        this.universidadData[3]['value'] = this.universidades[3][0]['COUNT(*)']
+        this.universidadData[4]['value'] = this.universidades[4][0]['COUNT(*)']
+        this.universidadData[5]['value'] = this.universidades[5][0]['COUNT(*)']
+        this.universidadData[6]['value'] = this.universidades[6][0]['COUNT(*)']
+        this.universidadData[7]['value'] = this.universidades[7][0]['COUNT(*)']
+        this.universidadData[8]['value'] = this.universidades[8][0]['COUNT(*)']
+        this.universidadData[9]['value'] = this.universidades[9][0]['COUNT(*)']
+        this.universidadData[10]['value'] = this.universidades[10][0]['COUNT(*)']
+        this.universidadData[11]['value'] = this.universidades[11][0]['COUNT(*)']
+        this.universidadData[12]['value'] = this.universidades[12][0]['COUNT(*)']
+        this.universidadData[13]['value'] = this.universidades[13][0]['COUNT(*)']
+        this.universidadData[14]['value'] = this.universidades[14][0]['COUNT(*)']
+        this.universidadData[15]['value'] = this.universidades[15][0]['COUNT(*)']
+        this.universidadData[16]['value'] = this.universidades[16][0]['COUNT(*)']
+        this.universidadData[17]['value'] = this.universidades[17][0]['COUNT(*)']
 
         //puestoActualData
+        this.puestoData[0]['value'] = this.puestoactual[0][0]['COUNT(*)']
+        this.puestoData[1]['value'] = this.puestoactual[1][0]['COUNT(*)']
+        this.puestoData[2]['value'] = this.puestoactual[2][0]['COUNT(*)']
+        this.puestoData[3]['value'] = this.puestoactual[3][0]['COUNT(*)']
+        this.puestoData[4]['value'] = this.puestoactual[4][0]['COUNT(*)']
 
       } else {
         this.showGeneral = false;
