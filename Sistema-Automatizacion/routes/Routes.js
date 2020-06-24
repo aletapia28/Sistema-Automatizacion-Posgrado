@@ -1011,7 +1011,7 @@ router.get('/ObtenerNota', function(req, res, next) {
     })
 })
 
-// Nota
+//Experiencia
 router.get('/ObtenerExperiencia', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerExperiencia()', (err, row, fields) => {
         if (!err)
