@@ -5,11 +5,13 @@ const EMAIL = "docx@docx.com";
 
 export class DocumentCreator {
     // tslint:disable-next-line: typedef
-    public create([postulantes, destinatario, remitente, periodo]): Document {
+    public create([destinatario, remitente, periodo, plan, mgp, iniciales]): Document {
         const document = new Document();
-        let fecha:Date = new Date();
+        let fecha: Date = new Date();
         let mes = fecha.getMonth()
         let mesNombre = ""
+        let dest = destinatario.nombre.split('\n')
+        let remi = remitente.nombre.split('\n')
         switch (mes) {
             case 0:
                 mesNombre = "Enero"
@@ -53,24 +55,22 @@ export class DocumentCreator {
         document.addSection({
             children: [
                 new Paragraph({
+                    alignment: AlignmentType.RIGHT,
+                    children: [
+                        new TextRun('Área Académica de Gerencia de Proyectos').break(),
+                        new TextRun('Tel : 2550-2182').break(),
+                    ],
+                }),
+                new Paragraph({
+                    text: `MGP-${mgp.mgp}`,
+                    heading: HeadingLevel.HEADING_2,
+                }),
+                new Paragraph({
                     text: "Memorando",
                     heading: HeadingLevel.TITLE,
                 }),
-                this.createToInfo(destinatario),
-                this.createFromInfo(remitente),
-                // this.createHeading("Education"),
-                // ...postulantes
-                //     .map((position) => {
-                //         const arr: Paragraph[] = [];
-
-                //         const bulletPoints = this.splitParagraphIntoBullets(position.nombre);
-                //         bulletPoints.forEach((bulletPoint) => {
-                //             arr.push(this.createBullet(bulletPoint));
-                //         });
-
-                //         return arr;
-                //     })
-                //     .reduce((prev, curr) => prev.concat(curr), []),
+                this.createToInfo(dest),
+                this.createFromInfo(remi),
                 new Paragraph({
                     alignment: AlignmentType.JUSTIFIED,
                     children: [
@@ -86,13 +86,20 @@ export class DocumentCreator {
                 new Paragraph({
                     alignment: AlignmentType.JUSTIFIED,
                     children: [
-                        new TextRun(`Adjunto encontrará los documentos de los estudiantes que han sido admitidos para el ${periodo.periodo} al Programa de Maestría en Gerencia de Proyectos, en la Sede de ${periodo.sede}. Favor incluirlos dentro del plan ${fecha.getFullYear()}.`).break(),
+                        new TextRun(`Adjunto encontrará los documentos de los estudiantes que han sido admitidos para el ${periodo.periodo} al Programa de Maestría en Gerencia de Proyectos, en la Sede de ${periodo.sede}. Favor incluirlos dentro del plan ${plan.plan}.`).break(),
                     ],
                 }),
                 new Paragraph({
                     alignment: AlignmentType.JUSTIFIED,
                     children: [
                         new TextRun(`Cualquier consulta estoy a la orden.`).break(),
+                    ],
+                }),
+                new Paragraph({
+                    alignment: AlignmentType.LEFT,
+                    children: [
+                        new TextRun(`${iniciales.iniciales}`).break(),
+                        new TextRun(`CI: Arch.`).break(),
                     ],
                 }),
             ],
@@ -102,24 +109,46 @@ export class DocumentCreator {
     }
 
     public createFromInfo(remitente): Paragraph {
-        return new Paragraph({
-            alignment: AlignmentType.JUSTIFIED,
-            children: [
-                new TextRun(`De: ${remitente.nombre}`).break(),
-            ],
-        });
+        if (remitente.length == 1) {
+            return new Paragraph({
+                alignment: AlignmentType.LEFT,
+                children: [
+                    new TextRun(`De: ${remitente[0]}`).break(),
+                ],
+            });
+        }
+        else {
+            return new Paragraph({
+                alignment: AlignmentType.LEFT,
+                children: [
+                    new TextRun(`De: ${remitente[0]}`).break(),
+                    new TextRun(`       ${remitente[1]}`).break()
+                ],
+            });
+        }
     }
 
     public createToInfo(destinatario): Paragraph {
-        return new Paragraph({
-            alignment: AlignmentType.JUSTIFIED,
-            children: [
-                new TextRun(`Para: ${destinatario.nombre}`).break(),
-            ],
-        });
+        if (destinatario.length == 1) {
+            return new Paragraph({
+                alignment: AlignmentType.LEFT,
+                children: [ 
+                    new TextRun(`Para: ${destinatario[0]}`).break(),
+                ],
+            });
+        }
+        else {
+            return new Paragraph({
+                alignment: AlignmentType.LEFT,
+                children: [
+                    new TextRun(`De: ${destinatario[0]}`).break(),
+                    new TextRun(`       ${destinatario[1]}`).break()
+                ],
+            });
+        }
     }
 
-    public createHeading(text: string): Paragraph {
+    public createHeading(text: string): Paragraph { 
         return new Paragraph({
             text: text,
             heading: HeadingLevel.HEADING_1,
