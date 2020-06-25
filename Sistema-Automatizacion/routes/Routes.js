@@ -929,4 +929,224 @@ router.post('/UpdatePassword', (req, res) => {
     })
 })
 
+//Informacion General 
+
+// Universidad
+router.get('/ObtenerUniversidad', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerUniversidad()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Genero
+router.get('/ObtenerGenero', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerGenero()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Puesto Actual
+router.get('/ObtenerPuestoActual', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerPuestoActual()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Afinidad
+router.get('/ObtenerAfinidad', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerAfinidad()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Maximo grado
+router.get('/ObtenerMaximoGrado', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMaximoGrado()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Acreditada
+router.get('/ObtenerAcreditada', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerAcreditada()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Promedio
+router.get('/ObtenerPromedio', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerPromedio()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Nota
+router.get('/ObtenerNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerNota()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+//Experiencia
+router.get('/ObtenerExperiencia', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerExperiencia()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Formacion Complementario
+router.get('/ObtenerFormacionComplementaria', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerFormacionComplementaria()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Total Estudiantes 
+router.get('/ObtenerTotalPostulantes', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerTotalPostulantes()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Total Suma Promedio
+router.get('/ObtenerSumaPromedio', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerSumaPromedio()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Mediana
+router.get('/ObtenerMedianaProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMedianaProm()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Moda 
+router.get('/ObtenerModaProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerModaProm()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+//Minimo
+router.get('/ObtenerMinimoProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMinimoProm()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+//Maximo
+router.get('/ObtenerMaximoProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMaximoProm()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+//Minimo Nota
+router.get('/ObtenerMinNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMinNota()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+//Maximo Nota 
+router.get('/ObtenerMaxNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMaxNota()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Total Suma Nota
+router.get('/ObtenerSumaNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerSumaNota()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Mediana Nota
+router.get('/ObtenerMedianaNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMedianaNota()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Moda Nota
+router.get('/ObtenerModaNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerModaNota()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Obtener Edad
+router.get('/ObtenerEdad', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerEdad()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+
 module.exports = router
