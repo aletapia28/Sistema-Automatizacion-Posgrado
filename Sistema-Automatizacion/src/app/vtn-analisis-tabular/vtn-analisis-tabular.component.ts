@@ -465,6 +465,63 @@ export class VtnAnalisisTabularComponent implements OnInit {
     }
   ];
 
+  //estaisticos record 
+  estadisticosData = [
+    {
+      "caracteristica": "Media",
+      "valor": 0
+    },
+    {
+      "caracteristica": "Mediana",
+      "valor": 0
+
+    },
+    {
+      "caracteristica": "Moda",
+      "valor": 0,
+    },
+    {
+      "caracteristica": "Mínimo",
+      "valor": 0,    
+    },
+    {
+      "caracteristica": "Máximo",
+      "valor": 0,    
+    },
+    {
+      "caracteristica": "Rango",
+      "valor": 0,    
+    }
+  ];
+
+  estadisticosEvalData = [
+    {
+      "caracteristica": "Media",
+      "valor": 0
+    },
+    {
+      "caracteristica": "Mediana",
+      "valor": 0
+
+    },
+    {
+      "caracteristica": "Moda",
+      "valor": 0,
+    },
+    {
+      "caracteristica": "Mínimo",
+      "valor": 0,    
+    },
+    {
+      "caracteristica": "Máximo",
+      "valor": 0,    
+    },
+    {
+      "caracteristica": "Rango",
+      "valor": 0,    
+    }
+  ];
+
    //Obtener json del backend 
    universidades = [];
    generos = [];
@@ -476,6 +533,19 @@ export class VtnAnalisisTabularComponent implements OnInit {
    nota =[];
    experiencia =[];
    formacioncomplementaria =[];
+   totalpostulantes =[];
+   sumapromedio =[];
+   medianaprom =[];
+   modaprom =[];
+   minprom = [];
+   maxprom =[];
+
+   mediananota =[];
+   modanota =[];
+   minnota = [];
+   maxnota =[];
+   sumanota =[];
+  
  
 
   constructor(
@@ -566,6 +636,78 @@ export class VtnAnalisisTabularComponent implements OnInit {
         
       },
     );
+     //CantidadPostulantes
+     this.http.get<any>('/router/ObtenerTotalPostulantes').subscribe(
+      (respost) => {
+        this.totalpostulantes = respost
+        
+      },
+    );
+     //Suma promedio general
+     this.http.get<any>('/router/ObtenerSumaPromedio').subscribe(
+      (respost) => {
+        this.sumapromedio = respost
+        
+      },
+    );
+     //Mediana
+     this.http.get<any>('/router/ObtenerMedianaProm').subscribe(
+      (respost) => {
+        this.medianaprom = respost
+        
+      },
+    );
+     //Moda
+     this.http.get<any>('/router/ObtenerModaProm').subscribe(
+      (respost) => {
+        this.modaprom = respost
+        
+      },
+    );
+    //Minimo
+    this.http.get<any>('/router/ObtenerMinimoProm').subscribe(
+      (respost) => {
+        this.minprom = respost
+        
+      },
+    );
+    //Maximo
+    this.http.get<any>('/router/ObtenerMaximoProm').subscribe(
+      (respost) => {
+        this.maxprom = respost
+      },
+    );
+    //MinimoNota
+    this.http.get<any>('/router/ObtenerMinNota').subscribe(
+      (respost) => {
+        this.minnota = respost
+      },
+    );
+    //MinimoNota
+    this.http.get<any>('/router/ObtenerMaxNota').subscribe(
+      (respost) => {
+        this.maxnota = respost
+      },
+    );
+    //Suma nota
+    this.http.get<any>('/router/ObtenerSumaNota').subscribe(
+    (respost) => {
+      this.sumanota = respost
+      
+    },
+  );
+    this.http.get<any>('/router/ObtenerMedianaNota').subscribe(
+      (respost) => {
+        this.mediananota = respost
+        
+      },
+    );
+    this.http.get<any>('/router/ObtenerModaNota').subscribe(
+      (respost) => {
+        this.modanota = respost
+        
+      },
+    );
   }
 
   cargarDist(event) {
@@ -604,16 +746,8 @@ export class VtnAnalisisTabularComponent implements OnInit {
         totalGenero = mascValue + femValue + otroValue 
 
         mascRelativo = Math.round(mascValue/totalGenero*100)
-        console.log('mascRelativo')
-        console.log(mascRelativo)
-
         femRelativo = Math.round(femValue/totalGenero*100)
-        console.log('femRelativo')
-        console.log(femRelativo)
-
         otroRelativo = Math.round(otroValue/totalGenero*100)
-        console.log('otroRelativo')
-        console.log(otroRelativo)
 
         //asignar a json generoData
         this.generoData[0]['absoluto'] = mascValue
@@ -751,16 +885,46 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.puestoActualData[4]['absoluto'] = trabValue
         this.puestoActualData[4]['relativo'] = trabRelativo.toString() + '%'
 
-
-        //Aqui tienen que cargar los datos de las tablas
-        // dataSource lo cambian por los nombres de abajo, y repost[0] ahi viene lo de la consulta, 
-        //entonces lo acomodan dependiendo de la tabla
-
         this.dataSourceGeneralesGenero = new MatTableDataSource(this.generoData);
         this.dataSourceGeneralesUniversidad = new MatTableDataSource(this.universidadData);
         this.dataSourceGeneralesPuestoAc = new MatTableDataSource(this.puestoActualData);
 
         // dataSourceGeneralesEdad
+
+        //Estadisticos
+        // dataSourceEvaluacion Record 
+        var media = 0, mediana = 0, moda = 0, minimo = 0, maximo = 0, rango = 0, totalpos = 0, sumaprom =0
+        totalpos = this.totalpostulantes[0][0]['COUNT(*)']
+        sumaprom = this.sumapromedio[0][0]['Total promedio']
+
+        //media
+        media = Math.round(sumaprom/totalpos)
+        this.estadisticosData[0]['valor'] = media
+        //mediana 
+        mediana = this.medianaprom[0][0]['AVG(promedioGeneral)']
+        this.estadisticosData[1]['valor'] = mediana
+        //moda
+        moda= this.modaprom[0][0]['promedioGeneral']
+        this.estadisticosData[2]['valor'] = moda
+        //minimo
+        minimo= this.minprom[0][0]['promedioGeneral']
+        this.estadisticosData[3]['valor'] = minimo
+        //maximo
+        maximo= this.maxprom[0][0]['promedioGeneral']
+        this.estadisticosData[4]['valor'] = maximo
+        //rango
+        rango = this.maxprom[0][0]['promedioGeneral'] - this.minprom[0][0]['promedioGeneral']
+        console.log(rango)
+        this.estadisticosData[5]['valor'] = rango
+        
+
+
+
+
+        this.dataSourceEstadisticosGeneral =  new MatTableDataSource(this.estadisticosData);
+
+       
+  
       
         
       } else {
@@ -1086,8 +1250,35 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.dataSourceEvaluacionFormacionC=  new MatTableDataSource(this.formacionData);
         this.dataSourceEvaluacionNota=  new MatTableDataSource(this.notaData);
 
-        // dataSourceEvaluacion
-        // dataSourceEstaditicosEval
+        //estadisticos
+         // dataSourceEvaluacion Record 
+         var medianota = 0, mediananota = 0, modanota = 0, minimonota = 0, maximonota = 0, rangonota = 0 , sumnota = 0, totalpos =0
+         
+ 
+        //media
+        sumnota = this.sumanota[0][0]['nota']
+        totalpos = this.totalpostulantes[0][0]['COUNT(*)']
+        medianota = Math.round(sumnota/totalpos)
+        this.estadisticosEvalData[0]['valor'] = medianota
+         //mediana 
+         mediananota = this.mediananota[0][0]['AVG(nota)']
+         console.log(mediananota)
+         this.estadisticosEvalData[1]['valor'] = mediananota
+        //  //moda
+         modanota= this.modanota[0][0]['nota']
+         console.log(modanota)
+         this.estadisticosEvalData[2]['valor'] = modanota
+         //minimo
+         minimonota= this.minnota[0][0]['nota']
+         this.estadisticosEvalData[3]['valor'] = minimonota
+         //maximo
+         maximonota= this.maxnota[0][0]['nota']
+         this.estadisticosEvalData[4]['valor'] = maximonota
+         //rango
+         rangonota = maximonota - minimonota
+         this.estadisticosEvalData[5]['valor'] = rangonota
+
+         this.dataSourceEstaditicosEval =  new MatTableDataSource(this.estadisticosEvalData);
 
 
       }
