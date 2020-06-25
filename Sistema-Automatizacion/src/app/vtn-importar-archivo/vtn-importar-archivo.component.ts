@@ -183,10 +183,8 @@ export class VtnImportarArchivoComponent implements OnInit {
         let cedula = y[keyid]
         let nombre = y[keyname]
         let genero = y[keygen]
-        var fechanacimiento = new Date();
-        console.log(fechanacimiento)
-        fechanacimiento  = y[keyfecha]
-        console.log(fechanacimiento )
+        let fecha = y[keyfecha]
+        var newf = new Date(Math.round((fecha - 25569)*86400*1000))
         let telefono1 = y[keytel1]
         let correo1 = y[keycorr1]
 
@@ -229,7 +227,7 @@ export class VtnImportarArchivoComponent implements OnInit {
           cedula: cedula, nombre: nombre, telefono1: telefono1, afinidad: afinidad, gradoAcademico: gradoAcademico, universidad: universidad,
           promedioGeneral: promedioGeneral, cursoAprovechamiento: cursoAprovechamiento, puestoActual: puestoActual, experienciaProfesion: experienciaProfesion,
           telefono2: telefono2, correo1: correo1, correo2: correo2, ingles: ingles, tituloDiplomado: tituloDiplomado, tituloTecnico: tituloTecnico,
-          acreditada: acreditada, enfasis: enfasis, sede: sede, nota: nota, memo: memo, periodo: periodo, cursoAfin: cursoAfin, genero: genero, fechaNacimiento: fechanacimiento
+          acreditada: acreditada, enfasis: enfasis, sede: sede, nota: nota, memo: memo, periodo: periodo, cursoAfin: cursoAfin, genero: genero, fechaNacimiento: newf
         }
 
         //llamada al post de insertar postulante 
