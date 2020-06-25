@@ -48,6 +48,39 @@ export class VtnAnalisisTabularComponent implements OnInit {
   dataSourceEvaluacion=new MatTableDataSource(); 
   dataSourceEstaditicosEval=new MatTableDataSource();
 
+// edad
+  edadData = [
+  {
+    "caracteristica": "20-24",
+    "absoluto": 0,
+    "relativo":''
+  },
+  {
+    "caracteristica": "25-29",
+    "absoluto": 0,
+    "relativo":''
+  },
+  {
+    "caracteristica": "30-34",
+    "absoluto": 0,
+    "relativo":''
+  },
+  {
+    "caracteristica": "35-39",
+    "absoluto": 0,
+    "relativo":''
+  },
+  {
+    "caracteristica": "40-44",
+    "absoluto": 0,
+    "relativo":''
+  },
+  {
+    "caracteristica": "45 y más",
+    "absoluto": 0,
+    "relativo":''
+  }
+];
 //genero
   generoData = [
     {
@@ -545,9 +578,8 @@ export class VtnAnalisisTabularComponent implements OnInit {
    minnota = [];
    maxnota =[];
    sumanota =[];
+   edades =[];
   
- 
-
   constructor(
     private http: HttpClient,
     private notificationService: NotificationService,
@@ -556,9 +588,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
   displayedColumnsGenerales: string[] = ['caracteristica', 'total', 'relativo'];
   displayedColumns: string[] = ['caracteristica', 'total'];
   titulo: string[] = ['titulo'];
-
-
-
 
   ngOnInit(): void {
     this.http.get<any>('/router/getPeriodosTranscurridos').subscribe(
@@ -691,11 +720,18 @@ export class VtnAnalisisTabularComponent implements OnInit {
     );
     //Suma nota
     this.http.get<any>('/router/ObtenerSumaNota').subscribe(
-    (respost) => {
-      this.sumanota = respost
-      
-    },
-  );
+      (respost) => {
+        this.sumanota = respost
+        
+      },
+    );
+     //Edades
+    this.http.get<any>('/router/ObtenerEdad').subscribe(
+      (respost) => {
+        this.edades = respost
+        
+      },
+    );   
     this.http.get<any>('/router/ObtenerMedianaNota').subscribe(
       (respost) => {
         this.mediananota = respost
@@ -735,6 +771,38 @@ export class VtnAnalisisTabularComponent implements OnInit {
       if (distribucion == 'Distribución general') {
         this.showGeneral = true;
         this.showEvaluacion = false;
+
+        //DataSourceEdad
+        var e1Value = 0, e2Value = 0, e3Value = 0, e4Value = 0,e5Value = 0,e6Value = 0,
+        totaledad = 0, e1Relativo = 0, e2Relativo  = 0, e3Relativo  = 0, e4Relativo  = 0,e5Relativo  = 0,e6Relativo  = 0
+        e1Value = this.edades[0][0]['COUNT(*)']
+        e2Value = this.edades[1][0]['COUNT(*)']
+        e3Value = this.edades[2][0]['COUNT(*)']
+        e4Value = this.edades[3][0]['COUNT(*)']
+        e5Value = this.edades[4][0]['COUNT(*)']
+        e6Value = this.edades[5][0]['COUNT(*)']
+
+        totaledad = e1Value + e2Value + e3Value + e4Value + e5Value + e6Value
+
+        e1Relativo = Math.round(e1Value/totaledad*100)
+        e2Relativo = Math.round(e2Value/totaledad*100)
+        e3Relativo = Math.round(e3Value/totaledad*100)
+        e4Relativo = Math.round(e4Value/totaledad*100)
+        e5Relativo = Math.round(e5Value/totaledad*100)
+        e5Relativo = Math.round(e6Value/totaledad*100)
+
+        this.edadData[0]['absoluto'] = e1Value
+        this.edadData[0]['relativo'] = e1Relativo.toString() + '%'
+        this.edadData[1]['absoluto'] = e2Value
+        this.edadData[1]['relativo'] = e2Relativo.toString() + '%'
+        this.edadData[2]['absoluto'] = e3Value
+        this.edadData[2]['relativo'] = e3Relativo.toString() + '%'
+        this.edadData[3]['absoluto'] = e4Value
+        this.edadData[3]['relativo'] = e4Relativo.toString() + '%'
+        this.edadData[4]['absoluto'] = e5Value
+        this.edadData[4]['relativo'] = e5Relativo.toString() + '%'
+        this.edadData[5]['absoluto'] = e6Value
+        this.edadData[5]['relativo'] = e6Relativo.toString() + '%'
 
         //Data Source Genero
         var mascValue = 0, femValue = 0, otroValue = 0, totalGenero =0, mascRelativo =0,
@@ -885,11 +953,11 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.puestoActualData[4]['absoluto'] = trabValue
         this.puestoActualData[4]['relativo'] = trabRelativo.toString() + '%'
 
+        this.dataSourceGeneralesEdad = new MatTableDataSource(this.edadData);
         this.dataSourceGeneralesGenero = new MatTableDataSource(this.generoData);
         this.dataSourceGeneralesUniversidad = new MatTableDataSource(this.universidadData);
         this.dataSourceGeneralesPuestoAc = new MatTableDataSource(this.puestoActualData);
 
-        // dataSourceGeneralesEdad
 
         //Estadisticos
         // dataSourceEvaluacion Record 
@@ -916,16 +984,8 @@ export class VtnAnalisisTabularComponent implements OnInit {
         rango = this.maxprom[0][0]['promedioGeneral'] - this.minprom[0][0]['promedioGeneral']
         console.log(rango)
         this.estadisticosData[5]['valor'] = rango
-        
-
-
-
 
         this.dataSourceEstadisticosGeneral =  new MatTableDataSource(this.estadisticosData);
-
-       
-  
-      
         
       } else {
         this.showGeneral = false;

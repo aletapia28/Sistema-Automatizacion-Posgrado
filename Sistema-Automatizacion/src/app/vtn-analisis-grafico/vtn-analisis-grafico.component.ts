@@ -27,22 +27,29 @@ export class VtnAnalisisGraficoComponent implements OnInit {
   edadData = [
     {
       "name": "20-24",
-      "value": 7
+      "value": 0
     },
     {
       "name": "25-29",
-      "value": 6
+      "value": 0
     },
     {
       "name": "30-34",
-      "value": 11
+      "value": 0
     },
     {
       "name": "35-39",
-      "value": 15
+      "value": 0
+    },
+    {
+      "name": "40-44",
+      "value": 0
+    },
+    {
+      "name": "45 y más",
+      "value": 0
     }
-  ]
-    ;
+  ];
 
   generoData = [
     {
@@ -473,6 +480,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
   nota =[];
   experiencia =[];
   formacioncomplementaria =[];
+  edades =[];
 
   constructor(
     private http: HttpClient,
@@ -554,6 +562,13 @@ export class VtnAnalisisGraficoComponent implements OnInit {
         
       },
     );
+    //Edad
+    this.http.get<any>('/router/ObtenerEdad').subscribe(
+    (respost) => {
+      this.edades = respost
+      
+    },
+  );
 
   }
   cargarDist(event) {
@@ -584,6 +599,13 @@ export class VtnAnalisisGraficoComponent implements OnInit {
 
         //AQUI CARGAR LOS JSON DE DISTRIBUCION GENERAL, SON ESTOS:
         //edadData
+        this.edadData[0]['value'] = this.edades[0][0]['COUNT(*)']
+        this.edadData[1]['value'] = this.edades[1][0]['COUNT(*)']
+        this.edadData[2]['value'] = this.edades[2][0]['COUNT(*)']
+        this.edadData[3]['value'] = this.edades[3][0]['COUNT(*)']
+        this.edadData[4]['value'] = this.edades[4][0]['COUNT(*)']
+        this.edadData[5]['value'] = this.edades[5][0]['COUNT(*)']
+
 
         //generoData
         this.generoData[0]['value'] = this.generos[1][0]['COUNT(*)']

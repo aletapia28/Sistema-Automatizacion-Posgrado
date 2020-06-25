@@ -1138,5 +1138,15 @@ router.get('/ObtenerModaNota', function(req, res, next) {
     })
 })
 
+// Obtener Edad
+router.get('/ObtenerEdad', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerEdad()', (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
 
 module.exports = router
