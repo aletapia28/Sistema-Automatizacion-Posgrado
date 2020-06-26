@@ -6,6 +6,8 @@ const bcrypt = require("bcrypt")
 const bodyParser = require('body-parser')
 const path = require('path');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
+const lodash = require('lodash');
+
 
 const nodemailer = require('nodemailer'); 
 
@@ -941,6 +943,33 @@ router.get('/ObtenerUniversidad', function(req, res, next) {
     })
 })
 
+// Universidad Historico
+router.get('/ObtenerUniversidadHistorico', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerUniversidadHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
+        if (!err){
+            var response =[]
+            for (i in row[0]) {
+                 response.push({"name":row[0][i].periodo, "series":[]})
+            } 
+            for (i in row[1]){
+                var index = 0
+                while(index < response.length){
+                    if (response[index].name == row[1][i].periodo){
+                        response[index].series.push({"name": row[1][i].universidad,
+                        "value": row[1][i].value})
+                        break
+                    }
+                    index = index + 1
+                }
+            }
+            res.send(response);
+        }
+        else    
+            console.log(err);
+    })
+})
+
+
 // Genero
 router.get('/ObtenerGenero', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerGenero()', (err, row, fields) => {
@@ -951,12 +980,65 @@ router.get('/ObtenerGenero', function(req, res, next) {
     })
 })
 
+// Genero Historico
+router.get('/ObtenerGeneroHistorico', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerGeneroHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
+        if (!err){
+            var response =[]
+            for (i in row[0]) {
+                 response.push({"name":row[0][i].periodo, "series":[]})
+            } 
+            for (i in row[1]){
+                var index = 0
+                while(index < response.length){
+                    if (response[index].name == row[1][i].periodo){
+                        response[index].series.push({"name": row[1][i].genero,
+                        "value": row[1][i].value})
+                        break
+                    }
+                    index = index + 1
+                }
+            }
+            res.send(response);
+        }
+        else    
+            console.log(err);
+    })
+})
+
+
 // Puesto Actual
 router.get('/ObtenerPuestoActual', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerPuestoActual()', (err, row, fields) => {
         if (!err)
             res.send(row);
         else
+            console.log(err);
+    })
+})
+
+// Puesto Historico
+router.get('/ObtenerPuestoHistorico', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerPuestoHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
+        if (!err){
+            var response =[]
+            for (i in row[0]) {
+                 response.push({"name":row[0][i].periodo, "series":[]})
+            } 
+            for (i in row[1]){
+                var index = 0
+                while(index < response.length){
+                    if (response[index].name == row[1][i].periodo){
+                        response[index].series.push({"name": row[1][i].puestoActual,
+                        "value": row[1][i].value})
+                        break
+                    }
+                    index = index + 1
+                }
+            }
+            res.send(response);
+        }
+        else    
             console.log(err);
     })
 })
@@ -971,6 +1053,32 @@ router.get('/ObtenerAfinidad', function(req, res, next) {
     })
 })
 
+// Afinidad Historico
+router.get('/ObtenerAfinidadHistorico', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerAfinidadHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
+        if (!err){
+            var response =[]
+            for (i in row[0]) {
+                response.push({"name":row[0][i].periodo, "series":[]})
+            } 
+            for (i in row[1]){
+                var index = 0
+                while(index < response.length){
+                    if (response[index].name == row[1][i].periodo){
+                        response[index].series.push({"name": row[1][i].afinidad,
+                        "value": row[1][i].value})
+                        break
+                    }
+                    index = index + 1
+                }
+            }
+            res.send(response);
+        }
+        else    
+            console.log(err);
+    })
+})
+
 // Maximo grado
 router.get('/ObtenerMaximoGrado', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerMaximoGrado()', (err, row, fields) => {
@@ -981,12 +1089,68 @@ router.get('/ObtenerMaximoGrado', function(req, res, next) {
     })
 })
 
+// Maximo grado Historico
+router.get('/ObtenerMaximoGradoHistorico', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMaximoGradoHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
+        if (!err){
+            var response =[]
+            for (i in row[0]) {
+                 response.push({"name":row[0][i].periodo, "series":[]})
+            } 
+            for (i in row[1]){
+                var index = 0
+                while(index < response.length){
+                    if (response[index].name == row[1][i].periodo){
+                        response[index].series.push({"name": row[1][i].gradoAcademico,
+                        "value": row[1][i].value})
+                        break
+                    }
+                    index = index + 1
+                }
+            }
+            res.send(response);
+        }
+        else    
+            console.log(err);
+    })
+})
+
 // Acreditada
 router.get('/ObtenerAcreditada', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerAcreditada()', (err, row, fields) => {
         if (!err)
             res.send(row);
         else
+            console.log(err);
+    })
+})
+
+// Acreditada Historico
+router.get('/ObtenerAcreditacionHistorico', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerAcreditacionHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
+        if (!err){
+            var response =[]
+            for (i in row[0]) {
+                 response.push({"name":row[0][i].periodo, "series":[]})
+            } 
+            for (i in row[1]){
+                var index = 0
+                while(index < response.length){
+                    if (response[index].name == row[1][i].periodo){
+                        if (row[1][i].acreditada == 1)
+                        var status = "Acreditada"
+                        else
+                        var status = "No Acreditada"
+                        response[index].series.push({"name": status,
+                        "value": row[1][i].value})
+                        break
+                    }
+                    index = index + 1
+                }
+            }
+            res.send(response);
+        }
+        else    
             console.log(err);
     })
 })
@@ -1007,6 +1171,28 @@ router.get('/ObtenerNota', function(req, res, next) {
         if (!err)
             res.send(row);
         else
+            console.log(err);
+    })
+})
+
+
+// Nota Historicos
+router.get('/ObtenerNotaHistorico', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerNotaHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
+        if (!err){
+            var response =[]
+            var minimo = []
+            var maximo = []
+            for (i in row[0]){
+                minimo.push({'name':row[0][i].periodo, 'value':row[0][i].Minimo})
+                maximo.push({'name':row[0][i].periodo, 'value':row[0][i].Maximo})
+            }
+            response.push({'name':'Nota Mínima', 'series': minimo})
+            response.push({'name':'Nota Máxima', 'series': maximo})
+
+            res.send(response);
+        }
+        else    
             console.log(err);
     })
 })
@@ -1147,6 +1333,9 @@ router.get('/ObtenerEdad', function(req, res, next) {
             console.log(err);
     })
 })
+
+
+
 
 
 module.exports = router
