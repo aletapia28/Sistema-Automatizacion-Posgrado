@@ -34,47 +34,11 @@ export class VtnAnalisisGraficoComponent implements OnInit {
 //maximo grado academico
   maxGradoData = [];
 //promedio   
-  recordData = []
+  recordData = [];
 
 //experiencia  
-  experienciaData = [
-    {
-      "name": "Menor a 3 años",
-      "series": [
-        {
-          "name": "Experiencia",
-          "value": 0
-        }
-      ]
-    },
-    {
-      "name": "3 a 6 años",
-      "series": [
-        {
-          "name": "Experiencia",
-          "value": 0
-        }
-      ]
-    },
-    {
-      "name": "7 a 10 años",
-      "series": [
-        {
-          "name": "Experiencia",
-          "value": 0
-        }
-      ] 
-    },
-    {
-      "name": "Mas de 10",
-      "series": [
-        {
-          "name": "Experiencia",
-          "value": 0
-        }
-      ]
-    }
-  ];
+  experiencia =[];
+  exp =[];
 //afinidad
   afinidadData = [];  
 //acreditada  
@@ -157,7 +121,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
 
   //Obtener json del backend 
   universidades = [];
-  experiencia =[];
+
 
 
   constructor(
@@ -266,15 +230,13 @@ export class VtnAnalisisGraficoComponent implements OnInit {
       //Experiencia
         this.http.post<any>('/router/ObtenerExperiencia',formData).subscribe(
           (respost) => {
-            console.log('Experiencia')
+            console.log(respost)
             console.log(respost[0])
-           // this.experienciaData[0]['series'] = respost[0]
-            this.experienciaData[1]['series'] = respost[0][0]
-            this.experienciaData[2]['series']= respost[0][1]
-          //  this.experienciaData[3]['series'] =respost[0]
-            
+            this.exp = respost
           },
-        );    
+        );
+          
+
       //afinidadData
         this.http.post<any>('/router/ObtenerAfinidad',formData).subscribe(
           (respost) => {

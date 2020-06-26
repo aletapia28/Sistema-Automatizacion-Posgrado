@@ -1014,8 +1014,64 @@ router.post('/ObtenerNota', function(req, res, next) {
 //Experiencia
 router.post('/ObtenerExperiencia', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerExperiencia(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
-        if (!err)
-            res.send(row);
+        if (!err){
+            
+            var experienciaData =[ {
+                "name": "Menor a 3 años",
+                "series": [
+                  {
+                    "name": "Experiencia",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "name": "3 a 6 años",
+                "series": [
+                  {
+                    "name": "Experiencia",
+                    "value": 0
+                  }
+                ]
+              },
+              {
+                "name": "7 a 10 años",
+                "series": [
+                  {
+                    "name": "Experiencia",
+                    "value": 0
+                  }
+                ] 
+              },
+              {
+                "name": "Mayor a 10",
+                "series": [
+                  {
+                    "name": "Experiencia",
+                    "value": 0
+                  }
+                ]
+              }]
+            var i = 0, k =0 
+            var len = row[0].length
+            var experiencia =[]
+            experiencia = row[0]
+            for(i=0;i <experienciaData.length;i++){
+                for(k=0;k<len;k++){
+                    if(experiencia[k]['name']==experienciaData[i]['name']){
+                        experienciaData[i]['series'][0]['value'] = experiencia[k]['value']
+                        console.log(experienciaData[i]['series'][0]['value'])
+
+                    }
+
+                }
+
+            }
+            res.send(experienciaData);
+            
+
+        }
+            
         else
             console.log(err);
     })
