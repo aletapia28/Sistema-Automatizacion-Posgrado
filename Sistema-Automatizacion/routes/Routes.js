@@ -1521,4 +1521,14 @@ router.get('/ObtenerUniversidadHistorico', function(req, res, next) {
     })
 })
 
+//obtener postulante 
+router.post('/ObtenerPeriodosSig', (req, res) => {
+    db.mysqlConnection.query('CALL ObtenerPeriodosSig(?)',[req.body.periodo], (err, row, fields) => {
+        if (!err) {
+            res.send(row[0]);
+        } else
+            console.log(err); 
+    })
+})
+
 module.exports = router
