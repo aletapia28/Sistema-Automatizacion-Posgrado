@@ -23,7 +23,7 @@
 
                     <mat-form-field class="inputVtn" appearance="outline">
                         <mat-label>Sede</mat-label>
-                        <mat-select formControlName="sede" (selectionChange)="cargarDist($event.value)">
+                        <mat-select formControlName="sede">
                             <mat-option *ngFor="let sede of sedes" [value]="sede.sede">{{sede.sede}}</mat-option>
                         </mat-select>
                     </mat-form-field>

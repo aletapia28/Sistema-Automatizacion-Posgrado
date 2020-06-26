@@ -16,6 +16,7 @@ export class VtnHistoricosComponent implements OnInit {
   });
 
   periodos = [];
+  periodos2 = [];
   sedes = [];
   showGeneral = false;
   showEvaluacion = false;
@@ -550,12 +551,12 @@ export class VtnHistoricosComponent implements OnInit {
     let tipoPost = event;
   }
 
-  cargarSedes(event) {
+  cargarFinales(event) {
     let periodo = event;
     const formData = { periodo: periodo }
-    this.http.post<any>('/router/ObtenerSedes', formData).subscribe(
+    this.http.post<any>('/router/ObtenerPeriodosSig', formData).subscribe(
       (respost) => {
-        this.sedes = respost;
+        this.periodos2 = respost; 
       }
     );
   }
