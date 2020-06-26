@@ -1368,7 +1368,26 @@ router.get('/ObtenerEdad', function(req, res, next) {
     })
 })
 
+// Edad Historicos
+router.get('/ObtenerEdadHistorico', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerEdadHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
+        if (!err){
+            var response =[]
+            var minimo = []
+            var maximo = []
+            for (i in row[0]){
+                minimo.push({'name':row[0][i].periodo, 'value':row[0][i].Minimo})
+                maximo.push({'name':row[0][i].periodo, 'value':row[0][i].Maximo})
+            }
+            response.push({'name':'Nota Mínima', 'series': minimo})
+            response.push({'name':'Nota Máxima', 'series': maximo})
 
+            res.send(response);
+        }
+        else    
+            console.log(err);
+    })
+})
 
 
 
