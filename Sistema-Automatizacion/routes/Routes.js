@@ -1148,6 +1148,115 @@ router.post('/ObtenerEdad', function(req, res, next) {
     })
 })
 
+// Obtener Genero Tabla
+router.post('/ObtenerGeneroTabla', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerGeneroTabla(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Obtener Edad Tabla
+router.post('/ObtenerEdadTabla', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerEdadTabla(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Obtener Puesto Actual Tabla
+router.post('/ObtenerPuestoActualTabla', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerPuestoActualTabla(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Obtener Universidad Tabla
+router.post('/ObtenerUniversidadTabla', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerUniversidadTabla(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Obtener Maximo Grado Tabla
+router.post('/ObtenerMaximoGradoTabla', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMaximoGradoTabla(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Obtener Promedio Tabla
+router.post('/ObtenerPromedioTabla', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerPromedioTabla(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+//ObtenerExperienciaTabla
+router.post('/ObtenerExperienciaTabla', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerExperienciaTabla(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+//ObtenerAfinidadTabla
+router.post('/ObtenerAfinidadTabla', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerAfinidadTabla(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+//Obtener Acreditada Tabla
+router.post('/ObtenerAcreditadaTabla', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerAcreditadaTabla(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Formacion Complementario Tabla
+router.post('/ObtenerFormacionComplementariaTabla', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerFormacionComplementariaTabla(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+
+// Nota X
+router.post('/ObtenerNotaTabla', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerNotaTabla(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
 
 
 module.exports = router

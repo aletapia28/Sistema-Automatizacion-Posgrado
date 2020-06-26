@@ -157,15 +157,8 @@ export class VtnAnalisisGraficoComponent implements OnInit {
 
   //Obtener json del backend 
   universidades = [];
-  puestoactual =[];
-  maximogrado =[];
-  afinidad =[];
-  acreditada =[];
-  promedio =[];
-  nota =[];
   experiencia =[];
-  formacioncomplementaria =[];
-  edades =[];
+
 
   constructor(
     private http: HttpClient,
