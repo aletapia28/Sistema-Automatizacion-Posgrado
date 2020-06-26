@@ -1207,6 +1207,40 @@ router.get('/ObtenerExperiencia', function(req, res, next) {
     })
 })
 
+// Nota Historicos
+router.get('/ObtenerExperienciaHistorico', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerExperienciaHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
+        if (!err){
+            var response =[]
+            var menosDeTres = []
+            var entreTresYCinco = []
+            var entreSeisYNueve = []
+            var diezOMas = []
+
+            for (i in row[0]){
+                menosDeTres.push({'name':row[0][i].periodo, 'value':row[0][i].value})
+            }
+            for (i in row[1]){
+                entreTresYCinco.push({'name':row[1][i].periodo, 'value':row[1][i].value})
+            }
+            for (i in row[2]){
+                entreSeisYNueve.push({'name':row[2][i].periodo, 'value':row[2][i].value})
+            }
+            for (i in row[3]){
+                diezOMas.push({'name':row[3][i].periodo, 'value':row[3][i].value})
+            }
+            response.push({'name':'Menos de 3 años', 'series': menosDeTres})
+            response.push({'name':'3 a > 6 años', 'series': entreTresYCinco})
+            response.push({'name':'6 a > 10 años', 'series': entreSeisYNueve})
+            response.push({'name':'Más de 10', 'series': diezOMas})
+
+            res.send(response);
+        }
+        else    
+            console.log(err);
+    })
+})
+
 // Formacion Complementario
 router.get('/ObtenerFormacionComplementaria', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerFormacionComplementaria()', (err, row, fields) => {
