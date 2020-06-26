@@ -71,23 +71,68 @@ export class VtnAnalisisTabularComponent implements OnInit {
 //experiencia
   experienciaData = [];
   //estaisticos record 
-  estadisticosData = [];
-  estadisticosEvalData = [];
+  estadisticosData = [
+    {
+      "name": "Media",
+      "value": 0
+    },
+    {
+      "name": "Mediana",
+      "value": 0
+    },
+    {
+      "name": "Moda",
+      "value": 0
+    },
+    {
+      "name": "Minimo",
+      "value": 0
+    },
+    {
+      "name": "Maximo",
+      "value": 0
+    },
+    {
+      "name": "Rango",
+      "value": 0
+    },
+  ];
+  estadisticosEvalData = [
+    {
+      "name": "Media",
+      "value": 0
+    },
+    {
+      "name": "Mediana",
+      "value": 0
+    },
+    {
+      "name": "Moda",
+      "value": 0
+    },
+    {
+      "name": "Minimo",
+      "value": 0
+    },
+    {
+      "name": "Maximo",
+      "value": 0
+    },
+    {
+      "name": "Rango",
+      "value": 0
+    },
+  ];
 
    //Obtener json del backend 
  
-   totalpostulantes =[];
+   totaleval =[];
+   totalgen =[];
    sumapromedio =[];
    medianaprom =[];
    modaprom =[];
    minprom = [];
    maxprom =[];
-
-   mediananota =[];
-   modanota =[];
-   minnota = [];
-   maxnota =[];
-   sumanota =[];
 
   
   constructor(
@@ -166,32 +211,48 @@ export class VtnAnalisisTabularComponent implements OnInit {
         },
       );   
         //Estadisticos
+        var maxe =0, mine =0, modae = 0, lene = 0, mediae =0, medianae=0
         // dataSourceEvaluacion Record 
-        // var media = 0, mediana = 0, moda = 0, minimo = 0, maximo = 0, rango = 0, totalpos = 0, sumaprom =0
-        // totalpos = this.totalpostulantes[0][0]['COUNT(*)']
-        // sumaprom = this.sumapromedio[0][0]['Total promedio']
+        this.http.post<any>('/router/ObtenerEstadisticas',formData).subscribe(
+          (respost) => {
+            this.totalgen = respost[0]
+            maxe = this.totalgen[0]['name']
+            lene = this.totalgen.length
+            mine = this.totalgen[lene-1]['name']
+            this.estadisticosData[3]['value'] =mine
+            this.estadisticosData[4]['value'] = maxe
+            this.estadisticosData[5]['value']= maxe-mine
+            this.dataSourceEstadisticosGeneral =  new MatTableDataSource(this.estadisticosData);
 
-        // //media
-        // media = Math.round(sumaprom/totalpos)
-        // this.estadisticosData[0]['valor'] = media
-        // //mediana 
-        // mediana = this.medianaprom[0][0]['AVG(promedioGeneral)']
-        // this.estadisticosData[1]['valor'] = mediana
-        // //moda
-        // moda= this.modaprom[0][0]['promedioGeneral']
-        // this.estadisticosData[2]['valor'] = moda
-        // //minimo
-        // minimo= this.minprom[0][0]['promedioGeneral']
-        // this.estadisticosData[3]['valor'] = minimo
-        // //maximo
-        // maximo= this.maxprom[0][0]['promedioGeneral']
-        // this.estadisticosData[4]['valor'] = maximo
-        // //rango
-        // rango = this.maxprom[0][0]['promedioGeneral'] - this.minprom[0][0]['promedioGeneral']
-        // console.log(rango)
-        // this.estadisticosData[5]['valor'] = rango
+          },
+        );
+        this.http.post<any>('/router/ObtenerMediaGen',formData).subscribe(
+          (respost) => {
+            this.totalgen = respost[0]
+            mediae= respost[0][0]['name']
+            this.estadisticosData[0]['value'] =mediae
+            this.dataSourceEstadisticosGeneral =  new MatTableDataSource(this.estadisticosData);
 
-        // this.dataSourceEstadisticosGeneral =  new MatTableDataSource(this.estadisticosData);
+          },
+        );
+        this.http.post<any>('/router/ObtenerMedianaGen',formData).subscribe(
+          (respost) => {
+            this.totalgen = respost[0]
+            medianae= respost[0][0]['name']
+            this.estadisticosData[1]['value'] =medianae
+            this.dataSourceEstadisticosGeneral =  new MatTableDataSource(this.estadisticosData);
+
+          },
+        );
+        this.http.post<any>('/router/ObtenerModaGen',formData).subscribe(
+          (respost) => {
+            this.totalgen = respost[0]
+            modae= respost[0][0]['name']
+            this.estadisticosData[2]['value'] =modae
+            this.dataSourceEstadisticosGeneral =  new MatTableDataSource(this.estadisticosData);
+
+          },
+        ); 
         
       } else {
         this.showGeneral = false;
@@ -246,7 +307,7 @@ export class VtnAnalisisTabularComponent implements OnInit {
             this.dataSourceEvaluacionAcreditacion = new MatTableDataSource(this.acredData);
           },
         );   
-        //acredata
+        //formacion
         this.http.post<any>('/router/ObtenerFormacionComplementariaTabla',formData).subscribe(
           (respost) => {
             this.formacionData = respost[0]
@@ -254,54 +315,57 @@ export class VtnAnalisisTabularComponent implements OnInit {
             this.dataSourceEvaluacionFormacionC = new MatTableDataSource(this.formacionData);
           },
         ); 
+        //nota
         this.http.post<any>('/router/ObtenerNotaTabla',formData).subscribe(
           (respost) => {
             this.notaData = respost[0]
             console.log(this.notaData)
             this.dataSourceEvaluacionNota = new MatTableDataSource(this.notaData);
           },
-        );                 
-          //   //Set Table 
-      //   this.dataSourceEvaluacionMGA = new MatTableDataSource(this.maxGradoData);
-      //   this.dataSourceEvaluacionPromedio = new MatTableDataSource(this.recordData);
-      //   this.dataSourceEvaluacionExperiencia = new MatTableDataSource(this.experienciaData);
-      //  // this.dataSourceEvaluacionNivelJ = new MatTableDataSource(this.puestoActualData);
-      //   this.dataSourceEvaluacionAfinidad =  new MatTableDataSource(this.afinidadData);
-      //   this.dataSourceEvaluacionAcreditacion =  new MatTableDataSource(this.acredData);
-      //   this.dataSourceEvaluacionFormacionC=  new MatTableDataSource(this.formacionData);
-      //   this.dataSourceEvaluacionNota=  new MatTableDataSource(this.notaData);
+        );
+        
+      //evaluacion 
+      var max =0, min =0, moda = 0, len = 0, media =0, mediana=0
+        this.http.post<any>('/router/ObtenerEstadisticasEval',formData).subscribe(
+          (respost) => {
+            this.totaleval = respost[0]
+            max = respost[0][0]['name']
+            len = this.totaleval.length
+            min = respost[0][len-1]['name']
+            this.estadisticosEvalData[3]['value'] =min
+            this.estadisticosEvalData[4]['value'] = max
+            this.estadisticosEvalData[5]['value']= max-min
+            this.dataSourceEstaditicosEval =  new MatTableDataSource(this.estadisticosEvalData);
 
-      //   //estadisticos
-      //    // dataSourceEvaluacion Record 
-      //    var medianota = 0, mediananota = 0, modanota = 0, minimonota = 0, maximonota = 0, rangonota = 0 , sumnota = 0, totalpos =0
-         
- 
-      //   //media
-      //   sumnota = this.sumanota[0][0]['nota']
-      //   totalpos = this.totalpostulantes[0][0]['COUNT(*)']
-      //   medianota = Math.round(sumnota/totalpos)
-      //   this.estadisticosEvalData[0]['valor'] = medianota
-      //    //mediana 
-      //    mediananota = this.mediananota[0][0]['AVG(nota)']
-      //    console.log(mediananota)
-      //    this.estadisticosEvalData[1]['valor'] = mediananota
-      //   //  //moda
-      //    modanota= this.modanota[0][0]['nota']
-      //    console.log(modanota)
-      //    this.estadisticosEvalData[2]['valor'] = modanota
-      //    //minimo
-      //    minimonota= this.minnota[0][0]['nota']
-      //    this.estadisticosEvalData[3]['valor'] = minimonota
-      //    //maximo
-      //    maximonota= this.maxnota[0][0]['nota']
-      //    this.estadisticosEvalData[4]['valor'] = maximonota
-      //    //rango
-      //    rangonota = maximonota - minimonota
-      //    this.estadisticosEvalData[5]['valor'] = rangonota
+          },
+        );
+        this.http.post<any>('/router/ObtenerMediaEval',formData).subscribe(
+          (respost) => {
+            this.notaData = respost[0]
+            media = respost[0][0]['name']
+            this.estadisticosEvalData[0]['value'] =media
+            this.dataSourceEstaditicosEval =  new MatTableDataSource(this.estadisticosEvalData);
 
-      //    this.dataSourceEstaditicosEval =  new MatTableDataSource(this.estadisticosEvalData);
+          },
+        );
+        this.http.post<any>('/router/ObtenerMedianaEval',formData).subscribe(
+          (respost) => {
+            this.notaData = respost[0]
+            mediana= respost[0][0]['name']
+            this.estadisticosEvalData[1]['value'] =mediana
+            this.dataSourceEstaditicosEval =  new MatTableDataSource(this.estadisticosEvalData);
 
+          },
+        ); 
+        this.http.post<any>('/router/ObtenerModaEval',formData).subscribe(
+          (respost) => {
+            this.notaData = respost[0]
+            moda= respost[0][0]['name']
+            this.estadisticosEvalData[2]['value'] =moda
+            this.dataSourceEstaditicosEval =  new MatTableDataSource(this.estadisticosEvalData);
 
+          },
+        );  
       }
 
     }
