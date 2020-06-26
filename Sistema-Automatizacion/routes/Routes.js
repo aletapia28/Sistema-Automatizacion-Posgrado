@@ -931,9 +931,9 @@ router.post('/UpdatePassword', (req, res) => {
 
 //Informacion General 
 
-// Universidad
-router.get('/ObtenerUniversidad', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerUniversidad()', (err, row, fields) => {
+// Universidad X
+router.post('/ObtenerUniversidad', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerUniversidad(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad],  (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -941,9 +941,9 @@ router.get('/ObtenerUniversidad', function(req, res, next) {
     })
 })
 
-// Genero
-router.get('/ObtenerGenero', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerGenero()', (err, row, fields) => {
+// Genero X
+router.post('/ObtenerGenero', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerGenero(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -951,9 +951,9 @@ router.get('/ObtenerGenero', function(req, res, next) {
     })
 })
 
-// Puesto Actual
-router.get('/ObtenerPuestoActual', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerPuestoActual()', (err, row, fields) => {
+// Puesto Actual X
+router.post('/ObtenerPuestoActual', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerPuestoActual(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -961,9 +961,9 @@ router.get('/ObtenerPuestoActual', function(req, res, next) {
     })
 })
 
-// Afinidad
-router.get('/ObtenerAfinidad', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerAfinidad()', (err, row, fields) => {
+// Afinidad X
+router.post('/ObtenerAfinidad', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerAfinidad(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -971,9 +971,9 @@ router.get('/ObtenerAfinidad', function(req, res, next) {
     })
 })
 
-// Maximo grado
-router.get('/ObtenerMaximoGrado', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerMaximoGrado()', (err, row, fields) => {
+// Maximo grado X
+router.post('/ObtenerMaximoGrado', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMaximoGrado(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -981,9 +981,9 @@ router.get('/ObtenerMaximoGrado', function(req, res, next) {
     })
 })
 
-// Acreditada
-router.get('/ObtenerAcreditada', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerAcreditada()', (err, row, fields) => {
+// Acreditada X
+router.post('/ObtenerAcreditada', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerAcreditada(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -991,9 +991,9 @@ router.get('/ObtenerAcreditada', function(req, res, next) {
     })
 })
 
-// Promedio
-router.get('/ObtenerPromedio', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerPromedio()', (err, row, fields) => {
+// Promedio X
+router.post('/ObtenerPromedio', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerPromedio(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1001,9 +1001,9 @@ router.get('/ObtenerPromedio', function(req, res, next) {
     })
 })
 
-// Nota
-router.get('/ObtenerNota', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerNota()', (err, row, fields) => {
+// Nota X
+router.post('/ObtenerNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerNota(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1012,8 +1012,8 @@ router.get('/ObtenerNota', function(req, res, next) {
 })
 
 //Experiencia
-router.get('/ObtenerExperiencia', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerExperiencia()', (err, row, fields) => {
+router.post('/ObtenerExperiencia', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerExperiencia(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1021,9 +1021,9 @@ router.get('/ObtenerExperiencia', function(req, res, next) {
     })
 })
 
-// Formacion Complementario
-router.get('/ObtenerFormacionComplementaria', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerFormacionComplementaria()', (err, row, fields) => {
+// Formacion Complementario X
+router.post('/ObtenerFormacionComplementaria', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerFormacionComplementaria(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1032,8 +1032,8 @@ router.get('/ObtenerFormacionComplementaria', function(req, res, next) {
 })
 
 // Total Estudiantes 
-router.get('/ObtenerTotalPostulantes', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerTotalPostulantes()', (err, row, fields) => {
+router.post('/ObtenerTotalPostulantes', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerTotalPostulantes(?,?,?,?)', [req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad],(err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1042,8 +1042,8 @@ router.get('/ObtenerTotalPostulantes', function(req, res, next) {
 })
 
 // Total Suma Promedio
-router.get('/ObtenerSumaPromedio', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerSumaPromedio()', (err, row, fields) => {
+router.post('/ObtenerSumaPromedio', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerSumaPromedio(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1052,8 +1052,8 @@ router.get('/ObtenerSumaPromedio', function(req, res, next) {
 })
 
 // Mediana
-router.get('/ObtenerMedianaProm', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerMedianaProm()', (err, row, fields) => {
+router.post('/ObtenerMedianaProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMedianaProm(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1062,8 +1062,8 @@ router.get('/ObtenerMedianaProm', function(req, res, next) {
 })
 
 // Moda 
-router.get('/ObtenerModaProm', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerModaProm()', (err, row, fields) => {
+router.post('/ObtenerModaProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerModaProm(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1071,8 +1071,8 @@ router.get('/ObtenerModaProm', function(req, res, next) {
     })
 })
 //Minimo
-router.get('/ObtenerMinimoProm', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerMinimoProm()', (err, row, fields) => {
+router.post('/ObtenerMinimoProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMinimoProm(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1080,8 +1080,8 @@ router.get('/ObtenerMinimoProm', function(req, res, next) {
     })
 })
 //Maximo
-router.get('/ObtenerMaximoProm', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerMaximoProm()', (err, row, fields) => {
+router.post('/ObtenerMaximoProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMaximoProm(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1090,8 +1090,8 @@ router.get('/ObtenerMaximoProm', function(req, res, next) {
 })
 
 //Minimo Nota
-router.get('/ObtenerMinNota', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerMinNota()', (err, row, fields) => {
+router.post('/ObtenerMinNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMinNota(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1099,8 +1099,8 @@ router.get('/ObtenerMinNota', function(req, res, next) {
     })
 })
 //Maximo Nota 
-router.get('/ObtenerMaxNota', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerMaxNota()', (err, row, fields) => {
+router.post('/ObtenerMaxNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMaxNota(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1109,8 +1109,8 @@ router.get('/ObtenerMaxNota', function(req, res, next) {
 })
 
 // Total Suma Nota
-router.get('/ObtenerSumaNota', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerSumaNota()', (err, row, fields) => {
+router.post('/ObtenerSumaNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerSumaNota(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1119,8 +1119,8 @@ router.get('/ObtenerSumaNota', function(req, res, next) {
 })
 
 // Mediana Nota
-router.get('/ObtenerMedianaNota', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerMedianaNota()', (err, row, fields) => {
+router.post('/ObtenerMedianaNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMedianaNota(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1129,8 +1129,8 @@ router.get('/ObtenerMedianaNota', function(req, res, next) {
 })
 
 // Moda Nota
-router.get('/ObtenerModaNota', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerModaNota()', (err, row, fields) => {
+router.post('/ObtenerModaNota', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerModaNota(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1138,15 +1138,16 @@ router.get('/ObtenerModaNota', function(req, res, next) {
     })
 })
 
-// Obtener Edad
-router.get('/ObtenerEdad', function(req, res, next) {
-    db.mysqlConnection.query('CALL ObtenerEdad()', (err, row, fields) => {
+// Obtener Edad X
+router.post('/ObtenerEdad', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerEdad(?,?,?,?)',[req.body.periodo,req.body.sede,req.body.nota,req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
             console.log(err);
     })
 })
+
 
 
 module.exports = router
