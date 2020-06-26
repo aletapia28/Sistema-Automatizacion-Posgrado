@@ -8,7 +8,7 @@
                 <div class="opciones">
                     <mat-form-field class="inputVtn2" appearance="outline">
                         <mat-label>Período inicial</mat-label>
-                        <mat-select formControlName="periodo">
+                        <mat-select formControlName="periodo" (selectionChange)="cargarFinales($event.value)">
                             <mat-option *ngFor="let periodo of periodos" [value]="periodo.periodo">{{periodo.periodo}}
                             </mat-option>
                         </mat-select>
@@ -17,7 +17,7 @@
                     <mat-form-field class="inputVtn2" appearance="outline">
                         <mat-label>Período final</mat-label>
                         <mat-select formControlName="periodo2">
-                            <mat-option *ngFor="let periodo of periodos" [value]="periodo.periodo">{{periodo.periodo}}
+                            <mat-option *ngFor="let periodo of periodos2" [value]="periodo.periodo">{{periodo.periodo}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
