@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import html2canvas from 'html2canvas';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-vtn-analisis-grafico',
@@ -18,36 +22,35 @@ export class VtnAnalisisGraficoComponent implements OnInit {
     cantidad: new FormControl(null, [Validators.required])
   });
 
+  docDefinition: any;
   periodos = [];
   sedes = [];
   tipos = [{ 'tipo': 'Distribución general' }, { 'tipo': 'Distribución de evaluación' }]
   showGeneral = false;
   showEvaluacion = false;
-//edad
+  //edad
   edadData = [];
-//genero
+  //genero
   generoData = [];
-//universidad
+  //universidad
   universidadData = [];
-//puesto
+  //puesto
   puestoData = [];
-//maximo grado academico
+  //maximo grado academico
   maxGradoData = [];
-//promedio   
+  //promedio   
   recordData = [];
-
-//experiencia  
-  experiencia =[];
-  exp =[];
-//afinidad
-  afinidadData = [];  
-//acreditada  
+  //experiencia  
+  experienciaData = [];
+  //afinidad
+  afinidadData = [];
+  //acreditada  
   acredData = [];
-//formacion complementaria
-  formacionData = [];  
-//nota 
+  //formacion complementaria
+  formacionData = [];
+  //nota 
   notaData = [];
-  
+
 
   view: any[] = [700, 400];
   view2: any[] = [1000, 400];
@@ -127,7 +130,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
   constructor(
     private http: HttpClient,
   ) { }
-  
+
   ngOnInit(): void {
     this.http.get<any>('/router/getPeriodosTranscurridos').subscribe(
       (respost) => {
@@ -159,7 +162,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
 
     if ((distribucion != null) && (periodo != null) && (sede != null) && (nota != null) && (cantidad != null)) {
 
-      const formData = {periodo: periodo, sede:sede, nota:nota,cantidad:cantidad} 
+      const formData = { periodo: periodo, sede: sede, nota: nota, cantidad: cantidad }
       if (distribucion == 'Distribución general') {
         this.showGeneral = true;
         this.showEvaluacion = false;
@@ -167,122 +170,302 @@ export class VtnAnalisisGraficoComponent implements OnInit {
         //AQUI CARGAR LOS JSON DE DISTRIBUCION GENERAL, SON ESTOS:
 
         //generoData
-        this.http.post<any>('/router/ObtenerGenero',formData).subscribe(
+        this.http.post<any>('/router/ObtenerGenero', formData).subscribe(
           (respost) => {
             this.generoData = respost[0]
-            console.log(this.generoData)
           },
         );
-      
+
         //puestoActualData
-        this.http.post<any>('/router/ObtenerPuestoActual',formData).subscribe(
+        this.http.post<any>('/router/ObtenerPuestoActual', formData).subscribe(
           (respost) => {
             this.puestoData = respost[0]
-            
           },
         );
-        //this.puestoData = this.puestoactual
 
         //universidad    
-        this.http.post<any>('/router/ObtenerUniversidad',formData).subscribe(
+        this.http.post<any>('/router/ObtenerUniversidad', formData).subscribe(
           (respost) => {
             this.universidadData = respost[0]
-            console.log(this.universidadData)
           },
         );
+
         //Edad
-        this.http.post<any>('/router/ObtenerEdad',formData).subscribe(
+        this.http.post<any>('/router/ObtenerEdad', formData).subscribe(
           (respost) => {
             this.edadData = respost[0]
-            console.log(this.edadData)
-            
           },
         );
+        
       } else {
         this.showGeneral = false;
         this.showEvaluacion = true;
 
         //AQUI CARGAR LOS JSON DE DISTRIBUCION DE EVALUACION, SON ESTOS:
         //maxGradoData
-        this.http.post<any>('/router/ObtenerMaximoGrado',formData).subscribe(
+        this.http.post<any>('/router/ObtenerMaximoGrado', formData).subscribe(
           (respost) => {
             this.maxGradoData = respost[0]
-            
           },
         );
-        //Promedio
-        this.http.post<any>('/router/ObtenerPromedio',formData).subscribe(
-          (respost) => {
-            this.recordData= respost[0]
-            
-          },
-        );
-   
 
-      //puesto
-        this.http.post<any>('/router/ObtenerPuestoActual',formData).subscribe(
+        //Promedio
+        this.http.post<any>('/router/ObtenerPromedio', formData).subscribe(
+          (respost) => {
+            this.recordData = respost[0]
+          },
+        );
+
+        //puesto
+        this.http.post<any>('/router/ObtenerPuestoActual', formData).subscribe(
           (respost) => {
             this.puestoData = respost[0]
-            
-          },
-        );  
-
-      //Experiencia
-        this.http.post<any>('/router/ObtenerExperiencia',formData).subscribe(
-          (respost) => {
-            console.log(respost)
-            console.log(respost[0])
-            this.exp = respost
           },
         );
-          
 
-      //afinidadData
-        this.http.post<any>('/router/ObtenerAfinidad',formData).subscribe(
+        //Experiencia
+        this.http.post<any>('/router/ObtenerExperiencia', formData).subscribe(
+          (respost) => {
+            this.experienciaData = respost
+          },
+        );
+
+        //afinidadData
+        this.http.post<any>('/router/ObtenerAfinidad', formData).subscribe(
           (respost) => {
             this.afinidadData = respost[0]
-            //console.log(this.afinidadData)
-            
           },
         );
-   
-      //Acreditada
-        this.http.post<any>('/router/ObtenerAcreditada',formData).subscribe(
+
+        //Acreditada
+        this.http.post<any>('/router/ObtenerAcreditada', formData).subscribe(
           (respost) => {
             this.acredData = respost[0]
-            
           },
         );
+
         //Formacion Complementaria
-        this.http.post<any>('/router/ObtenerFormacionComplementaria',formData).subscribe(
+        this.http.post<any>('/router/ObtenerFormacionComplementaria', formData).subscribe(
           (respost) => {
             this.formacionData = respost[0]
-            
           },
-        );    
-   
-      //notaData
-      this.http.post<any>('/router/ObtenerNota',formData).subscribe(
-        (respost) => {
-          this.notaData = respost[0]
-          
-        },
-      );       
+        );
+
+        //notaData
+        this.http.post<any>('/router/ObtenerNota', formData).subscribe(
+          (respost) => {
+            this.notaData = respost[0]
+          },
+        );
       }
 
     }
   }
 
-  onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  pdfGeneral() {
+    setTimeout(() => {
+      // Charts are now rendered
+      const chart = document.getElementById('edadChart');
+      const chart2 = document.getElementById('generoChart');
+      const chart3 = document.getElementById('uniChart');
+      const chart4 = document.getElementById('puestoChart');
+      html2canvas(chart, {
+        backgroundColor: null,
+        logging: false,
+        onclone: (document) => {
+          document.getElementById('edadChart');
+        }
+      }).then((canvas) => {
+        html2canvas(chart2, {
+          backgroundColor: null,
+          logging: false,
+          onclone: (document) => {
+            document.getElementById('generoChart');
+          }
+        }).then((canvas2) => {
+          html2canvas(chart3, {
+            backgroundColor: null,
+            logging: false,
+            onclone: (document) => {
+              document.getElementById('uniChart');
+            }
+          }).then((canvas3) => {
+            html2canvas(chart4, {
+              backgroundColor: null,
+              logging: false,
+              onclone: (document) => {
+                document.getElementById('puestoChart');
+              }
+            }).then((canvas4) => {
+              // Get chart data so we can append to the pdf
+              const chartData = canvas.toDataURL();
+              const chartData2 = canvas2.toDataURL();
+              const chartData3 = canvas3.toDataURL();
+              const chartData4 = canvas4.toDataURL();
+              // Prepare pdf structure
+              const docDefinition = {
+                content: [],
+                styles: {
+                  subheader: {
+                    fontSize: 16,
+                    bold: true,
+                    margin: [0, 10, 0, 5],
+                    alignment: 'center'
+                  },
+                  subsubheader: {
+                    fontSize: 12,
+                    italics: true,
+                    margin: [0, 10, 0, 25],
+                    alignment: 'left'
+                  }
+                },
+                defaultStyle: {
+                  // alignment: 'justify'
+                }
+              };
+
+              // Add some content to the pdf
+              const title = { text: this.anaGrafForm.get('tipo').value, style: 'subheader' };
+              const description = { text: `${this.anaGrafForm.get('periodo').value}, sede ${this.anaGrafForm.get('sede').value}`, style: 'subsubheader' };
+              docDefinition.content.push(title);
+              docDefinition.content.push(description);
+              // Push image of the chart
+              docDefinition.content.push({ image: chartData, width: 500 });
+              docDefinition.content.push({ image: chartData2, width: 500 });
+              docDefinition.content.push({ image: chartData3, width: 500 });
+              docDefinition.content.push({ image: chartData4, width: 500 });
+              this.docDefinition = docDefinition;
+              pdfMake.createPdf(docDefinition).download(`${this.anaGrafForm.get('tipo').value}.pdf`);
+            });
+          });
+        });
+      });
+    }, 1100);
   }
 
-  onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
+  pdfEvaluacion() {
+    setTimeout(() => {
+      // Charts are now rendered
+      const chart = document.getElementById('maxChart');
+      const chart2 = document.getElementById('recordChart');
+      const chart3 = document.getElementById('expChart');
+      const chart4 = document.getElementById('jerarChart');
+      const chart5 = document.getElementById('afinChart');
+      const chart6 = document.getElementById('acredChart');
+      const chart7 = document.getElementById('formChart');
+      const chart8 = document.getElementById('notaChart');
+      html2canvas(chart, {
+        backgroundColor: null,
+        logging: false,
+        onclone: (document) => {
+          document.getElementById('maxChart');
+        }
+      }).then((canvas) => {
+        html2canvas(chart2, {
+          backgroundColor: null,
+          logging: false,
+          onclone: (document) => {
+            document.getElementById('recordChart');
+          }
+        }).then((canvas2) => {
+          html2canvas(chart3, {
+            backgroundColor: null,
+            logging: false,
+            onclone: (document) => {
+              document.getElementById('expChart');
+            }
+          }).then((canvas3) => {
+            html2canvas(chart4, {
+              backgroundColor: null,
+              logging: false,
+              onclone: (document) => {
+                document.getElementById('jerarChart');
+              }
+            }).then((canvas4) => {
+              html2canvas(chart5, {
+                backgroundColor: null,
+                logging: false,
+                onclone: (document) => {
+                  document.getElementById('afinChart');
+                }
+              }).then((canvas5) => {
+                html2canvas(chart6, {
+                  backgroundColor: null,
+                  logging: false,
+                  onclone: (document) => {
+                    document.getElementById('acredChart');
+                  }
+                }).then((canvas6) => {
+                  html2canvas(chart7, {
+                    backgroundColor: null,
+                    logging: false,
+                    onclone: (document) => {
+                      document.getElementById('formChart');
+                    }
+                  }).then((canvas7) => {
+                    html2canvas(chart8, {
+                      backgroundColor: null,
+                      logging: false,
+                      onclone: (document) => {
+                        document.getElementById('notaChart');
+                      }
+                    }).then((canvas8) => {
+                      // Get chart data so we can append to the pdf
+                      const chartData = canvas.toDataURL();
+                      const chartData2 = canvas2.toDataURL();
+                      const chartData3 = canvas3.toDataURL();
+                      const chartData4 = canvas4.toDataURL();
+                      const chartData5 = canvas5.toDataURL();
+                      const chartData6 = canvas6.toDataURL();
+                      const chartData7 = canvas7.toDataURL();
+                      const chartData8 = canvas8.toDataURL();
+                      // Prepare pdf structure
+                      const docDefinition = {
+                        content: [],
+                        styles: {
+                          subheader: {
+                            fontSize: 16,
+                            bold: true,
+                            margin: [0, 10, 0, 5],
+                            alignment: 'center'
+                          },
+                          subsubheader: {
+                            fontSize: 12,
+                            italics: true,
+                            margin: [0, 10, 0, 25],
+                            alignment: 'left'
+                          }
+                        },
+                        defaultStyle: {
+                          // alignment: 'justify'
+                        }
+                      };
 
-  onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+                      // Add some content to the pdf
+                      const title = { text: this.anaGrafForm.get('tipo').value, style: 'subheader' };
+                      const description = { text: `${this.anaGrafForm.get('periodo').value}, sede ${this.anaGrafForm.get('sede').value}`, style: 'subsubheader' };
+                      docDefinition.content.push(title);
+                      docDefinition.content.push(description);
+                      // Push image of the chart
+                      docDefinition.content.push({ image: chartData, width: 500 });
+                      docDefinition.content.push({ image: chartData2, width: 500 });
+                      docDefinition.content.push({ image: chartData3, width: 500 });
+                      docDefinition.content.push({ image: chartData4, width: 500 });
+                      docDefinition.content.push({ image: chartData5, width: 500 });
+                      docDefinition.content.push({ image: chartData6, width: 500 });
+                      docDefinition.content.push({ image: chartData7, width: 500 });
+                      docDefinition.content.push({ image: chartData8, width: 500 });
+                      this.docDefinition = docDefinition;
+                      pdfMake.createPdf(docDefinition).download(`${this.anaGrafForm.get('tipo').value}.pdf`);
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    }, 1100);
   }
 
 }

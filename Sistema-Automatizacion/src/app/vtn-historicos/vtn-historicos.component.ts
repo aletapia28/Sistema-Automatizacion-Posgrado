@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import html2canvas from 'html2canvas';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-vtn-historicos',
@@ -10,420 +14,26 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 })
 export class VtnHistoricosComponent implements OnInit {
 
-  anaGrafForm = new FormGroup({
+  historicoForm = new FormGroup({
     periodo: new FormControl(null, [Validators.required]),
     periodo2: new FormControl(null, [Validators.required])
   });
 
+  docDefinition: any;
   periodos = [];
   periodos2 = [];
   sedes = [];
-  showGeneral = false;
-  showEvaluacion = false;
+  showHistorico = false;
 
-  universidadData = [
-    {
-      "name": "Bimestre 1 2020",
-      "series": [
-        {
-          "name": "UCR",
-          "value": 12
-        },
-        {
-          "name": "UNA",
-          "value": 8
-        }
-      ]
-    },
-    {
-      "name": "Bimestre 1 2019",
-      "series": [
-        {
-          "name": "UCR",
-          "value": 14
-        },
-        {
-          "name": "TEC",
-          "value": 36
-        }
-      ]
-    }
-  ];
-
-  edadData = [
-    {
-      name: "Edad   mínima",
-      series: [
-        {
-          name: "Bimestre 2 2020",
-          value: 62
-        },
-        {
-          name: "Bimestre 2 2021",
-          value: 73
-        },
-        {
-          name: "Bimestre 2 2022",
-          value: 64
-        },
-        {
-          name: "Bimestre 2 2023",
-          value: 23
-        }
-      ]
-    },
-    {
-      name: "Edad  máxima",
-      series: [
-        {
-          name: "Bimestre 2 2020",
-          value: 89
-        },
-        {
-          name: "Bimestre 2 2021",
-          value: 95
-        },
-        {
-          name: "Bimestre 2 2022",
-          value: 90
-        },
-        {
-          name: "Bimestre 2 2023",
-          value: 85
-        }
-      ]
-    }
-  ];
-
-  afinidadData = [
-    {
-      "name": "Bimestre 1 2020",
-      "series": [
-        {
-          "name": "Alta",
-          "value": 7300000
-        },
-        {
-          "name": "Media",
-          "value": 8940000
-        }
-      ]
-    },
-    {
-      "name": "Bimestre 1 2019",
-      "series": [
-        {
-          "name": "Alta",
-          "value": 7870000
-        },
-        {
-          "name": "Baja",
-          "value": 8270000
-        }
-      ]
-    }
-  ];
-
-  generoData = [
-    {
-      "name": "Bimestre 1 2020",
-      "series": [
-        {
-          "name": "Masculino",
-          "value": 35
-        },
-        {
-          "name": "Femenino",
-          "value": 47
-        },
-        {
-          "name": "Otro",
-          "value": 3
-        }
-      ]
-    },
-    {
-      "name": "Bimestre 1 2019",
-      "series": [
-        {
-          "name": "Masculino",
-          "value": 18
-        },
-        {
-          "name": "Femenino",
-          "value": 11
-        },
-        {
-          "name": "Otro",
-          "value": 1
-        }
-      ]
-    }
-  ];
-
-  nivelData = [
-    {
-      "name": "Bimestre 2 2020",
-      "series": [
-        {
-          "name": "Profesional sin personal a cargo",
-          "value": 62
-        },
-        {
-          "name": "Profesional miembro de equipo de proyectos",
-          "value": 73
-        },
-        {
-          "name": "Jefatura intermedia (coordinación/supervisión)",
-          "value": 89
-        },
-        {
-          "name": "Gerencia/Dirección General",
-          "value": 73
-        },
-        {
-          "name": "Trabajador independiente/dueño de empresa",
-          "value": 89
-        }
-      ]
-    },
-    {
-      "name": "Bimestre 3 2020",
-      "series": [
-        {
-          "name": "Profesional sin personal a cargo",
-          "value": 25
-        },
-        {
-          "name": "Profesional miembro de equipo de proyectos",
-          "value": 30
-        },
-        {
-          "name": "Jefatura intermedia (coordinación/supervisión)",
-          "value": 31
-        },
-        {
-          "name": "Gerencia/Dirección General",
-          "value": 15
-        },
-        {
-          "name": "Trabajador independiente/dueño de empresa",
-          "value": 2
-        }
-      ]
-    },
-  ];
-
-  notaData = [
-    {
-      name: "Nota mínima",
-      series: [
-        {
-          name: "Bimestre 2 2020",
-          value: 62
-        },
-        {
-          name: "Bimestre 2 2021",
-          value: 73
-        },
-        {
-          name: "Bimestre 2 2022",
-          value: 64
-        },
-        {
-          name: "Bimestre 2 2023",
-          value: 23
-        }
-      ]
-    },
-    {
-      name: "Nota  máxima",
-      series: [
-        {
-          name: "Bimestre 2 2020",
-          value: 89
-        },
-        {
-          name: "Bimestre 2 2021",
-          value: 95
-        },
-        {
-          name: "Bimestre 2 2022",
-          value: 90
-        },
-        {
-          name: "Bimestre 2 2023",
-          value: 85
-        }
-      ]
-    }
-  ];
-  
-  acredData = [
-    {
-      "name": "Bimestre 1 2020",
-      "series": [
-        {
-          "name": "Acreditada",
-          "value": 7300000
-        },
-        {
-          "name": "No acreditada",
-          "value": 8940000
-        }
-      ]
-    },
-    {
-      "name": "Bimestre 1 2019",
-      "series": [
-        {
-          "name": "Acreditada",
-          "value": 7870000
-        },
-        {
-          "name": "No acreditada",
-          "value": 8270000
-        }
-      ]
-    }
-  ];  
-
-  experienciaData = [
-    {
-      name: "Menos de 3 años",
-      series: [
-        {
-          name: "Bimestre 1 2017",
-          value: 40
-        },
-        {
-          name: "Bimestre 1 2018",
-          value: 43
-        },
-        {
-          name: "Bimestre 1 2019",
-          value: 45
-        }
-      ]
-    },
-    {
-      name: "3 a > 6 años",
-      series: [
-        {
-          name: "Bimestre 1 2017",
-          value: 1
-        },
-        {
-          name: "Bimestre 1 2018",
-          value: 4
-        },
-        {
-          name: "Bimestre 1 2019",
-          value: 8
-        }
-      ]
-    },
-    {
-      name: "6 a > 10 años",
-      series: [
-        {
-          name: "Bimestre 1 2017",
-          value: 32
-        },
-        {
-          name: "Bimestre 1 2018",
-          value: 2
-        },
-        {
-          name: "Bimestre 1 2019",
-          value: 34
-        }
-      ]
-    },
-    {
-      name: "Más de 10",
-      series: [
-        {
-          name: "Bimestre 1 2017",
-          value: 5
-        },
-        {
-          name: "Bimestre 1 2018",
-          value: 40
-        },
-        {
-          name: "Bimestre 1 2019",
-          value: 40
-        }
-      ]
-    }
-  ];
-
-  maxGradoData = [
-    {
-      name: "Bimestre 1 2020",
-      series: [
-        {
-          name: "Bachillerato",
-          value: 15
-        },
-        {
-          name: "Licenciatura",
-          value: 15
-        },
-        {
-          name: "Maestría",
-          value: 22
-        },
-        {
-          name: "Doctorado",
-          value: 1
-        }
-      ]
-    },
-      {
-      name: "Bimestre 1 2021",
-      series: [
-        {
-          name: "Bachillerato",
-          value: 15
-        },
-        {
-          name: "Licenciatura",
-          value: 15
-        },
-        {
-          name: "Maestría",
-          value: 22
-        },
-        {
-          name: "Doctorado",
-          value: 0
-        }
-      ]
-    },
-      {
-      name: "Bimestre 1 2022",
-      series: [
-        {
-          name: "Bachillerato", 
-          value: 10
-        },
-        {
-          name: "Licenciatura",
-          value: 13
-        },
-        {
-          name: "Maestría",
-          value: 22
-        },
-        {
-          name: "Doctorado",
-          value: 2
-        }
-      ]
-    },  
-  ];
+  universidadData = [];
+  edadData = [];
+  afinidadData = [];
+  generoData = [];
+  nivelData = [];
+  notaData = [];
+  acredData = [];
+  experienciaData = [];
+  maxGradoData = [];
 
   // Opciones universidad
   showXAxisUni: boolean = true;
@@ -452,14 +62,14 @@ export class VtnHistoricosComponent implements OnInit {
 
   // Opciones afinidad
   showXAxisAfin: boolean = true;
-  showYAxisAfin: boolean = true; 
+  showYAxisAfin: boolean = true;
   gradientAfin: boolean = false;
   showLegendAfin: boolean = true;
   legendPositionAfin: string = 'right';
   showXAxisLabelAfin: boolean = true;
   yAxisLabelAfin: string = 'Bimestres';
   showYAxisLabelAfin: boolean = true;
-  xAxisLabelAfin = 'Cantidad'; 
+  xAxisLabelAfin = 'Cantidad';
   titleAfin: string = 'Afinidad';
 
   // Opciones nivel jerarquico
@@ -510,7 +120,7 @@ export class VtnHistoricosComponent implements OnInit {
   xAxisLabelExp: string = 'Bimestres';
   yAxisLabelExp: string = 'Cantidad';
   timelineExp: boolean = true;
-  titleExp: string = 'Experiencia'; 
+  titleExp: string = 'Experiencia';
 
   // Opciones max grado academico
   showXAxisMax: boolean = true;
@@ -521,18 +131,18 @@ export class VtnHistoricosComponent implements OnInit {
   yAxisLabelMax: string = 'Bimestres';
   showYAxisLabelMax: boolean = true;
   xAxisLabelMax: string = 'Cantidad';
-  titleMax: string = 'Máximo grado'; 
+  titleMax: string = 'Máximo grado';
 
   // Opciones genero
   showXAxisGen: boolean = true;
-  showYAxisGen: boolean = true; 
+  showYAxisGen: boolean = true;
   gradientGen: boolean = false;
   showLegendGen: boolean = true;
   legendPositionGen: string = 'right';
   showXAxisLabelGen: boolean = true;
   yAxisLabelGen: string = 'Bimestres';
   showYAxisLabelGen: boolean = true;
-  xAxisLabelGen = 'Cantidad'; 
+  xAxisLabelGen = 'Cantidad';
   titleGen: string = 'Género';
 
   constructor(
@@ -556,43 +166,210 @@ export class VtnHistoricosComponent implements OnInit {
     const formData = { periodo: periodo }
     this.http.post<any>('/router/ObtenerPeriodosSig', formData).subscribe(
       (respost) => {
-        this.periodos2 = respost; 
+        this.periodos2 = respost;
       }
     );
   }
 
   onSubmit() {
-    let periodo = this.anaGrafForm.get('periodo').value;
-    let periodo2 = this.anaGrafForm.get('periodo2').value;
+    let periodo = this.historicoForm.get('periodo').value;
+    let periodo2 = this.historicoForm.get('periodo2').value;
 
     if ((periodo != null) && (periodo2 != null)) {
-      this.showGeneral = true;
-      this.showEvaluacion = false;
-
+      this.showHistorico = true;
+      const formData = { periodoInicial: periodo, periodoFinal: periodo2 }
       //AQUI CARGAR LOS JSON, SON ESTOS:
       //edadData
-      //universidadData
-      //nivelData
-      //maxGradoData
-      //experienciaData
-      //afinidadData
-      //acredData
-      //notaData
+      this.http.post<any>('/router/ObtenerEdadHistorico', formData).subscribe(
+        (respost) => {
+          this.edadData = respost
+        },
+      );
       //generoData
-
+      this.http.post<any>('/router/ObtenerGeneroHistorico', formData).subscribe(
+        (respost) => {
+          this.generoData = respost
+        },
+      );
+      //universidadData
+      this.http.post<any>('/router/ObtenerUniversidadHistorico', formData).subscribe(
+        (respost) => {
+          this.universidadData = respost
+        },
+      );
+      //maxGradoData
+      this.http.post<any>('/router/ObtenerMaximoGradoHistorico', formData).subscribe(
+        (respost) => {
+          this.maxGradoData = respost
+        },
+      );
+      //experienciaData
+      this.http.post<any>('/router/ObtenerExperienciaHistorico', formData).subscribe(
+        (respost) => {
+          this.experienciaData = respost
+        },
+      );
+      //nivelData
+      this.http.post<any>('/router/ObtenerPuestoHistorico', formData).subscribe(
+        (respost) => {
+          this.nivelData = respost
+        },
+      );
+      //afinidadData
+      this.http.post<any>('/router/ObtenerAfinidadHistorico', formData).subscribe(
+        (respost) => {
+          this.afinidadData = respost
+        },
+      );
+      //acredData
+      this.http.post<any>('/router/ObtenerAcreditacionHistorico', formData).subscribe(
+        (respost) => {
+          this.acredData = respost
+        },
+      );
+      //notaData
+      this.http.post<any>('/router/ObtenerNotaHistorico', formData).subscribe(
+        (respost) => {
+          this.notaData = respost
+        },
+      );
     }
   }
 
-  onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
+  pdfHistorico() {
+    setTimeout(() => {
+      // Charts are now rendered
+      const chart = document.getElementById('edadChart');
+      const chart2 = document.getElementById('generoChart');
+      const chart3 = document.getElementById('uniChart');
+      const chart4 = document.getElementById('maxChart');
+      const chart5 = document.getElementById('expChart');
+      const chart6 = document.getElementById('jerarChart');
+      const chart7 = document.getElementById('afinChart');
+      const chart8 = document.getElementById('acredChart');
+      const chart9 = document.getElementById('notaChart');
+      html2canvas(chart, {
+        backgroundColor: null,
+        logging: false,
+        onclone: (document) => {
+          document.getElementById('edadChart');
+        }
+      }).then((canvas) => {
+        html2canvas(chart2, {
+          backgroundColor: null,
+          logging: false,
+          onclone: (document) => {
+            document.getElementById('generoChart');
+          }
+        }).then((canvas2) => {
+          html2canvas(chart3, {
+            backgroundColor: null,
+            logging: false,
+            onclone: (document) => {
+              document.getElementById('uniChart');
+            }
+          }).then((canvas3) => {
+            html2canvas(chart4, {
+              backgroundColor: null,
+              logging: false,
+              onclone: (document) => {
+                document.getElementById('maxChart');
+              }
+            }).then((canvas4) => {
+              html2canvas(chart5, {
+                backgroundColor: null,
+                logging: false,
+                onclone: (document) => {
+                  document.getElementById('expChart');
+                }
+              }).then((canvas5) => {
+                html2canvas(chart6, {
+                  backgroundColor: null,
+                  logging: false,
+                  onclone: (document) => {
+                    document.getElementById('jerarChart');
+                  }
+                }).then((canvas6) => {
+                  html2canvas(chart7, {
+                    backgroundColor: null,
+                    logging: false,
+                    onclone: (document) => {
+                      document.getElementById('afinChart');
+                    }
+                  }).then((canvas7) => {
+                    html2canvas(chart8, {
+                      backgroundColor: null,
+                      logging: false,
+                      onclone: (document) => {
+                        document.getElementById('acredChart');
+                      }
+                    }).then((canvas8) => {
+                      html2canvas(chart9, {
+                        backgroundColor: null,
+                        logging: false,
+                        onclone: (document) => {
+                          document.getElementById('notaChart');
+                        }
+                      }).then((canvas9) => {
+                        // Get chart data so we can append to the pdf
+                        const chartData = canvas.toDataURL();
+                        const chartData2 = canvas2.toDataURL();
+                        const chartData3 = canvas3.toDataURL();
+                        const chartData4 = canvas4.toDataURL();
+                        const chartData5 = canvas5.toDataURL();
+                        const chartData6 = canvas6.toDataURL();
+                        const chartData7 = canvas7.toDataURL();
+                        const chartData8 = canvas8.toDataURL();
+                        const chartData9 = canvas9.toDataURL();
+                        // Prepare pdf structure
+                        const docDefinition = {
+                          content: [],
+                          styles: {
+                            subheader: {
+                              fontSize: 16,
+                              bold: true,
+                              margin: [0, 10, 0, 5],
+                              alignment: 'center'
+                            },
+                            subsubheader: {
+                              fontSize: 12,
+                              italics: true,
+                              margin: [0, 10, 0, 25],
+                              alignment: 'center'
+                            }
+                          },
+                          defaultStyle: {
+                            // alignment: 'justify'
+                          }
+                        };
 
-  onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+                        // Add some content to the pdf
+                        const title = { text: 'Análisis de Históricos', style: 'subheader' };
+                        const description = { text: `${this.historicoForm.get('periodo').value} - ${this.historicoForm.get('periodo2').value}`, style: 'subsubheader' };
+                        docDefinition.content.push(title);
+                        docDefinition.content.push(description);
+                        // Push image of the chart 
+                        docDefinition.content.push({ image: chartData, width: 500 });
+                        docDefinition.content.push({ image: chartData2, width: 500 });
+                        docDefinition.content.push({ image: chartData3, width: 500 });
+                        docDefinition.content.push({ image: chartData4, width: 500 });
+                        docDefinition.content.push({ image: chartData5, width: 500 });
+                        docDefinition.content.push({ image: chartData6, width: 500 });
+                        docDefinition.content.push({ image: chartData7, width: 500 });
+                        docDefinition.content.push({ image: chartData8, width: 500 });
+                        docDefinition.content.push({ image: chartData9, width: 500 });
+                        this.docDefinition = docDefinition;
+                        pdfMake.createPdf(docDefinition).download('Analisis Historico.pdf');
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    }, 1100);
   }
 
 }

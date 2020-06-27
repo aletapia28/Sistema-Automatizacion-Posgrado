@@ -1286,7 +1286,7 @@ router.post('/ObtenerModaGen', function(req, res, next) {
 //Historicos
 
 // Edad Historicos
-router.get('/ObtenerEdadHistorico', function(req, res, next) {
+router.post('/ObtenerEdadHistorico', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerEdadHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
         if (!err){
             var response =[]
@@ -1307,7 +1307,7 @@ router.get('/ObtenerEdadHistorico', function(req, res, next) {
 })
 
 // Experiencia Historicos
-router.get('/ObtenerExperienciaHistorico', function(req, res, next) {
+router.post('/ObtenerExperienciaHistorico', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerExperienciaHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
         if (!err){
             var response =[]
@@ -1341,7 +1341,7 @@ router.get('/ObtenerExperienciaHistorico', function(req, res, next) {
 })
 
 // Nota Historicos
-router.get('/ObtenerNotaHistorico', function(req, res, next) {
+router.post('/ObtenerNotaHistorico', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerNotaHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
         if (!err){
             var response =[]
@@ -1362,7 +1362,7 @@ router.get('/ObtenerNotaHistorico', function(req, res, next) {
 })
 
 // Acreditada Historico
-router.get('/ObtenerAcreditacionHistorico', function(req, res, next) {
+router.post('/ObtenerAcreditacionHistorico', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerAcreditacionHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
         if (!err){
             var response =[]
@@ -1392,7 +1392,7 @@ router.get('/ObtenerAcreditacionHistorico', function(req, res, next) {
 })
 
 // Maximo grado Historico
-router.get('/ObtenerMaximoGradoHistorico', function(req, res, next) {
+router.post('/ObtenerMaximoGradoHistorico', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerMaximoGradoHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
         if (!err){
             var response =[]
@@ -1418,7 +1418,7 @@ router.get('/ObtenerMaximoGradoHistorico', function(req, res, next) {
 })
 
 // Afinidad Historico
-router.get('/ObtenerAfinidadHistorico', function(req, res, next) {
+router.post('/ObtenerAfinidadHistorico', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerAfinidadHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
         if (!err){
             var response =[]
@@ -1444,7 +1444,7 @@ router.get('/ObtenerAfinidadHistorico', function(req, res, next) {
 })
 
 // Puesto Historico
-router.get('/ObtenerPuestoHistorico', function(req, res, next) {
+router.post('/ObtenerPuestoHistorico', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerPuestoHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
         if (!err){
             var response =[]
@@ -1470,7 +1470,7 @@ router.get('/ObtenerPuestoHistorico', function(req, res, next) {
 })
 
 // Genero Historico
-router.get('/ObtenerGeneroHistorico', function(req, res, next) {
+router.post('/ObtenerGeneroHistorico', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerGeneroHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
         if (!err){
             var response =[]
@@ -1496,7 +1496,7 @@ router.get('/ObtenerGeneroHistorico', function(req, res, next) {
 })
 
 // Universidad Historico
-router.get('/ObtenerUniversidadHistorico', function(req, res, next) {
+router.post('/ObtenerUniversidadHistorico', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerUniversidadHistorico(?,?)', [req.body.periodoInicial, req.body.periodoFinal], (err, row, fields) => {
         if (!err){
             var response =[]
