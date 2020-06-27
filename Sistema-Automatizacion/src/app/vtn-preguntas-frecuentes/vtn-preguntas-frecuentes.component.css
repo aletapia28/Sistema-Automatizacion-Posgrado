@@ -101,3 +101,7 @@ label {
     align-items: center;
     justify-content: space-between;
 }
+
+p{
+    text-indent: 2rem;
+}
