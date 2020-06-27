@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { MatSort } from '@angular/material/sort';
 import { NotificationService } from '../shared/notification.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { CurrencyPipe, NgSwitchCase } from '@angular/common';
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 export interface DatosGenerales { caracteristica: string, absoluto: number, relativo: number }
 const DATOS_GENERALES: DatosGenerales[] =[]
@@ -32,21 +35,21 @@ export class VtnAnalisisTabularComponent implements OnInit {
   showGeneral = false;
   showEvaluacion = false;
 
-  dataSourceGeneralesGenero=new MatTableDataSource();
-  dataSourceGeneralesEdad=new MatTableDataSource();
-  dataSourceGeneralesUniversidad=new MatTableDataSource();
-  dataSourceGeneralesPuestoAc=new MatTableDataSource();
-  dataSourceEstadisticosGeneral=new MatTableDataSource();
-  dataSourceEvaluacionMGA=new MatTableDataSource(); 
-  dataSourceEvaluacionPromedio=new MatTableDataSource(); 
-  dataSourceEvaluacionExperiencia=new MatTableDataSource(); 
-  dataSourceEvaluacionNivelJ=new MatTableDataSource(); 
-  dataSourceEvaluacionAfinidad=new MatTableDataSource(); 
-  dataSourceEvaluacionAcreditacion=new MatTableDataSource(); 
-  dataSourceEvaluacionFormacionC=new MatTableDataSource(); 
-  dataSourceEvaluacionNota=new MatTableDataSource(); 
-  dataSourceEvaluacion=new MatTableDataSource(); 
-  dataSourceEstaditicosEval=new MatTableDataSource();
+  dataSourceGeneralesGenero =       new MatTableDataSource(DATOS_GENERALES );
+  dataSourceGeneralesEdad=          new MatTableDataSource(DATOS_GENERALES);
+  dataSourceGeneralesUniversidad=   new MatTableDataSource(DATOS_GENERALES);
+  dataSourceGeneralesPuestoAc=      new MatTableDataSource(DATOS_GENERALES);
+  dataSourceEstadisticosGeneral=    new MatTableDataSource();
+  dataSourceEvaluacionMGA=          new MatTableDataSource(DATOS_GENERALES); 
+  dataSourceEvaluacionPromedio=     new MatTableDataSource(DATOS_GENERALES); 
+  dataSourceEvaluacionExperiencia=  new MatTableDataSource(DATOS_GENERALES); 
+  dataSourceEvaluacionNivelJ=       new MatTableDataSource(DATOS_GENERALES); 
+  dataSourceEvaluacionAfinidad=     new MatTableDataSource(DATOS_GENERALES); 
+  dataSourceEvaluacionAcreditacion= new MatTableDataSource(DATOS_GENERALES); 
+  dataSourceEvaluacionFormacionC=   new MatTableDataSource(DATOS_GENERALES); 
+  dataSourceEvaluacionNota=         new MatTableDataSource(DATOS_GENERALES); 
+  dataSourceEvaluacion=             new MatTableDataSource(DATOS_GENERALES); 
+  dataSourceEstaditicosEval=        new MatTableDataSource();
 
 // edad 
   edadData = [];
@@ -152,6 +155,16 @@ export class VtnAnalisisTabularComponent implements OnInit {
     );
   }
 
+  getAbsoluto(datas){  
+    return datas.data.map(t => t.value).reduce((acc, value) => acc + value, 0);
+  }
+
+  getRelativo(datas){    
+
+      return (datas.data.map(t => t.relativo).reduce((acc, value) => acc + value, 0));
+ 
+  }
+
   cargarDist(event) {
     let tipoPost = event;
   }
@@ -199,6 +212,10 @@ export class VtnAnalisisTabularComponent implements OnInit {
         (respost) => {
           this.puestoData = respost[0]
           console.log(this.puestoData)
+
+
+
+
           this.dataSourceGeneralesPuestoAc= new MatTableDataSource(this.puestoData);
         },
       );  
