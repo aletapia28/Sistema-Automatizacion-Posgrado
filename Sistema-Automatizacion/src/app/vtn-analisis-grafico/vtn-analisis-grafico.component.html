@@ -23,7 +23,7 @@
 
                     <mat-form-field class="inputVtn" appearance="outline">
                         <mat-label>Sede</mat-label>
-                        <mat-select formControlName="sede">
+                        <mat-select formControlName="sede" (selectionChange)="cargarDist($event.value)">
                             <mat-option *ngFor="let sede of sedes" [value]="sede.sede">{{sede.sede}}</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -38,96 +38,135 @@
                         <input matInput formControlName="cantidad" type="number" min="0" max="500" required>
                     </mat-form-field>
                 </div>
-                <button mat-raised-button class="boton" type="submit">Generar</button>
+                <div class="botones">
+                    <button mat-raised-button class="boton" type="submit">Generar</button>
+                    <button mat-icon-button (click)="pdfGeneral()" class="icon1" matTooltip="Exportar"
+                        matTooltipPosition="above" *ngIf="showGeneral" type="button">
+                        <mat-icon>picture_as_pdf</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="pdfEvaluacion()" class="icon1" matTooltip="Exportar"
+                        matTooltipPosition="above" *ngIf="showEvaluacion" type="button">
+                        <mat-icon>picture_as_pdf</mat-icon>
+                    </button>
+                </div>
             </form>
+            <!-- <button mat-raised-button class="boton" *ngIf="showGeneral" (click)="PDF()">PDF</button> -->
         </div>
-        <div class="general" *ngIf="showGeneral">
-            <h2 class="titulo">Edad</h2>
-            <div class="grafica">
-                <ngx-charts-pie-chart [results]="edadData" [gradient]="gradientEdad"
-                    [legend]="showLegendEdad" [legendTitle]="titleEdad" [legendPosition]="legendPositionEdad"
-                    [labels]="showLabelsEdad" [doughnut]="isDoughnutEdad" [explodeSlices]="explodeSlicesEdad">
-                </ngx-charts-pie-chart>
+        <div id="grafGeneral" class="general" *ngIf="showGeneral">
+            <div class="bloque" id="edadChart">
+                <h2 class="titulo">Edad</h2>
+                <div class="grafica">
+                    <ngx-charts-pie-chart [results]="edadData" [gradient]="gradientEdad" [legend]="showLegendEdad"
+                        [legendTitle]="titleEdad" [legendPosition]="legendPositionEdad" [labels]="showLabelsEdad"
+                        [doughnut]="isDoughnutEdad" [explodeSlices]="explodeSlicesEdad">
+                    </ngx-charts-pie-chart>
+                </div>
             </div>
 
-            <h2 class="titulo">Género</h2>
-            <div class="grafica">
-                <ngx-charts-pie-grid [results]="generoData">
-                </ngx-charts-pie-grid>
+            <div class="bloque" id="generoChart">
+                <h2 class="titulo">Género</h2>
+                <div class="grafica">
+                    <ngx-charts-pie-grid [results]="generoData">
+                    </ngx-charts-pie-grid>
+                </div>
             </div>
 
-            <h2 class="titulo">Universidad</h2>
-            <div class="grafica">
-                <ngx-charts-bar-vertical [results]="universidadData" [gradient]="gradientUni"
-                    [xAxis]="showXAxisUni" [yAxis]="showYAxisUni" [legend]="showLegendUni"
-                    [showXAxisLabel]="showXAxisLabelUni" [showYAxisLabel]="showYAxisLabelUni"
-                    [xAxisLabel]="xAxisLabelUni" [yAxisLabel]="yAxisLabelUni">
-                </ngx-charts-bar-vertical>
+            <div class="bloque" id="uniChart">
+                <h2 class="titulo">Universidad</h2>
+                <div class="grafica">
+                    <ngx-charts-bar-vertical [results]="universidadData" [gradient]="gradientUni" [xAxis]="showXAxisUni"
+                        [yAxis]="showYAxisUni" [legend]="showLegendUni" [showXAxisLabel]="showXAxisLabelUni"
+                        [showYAxisLabel]="showYAxisLabelUni" [xAxisLabel]="xAxisLabelUni" [yAxisLabel]="yAxisLabelUni"
+                        [showDataLabel]="showDataLabelUni">
+                    </ngx-charts-bar-vertical>
+                </div>
             </div>
 
-            <h2 class="titulo">Puesto actual</h2>
-            <div class="grafica">
-                <ngx-charts-number-card [results]="puestoData" [cardColor]="cardColorPuesto">
-                </ngx-charts-number-card>
+            <div class="bloque" id="puestoChart">
+                <h2 class="titulo">Puesto actual</h2>
+                <div class="grafica">
+                    <ngx-charts-number-card [results]="puestoData" [cardColor]="cardColorPuesto">
+                    </ngx-charts-number-card>
+                </div>
             </div>
         </div>
+
         <div class="evaluacion" *ngIf="showEvaluacion">
-            <h2 class="titulo">Máximo grado académico</h2>
-            <div class="grafica">
-                <ngx-charts-pie-grid [results]="maxGradoData">
-                </ngx-charts-pie-grid>
+            <div class="bloque" id="maxChart">
+                <h2 class="titulo">Máximo grado académico</h2>
+                <div class="grafica">
+                    <ngx-charts-pie-grid [results]="maxGradoData">
+                    </ngx-charts-pie-grid>
+                </div>
             </div>
 
-            <h2 class="titulo">Record</h2>
-            <div class="grafica">
-                <ngx-charts-bar-vertical [results]="recordData" [gradient]="gradientRec" [xAxis]="showXAxisRec"
-                    [yAxis]="showYAxisRec" [legend]="showLegendRec" [showXAxisLabel]="showXAxisLabelRec"
-                    [showYAxisLabel]="showYAxisLabelRec" [xAxisLabel]="xAxisLabelRec" [yAxisLabel]="yAxisLabelRec">
-                </ngx-charts-bar-vertical>
+            <div class="bloque" id="recordChart">
+                <h2 class="titulo">Record</h2>
+                <div class="grafica">
+                    <ngx-charts-bar-vertical [results]="recordData" [gradient]="gradientRec" [xAxis]="showXAxisRec"
+                        [yAxis]="showYAxisRec" [legend]="showLegendRec" [showXAxisLabel]="showXAxisLabelRec"
+                        [showYAxisLabel]="showYAxisLabelRec" [xAxisLabel]="xAxisLabelRec" [yAxisLabel]="yAxisLabelRec"
+                        [showDataLabel]="showDataLabelUni">
+                    </ngx-charts-bar-vertical>
+                </div>
             </div>
 
-            <h2 class="titulo">Experiencia laboral</h2>
-            <div class="grafica">
-                <ngx-charts-heat-map [legend]="legendExp" [showXAxisLabel]="showXAxisLabelExp"
-                    [showYAxisLabel]="showYAxisLabelExp" [xAxis]="xAxisExp" [yAxis]="yAxisExp"
-                    [results]="exp">
-                </ngx-charts-heat-map>
+            <div class="bloque" id="expChart">
+                <h2 class="titulo">Experiencia laboral</h2>
+                <div class="grafica">
+                    <ngx-charts-heat-map [legend]="legendExp" [showXAxisLabel]="showXAxisLabelExp"
+                        [showYAxisLabel]="showYAxisLabelExp" [xAxis]="xAxisExp" [yAxis]="yAxisExp"
+                        [results]="experienciaData">
+                    </ngx-charts-heat-map>
+                </div>
             </div>
 
-            <h2 class="titulo">Nivel jerárquico</h2>
-            <div class="grafica">
-                <ngx-charts-number-card [results]="puestoData" [cardColor]="cardColorPuesto">
-                </ngx-charts-number-card>
+            <div class="bloque" id="jerarChart">
+                <h2 class="titulo">Nivel jerárquico</h2>
+                <div class="grafica">
+                    <ngx-charts-number-card [results]="puestoData" [cardColor]="cardColorPuesto">
+                    </ngx-charts-number-card>
+                </div>
             </div>
 
-            <h2 class="titulo">Afinidad</h2>
-            <div class="grafica">
-                <ngx-charts-pie-chart [results]="afinidadData" [gradient]="gradientAfin" [legend]="showLegendAfin"
-                    [legendTitle]="titleAfin" [legendPosition]="legendPositionAfin" [labels]="showLabelsAfin"
-                    [doughnut]="isDoughnutAfin">
-                </ngx-charts-pie-chart>
+            <div class="bloque" id="afinChart">
+                <h2 class="titulo">Afinidad</h2>
+                <div class="grafica">
+                    <ngx-charts-pie-chart [results]="afinidadData" [gradient]="gradientAfin" [legend]="showLegendAfin"
+                        [legendTitle]="titleAfin" [legendPosition]="legendPositionAfin" [labels]="showLabelsAfin"
+                        [doughnut]="isDoughnutAfin">
+                    </ngx-charts-pie-chart>
+                </div>
             </div>
 
-            <h2 class="titulo">Acreditación</h2>
-            <div class="grafica">
-                <ngx-charts-pie-grid [results]="acredData">
-                </ngx-charts-pie-grid>
+            <div class="bloque" id="acredChart">
+                <h2 class="titulo">Acreditación</h2>
+                <div class="grafica">
+                    <ngx-charts-pie-grid [results]="acredData">
+                    </ngx-charts-pie-grid>
+                </div>
             </div>
 
-            <h2 class="titulo">Formación complementaria</h2>
-            <div class="grafica">
-                <ngx-charts-bar-horizontal [results]="formacionData" [gradient]="gradientForm" [xAxis]="showXAxisForm"
-                    [yAxis]="showYAxisForm" [legend]="showLegendForm" [showXAxisLabel]="showXAxisLabelForm"
-                    [showYAxisLabel]="showYAxisLabelForm">
-                </ngx-charts-bar-horizontal>
+            <div class="bloque" id="formChart">
+                <h2 class="titulo">Formación complementaria</h2>
+                <div class="grafica">
+                    <ngx-charts-bar-horizontal [results]="formacionData" [gradient]="gradientForm"
+                        [xAxis]="showXAxisForm" [yAxis]="showYAxisForm" [legend]="showLegendForm"
+                        [showXAxisLabel]="showXAxisLabelForm" [showYAxisLabel]="showYAxisLabelForm"
+                        [showDataLabel]="showDataLabelUni">
+                    </ngx-charts-bar-horizontal>
+                </div>
             </div>
 
-            <h2 class="titulo">Nota obtenida</h2>
-            <div class="grafica2">
-                <ngx-charts-bar-vertical [results]="notaData" [gradient]="gradientNota" [xAxis]="showXAxisNota"
-                    [yAxis]="showYAxisNota" [legend]="showLegendNota" [showXAxisLabel]="showXAxisLabelNota"
-                    [showYAxisLabel]="showYAxisLabelNota" [xAxisLabel]="xAxisLabelNota" [yAxisLabel]="yAxisLabelNota">
-                </ngx-charts-bar-vertical>
+            <div class="bloque" id="notaChart">
+                <h2 class="titulo">Nota obtenida</h2>
+                <div class="grafica2">
+                    <ngx-charts-bar-vertical [results]="notaData" [gradient]="gradientNota" [xAxis]="showXAxisNota"
+                        [yAxis]="showYAxisNota" [legend]="showLegendNota" [showXAxisLabel]="showXAxisLabelNota"
+                        [showYAxisLabel]="showYAxisLabelNota" [xAxisLabel]="xAxisLabelNota"
+                        [yAxisLabel]="yAxisLabelNota" [showDataLabel]="showDataLabelUni">
+                    </ngx-charts-bar-vertical>
+                </div>
             </div>
         </div>
     </div>
