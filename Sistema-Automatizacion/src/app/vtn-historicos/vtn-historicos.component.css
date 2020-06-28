@@ -37,6 +37,13 @@
     width: fit-content;
 }
 
+.botones {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 .boton {
     background-color: #1F2F5F;
     color: #ffffff;
@@ -63,19 +70,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    width: 100%;
-}
-
-.evaluacion {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 100%;
+    width: 50%;
 }
 
 .grafica {
-    width: 50%;
+    width: 100%;
     height: 400px;
     display: flex;
     flex-direction: column;
@@ -84,11 +83,25 @@
 }
 
 .grafica2 {
-    width: 50%;
+    width: 100%;
     height: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+}
+
+.bloque {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.icon1 {
+    height: 40px;
+    width: 40px;
+    margin: 0px 10px;
 }
