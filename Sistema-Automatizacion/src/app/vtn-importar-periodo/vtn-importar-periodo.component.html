@@ -6,7 +6,7 @@
 
         <div class="cuadro">
             <h1 class="titulo">Importar Período</h1>
-            <form class="periodo-form"  [formGroup]="importarPForm">
+            <form class="periodo-form" [formGroup]="importarPForm">
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Bimestre</mat-label>
                     <mat-select [(value)]="bimestreSource" formControlName="bimestre" placeholder="Bimestre">
@@ -34,11 +34,13 @@
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
 
-                <h2 class="subtitulo">Seleccione el archivo conformado por postulantes para la maestría que desea importar a la aplicación</h2>
+                <h2 class="subtitulo">Seleccione el archivo conformado por postulantes para la maestría que desea
+                    importar a la aplicación</h2>
 
                 <div class="upload_button">
                     <label>
-                        <input type="file" formControlName="archivo" (change)="addfile($event)" accept="application/vnd.ms-excel" multiple="false">
+                        <input type="file" formControlName="archivo" (change)="addfile($event)" accept=".xlsx"
+                            multiple="false">
                         <span class="span">Seleccionar Archivo</span>
                     </label>
                 </div>

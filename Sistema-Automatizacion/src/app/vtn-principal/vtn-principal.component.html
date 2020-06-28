@@ -11,7 +11,7 @@
                         <mat-option *ngFor="let tipo of tipos" [value]="tipo.tipo">{{tipo.tipo}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <button mat-icon-button  (click)="onFilt()" class="icon" matTooltip="Filtrar" matTooltipPosition="above" 
+                <button mat-icon-button  (click)="onFilt()" class="icon1" matTooltip="Filtrar" matTooltipPosition="above" 
                         *ngIf="!tipoShowing">
                             <mat-icon>filter_alt</mat-icon>
                         </button>

@@ -206,6 +206,12 @@ export class VtnImportarPeriodoComponent implements OnInit {
 
                 let periodo = period;
                 let enfasis = y[keyenf]
+                if(enfasis == "Empresariales"){
+                  enfasis = "Énfasis en Proyectos " + enfasis;
+                }
+                else { 
+                  enfasis = "Énfasis en Proyectos de " + enfasis;
+                }
                 let sede = y[keysede]
                 let nota = y[keynota]
                 let memo = 1

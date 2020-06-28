@@ -61,6 +61,7 @@ import { AdmitidosDialogComponent } from './admitidos-dialog/admitidos-dialog.co
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { VtnHistoricosComponent } from './vtn-historicos/vtn-historicos.component';
+import { VtnPreguntasFrecuentesComponent } from './vtn-preguntas-frecuentes/vtn-preguntas-frecuentes.component';
 
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
@@ -101,7 +102,8 @@ const routes: Routes = [
     VtnAnalisisGraficoComponent,
     VtnAnalisisTabularComponent,
     AdmitidosDialogComponent,
-    VtnHistoricosComponent
+    VtnHistoricosComponent,
+    VtnPreguntasFrecuentesComponent
   ],
   imports: [
     BrowserModule,

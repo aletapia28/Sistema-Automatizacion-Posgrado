@@ -18,6 +18,7 @@
             <button mat-menu-item class="opcionMenu" [matMenuTriggerFor]="asistentes" *ngIf="show">Asistentes</button>
             <button mat-menu-item class="opcionMenu" [matMenuTriggerFor]="analisis">Análisis de datos</button>
             <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="editFormula()">Editar fórmula</button>
+            <button mat-menu-item class="opcionMenu"  (click)="preguntasFrecuentes()">Preguntas frecuentes</button>
             <button mat-menu-item class="opcionMenu" (click)="signOut()">Cerrar sesión</button>
         </mat-menu>
         <mat-menu #periodos="matMenu" xPosition="before">

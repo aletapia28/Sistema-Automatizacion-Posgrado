@@ -95,6 +95,9 @@ export class BarraSistemaComponent implements OnInit {
   editFormula() {
     this.router.navigate(['editFor']);
   }
+  preguntasFrecuentes() {
+    this.router.navigate(['preguntasFrecuentes']);
+  }
 
   verHistoricos() {
     this.router.navigate(['analisisHistorico']);
