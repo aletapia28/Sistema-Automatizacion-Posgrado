@@ -1,21 +1,21 @@
 const Sequelize = require('sequelize')
 const mysql = require('mysql')
-//conexion a la bd 
+    //conexion a la bd 
 
 var mysqlconnection = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'',
-    database:'sistpostulacion'
+    host: 'localhost',
+    user: 'root',
+    password: 'MyNewPass',
+    database: 'sistpostulacion'
 });
 
 const db = {}
-const sequelize = new Sequelize("sistpostulacion","root","",{
+const sequelize = new Sequelize("sistpostulacion", "root", "MyNewPass", {
     host: "localhost",
     dialect: "mysql",
     operatorsAliases: false,
 
-    pool:{
+    pool: {
         max: 5,
         min: 0,
         acquire: 30000,
