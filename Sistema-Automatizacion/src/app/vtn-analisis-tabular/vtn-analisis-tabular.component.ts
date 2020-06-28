@@ -156,12 +156,12 @@ export class VtnAnalisisTabularComponent implements OnInit {
   }
 
   getAbsoluto(datas) {
-    return datas.data.map(t => t.value).reduce((acc, value) => acc + value, 0);
+    return Math.round(datas.data.map(t => t.value).reduce((acc, value) => acc + value, 0));
   }
 
   getRelativo(datas) {
 
-    return (datas.data.map(t => t.relativo).reduce((acc, value) => acc + value, 0));
+    return Math.round(datas.data.map(t => t.relativo).reduce((acc, value) => acc + value, 0));
 
   }
 
@@ -213,9 +213,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
             this.puestoData = respost[0]
             console.log(this.puestoData)
 
-
-
-
             this.dataSourceGeneralesPuestoAc = new MatTableDataSource(this.puestoData);
           },
         );
@@ -264,6 +261,8 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerModaGen', formData).subscribe(
           (respost) => {
             this.totalgen = respost[0]
+            console.log("this.totalgen")
+            console.log(respost[0])
             modae = respost[0][0]['name']
             this.estadisticosData[2]['value'] = Math.round(modae)
             this.dataSourceEstadisticosGeneral = new MatTableDataSource(this.estadisticosData);
