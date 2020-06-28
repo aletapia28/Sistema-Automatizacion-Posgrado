@@ -7,6 +7,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { CurrencyPipe, NgSwitchCase } from '@angular/common';
 import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
+import html2canvas from 'html2canvas';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export interface DatosGenerales { caracteristica: string, absoluto: number, relativo: number }
 const DATOS_GENERALES: DatosGenerales[] = []
@@ -29,6 +33,7 @@ export class VtnAnalisisTabularComponent implements OnInit {
     cantidad: new FormControl(null, [Validators.required])
   });
 
+  docDefinition: any;
   periodos = [];
   sedes = [];
   tipos = [{ 'tipo': 'Distribución general' }, { 'tipo': 'Distribución de evaluación' }]
@@ -388,5 +393,241 @@ export class VtnAnalisisTabularComponent implements OnInit {
     }
 
 
+  }
+
+  pdfGeneral() {
+    setTimeout(() => {
+      // Charts are now rendered
+      const chart = document.getElementById('edadChart');
+      const chart2 = document.getElementById('generoChart');
+      const chart3 = document.getElementById('uniChart');
+      const chart4 = document.getElementById('puestoChart');
+      const chart5 = document.getElementById('estGenChart');
+      html2canvas(chart, {
+        backgroundColor: null,
+        logging: false,
+        onclone: (document) => {
+          document.getElementById('edadChart');
+        }
+      }).then((canvas) => {
+        html2canvas(chart2, {
+          backgroundColor: null,
+          logging: false,
+          onclone: (document) => {
+            document.getElementById('generoChart');
+          }
+        }).then((canvas2) => {
+          html2canvas(chart3, {
+            backgroundColor: null,
+            logging: false,
+            onclone: (document) => {
+              document.getElementById('uniChart');
+            }
+          }).then((canvas3) => {
+            html2canvas(chart4, {
+              backgroundColor: null,
+              logging: false,
+              onclone: (document) => {
+                document.getElementById('puestoChart');
+              }
+            }).then((canvas4) => {
+              html2canvas(chart5, {
+                backgroundColor: null,
+                logging: false,
+                onclone: (document) => {
+                  document.getElementById('estGenChart');
+                }
+              }).then((canvas5) => {
+                // Get chart data so we can append to the pdf
+                const chartData = canvas.toDataURL();
+                const chartData2 = canvas2.toDataURL();
+                const chartData3 = canvas3.toDataURL();
+                const chartData4 = canvas4.toDataURL();
+                const chartData5 = canvas5.toDataURL();
+                // Prepare pdf structure
+                const docDefinition = {
+                  content: [],
+                  styles: {
+                    subheader: {
+                      fontSize: 16,
+                      bold: true,
+                      margin: [0, 10, 0, 5],
+                      alignment: 'center'
+                    },
+                    subsubheader: {
+                      fontSize: 12,
+                      italics: true,
+                      margin: [0, 10, 0, 25],
+                      alignment: 'left'
+                    },
+                    imageStyle: {
+                      margin: [0, 10, 0, 10],
+                      alignment: 'center'
+                    }
+                  },
+                  defaultStyle: {
+                    // alignment: 'justify'
+                  }
+                };
+
+                // Add some content to the pdf
+                const title = { text: this.anaTabForm.get('tipo').value, style: 'subheader' };
+                const description = { text: `${this.anaTabForm.get('periodo').value}, sede ${this.anaTabForm.get('sede').value}`, style: 'subsubheader' };
+                docDefinition.content.push(title);
+                docDefinition.content.push(description); 
+                // Push image of the chart 
+                docDefinition.content.push({ image: chartData, width: 500, style: 'imageStyle' });
+                docDefinition.content.push({ image: chartData2, width: 500, style: 'imageStyle' });
+                docDefinition.content.push({ image: chartData3, width: 500, style: 'imageStyle' });
+                docDefinition.content.push({ image: chartData4, width: 500, style: 'imageStyle' });
+                docDefinition.content.push({ image: chartData5, width: 500, style: 'imageStyle' });
+                this.docDefinition = docDefinition;
+                pdfMake.createPdf(docDefinition).download(`${this.anaTabForm.get('tipo').value} tabular.pdf`);
+              });
+            });
+          });
+        });
+      });
+    }, 1100);
+  }
+
+  pdfEvaluacion() {
+    setTimeout(() => {
+      // Charts are now rendered
+      const chart = document.getElementById('maxChart');
+      const chart2 = document.getElementById('recordChart');
+      const chart3 = document.getElementById('expChart');
+      const chart4 = document.getElementById('jerarChart');
+      const chart5 = document.getElementById('afinChart');
+      const chart6 = document.getElementById('acredChart');
+      const chart7 = document.getElementById('formChart');
+      const chart8 = document.getElementById('notaChart');
+      const chart9 = document.getElementById('estEvaChart');
+      html2canvas(chart, {
+        backgroundColor: null,
+        logging: false,
+        onclone: (document) => {
+          document.getElementById('maxChart');
+        }
+      }).then((canvas) => {
+        html2canvas(chart2, {
+          backgroundColor: null,
+          logging: false,
+          onclone: (document) => {
+            document.getElementById('recordChart');
+          }
+        }).then((canvas2) => {
+          html2canvas(chart3, {
+            backgroundColor: null,
+            logging: false,
+            onclone: (document) => {
+              document.getElementById('expChart');
+            }
+          }).then((canvas3) => {
+            html2canvas(chart4, {
+              backgroundColor: null,
+              logging: false,
+              onclone: (document) => {
+                document.getElementById('jerarChart');
+              }
+            }).then((canvas4) => {
+              html2canvas(chart5, {
+                backgroundColor: null,
+                logging: false,
+                onclone: (document) => {
+                  document.getElementById('afinChart');
+                }
+              }).then((canvas5) => {
+                html2canvas(chart6, {
+                  backgroundColor: null,
+                  logging: false,
+                  onclone: (document) => {
+                    document.getElementById('acredChart');
+                  }
+                }).then((canvas6) => {
+                  html2canvas(chart7, {
+                    backgroundColor: null,
+                    logging: false,
+                    onclone: (document) => {
+                      document.getElementById('formChart');
+                    }
+                  }).then((canvas7) => {
+                    html2canvas(chart8, {
+                      backgroundColor: null,
+                      logging: false,
+                      onclone: (document) => {
+                        document.getElementById('notaChart');
+                      }
+                    }).then((canvas8) => {
+                      html2canvas(chart9, {
+                        backgroundColor: null,
+                        logging: false,
+                        onclone: (document) => {
+                          document.getElementById('estEvaChart');
+                        }
+                      }).then((canvas9) => {
+                        // Get chart data so we can append to the pdf
+                        const chartData = canvas.toDataURL();
+                        const chartData2 = canvas2.toDataURL();
+                        const chartData3 = canvas3.toDataURL();
+                        const chartData4 = canvas4.toDataURL();
+                        const chartData5 = canvas5.toDataURL();
+                        const chartData6 = canvas6.toDataURL();
+                        const chartData7 = canvas7.toDataURL();
+                        const chartData8 = canvas8.toDataURL();
+                        const chartData9 = canvas9.toDataURL();
+                        // Prepare pdf structure
+                        const docDefinition = {
+                          content: [],
+                          styles: {
+                            subheader: {
+                              fontSize: 16,
+                              bold: true,
+                              margin: [0, 10, 0, 5],
+                              alignment: 'center'
+                            },
+                            subsubheader: {
+                              fontSize: 12,
+                              italics: true,
+                              margin: [0, 10, 0, 25],
+                              alignment: 'left'
+                            },
+                            imageStyle: {
+                              margin: [0, 10, 0, 10],
+                              alignment: 'center'
+                            }
+                          },
+                          defaultStyle: {
+                            // alignment: 'justify'
+                          }
+                        };
+
+                        // Add some content to the pdf
+                        const title = { text: this.anaTabForm.get('tipo').value, style: 'subheader' };
+                        const description = { text: `${this.anaTabForm.get('periodo').value}, sede ${this.anaTabForm.get('sede').value}`, style: 'subsubheader' };
+                        docDefinition.content.push(title);
+                        docDefinition.content.push(description);
+                        // Push image of the chart
+                        docDefinition.content.push({ image: chartData, width: 500, style: 'imageStyle' });
+                        docDefinition.content.push({ image: chartData2, width: 500, style: 'imageStyle' });
+                        docDefinition.content.push({ image: chartData3, width: 500, style: 'imageStyle' });
+                        docDefinition.content.push({ image: chartData4, width: 500, style: 'imageStyle' });
+                        docDefinition.content.push({ image: chartData5, width: 500, style: 'imageStyle' });
+                        docDefinition.content.push({ image: chartData6, width: 500, style: 'imageStyle' });
+                        docDefinition.content.push({ image: chartData7, width: 500, style: 'imageStyle' });
+                        docDefinition.content.push({ image: chartData8, width: 500, style: 'imageStyle' });
+                        docDefinition.content.push({ image: chartData9, width: 500, style: 'imageStyle' });
+                        this.docDefinition = docDefinition;
+                        pdfMake.createPdf(docDefinition).download(`${this.anaTabForm.get('tipo').value} tabular.pdf`);
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    }, 1100);
   }
 }

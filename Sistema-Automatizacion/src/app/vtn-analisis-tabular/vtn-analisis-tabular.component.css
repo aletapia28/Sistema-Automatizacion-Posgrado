@@ -37,6 +37,13 @@
     width: fit-content;
 }
 
+.botones {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 .boton {
     background-color: #1F2F5F;
     color: #ffffff;
@@ -76,7 +83,7 @@
     width: 60vw;
     /* overflow: auto; */
     /* max-height: 300px; */
-    margin: 20px;   
+    margin: 20px;
 }
 
 ::ng-deep .mat-sort-header-container {
@@ -133,15 +140,15 @@ table {
 }
 
 tr.mat-footer-row {
-    font-weight: bold;
     background-color: #1F2F5F;
     /* opacity:0.8; */
 }
-.mat-footer-cell {
+
+.mat-footer-cell { 
     color: #ffffff;
 }
+
 th {
-    font-weight: bold;
     font-size: 14px;
     background-color: #1F2F5F;
     position: fixed;
@@ -179,4 +186,14 @@ th {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.icon1 {
+    height: 40px;
+    width: 40px;
+    margin: 0px 10px;
+}
+
+.tituloTabla {
+    font-size: 18px;
 }

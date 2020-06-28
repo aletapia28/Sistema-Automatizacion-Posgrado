@@ -336,7 +336,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
               docDefinition.content.push({ image: chartData3, width: 500 });
               docDefinition.content.push({ image: chartData4, width: 500 });
               this.docDefinition = docDefinition;
-              pdfMake.createPdf(docDefinition).download(`${this.anaGrafForm.get('tipo').value}.pdf`);
+              pdfMake.createPdf(docDefinition).download(`${this.anaGrafForm.get('tipo').value} grafico.pdf`);
             });
           });
         });
@@ -447,7 +447,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
                       const description = { text: `${this.anaGrafForm.get('periodo').value}, sede ${this.anaGrafForm.get('sede').value}`, style: 'subsubheader' };
                       docDefinition.content.push(title);
                       docDefinition.content.push(description);
-                      // Push image of the chart
+                      // Push image of the chart 
                       docDefinition.content.push({ image: chartData, width: 500 });
                       docDefinition.content.push({ image: chartData2, width: 500 });
                       docDefinition.content.push({ image: chartData3, width: 500 });
@@ -457,7 +457,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
                       docDefinition.content.push({ image: chartData7, width: 500 });
                       docDefinition.content.push({ image: chartData8, width: 500 });
                       this.docDefinition = docDefinition;
-                      pdfMake.createPdf(docDefinition).download(`${this.anaGrafForm.get('tipo').value}.pdf`);
+                      pdfMake.createPdf(docDefinition).download(`${this.anaGrafForm.get('tipo').value} grafico.pdf`);
                     });
                   });
                 });
