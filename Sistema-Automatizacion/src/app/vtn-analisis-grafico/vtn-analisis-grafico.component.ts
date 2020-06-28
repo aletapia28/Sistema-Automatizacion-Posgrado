@@ -73,6 +73,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
   xAxisLabelUni = 'Universidad';
   showYAxisLabelUni = true;
   yAxisLabelUni = 'Cantidad';
+  showDataLabelUni = true;
 
   //Opciones Puesto actual
   cardColorPuesto: string = '#232837';
