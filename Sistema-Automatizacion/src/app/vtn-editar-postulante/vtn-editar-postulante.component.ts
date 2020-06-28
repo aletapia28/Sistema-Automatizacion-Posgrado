@@ -138,41 +138,43 @@ export class VtnEditarPostulanteComponent implements OnInit {
   }
 
   onSubmit() {
-    let cedula: string = this.editarPosForm.get('cedula').value;
-    let nombre: string = this.editarPosForm.get('nombre').value;
-    let genero: string = this.editarPosForm.get('genero').value;
+    let cedula = this.editarPosForm.get('cedula').value;
+    let nombre = this.editarPosForm.get('nombre').value;
+    let genero = this.editarPosForm.get('genero').value;
     let fechaNacimiento = this.editarPosForm.get('fechaNacimiento').value;
-    let telefono1: string = this.editarPosForm.get('telefono1').value;
-    let telefono2: string = this.editarPosForm.get('telefono2').value;
-    let correo1: string = this.editarPosForm.get('correo1').value;
-    let correo2: string = this.editarPosForm.get('correo2').value;
-    let ingles: boolean = this.editarPosForm.get('ingles').value;
-    let gradoAcademico: string = this.editarPosForm.get('gradoAca').value;
-    let universidad: string = this.editarPosForm.get('universidad').value;
-    let afinidad: string = this.editarPosForm.get('afinidad').value;
-    let acreditada: boolean = this.editarPosForm.get('acreditada').value;
-    let puestoActual: string = this.editarPosForm.get('puestoActual').value;
-    let experienciaProfesion= this.editarPosForm.get('experienciaProfesion').value;
+    let telefono1 = this.editarPosForm.get('telefono1').value;
+    let telefono2 = this.editarPosForm.get('telefono2').value;
+    let correo1 = this.editarPosForm.get('correo1').value;
+    let correo2 = this.editarPosForm.get('correo2').value;
+    let ingles = this.editarPosForm.get('ingles').value;
+    let gradoAcademico = this.editarPosForm.get('gradoAca').value;
+    let universidad = this.editarPosForm.get('universidad').value;
+    let afinidad = this.editarPosForm.get('afinidad').value;
+    let acreditada = this.editarPosForm.get('acreditada').value;
+    let puestoActual = this.editarPosForm.get('puestoActual').value;
+    let experienciaProfesion = this.editarPosForm.get('experienciaProfesion').value;
     let cursoAprovechamiento = this.editarPosForm.get('cursoAprovechamiento').value;
-    let tituloTecnico: boolean = this.editarPosForm.get('tTecnico').value;
+    let tituloTecnico = this.editarPosForm.get('tTecnico').value;
     let cursoAfin = this.editarPosForm.get('cursoAfin').value;
-    let tituloDiplomado: boolean = this.editarPosForm.get('tDiplomado').value;
+    let tituloDiplomado = this.editarPosForm.get('tDiplomado').value;
     let promedioGeneral = this.editarPosForm.get('promedio').value;
     //conversion de titulos a integer
     let acred,ttec,tdip;
     if (acreditada == true){acred=1}else{acred=0}
     if (tituloTecnico == true){ttec=1}else{ttec=0}
     if (tituloDiplomado == true){tdip=1}else{tdip=0}
+    
 
     let notanw = this.calcularnota(acred,gradoAcademico,promedioGeneral,afinidad,puestoActual,experienciaProfesion,cursoAfin,ttec,cursoAprovechamiento,tdip )
     if ((cedula.length > 0) && (nombre.length > 0) && (telefono1.length > 0) && (correo1.length > 0) && (gradoAcademico.length > 0)
       && (universidad.length > 0) && (afinidad.length > 0) && (puestoActual.length > 0) && (experienciaProfesion != null) && (cursoAprovechamiento != null)
       && (cursoAfin != null) && (promedioGeneral != null)) {
+        
       const formData = {
         cedula: cedula, nombre: nombre, telefono1: telefono1, telefono2: telefono2, correo1: correo1, correo2: correo2, ingles: ingles,
         gradoAcademico: gradoAcademico, universidad: universidad, afinidad: afinidad, acreditada: acreditada, puestoActual: puestoActual, experienciaProfesion: experienciaProfesion,
-        cursoAprovechamiento: cursoAprovechamiento, tituloTecnico: tituloTecnico, cursoAfin: cursoAfin, tituloDiplomado: tituloDiplomado, promedioGeneral: promedioGeneral, nota:notanw,
-        genero: genero, fechaNacimiento: fechaNacimiento
+        cursoAprovechamiento: cursoAprovechamiento, tituloTecnico: tituloTecnico, cursoAfin: cursoAfin, tituloDiplomado: tituloDiplomado, promedioGeneral: promedioGeneral,
+        genero: genero, fechaNacimiento:fechaNacimiento
       }
       this.http.put<any>('/router/EditPostulante', formData).subscribe(
         (res) => {
