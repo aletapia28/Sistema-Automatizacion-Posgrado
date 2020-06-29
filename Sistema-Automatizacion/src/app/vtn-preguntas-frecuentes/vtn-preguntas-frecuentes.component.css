@@ -19,7 +19,7 @@
     background-color: #E2E2E2;
     width: 40vw;
     min-width: 500px;
-    height: 60vh;
+    /* height: 60vh; */
     min-height: 460px;
     display: flex;
     flex-direction: column;

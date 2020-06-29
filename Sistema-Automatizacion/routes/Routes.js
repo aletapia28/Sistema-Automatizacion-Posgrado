@@ -26,7 +26,7 @@ const db = require('../database/db')
 
 db.mysqlConnection.connect((err) => {
     if (!err)
-        console.log('Connexión con exito');
+        console.log('Conexión con exito');
     else
         console.log('Error de conexión a la base de datos\n Error: ' + JSON.stringify(err, undefined, 2));
 
