@@ -1019,31 +1019,19 @@ router.post('/ObtenerExperiencia', function(req, res, next) {
 
             var experienciaData = [{
                     "name": "Menor a 3 años",
-                    "series": [{
-                        "name": "Experiencia",
-                        "value": 0
-                    }]
+                    "value": 0
                 },
                 {
                     "name": "3 a 6 años",
-                    "series": [{
-                        "name": "Experiencia",
-                        "value": 0
-                    }]
+                    "value": 0
                 },
                 {
                     "name": "7 a 10 años",
-                    "series": [{
-                        "name": "Experiencia",
-                        "value": 0
-                    }]
+                    "value": 0
                 },
                 {
                     "name": "Mayor a 10",
-                    "series": [{
-                        "name": "Experiencia",
-                        "value": 0
-                    }]
+                    "value": 0
                 }
             ]
             var i = 0,
@@ -1054,17 +1042,11 @@ router.post('/ObtenerExperiencia', function(req, res, next) {
             for (i = 0; i < experienciaData.length; i++) {
                 for (k = 0; k < len; k++) {
                     if (experiencia[k]['name'] == experienciaData[i]['name']) {
-                        experienciaData[i]['series'][0]['value'] = experiencia[k]['value']
-                        console.log(experienciaData[i]['series'][0]['value'])
-
+                        experienciaData[k]['value'] = experiencia[k]['value']
                     }
-
                 }
-
             }
             res.send(experienciaData);
-
-
         } else
             console.log(err);
     })

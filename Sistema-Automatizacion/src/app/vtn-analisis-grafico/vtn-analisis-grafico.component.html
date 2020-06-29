@@ -74,11 +74,9 @@
             <div class="bloque" id="uniChart">
                 <h2 class="titulo">Universidad</h2>
                 <div class="grafica">
-                    <ngx-charts-bar-vertical [results]="universidadData" [gradient]="gradientUni" [xAxis]="showXAxisUni"
-                        [yAxis]="showYAxisUni" [legend]="showLegendUni" [showXAxisLabel]="showXAxisLabelUni"
-                        [showYAxisLabel]="showYAxisLabelUni" [xAxisLabel]="xAxisLabelUni" [yAxisLabel]="yAxisLabelUni"
-                        [showDataLabel]="showDataLabelUni">
-                    </ngx-charts-bar-vertical>
+                    <ngx-charts-tree-map [gradient]="gradientUni" [animations]="animationsUni"
+                        [results]="universidadData">
+                    </ngx-charts-tree-map> 
                 </div>
             </div>
 
@@ -106,7 +104,7 @@
                     <ngx-charts-bar-vertical [results]="recordData" [gradient]="gradientRec" [xAxis]="showXAxisRec"
                         [yAxis]="showYAxisRec" [legend]="showLegendRec" [showXAxisLabel]="showXAxisLabelRec"
                         [showYAxisLabel]="showYAxisLabelRec" [xAxisLabel]="xAxisLabelRec" [yAxisLabel]="yAxisLabelRec"
-                        [showDataLabel]="showDataLabelUni">
+                        [showDataLabel]="showDataLabelRec">
                     </ngx-charts-bar-vertical>
                 </div>
             </div>
@@ -114,10 +112,9 @@
             <div class="bloque" id="expChart">
                 <h2 class="titulo">Experiencia laboral</h2>
                 <div class="grafica">
-                    <ngx-charts-heat-map [legend]="legendExp" [showXAxisLabel]="showXAxisLabelExp"
-                        [showYAxisLabel]="showYAxisLabelExp" [xAxis]="xAxisExp" [yAxis]="yAxisExp"
+                    <ngx-charts-tree-map [gradient]="gradientExp" [animations]="animationsExp"
                         [results]="experienciaData">
-                    </ngx-charts-heat-map>
+                    </ngx-charts-tree-map>
                 </div>
             </div>
 
@@ -153,7 +150,7 @@
                     <ngx-charts-bar-horizontal [results]="formacionData" [gradient]="gradientForm"
                         [xAxis]="showXAxisForm" [yAxis]="showYAxisForm" [legend]="showLegendForm"
                         [showXAxisLabel]="showXAxisLabelForm" [showYAxisLabel]="showYAxisLabelForm"
-                        [showDataLabel]="showDataLabelUni">
+                        [showDataLabel]="showDataLabelRec">
                     </ngx-charts-bar-horizontal>
                 </div>
             </div>
@@ -164,7 +161,7 @@
                     <ngx-charts-bar-vertical [results]="notaData" [gradient]="gradientNota" [xAxis]="showXAxisNota"
                         [yAxis]="showYAxisNota" [legend]="showLegendNota" [showXAxisLabel]="showXAxisLabelNota"
                         [showYAxisLabel]="showYAxisLabelNota" [xAxisLabel]="xAxisLabelNota"
-                        [yAxisLabel]="yAxisLabelNota" [showDataLabel]="showDataLabelUni">
+                        [yAxisLabel]="yAxisLabelNota" [showDataLabel]="showDataLabelRec">
                     </ngx-charts-bar-vertical>
                 </div>
             </div>
