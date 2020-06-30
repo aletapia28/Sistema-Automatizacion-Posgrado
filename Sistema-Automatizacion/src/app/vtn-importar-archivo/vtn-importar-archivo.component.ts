@@ -212,8 +212,8 @@ export class VtnImportarArchivoComponent implements OnInit {
         let acreditada = 0
 
         //conversiones a ints y validaciones de entradas vacias 
-        if (y[keytel2] == '') { telefono2 = 'no aplica' } else { telefono2 = y[keytel2] }
-        if (y[keycorr2] instanceof String) { correo2 = y[keycorr2] } else { correo2 = 'No indica' }
+        if (typeof y[keytel2] == 'number') { telefono2 = y[keytel2] } else { telefono2 = 'No indica' }
+        if (typeof y[keycorr2] == 'string') { correo2 = y[keycorr2] } else { correo2 = 'No indica' }
         if (y[keying] == 'No') { ingles = 0 } else { ingles = 1 }
         if (y[keytdip] == 'No') { tituloDiplomado = 0 } else { tituloDiplomado = 1 }
         if (y[keyttec] == 'No') { tituloTecnico = 0 } else { tituloTecnico = 1 }
