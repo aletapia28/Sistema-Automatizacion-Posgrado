@@ -14,6 +14,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class VtnAnalisisGraficoComponent implements OnInit {
 
+  //form que contiene los datos del analisis a generar
   anaGrafForm = new FormGroup({
     tipo: new FormControl(null, [Validators.required]),
     periodo: new FormControl(null, [Validators.required]),
@@ -22,12 +23,17 @@ export class VtnAnalisisGraficoComponent implements OnInit {
     cantidad: new FormControl(null, [Validators.required])
   });
 
+  //Definicion del PDF 
   docDefinition: any;
+  //Arrays de los selectores de la pantalla
   periodos = [];
   sedes = [];
   tipos = [{ 'tipo': 'Distribución general' }, { 'tipo': 'Distribución de evaluación' }]
+  //booleans que definen si se muestra el div de distribucion general o de evaluacion
   showGeneral = false;
   showEvaluacion = false;
+
+  //Estructuras de datos para las gráficas
   //edad
   edadData = [];
   //genero
@@ -50,10 +56,6 @@ export class VtnAnalisisGraficoComponent implements OnInit {
   formacionData = [];
   //nota 
   notaData = [];
-
-
-  view: any[] = [700, 400];
-  view2: any[] = [1000, 400];
 
   // Opciones Edad 
   gradientEdad: boolean = true;
@@ -115,13 +117,12 @@ export class VtnAnalisisGraficoComponent implements OnInit {
   //Obtener json del backend 
   universidades = [];
 
-
-
   constructor(
     private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
+    //Obtiene los periodos para el selector de periodos
     this.http.get<any>('/router/getPeriodosTranscurridos').subscribe(
       (respost) => {
         this.periodos = respost[0]
@@ -129,10 +130,9 @@ export class VtnAnalisisGraficoComponent implements OnInit {
     );
 
   }
-  cargarDist(event) {
-    let tipoPost = event;
-  }
 
+  //Al elegir un periodo se invoca cargarSedes()
+  //Carga las sedes del periodo elegido en pantalla
   cargarSedes(event) {
     let periodo = event;
     const formData = { periodo: periodo }
@@ -143,22 +143,25 @@ export class VtnAnalisisGraficoComponent implements OnInit {
     );
   }
 
+  //Metodo ejecutado al dar click en el boton Generar
   onSubmit() {
+    //Se obtienen los datos de la consulta
     let distribucion = this.anaGrafForm.get('tipo').value;
     let periodo = this.anaGrafForm.get('periodo').value;
     let sede = this.anaGrafForm.get('sede').value;
     let nota = this.anaGrafForm.get('nota').value;
     let cantidad = this.anaGrafForm.get('cantidad').value;
 
+    //Se chequea que los datos no esten vacios
     if ((distribucion != null) && (periodo != null) && (sede != null) && (nota != null) && (cantidad != null)) {
 
       const formData = { periodo: periodo, sede: sede, nota: nota, cantidad: cantidad }
       if (distribucion == 'Distribución general') {
+        //Se pone en true showGeneral y en false showEvaluacion para que se muestre solo lo referente a la distribucion general
         this.showGeneral = true;
         this.showEvaluacion = false;
 
-        //AQUI CARGAR LOS JSON DE DISTRIBUCION GENERAL, SON ESTOS:
-
+        //Se cargan las estructuras de distribucion general
         //generoData
         this.http.post<any>('/router/ObtenerGenero', formData).subscribe(
           (respost) => {
@@ -188,6 +191,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
         );
         
       } else {
+        //Se pone en true showEvaluacion y en false showGeneral para que se muestre solo lo referente a la distribucion de evaluacion
         this.showGeneral = false;
         this.showEvaluacion = true;
 
@@ -252,6 +256,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
     }
   }
 
+  //Metodo encargado de generar el PDF de la distribucion general
   pdfGeneral() {
     setTimeout(() => {
       // Charts are now rendered
@@ -333,6 +338,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
     }, 1100);
   }
 
+  //Metodo encargado de generar el PDF de la distribucion de evaluacion
   pdfEvaluacion() {
     setTimeout(() => {
       // Charts are now rendered
