@@ -41,7 +41,7 @@ export class VtnAnalisisGraficoComponent implements OnInit {
   //promedio   
   recordData = [];
   //experiencia  
-  experienciaData = [];
+  experienciaData = []; 
   //afinidad
   afinidadData = [];
   //acreditada  
@@ -65,15 +65,8 @@ export class VtnAnalisisGraficoComponent implements OnInit {
   explodeSlicesEdad: boolean = true;
 
   //Opciones Universidad
-  showXAxisUni = true;
-  showYAxisUni = true;
-  gradientUni = false;
-  showLegendUni = false;
-  showXAxisLabelUni = true;
-  xAxisLabelUni = 'Universidad';
-  showYAxisLabelUni = true;
-  yAxisLabelUni = 'Cantidad';
-  showDataLabelUni = true;
+  gradientUni: boolean = false;
+  animationsUni: boolean = true;
 
   //Opciones Puesto actual
   cardColorPuesto: string = '#232837';
@@ -87,15 +80,11 @@ export class VtnAnalisisGraficoComponent implements OnInit {
   xAxisLabelRec = 'Promedio';
   showYAxisLabelRec = true;
   yAxisLabelRec = 'Cantidad';
+  showDataLabelRec = true;
 
   //Opciones Experiencia
-  legendExp: boolean = true;
-  showLabelsExp: boolean = true;
+  gradientExp: boolean = false;
   animationsExp: boolean = true;
-  xAxisExp: boolean = true;
-  yAxisExp: boolean = true;
-  showYAxisLabelExp: boolean = false;
-  showXAxisLabelExp: boolean = false;
 
   // Opciones Afinidad
   gradientAfin: boolean = true;

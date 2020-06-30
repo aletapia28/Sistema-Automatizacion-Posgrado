@@ -3,7 +3,7 @@
 
     <div class="cuerpo">
         <div class="encabezado">
-            <h1 class="titulo">Análisis de Históricos</h1>
+            <h1 class="titulo">Análisis de históricos</h1>
             <form (submit)="onSubmit()" [formGroup]="historicoForm">
                 <div class="opciones">
                     <mat-form-field class="inputVtn2" appearance="outline">
@@ -33,7 +33,7 @@
         </div>
         <div class="general" *ngIf="showHistorico">
             <div class="bloque" id="edadChart">
-                <h2 class="titulo">Según la edad</h2>
+                <h2 class="titulo">Edad</h2>
                 <div class="grafica">
                     <ngx-charts-area-chart [legend]="legendEdad" [showXAxisLabel]="showXAxisLabelEdad"
                         [showYAxisLabel]="showYAxisLabelEdad" [xAxis]="xAxisEdad" [yAxis]="yAxisEdad"
@@ -44,7 +44,7 @@
             </div>
 
             <div class="bloque" id="generoChart">
-                <h2 class="titulo">Según el género</h2>
+                <h2 class="titulo">Género</h2>
                 <div class="grafica">
                     <ngx-charts-bar-horizontal-stacked [results]="generoData" [gradient]="gradientGen" [xAxis]="showXAxisGen"
                         [yAxis]="showYAxisGen" [legend]="showLegendGen" [legendPosition]="legendPositionGen"
@@ -132,7 +132,7 @@
                     </ngx-charts-line-chart>
                 </div>
             </div>
-        </div>
+        </div> 
     </div>
     <app-barra-inferior></app-barra-inferior>
 </div>
