@@ -1271,8 +1271,6 @@ router.post('/ObtenerModaEval', function(req, res, next) {
                 res.send(row);
             else {
                 row[0][0]['name'] = 0;
-                console.log(row[0]['value'])
-                console.log(row)
                 res.send(row)
             }
         else
@@ -1286,8 +1284,20 @@ router.post('/ObtenerModaGen', function(req, res, next) {
                 res.send(row);
             else {
                 row[0][0]['name'] = 0;
-                console.log(row[0]['value'])
-                console.log(row)
+                res.send(row)
+            }
+        else
+            console.log(err);
+    })
+})
+
+router.post('/ObtenerModaProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerModaProm(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            if (row[0][0]['value'] >= 2)
+                res.send(row);
+            else {
+                row[0][0]['name'] = 0;
                 res.send(row)
             }
         else
@@ -1308,8 +1318,8 @@ router.post('/ObtenerEdadHistorico', function(req, res, next) {
                 minimo.push({ 'name': row[0][i].periodo, 'value': row[0][i].Minimo })
                 maximo.push({ 'name': row[0][i].periodo, 'value': row[0][i].Maximo })
             }
-            response.push({ 'name': 'Nota Mínima', 'series': minimo })
-            response.push({ 'name': 'Nota Máxima', 'series': maximo })
+            response.push({ 'name': 'Edad Mínima', 'series': minimo })
+            response.push({ 'name': 'Edad Máxima', 'series': maximo })
 
             res.send(response);
         } else
