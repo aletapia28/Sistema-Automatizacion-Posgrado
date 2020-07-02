@@ -131,6 +131,32 @@ export class VtnAnalisisTabularComponent implements OnInit {
       "value": 0
     },
   ];
+  estadisticosPromData = [
+    {
+      "name": "Media",
+      "value": 0
+    },
+    {
+      "name": "Mediana",
+      "value": 0
+    },
+    {
+      "name": "Moda",
+      "value": 0
+    },
+    {
+      "name": "Mínimo",
+      "value": 0
+    },
+    {
+      "name": "Máximo",
+      "value": 0
+    },
+    {
+      "name": "Rango",
+      "value": 0
+    },
+  ];
 
   //Obtener json del backend 
 

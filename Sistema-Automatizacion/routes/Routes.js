@@ -1208,6 +1208,14 @@ router.post('/ObtenerEstadisticasEval', function(req, res, next) {
             console.log(err);
     })
 })
+router.post('/ObtenerEstadisticasProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerEstadisticasProm(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
 router.post('/ObtenerMediaEval', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerMediaEval(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
         if (!err)
@@ -1224,6 +1232,14 @@ router.post('/ObtenerMediaGen', function(req, res, next) {
             console.log(err);
     })
 })
+router.post('/ObtenerMediaProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMediaProm(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
 router.post('/ObtenerMedianaEval', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerMedianaEval(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
         if (!err)
@@ -1234,6 +1250,14 @@ router.post('/ObtenerMedianaEval', function(req, res, next) {
 })
 router.post('/ObtenerMedianaGen', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerMedianaGen(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+router.post('/ObtenerMedianaProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMedianaProm(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
