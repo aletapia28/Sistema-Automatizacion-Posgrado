@@ -93,11 +93,11 @@ export class VtnAnalisisTabularComponent implements OnInit {
       "value": 0
     },
     {
-      "name": "Minimo",
+      "name": "Mínimo",
       "value": 0
     },
     {
-      "name": "Maximo",
+      "name": "Máximo",
       "value": 0
     },
     {
@@ -119,11 +119,11 @@ export class VtnAnalisisTabularComponent implements OnInit {
       "value": 0
     },
     {
-      "name": "Minimo",
+      "name": "Mínimo",
       "value": 0
     },
     {
-      "name": "Maximo",
+      "name": "Máximo",
       "value": 0
     },
     {

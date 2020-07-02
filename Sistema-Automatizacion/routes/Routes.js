@@ -1018,7 +1018,7 @@ router.post('/ObtenerExperiencia', function(req, res, next) {
         if (!err) {
 
             var experienciaData = [{
-                    "name": "Menor a 3 años",
+                    "name": "0 a 3 años",
                     "value": 0
                 },
                 {
@@ -1030,7 +1030,7 @@ router.post('/ObtenerExperiencia', function(req, res, next) {
                     "value": 0
                 },
                 {
-                    "name": "Mayor a 10",
+                    "name": "10 o más",
                     "value": 0
                 }
             ]

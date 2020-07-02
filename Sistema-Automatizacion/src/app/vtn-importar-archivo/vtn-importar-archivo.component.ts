@@ -172,7 +172,6 @@ export class VtnImportarArchivoComponent implements OnInit {
       const prueba = (XLSX.utils.sheet_to_json(ws, { header: 1 }))
       var size = prueba.length
       var cont, y
-      console.log(datap);
       for (cont = 3; cont < size; cont++) {
         y = datap[cont]
         var keyname = '9',keyfecha = '10',keygen ='11',keyid = '13', keytel1 = '15', keytel2 = '16', keycorr1 = '17', keycorr2 = '18',
