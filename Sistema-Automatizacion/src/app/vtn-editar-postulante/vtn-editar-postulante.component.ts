@@ -138,25 +138,25 @@ export class VtnEditarPostulanteComponent implements OnInit {
   }
 
   onSubmit() {
-    let cedula = this.editarPosForm.get('cedula').value;
-    let nombre = this.editarPosForm.get('nombre').value;
-    let genero = this.editarPosForm.get('genero').value;
+    let cedula: string = this.editarPosForm.get('cedula').value;
+    let nombre: string = this.editarPosForm.get('nombre').value;
+    let genero: string = this.editarPosForm.get('genero').value;
     let fechaNacimiento = this.editarPosForm.get('fechaNacimiento').value;
-    let telefono1 = this.editarPosForm.get('telefono1').value;
-    let telefono2 = this.editarPosForm.get('telefono2').value;
-    let correo1 = this.editarPosForm.get('correo1').value;
-    let correo2 = this.editarPosForm.get('correo2').value;
-    let ingles = this.editarPosForm.get('ingles').value;
-    let gradoAcademico = this.editarPosForm.get('gradoAca').value;
-    let universidad = this.editarPosForm.get('universidad').value;
-    let afinidad = this.editarPosForm.get('afinidad').value;
-    let acreditada = this.editarPosForm.get('acreditada').value;
-    let puestoActual = this.editarPosForm.get('puestoActual').value;
-    let experienciaProfesion = this.editarPosForm.get('experienciaProfesion').value;
+    let telefono1: string = this.editarPosForm.get('telefono1').value;
+    let telefono2: string = this.editarPosForm.get('telefono2').value;
+    let correo1: string = this.editarPosForm.get('correo1').value;
+    let correo2: string = this.editarPosForm.get('correo2').value;
+    let ingles: boolean = this.editarPosForm.get('ingles').value;
+    let gradoAcademico: string = this.editarPosForm.get('gradoAca').value;
+    let universidad: string = this.editarPosForm.get('universidad').value;
+    let afinidad: string = this.editarPosForm.get('afinidad').value;
+    let acreditada: boolean = this.editarPosForm.get('acreditada').value;
+    let puestoActual: string = this.editarPosForm.get('puestoActual').value;
+    let experienciaProfesion= this.editarPosForm.get('experienciaProfesion').value;
     let cursoAprovechamiento = this.editarPosForm.get('cursoAprovechamiento').value;
-    let tituloTecnico = this.editarPosForm.get('tTecnico').value;
+    let tituloTecnico: boolean = this.editarPosForm.get('tTecnico').value;
     let cursoAfin = this.editarPosForm.get('cursoAfin').value;
-    let tituloDiplomado = this.editarPosForm.get('tDiplomado').value;
+    let tituloDiplomado: boolean = this.editarPosForm.get('tDiplomado').value;
     let promedioGeneral = this.editarPosForm.get('promedio').value;
     //conversion de titulos a integer
     let acred,ttec,tdip;
