@@ -163,7 +163,7 @@ export class VtnAnalisisTabularComponent implements OnInit {
 
   totaleval = [];
   totalgen = [];
-  totalprom =[];
+  totalprom = [];
   sumapromedio = [];
   medianaprom = [];
   modaprom = [];
@@ -360,7 +360,7 @@ export class VtnAnalisisTabularComponent implements OnInit {
 
         //evaluacion 
         var max = 0, min = 0, moda = 0, len = 0, media = 0, mediana = 0,
-        maxprom = 0, minprom = 0, modaprom = 0, lenprom = 0, mediaprom = 0, medianaprom = 0
+          maxprom = 0, minprom = 0, modaprom = 0, lenprom = 0, mediaprom = 0, medianaprom = 0
         //min, max, rango nota 
         this.http.post<any>('/router/ObtenerEstadisticasEval', formData).subscribe(
           (respost) => {
@@ -460,10 +460,10 @@ export class VtnAnalisisTabularComponent implements OnInit {
     setTimeout(() => {
       // Charts are now rendered
       const chart = document.getElementById('edadChart');
-      const chart2 = document.getElementById('generoChart');
-      const chart3 = document.getElementById('uniChart');
-      const chart4 = document.getElementById('puestoChart');
-      const chart5 = document.getElementById('estGenChart');
+      const chart2 = document.getElementById('estEdadChart');
+      const chart3 = document.getElementById('generoChart');
+      const chart4 = document.getElementById('uniChart');
+      const chart5 = document.getElementById('puestoChart');
       html2canvas(chart, {
         backgroundColor: null,
         logging: false,
@@ -475,28 +475,28 @@ export class VtnAnalisisTabularComponent implements OnInit {
           backgroundColor: null,
           logging: false,
           onclone: (document) => {
-            document.getElementById('generoChart');
+            document.getElementById('estEdadChart');
           }
         }).then((canvas2) => {
           html2canvas(chart3, {
             backgroundColor: null,
             logging: false,
             onclone: (document) => {
-              document.getElementById('uniChart');
+              document.getElementById('generoChart');
             }
           }).then((canvas3) => {
             html2canvas(chart4, {
               backgroundColor: null,
               logging: false,
               onclone: (document) => {
-                document.getElementById('puestoChart');
+                document.getElementById('uniChart');
               }
             }).then((canvas4) => {
               html2canvas(chart5, {
                 backgroundColor: null,
                 logging: false,
                 onclone: (document) => {
-                  document.getElementById('estGenChart');
+                  document.getElementById('puestoChart');
                 }
               }).then((canvas5) => {
                 // Get chart data so we can append to the pdf
@@ -509,6 +509,10 @@ export class VtnAnalisisTabularComponent implements OnInit {
                 const docDefinition = {
                   content: [],
                   styles: {
+                    info: {
+                      fontSize: 10,
+                      alignment: 'right'
+                    },
                     subheader: {
                       fontSize: 16,
                       bold: true,
@@ -531,11 +535,17 @@ export class VtnAnalisisTabularComponent implements OnInit {
                   }
                 };
 
+                let fechaActual = new Date();
+                let strFecha = fechaActual.toLocaleString();
+
                 // Add some content to the pdf
+                const info = { text: `Instituto Tecnológico de Costa Rica\nÁrea Académica de Gerencia de Proyectos\nTel : 2550-2182\n${strFecha}`, style: 'info' };
                 const title = { text: this.anaTabForm.get('tipo').value, style: 'subheader' };
                 const description = { text: `${this.anaTabForm.get('periodo').value}, sede ${this.anaTabForm.get('sede').value}`, style: 'subsubheader' };
+
+                docDefinition.content.push(info);
                 docDefinition.content.push(title);
-                docDefinition.content.push(description); 
+                docDefinition.content.push(description);
                 // Push image of the chart 
                 docDefinition.content.push({ image: chartData, width: 500, style: 'imageStyle' });
                 docDefinition.content.push({ image: chartData2, width: 500, style: 'imageStyle' });
@@ -557,13 +567,14 @@ export class VtnAnalisisTabularComponent implements OnInit {
       // Charts are now rendered
       const chart = document.getElementById('maxChart');
       const chart2 = document.getElementById('recordChart');
-      const chart3 = document.getElementById('expChart');
-      const chart4 = document.getElementById('jerarChart');
-      const chart5 = document.getElementById('afinChart');
-      const chart6 = document.getElementById('acredChart');
-      const chart7 = document.getElementById('formChart');
-      const chart8 = document.getElementById('notaChart');
-      const chart9 = document.getElementById('estEvaChart');
+      const chart3 = document.getElementById('estPromChart');
+      const chart4 = document.getElementById('expChart');
+      const chart5 = document.getElementById('jerarChart');
+      const chart6 = document.getElementById('afinChart');
+      const chart7 = document.getElementById('acredChart');
+      const chart8 = document.getElementById('formChart');
+      const chart9 = document.getElementById('notaChart');
+      const chart10 = document.getElementById('estEvaChart');
       html2canvas(chart, {
         backgroundColor: null,
         logging: false,
@@ -582,104 +593,124 @@ export class VtnAnalisisTabularComponent implements OnInit {
             backgroundColor: null,
             logging: false,
             onclone: (document) => {
-              document.getElementById('expChart');
+              document.getElementById('estPromChart');
             }
           }).then((canvas3) => {
             html2canvas(chart4, {
               backgroundColor: null,
               logging: false,
               onclone: (document) => {
-                document.getElementById('jerarChart');
+                document.getElementById('expChart');
               }
             }).then((canvas4) => {
               html2canvas(chart5, {
                 backgroundColor: null,
                 logging: false,
                 onclone: (document) => {
-                  document.getElementById('afinChart');
+                  document.getElementById('jerarChart');
                 }
               }).then((canvas5) => {
                 html2canvas(chart6, {
                   backgroundColor: null,
                   logging: false,
                   onclone: (document) => {
-                    document.getElementById('acredChart');
+                    document.getElementById('afinChart');
                   }
                 }).then((canvas6) => {
                   html2canvas(chart7, {
                     backgroundColor: null,
                     logging: false,
                     onclone: (document) => {
-                      document.getElementById('formChart');
+                      document.getElementById('acredChart');
                     }
                   }).then((canvas7) => {
                     html2canvas(chart8, {
                       backgroundColor: null,
                       logging: false,
                       onclone: (document) => {
-                        document.getElementById('notaChart');
+                        document.getElementById('formChart');
                       }
                     }).then((canvas8) => {
                       html2canvas(chart9, {
                         backgroundColor: null,
                         logging: false,
                         onclone: (document) => {
-                          document.getElementById('estEvaChart');
+                          document.getElementById('notaChart');
                         }
                       }).then((canvas9) => {
-                        // Get chart data so we can append to the pdf
-                        const chartData = canvas.toDataURL();
-                        const chartData2 = canvas2.toDataURL();
-                        const chartData3 = canvas3.toDataURL();
-                        const chartData4 = canvas4.toDataURL();
-                        const chartData5 = canvas5.toDataURL();
-                        const chartData6 = canvas6.toDataURL();
-                        const chartData7 = canvas7.toDataURL();
-                        const chartData8 = canvas8.toDataURL();
-                        const chartData9 = canvas9.toDataURL();
-                        // Prepare pdf structure
-                        const docDefinition = {
-                          content: [],
-                          styles: {
-                            subheader: {
-                              fontSize: 16,
-                              bold: true,
-                              margin: [0, 10, 0, 5],
-                              alignment: 'center'
-                            },
-                            subsubheader: {
-                              fontSize: 12,
-                              italics: true,
-                              margin: [0, 10, 0, 25],
-                              alignment: 'left'
-                            },
-                            imageStyle: {
-                              margin: [0, 10, 0, 10],
-                              alignment: 'center'
-                            }
-                          },
-                          defaultStyle: {
-                            // alignment: 'justify'
+                        html2canvas(chart10, {
+                          backgroundColor: null,
+                          logging: false,
+                          onclone: (document) => {
+                            document.getElementById('estEvaChart');
                           }
-                        };
+                        }).then((canvas10) => {
+                          // Get chart data so we can append to the pdf
+                          const chartData = canvas.toDataURL();
+                          const chartData2 = canvas2.toDataURL();
+                          const chartData3 = canvas3.toDataURL();
+                          const chartData4 = canvas4.toDataURL();
+                          const chartData5 = canvas5.toDataURL();
+                          const chartData6 = canvas6.toDataURL();
+                          const chartData7 = canvas7.toDataURL();
+                          const chartData8 = canvas8.toDataURL();
+                          const chartData9 = canvas9.toDataURL();
+                          const chartData10 = canvas10.toDataURL();
+                          // Prepare pdf structure
+                          const docDefinition = {
+                            content: [],
+                            styles: {
+                              info: {
+                                fontSize: 10,
+                                alignment: 'right'
+                              },
+                              subheader: {
+                                fontSize: 16,
+                                bold: true,
+                                margin: [0, 10, 0, 5],
+                                alignment: 'center'
+                              },
+                              subsubheader: {
+                                fontSize: 12,
+                                italics: true,
+                                margin: [0, 10, 0, 25],
+                                alignment: 'left'
+                              },
+                              imageStyle: {
+                                margin: [0, 10, 0, 10],
+                                alignment: 'center'
+                              }
+                            },
+                            defaultStyle: {
+                              // alignment: 'justify'
+                            }
+                          };
 
-                        // Add some content to the pdf
-                        const title = { text: this.anaTabForm.get('tipo').value, style: 'subheader' };
-                        const description = { text: `${this.anaTabForm.get('periodo').value}, sede ${this.anaTabForm.get('sede').value}`, style: 'subsubheader' };
-                        docDefinition.content.push(title);
-                        docDefinition.content.push(description);
-                        // Push image of the chart
-                        docDefinition.content.push({ image: chartData, width: 500, style: 'imageStyle' });
-                        docDefinition.content.push({ image: chartData2, width: 500, style: 'imageStyle' });
-                        docDefinition.content.push({ image: chartData3, width: 500, style: 'imageStyle' });
-                        docDefinition.content.push({ image: chartData4, width: 500, style: 'imageStyle' });
-                        docDefinition.content.push({ image: chartData5, width: 500, style: 'imageStyle' });
-                        docDefinition.content.push({ image: chartData6, width: 500, style: 'imageStyle' });
-                        docDefinition.content.push({ image: chartData7, width: 500, style: 'imageStyle' });
-                        docDefinition.content.push({ image: chartData8, width: 500, style: 'imageStyle' });
-                        docDefinition.content.push({ image: chartData9, width: 500, style: 'imageStyle' });
-                        this.docDefinition = docDefinition;
-                        pdfMake.createPdf(docDefinition).download(`${this.anaTabForm.get('tipo').value} tabular.pdf`);
+                          let fechaActual = new Date();
+                          let strFecha = fechaActual.toLocaleString();
+
+                          // Add some content to the pdf
+                          const info = { text: `Instituto Tecnológico de Costa Rica\nÁrea Académica de Gerencia de Proyectos\nTel : 2550-2182\n${strFecha}`, style: 'info' };
+                          const title = { text: this.anaTabForm.get('tipo').value, style: 'subheader' };
+                          const description = { text: `${this.anaTabForm.get('periodo').value}, sede ${this.anaTabForm.get('sede').value}`, style: 'subsubheader' };
+
+                          docDefinition.content.push(info);
+                          docDefinition.content.push(title);
+                          docDefinition.content.push(description);
+                          // Push image of the chart
+                          docDefinition.content.push({ image: chartData, width: 500, style: 'imageStyle' });
+                          docDefinition.content.push({ image: chartData2, width: 500, style: 'imageStyle' });
+                          docDefinition.content.push({ image: chartData3, width: 500, style: 'imageStyle' });
+                          docDefinition.content.push({ image: chartData4, width: 500, style: 'imageStyle' });
+                          docDefinition.content.push({ image: chartData5, width: 500, style: 'imageStyle' });
+                          docDefinition.content.push({ image: chartData6, width: 500, style: 'imageStyle' });
+                          docDefinition.content.push({ image: chartData7, width: 500, style: 'imageStyle' });
+                          docDefinition.content.push({ image: chartData8, width: 500, style: 'imageStyle' });
+                          docDefinition.content.push({ image: chartData9, width: 500, style: 'imageStyle' });
+                          docDefinition.content.push({ image: chartData10, width: 500, style: 'imageStyle' });
+                          this.docDefinition = docDefinition;
+                          pdfMake.createPdf(docDefinition).download(`${this.anaTabForm.get('tipo').value} tabular.pdf`);
+                        });
                       });
                     });
                   });

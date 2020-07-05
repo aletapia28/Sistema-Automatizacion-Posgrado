@@ -325,6 +325,10 @@ export class VtnHistoricosComponent implements OnInit {
                         const docDefinition = {
                           content: [],
                           styles: {
+                            info: {
+                              fontSize: 10,
+                              alignment: 'right'
+                            },
                             subheader: {
                               fontSize: 16,
                               bold: true,
@@ -343,9 +347,15 @@ export class VtnHistoricosComponent implements OnInit {
                           }
                         };
 
+                        let fechaActual = new Date();
+                        let strFecha = fechaActual.toLocaleString();
+
                         // Add some content to the pdf
+                        const info = { text: `Instituto Tecnológico de Costa Rica\nÁrea Académica de Gerencia de Proyectos\nTel : 2550-2182\n${strFecha}`, style: 'info' };
                         const title = { text: 'Análisis de Históricos', style: 'subheader' };
                         const description = { text: `${this.historicoForm.get('periodo').value} - ${this.historicoForm.get('periodo2').value}`, style: 'subsubheader' };
+                         
+                        docDefinition.content.push(info);
                         docDefinition.content.push(title);
                         docDefinition.content.push(description);
                         // Push image of the chart 

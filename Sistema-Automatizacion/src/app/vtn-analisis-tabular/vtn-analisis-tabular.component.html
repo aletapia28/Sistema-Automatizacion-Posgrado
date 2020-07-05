@@ -86,7 +86,7 @@
                     </table>
                 </div>
                 <div class="tablas" >
-                    <div class="contenedor-tabla" id="estGenChart" #TABLE >
+                    <div class="contenedor-tabla" id="estEdadChart" #TABLE >
                         <!-- TABLA DE Datos Estadisticos -->
                         <table mat-table [dataSource]="dataSourceEstadisticosGeneral">
                             <ng-container matColumnDef="titulo" sticky>
@@ -204,8 +204,6 @@
                     </table>
                 </div>
             </div>
-            
-
         </div>
 
         <div class="evaluacion" *ngIf="showEvaluacion">
@@ -279,8 +277,8 @@
             </div>
 
             <div class="tablas">
-                <div class="contenedor-tabla" id="estEvaChart" #TABLE>
-                    <!-- TABLA DE Edisticos -->
+                <div class="contenedor-tabla" id="estPromChart" #TABLE>
+                    <!-- TABLA DE Estadisticos -->
                     <table mat-table [dataSource]="dataSourceEstaditicosProm">
 
                         <ng-container matColumnDef="titulo" sticky>

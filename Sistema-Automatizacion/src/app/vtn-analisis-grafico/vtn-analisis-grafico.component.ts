@@ -301,6 +301,10 @@ export class VtnAnalisisGraficoComponent implements OnInit {
               const docDefinition = {
                 content: [],
                 styles: {
+                  info: {
+                    fontSize: 10,
+                    alignment: 'right'
+                  },
                   subheader: {
                     fontSize: 16,
                     bold: true,
@@ -319,9 +323,15 @@ export class VtnAnalisisGraficoComponent implements OnInit {
                 }
               };
 
+              let fechaActual = new Date();
+              let strFecha = fechaActual.toLocaleString();
+
               // Add some content to the pdf
+              const info = { text: `Instituto Tecnológico de Costa Rica\nÁrea Académica de Gerencia de Proyectos\nTel : 2550-2182\n${strFecha}`, style: 'info' };
               const title = { text: this.anaGrafForm.get('tipo').value, style: 'subheader' };
               const description = { text: `${this.anaGrafForm.get('periodo').value}, sede ${this.anaGrafForm.get('sede').value}`, style: 'subsubheader' };
+               
+              docDefinition.content.push(info);
               docDefinition.content.push(title);
               docDefinition.content.push(description);
               // Push image of the chart
@@ -419,6 +429,10 @@ export class VtnAnalisisGraficoComponent implements OnInit {
                       const docDefinition = {
                         content: [],
                         styles: {
+                          info: {
+                            fontSize: 10,
+                            alignment: 'right'
+                          },
                           subheader: {
                             fontSize: 16,
                             bold: true,
@@ -437,10 +451,16 @@ export class VtnAnalisisGraficoComponent implements OnInit {
                         }
                       };
 
+                      let fechaActual = new Date();
+                      let strFecha = fechaActual.toLocaleString();
+
                       // Add some content to the pdf
+                      const info = { text: `Instituto Tecnológico de Costa Rica\nÁrea Académica de Gerencia de Proyectos\nTel : 2550-2182\n${strFecha}`, style: 'info' };
                       const title = { text: this.anaGrafForm.get('tipo').value, style: 'subheader' };
                       const description = { text: `${this.anaGrafForm.get('periodo').value}, sede ${this.anaGrafForm.get('sede').value}`, style: 'subsubheader' };
-                      docDefinition.content.push(title);
+                       
+                      docDefinition.content.push(info);
+                      docDefinition.content.push(title); 
                       docDefinition.content.push(description);
                       // Push image of the chart 
                       docDefinition.content.push({ image: chartData, width: 500 });
