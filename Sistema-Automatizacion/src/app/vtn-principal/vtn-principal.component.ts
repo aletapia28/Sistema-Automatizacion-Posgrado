@@ -10,7 +10,7 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { FormControl, FormGroup } from '@angular/forms';
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import * as XLSX from 'xlsx';
-//import * as FileSaver from 'file-saver';
+import * as FileSaver from 'file-saver';
 
 export interface PostulanteElement {
   cedula: string;
@@ -303,7 +303,7 @@ export class VtnPrincipalComponent {
           data = data.replace(/Ú/g, 'U')
 
           const blob = new Blob([data], { type: 'text/csv' });
-         // FileSaver.saveAs(blob, nombre);
+          FileSaver.saveAs(blob, nombre);
         }
       });
   }

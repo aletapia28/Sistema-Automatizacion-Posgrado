@@ -55,6 +55,8 @@ export class VtnAnalisisTabularComponent implements OnInit {
   dataSourceEvaluacionNota = new MatTableDataSource(DATOS_GENERALES);
   dataSourceEvaluacion = new MatTableDataSource(DATOS_GENERALES);
   dataSourceEstaditicosEval = new MatTableDataSource();
+  //Nuevo datasource para la tabla de estadisticas de Record (promedioGeneral)
+  dataSourceEstaditicosProm = new MatTableDataSource();
 
   // edad 
   edadData = [];
@@ -93,11 +95,11 @@ export class VtnAnalisisTabularComponent implements OnInit {
       "value": 0
     },
     {
-      "name": "Minimo",
+      "name": "Mínimo",
       "value": 0
     },
     {
-      "name": "Maximo",
+      "name": "Máximo",
       "value": 0
     },
     {
@@ -119,11 +121,37 @@ export class VtnAnalisisTabularComponent implements OnInit {
       "value": 0
     },
     {
-      "name": "Minimo",
+      "name": "Mínimo",
       "value": 0
     },
     {
-      "name": "Maximo",
+      "name": "Máximo",
+      "value": 0
+    },
+    {
+      "name": "Rango",
+      "value": 0
+    },
+  ];
+  estadisticosPromData = [
+    {
+      "name": "Media",
+      "value": 0
+    },
+    {
+      "name": "Mediana",
+      "value": 0
+    },
+    {
+      "name": "Moda",
+      "value": 0
+    },
+    {
+      "name": "Mínimo",
+      "value": 0
+    },
+    {
+      "name": "Máximo",
       "value": 0
     },
     {
@@ -136,6 +164,7 @@ export class VtnAnalisisTabularComponent implements OnInit {
 
   totaleval = [];
   totalgen = [];
+  totalprom =[];
   sumapromedio = [];
   medianaprom = [];
   modaprom = [];
@@ -346,7 +375,9 @@ export class VtnAnalisisTabularComponent implements OnInit {
         );
 
         //evaluacion 
-        var max = 0, min = 0, moda = 0, len = 0, media = 0, mediana = 0
+        var max = 0, min = 0, moda = 0, len = 0, media = 0, mediana = 0,
+        maxprom = 0, minprom = 0, modaprom = 0, lenprom = 0, mediaprom = 0, medianaprom = 0
+        //min, max, rango nota 
         this.http.post<any>('/router/ObtenerEstadisticasEval', formData).subscribe(
           (respost) => {
             this.totaleval = respost[0]
@@ -361,6 +392,21 @@ export class VtnAnalisisTabularComponent implements OnInit {
 
           },
         );
+        //min,max,rango promedioGeneral 
+        this.http.post<any>('/router/ObtenerEstadisticasProm', formData).subscribe(
+          (respost) => {
+            this.totalprom = respost[0]
+            maxprom = respost[0][0]['name']
+            lenprom = this.totalprom.length
+            minprom = respost[0][len - 1]['name']
+            this.estadisticosPromData[3]['value'] = Math.round(minprom)
+            this.estadisticosPromData[4]['value'] = Math.round(maxprom)
+            this.estadisticosPromData[5]['value'] = Math.round(maxprom - minprom)
+            this.dataSourceEstaditicosProm = new MatTableDataSource(this.estadisticosPromData);
+
+          },
+        );
+        //media nota   
         this.http.post<any>('/router/ObtenerMediaEval', formData).subscribe(
           (respost) => {
             this.notaData = respost[0]
@@ -370,6 +416,17 @@ export class VtnAnalisisTabularComponent implements OnInit {
 
           },
         );
+        //media promedioGeneral   
+        this.http.post<any>('/router/ObtenerMediaProm', formData).subscribe(
+          (respost) => {
+            this.notaData = respost[0]
+            mediaprom = respost[0][0]['name'];
+            this.estadisticosPromData[0]['value'] = Math.round(mediaprom);
+            this.dataSourceEstaditicosProm = new MatTableDataSource(this.estadisticosPromData);
+
+          },
+        );
+        //mediana nota
         this.http.post<any>('/router/ObtenerMedianaEval', formData).subscribe(
           (respost) => {
             this.notaData = respost[0]
@@ -379,12 +436,33 @@ export class VtnAnalisisTabularComponent implements OnInit {
 
           },
         );
+        //mediana promedioGeneral
+        this.http.post<any>('/router/ObtenerMedianaProm', formData).subscribe(
+          (respost) => {
+            this.notaData = respost[0]
+            medianaprom = respost[0][0]['name']
+            this.estadisticosPromData[1]['value'] = Math.round(medianaprom);
+            this.dataSourceEstaditicosProm = new MatTableDataSource(this.estadisticosPromData);
+
+          },
+        );
+        //moda nota
         this.http.post<any>('/router/ObtenerModaEval', formData).subscribe(
           (respost) => {
             this.notaData = respost[0]
             moda = respost[0][0]['name']
             this.estadisticosEvalData[2]['value'] = Math.round(moda);
             this.dataSourceEstaditicosEval = new MatTableDataSource(this.estadisticosEvalData);
+
+          },
+        );
+        //moda promedioGeneral
+        this.http.post<any>('/router/ObtenerModaProm', formData).subscribe(
+          (respost) => {
+            this.notaData = respost[0]
+            modaprom = respost[0][0]['name']
+            this.estadisticosPromData[2]['value'] = Math.round(modaprom);
+            this.dataSourceEstaditicosProm = new MatTableDataSource(this.estadisticosPromData);
 
           },
         );
