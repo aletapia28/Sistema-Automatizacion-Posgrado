@@ -42,12 +42,23 @@ export class VtnNuevoPeriodoComponent implements OnInit {
     let fechafin = this.nuevoPForm.get('fechaF').value;
     
     if (period.length > 0) {
-
       const formData = { periodo: period, fechaInicio: fechain, fechaCierre: fechafin }
       this.http.post<any>('/router/CrearPeriodo', formData).subscribe(
         (res) => {
           if (Array.isArray(res)) {
             this.notificationService.success('Datos guardados');
+            this.http.get<any>('/router/getPeriodoActual').subscribe(
+              (respost) => {
+                let periodoActual = respost[0];
+                if (periodoActual.length == 1) {
+                  sessionStorage.setItem('periodoVigente', 'true');
+                  sessionStorage.setItem('periodoActual', periodoActual[0].periodo);
+                }
+                else {
+                  sessionStorage.setItem('periodoVigente', 'false');
+                }
+              }
+            );
           } else
             this.notificationService.warning('Error al crear')
         },
@@ -55,9 +66,6 @@ export class VtnNuevoPeriodoComponent implements OnInit {
           this.notificationService.warning('Error')
         }
       );
-    } else {
-      console.log('Aqui')
     }
-
   }
 }

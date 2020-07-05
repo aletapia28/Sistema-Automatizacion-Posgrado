@@ -22,7 +22,6 @@ export class VtnRepostularComponent implements OnInit {
     private http: HttpClient,
     private notificationService: NotificationService,
     private dialogService: DialogService
-
   ) { }
 
   ngOnInit(): void {

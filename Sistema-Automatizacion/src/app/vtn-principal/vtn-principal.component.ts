@@ -150,6 +150,7 @@ export class VtnPrincipalComponent {
           );
         }
         else {
+          sessionStorage.setItem('periodoVigente', 'false');
           this.http.get<any>('/router/getPeriodoAnterior').subscribe(
             (respost) => {
               let periodoAnterior = respost[0];
@@ -188,75 +189,41 @@ export class VtnPrincipalComponent {
     this.periodoShowing = periodoShow;
     sessionStorage.setItem('periodoSeleccionado', periodoShow);
     if (this.tipoShowing) {
-      const formData = { periodo: periodoShow }
-      this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
-        (respost) => {
-          this.dataSource = new MatTableDataSource(respost[0]);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-          this.paginator._intl.itemsPerPageLabel = 'Postulaciones por página:';
-        }
-      );
+      this.onPostulantes();
     } else {
-      this.dialogService.openAdmitidosDialog("Postulantes admitidos", "Elija la sede y la posible nota mínima a aceptar")
-        .afterClosed().subscribe(res => {
-          if (res) {
-            let nota = sessionStorage.getItem('notaMinima');
-            let sede = sessionStorage.getItem('sedeActual');
-            const formData = { periodo: this.periodoShowing, nota: nota, sede: sede }
-            this.http.post<any>('/router/obtenerAdmitidos', formData).subscribe(
-              (respost) => {
-                this.dataSource = new MatTableDataSource(respost[0]);
-                this.dataSource.sort = this.sort;
-                this.dataSource.paginator = this.paginator;
-                this.paginator._intl.itemsPerPageLabel = 'Admitidos por página:';
-              }
-            );
-          }
-        });
+      this.onFilt();
     }
   }
 
   cargarPost(event) {
     let tipoPost = event;
     if (tipoPost == 'Postulantes') {
-      const formData = { periodo: this.periodoShowing }
-      this.tipoShowing = true;
-      this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
-        (respost) => {
-          this.dataSource = new MatTableDataSource(respost[0]);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-          this.paginator._intl.itemsPerPageLabel = 'Postulaciones por página:';
-        }
-      );
+      this.onPostulantes();
     } else {
-      this.dialogService.openAdmitidosDialog("Postulantes admitidos", "Elija la sede y la posible nota mínima a aceptar")
-        .afterClosed().subscribe(res => {
-          if (res) {
-            let nota = sessionStorage.getItem('notaMinima');
-            let sede = sessionStorage.getItem('sedeActual');
-            const formData = { periodo: this.periodoShowing, nota: nota, sede: sede }
-            this.tipoShowing = false;
-            this.http.post<any>('/router/obtenerAdmitidos', formData).subscribe(
-              (respost) => {
-                this.dataSource = new MatTableDataSource(respost[0]);
-                this.dataSource.sort = this.sort;
-                this.dataSource.paginator = this.paginator;
-                this.paginator._intl.itemsPerPageLabel = 'Admitidos por página:';
-              }
-            );
-          }
-        });
+      this.onFilt();
     }
+  }
+
+  onPostulantes() {
+    const formData = { periodo: this.periodoShowing }
+    this.tipoShowing = true;
+    this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
+      (respost) => {
+        this.dataSource = new MatTableDataSource(respost[0]);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.paginator._intl.itemsPerPageLabel = 'Postulaciones por página:';
+      }
+    );
   }
 
   onFilt() {
     this.dialogService.openAdmitidosDialog("Postulantes admitidos", "Elija la sede y la posible nota mínima a aceptar")
-        .afterClosed().subscribe(res => {
-          if (res) {
-            let nota = sessionStorage.getItem('notaMinima');
-            let sede = sessionStorage.getItem('sedeActual');
+      .afterClosed().subscribe(res => {
+        if (res) {
+          let nota = sessionStorage.getItem('notaMinima');
+          let sede = sessionStorage.getItem('sedeActual');
+          if ((nota != 'null') && (sede != 'null')) {
             const formData = { periodo: this.periodoShowing, nota: nota, sede: sede }
             this.tipoShowing = false;
             this.http.post<any>('/router/obtenerAdmitidos', formData).subscribe(
@@ -267,8 +234,12 @@ export class VtnPrincipalComponent {
                 this.paginator._intl.itemsPerPageLabel = 'Admitidos por página:';
               }
             );
+          } else {
+            this.tipo.setValue('Postulantes');
+            this.onPostulantes();
           }
-        });
+        }
+      });
   }
 
   descargarArchivo() {
@@ -308,12 +279,12 @@ export class VtnPrincipalComponent {
       });
   }
 
-  getFecha(fecha:string) {
+  getFecha(fecha: string) {
     let dia = fecha.slice(8, 10);
     let mes = fecha.slice(5, 7);
     let anho = fecha.slice(0, 4);
-    return(`${mes}/${dia}/${anho}`)
-  } 
+    return (`${mes}/${dia}/${anho}`)
+  }
 }
 
 

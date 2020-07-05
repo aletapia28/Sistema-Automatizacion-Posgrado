@@ -233,8 +233,7 @@ export class VtnImportarArchivoComponent implements OnInit {
         this.http.post<any>('/router/registerpostulanteA', formData).subscribe(
           (res) => {
             this.notificationService.success('Postulante importado');
-          },
-          (err) => console.log(err)
+          }
         );
 
       }
@@ -243,7 +242,5 @@ export class VtnImportarArchivoComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.importarAForm.value);
-    
   }
 }

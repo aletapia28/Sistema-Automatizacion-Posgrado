@@ -8,7 +8,6 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { NotificationService } from '../shared/notification.service';
 import { DialogService } from '../shared/dialog.service';
 
-
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -26,6 +25,7 @@ export class VtnLoginComponent implements OnInit {
     correo: '',
     password: '',
   }
+
   credsuperuser: Tokenuser = {
     correo: ''
   }
@@ -55,7 +55,6 @@ export class VtnLoginComponent implements OnInit {
     if (this.loginForm.get('correo').hasError('required')) {
       return 'Debe ingresar un correo electrónico';
     }
-
     return this.loginForm.get('correo').hasError('email') ? 'Correo inválido' : '';
   }
 
@@ -84,10 +83,8 @@ export class VtnLoginComponent implements OnInit {
                 sessionStorage.setItem('correoAsistente', email);
               }
               this.router.navigate(['principal'])
-            },
-            (err) => console.log(err)
+            }
           );
-
         },
         err => {
           this.notificationService.warning('Los datos ingresados no corresponden a ningún usuario');
@@ -95,6 +92,7 @@ export class VtnLoginComponent implements OnInit {
       )
     }
   }
+
   recuperar(){
     this.dialog.openRecoverPass("Recuperar contraseña","Digite el correo del usuario ");
   }
