@@ -1018,7 +1018,7 @@ router.post('/ObtenerExperiencia', function(req, res, next) {
         if (!err) {
 
             var experienciaData = [{
-                    "name": "Menor a 3 años",
+                    "name": "0 a 3 años",
                     "value": 0
                 },
                 {
@@ -1030,7 +1030,7 @@ router.post('/ObtenerExperiencia', function(req, res, next) {
                     "value": 0
                 },
                 {
-                    "name": "Mayor a 10",
+                    "name": "10 o más",
                     "value": 0
                 }
             ]
@@ -1208,6 +1208,14 @@ router.post('/ObtenerEstadisticasEval', function(req, res, next) {
             console.log(err);
     })
 })
+router.post('/ObtenerEstadisticasProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerEstadisticasProm(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
 router.post('/ObtenerMediaEval', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerMediaEval(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
         if (!err)
@@ -1218,6 +1226,14 @@ router.post('/ObtenerMediaEval', function(req, res, next) {
 })
 router.post('/ObtenerMediaGen', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerMediaGen(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
+router.post('/ObtenerMediaProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMediaProm(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -1240,6 +1256,14 @@ router.post('/ObtenerMedianaGen', function(req, res, next) {
             console.log(err);
     })
 })
+router.post('/ObtenerMedianaProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerMedianaProm(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            res.send(row);
+        else
+            console.log(err);
+    })
+})
 router.post('/ObtenerModaEval', function(req, res, next) {
     db.mysqlConnection.query('CALL ObtenerModaEval(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
         if (!err)
@@ -1247,8 +1271,6 @@ router.post('/ObtenerModaEval', function(req, res, next) {
                 res.send(row);
             else {
                 row[0][0]['name'] = 0;
-                console.log(row[0]['value'])
-                console.log(row)
                 res.send(row)
             }
         else
@@ -1262,8 +1284,20 @@ router.post('/ObtenerModaGen', function(req, res, next) {
                 res.send(row);
             else {
                 row[0][0]['name'] = 0;
-                console.log(row[0]['value'])
-                console.log(row)
+                res.send(row)
+            }
+        else
+            console.log(err);
+    })
+})
+
+router.post('/ObtenerModaProm', function(req, res, next) {
+    db.mysqlConnection.query('CALL ObtenerModaProm(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
+        if (!err)
+            if (row[0][0]['value'] >= 2)
+                res.send(row);
+            else {
+                row[0][0]['name'] = 0;
                 res.send(row)
             }
         else
@@ -1284,8 +1318,8 @@ router.post('/ObtenerEdadHistorico', function(req, res, next) {
                 minimo.push({ 'name': row[0][i].periodo, 'value': row[0][i].Minimo })
                 maximo.push({ 'name': row[0][i].periodo, 'value': row[0][i].Maximo })
             }
-            response.push({ 'name': 'Nota Mínima', 'series': minimo })
-            response.push({ 'name': 'Nota Máxima', 'series': maximo })
+            response.push({ 'name': 'Edad Mínima', 'series': minimo })
+            response.push({ 'name': 'Edad Máxima', 'series': maximo })
 
             res.send(response);
         } else
