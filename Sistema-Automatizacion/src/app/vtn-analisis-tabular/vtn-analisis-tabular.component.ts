@@ -55,7 +55,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
   dataSourceEvaluacionNota = new MatTableDataSource(DATOS_GENERALES);
   dataSourceEvaluacion = new MatTableDataSource(DATOS_GENERALES);
   dataSourceEstaditicosEval = new MatTableDataSource();
-  //Nuevo datasource para la tabla de estadisticas de Record (promedioGeneral)
   dataSourceEstaditicosProm = new MatTableDataSource();
 
   // edad 
@@ -229,7 +228,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerGeneroTabla', formData).subscribe(
           (respost) => {
             this.generoData = respost[0]
-            console.log(this.generoData)
             this.dataSourceGeneralesGenero = new MatTableDataSource(this.generoData);
           },
         );
@@ -237,7 +235,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerEdadTabla', formData).subscribe(
           (respost) => {
             this.edadData = respost[0]
-            console.log(this.edadData)
             this.dataSourceGeneralesEdad = new MatTableDataSource(this.edadData);
           },
         );
@@ -245,8 +242,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerPuestoActualTabla', formData).subscribe(
           (respost) => {
             this.puestoData = respost[0]
-            console.log(this.puestoData)
-
             this.dataSourceGeneralesPuestoAc = new MatTableDataSource(this.puestoData);
           },
         );
@@ -254,7 +249,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerUniversidadTabla', formData).subscribe(
           (respost) => {
             this.universidadData = respost[0]
-            console.log(this.universidadData)
             this.dataSourceGeneralesUniversidad = new MatTableDataSource(this.universidadData);
           },
         );
@@ -295,8 +289,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerModaGen', formData).subscribe(
           (respost) => {
             this.totalgen = respost[0]
-            console.log("this.totalgen")
-            console.log(respost[0])
             modae = respost[0][0]['name']
             this.estadisticosData[2]['value'] = Math.round(modae)
             this.dataSourceEstadisticosGeneral = new MatTableDataSource(this.estadisticosData);
@@ -312,7 +304,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerMaximoGradoTabla', formData).subscribe(
           (respost) => {
             this.maxGradoData = respost[0]
-            console.log(this.maxGradoData)
             this.dataSourceEvaluacionMGA = new MatTableDataSource(this.maxGradoData);
           },
         );
@@ -320,7 +311,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerPromedioTabla', formData).subscribe(
           (respost) => {
             this.recordData = respost[0]
-            console.log(this.recordData)
             this.dataSourceEvaluacionPromedio = new MatTableDataSource(this.recordData);
           },
         );
@@ -329,7 +319,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerExperienciaTabla', formData).subscribe(
           (respost) => {
             this.experienciaData = respost[0]
-            console.log(this.experienciaData)
             this.dataSourceEvaluacionExperiencia = new MatTableDataSource(this.experienciaData);
           },
         );
@@ -337,7 +326,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerPuestoActualTabla', formData).subscribe(
           (respost) => {
             this.puestoData = respost[0]
-            console.log(this.puestoData)
             this.dataSourceEvaluacionNivelJ = new MatTableDataSource(this.puestoData);
           },
         );
@@ -345,7 +333,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerAfinidadTabla', formData).subscribe(
           (respost) => {
             this.afinidadData = respost[0]
-            console.log(this.afinidadData)
             this.dataSourceEvaluacionAfinidad = new MatTableDataSource(this.afinidadData);
           },
         );
@@ -353,7 +340,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerAcreditadaTabla', formData).subscribe(
           (respost) => {
             this.acredData = respost[0]
-            console.log(this.acredData)
             this.dataSourceEvaluacionAcreditacion = new MatTableDataSource(this.acredData);
           },
         );
@@ -361,7 +347,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerFormacionComplementariaTabla', formData).subscribe(
           (respost) => {
             this.formacionData = respost[0]
-            console.log(this.formacionData)
             this.dataSourceEvaluacionFormacionC = new MatTableDataSource(this.formacionData);
           },
         );
@@ -369,7 +354,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
         this.http.post<any>('/router/ObtenerNotaTabla', formData).subscribe(
           (respost) => {
             this.notaData = respost[0]
-            console.log(this.notaData)
             this.dataSourceEvaluacionNota = new MatTableDataSource(this.notaData);
           },
         );
@@ -385,7 +369,6 @@ export class VtnAnalisisTabularComponent implements OnInit {
             len = this.totaleval.length
             min = respost[0][len - 1]['name']
             this.estadisticosEvalData[3]['value'] = Math.round(min)
-
             this.estadisticosEvalData[4]['value'] = Math.round(max)
             this.estadisticosEvalData[5]['value'] = Math.round(max - min)
             this.dataSourceEstaditicosEval = new MatTableDataSource(this.estadisticosEvalData);

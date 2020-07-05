@@ -19,9 +19,6 @@ export interface Usuarios {
 }
 const ELEMENT_DATA: Usuarios[] = [];
 
-
-
-
 @Component({
   selector: 'app-vtn-eliminar-asistente',
   templateUrl: './vtn-eliminar-asistente.component.html',
@@ -80,11 +77,9 @@ export class VtnEliminarAsistenteComponent implements OnInit {
 
         this.dataSource = new MatTableDataSource(respost[0]);
       }
-
     );
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    
+    this.dataSource.paginator = this.paginator; 
   }
 
   onDelete(row, key) {
@@ -110,8 +105,6 @@ export class VtnEliminarAsistenteComponent implements OnInit {
   onEdit(row, key) {
     sessionStorage.setItem('correoAsistente', row.correo);
     this.router.navigate(['editAsis']);
-
-
   }
 
 }

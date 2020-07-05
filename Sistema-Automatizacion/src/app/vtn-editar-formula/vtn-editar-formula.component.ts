@@ -96,8 +96,6 @@ export class VtnEditarFormulaComponent implements OnInit {
     let tTecnico = this.editarFForm.get('tTecnico').value;
     let cMaestria = this.editarFForm.get('cMaestria').value;
     let tDiplomado = this.editarFForm.get('tDiplomado').value;
-    console.log(tDiplomado)
-    
 
     if ((bachillerato != null) && (licenciatura != null) && (maestria != null) && (doctorado != null) && (de3a6 != null)
       && (de6a10 != null) && (masDe10 != null) && (profSinP != null) && (profMiembro != null) && (jefatura != null)
@@ -111,7 +109,6 @@ export class VtnEditarFormulaComponent implements OnInit {
         media: media, baja: baja, acreditada: acreditada, noAcreditada: noAcreditada, cAprovechamiento: cAprovechamiento, tTecnico: tTecnico,
         cMaestria: cMaestria, tDiplomado: tDiplomado
       }
-      console.log(formData)
       this.http.post<any>('/router/editarFormula', formData).subscribe(
         (res) => {
           this.notificationService.success('Fórmula actualizada'); 

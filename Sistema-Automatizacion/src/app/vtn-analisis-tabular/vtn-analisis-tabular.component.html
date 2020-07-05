@@ -65,32 +65,53 @@
                             <th mat-header-cell *matHeaderCellDef> Edad </th>
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                             <td mat-footer-cell *matFooterCellDef> Total </td>
-
                         </ng-container>
+
                         <ng-container matColumnDef="total" >
                             <th mat-header-cell *matHeaderCellDef> Absoluto </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                             <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceGeneralesEdad)}} </td>
-
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
                             <td mat-footer-cell *matFooterCellDef> {{getRelativo(dataSourceGeneralesEdad)}}% </td>
-
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="titulo,sticky:false"></tr>
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsGenerales; sticky:true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsGenerales;"></tr>
                         <tr mat-footer-row *matFooterRowDef="displayedColumnsGenerales"></tr>
-
                     </table>
+                </div>
+                <div class="tablas" >
+                    <div class="contenedor-tabla" id="estGenChart" #TABLE >
+                        <!-- TABLA DE Datos Estadisticos -->
+                        <table mat-table [dataSource]="dataSourceEstadisticosGeneral">
+                            <ng-container matColumnDef="titulo" sticky>
+                                <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="tituloTabla"> Datos estadísticos por edad </th>
+                            </ng-container>
+
+                            <ng-container matColumnDef="caracteristica" >
+                                <th mat-header-cell *matHeaderCellDef>Variable </th>
+                                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="total" >
+                                <th mat-header-cell *matHeaderCellDef> Valor </th>
+                                <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="titulo,sticky:false">Datos estadísticos por edad</tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
                 </div>
                 <div class="contenedor-tabla" id="generoChart" #TABLE>
                     <!-- TABLA DE GENERO -->
                     <table mat-table [dataSource]="dataSourceGeneralesGenero">
-
                         <ng-container matColumnDef="titulo" sticky>
                             <th mat-header-cell *matHeaderCellDef colspan="3" class="tituloTabla"> Datos generales por género </th>
                         </ng-container>
@@ -106,6 +127,7 @@
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                             <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceGeneralesGenero)}} </td>
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
@@ -131,28 +153,23 @@
                             <th mat-header-cell *matHeaderCellDef> Universidad </th>
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                             <td mat-footer-cell *matFooterCellDef> Total </td>
-
                         </ng-container>
+
                         <ng-container matColumnDef="total" >
                             <th mat-header-cell *matHeaderCellDef> Absoluto </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
-                            <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceGeneralesUniversidad)}}
-                            </td>
-
+                            <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceGeneralesUniversidad)}}</td>
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
-                            <td mat-footer-cell *matFooterCellDef> {{getRelativo(dataSourceGeneralesUniversidad)}}%
-                            </td>
-
+                            <td mat-footer-cell *matFooterCellDef> {{getRelativo(dataSourceGeneralesUniversidad)}}%</td>
                         </ng-container>
-
                         <tr mat-header-row *matHeaderRowDef="titulo,sticky:false"></tr>
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsGenerales; sticky:true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsGenerales;"></tr>
                         <tr mat-footer-row *matFooterRowDef="displayedColumnsGenerales"></tr>
-
                     </table>
                 </div>
                 <div class="contenedor-tabla" id="puestoChart" #TABLE>
@@ -167,11 +184,13 @@
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                             <td mat-footer-cell *matFooterCellDef> Total </td>
                         </ng-container>
+
                         <ng-container matColumnDef="total" >
                             <th mat-header-cell *matHeaderCellDef> Absoluto </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                             <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceGeneralesPuestoAc)}} </td>
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
@@ -185,30 +204,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tablas" >
-                <div class="contenedor-tabla" id="estGenChart" #TABLE >
-                    <!-- TABLA DE Datos Estadisticos -->
-                    <table mat-table [dataSource]="dataSourceEstadisticosGeneral">
-
-                        <ng-container matColumnDef="titulo" sticky>
-                            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="tituloTabla"> Datos Estadísticos </th>
-                        </ng-container>
-
-                        <ng-container matColumnDef="caracteristica" >
-                            <th mat-header-cell *matHeaderCellDef>Variable </th>
-                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="total" >
-                            <th mat-header-cell *matHeaderCellDef> Valor </th>
-                            <td mat-cell *matCellDef="let element"> {{element.value}} </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="titulo,sticky:false">Datos Estadísticos</tr>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                </div>
-            </div>
+            
 
         </div>
 
@@ -221,17 +217,20 @@
                             <th mat-header-cell *matHeaderCellDef colspan="3" class="tituloTabla"> Evaluación por máximo grado académico
                             </th>
                         </ng-container>
+
                         <!-- nombre Column -->
                         <ng-container matColumnDef="caracteristica" >
                             <th mat-header-cell *matHeaderCellDef> Máximo grado académico </th>
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                             <td mat-footer-cell *matFooterCellDef> Total </td>
                         </ng-container>
+
                         <ng-container matColumnDef="total" >
                             <th mat-header-cell *matHeaderCellDef> Absoluto </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                             <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceEvaluacionMGA)}} </td>
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
@@ -244,23 +243,27 @@
                         <tr mat-footer-row *matFooterRowDef="displayedColumnsGenerales"></tr>
                     </table>
                 </div>
+
                 <div class="contenedor-tabla" id="recordChart" #TABLE>
                     <!-- TABLA DE Promedio general -->
                     <table mat-table [dataSource]="dataSourceEvaluacionPromedio">
                         <ng-container matColumnDef="titulo" sticky>
                             <th mat-header-cell *matHeaderCellDef colspan="3" class="tituloTabla"> Evaluación por promedio general </th>
                         </ng-container>
+
                         <!-- nombre Column -->
                         <ng-container matColumnDef="caracteristica" >
                             <th mat-header-cell *matHeaderCellDef> Promedio general </th>
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                             <td mat-footer-cell *matFooterCellDef> Total </td>
                         </ng-container>
+
                         <ng-container matColumnDef="total" >
                             <th mat-header-cell *matHeaderCellDef> Absoluto </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                             <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceEvaluacionPromedio)}} </td>
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
@@ -274,6 +277,33 @@
                     </table>
                 </div>
             </div>
+
+            <div class="tablas">
+                <div class="contenedor-tabla" id="estEvaChart" #TABLE>
+                    <!-- TABLA DE Edisticos -->
+                    <table mat-table [dataSource]="dataSourceEstaditicosProm">
+
+                        <ng-container matColumnDef="titulo" sticky>
+                            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="tituloTabla"> Datos estadísticos por promedio general </th>
+                            <!-- <td mat-cell *matCellDef="let element" [attr.rowspan]="2"> {{element.caracteristica}} </td> -->
+                        </ng-container>
+
+                        <ng-container matColumnDef="caracteristica" >
+                            <th mat-header-cell *matHeaderCellDef>Variable </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="total" >
+                            <th mat-header-cell *matHeaderCellDef> Valor </th>
+                            <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="titulo,sticky:true">Datos Estadísticos</tr>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+
             <div class="tablas">
                 <div class="contenedor-tabla" id="expChart" #TABLE>
                     <!-- TABLA DE Experiencia -->
@@ -282,17 +312,20 @@
                             <th mat-header-cell *matHeaderCellDef colspan="3" class="tituloTabla"> Evaluación por experiencia profesional
                             </th>
                         </ng-container>
+
                         <!-- nombre Column -->
                         <ng-container matColumnDef="caracteristica" >
                             <th mat-header-cell *matHeaderCellDef> Experiencia profesional </th>
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                             <td mat-footer-cell *matFooterCellDef> Total </td>
                         </ng-container>
+
                         <ng-container matColumnDef="total" >
                             <th mat-header-cell *matHeaderCellDef> Absoluto </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                             <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceEvaluacionExperiencia)}} </td>
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
@@ -305,24 +338,27 @@
                         <tr mat-footer-row *matFooterRowDef="displayedColumnsGenerales"></tr>
                     </table>
                 </div>
+
                 <div class="contenedor-tabla" id="jerarChart" #TABLE>
                     <!-- TABLA DE Nivel jerárquico -->
                     <table mat-table [dataSource]="dataSourceEvaluacionNivelJ">
                         <ng-container matColumnDef="titulo" sticky>
                             <th mat-header-cell *matHeaderCellDef colspan="3" class="tituloTabla"> Evaluación por nivel jerárquico </th>
                         </ng-container>
+
                         <!-- nombre Column -->
                         <ng-container matColumnDef="caracteristica" >
                             <th mat-header-cell *matHeaderCellDef> Nivel jerárquico </th>
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                             <td mat-footer-cell *matFooterCellDef> Total </td>
-
                         </ng-container>
+
                         <ng-container matColumnDef="total" >
                             <th mat-header-cell *matHeaderCellDef> Absoluto </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                             <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceEvaluacionNivelJ)}} </td>
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
@@ -337,7 +373,6 @@
                 </div>
             </div>
 
-
             <div class="tablas">
                 <div class="contenedor-tabla" id="afinChart" #TABLE>
                     <!-- TABLA DE Afinidad -->
@@ -345,17 +380,20 @@
                         <ng-container matColumnDef="titulo" sticky>
                             <th mat-header-cell *matHeaderCellDef colspan="3" class="tituloTabla"> Evaluación por afinidad </th>
                         </ng-container>
+
                         <!-- nombre Column -->
                         <ng-container matColumnDef="caracteristica" >
                             <th mat-header-cell *matHeaderCellDef> Afinidad </th>
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                             <td mat-footer-cell *matFooterCellDef> Total </td>
                         </ng-container>
+
                         <ng-container matColumnDef="total" >
                             <th mat-header-cell *matHeaderCellDef> Absoluto </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                             <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceEvaluacionAfinidad)}} </td>
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
@@ -368,23 +406,27 @@
                         <tr mat-footer-row *matFooterRowDef="displayedColumnsGenerales"></tr>
                     </table>
                 </div>
+
                 <div class="contenedor-tabla" id="acredChart" #TABLE>
                     <!-- TABLA DE Acreditación -->
                     <table mat-table [dataSource]="dataSourceEvaluacionAcreditacion">
                         <ng-container matColumnDef="titulo" sticky>
                             <th mat-header-cell *matHeaderCellDef colspan="3" class="tituloTabla"> Evaluación por acreditación </th>
                         </ng-container>
+
                         <!-- nombre Column -->
                         <ng-container matColumnDef="caracteristica" >
                             <th mat-header-cell *matHeaderCellDef> Acreditación </th>
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                             <td mat-footer-cell *matFooterCellDef> Total </td>
                         </ng-container>
+
                         <ng-container matColumnDef="total" >
                             <th mat-header-cell *matHeaderCellDef> Absoluto </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                             <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceEvaluacionAcreditacion)}} </td>
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
@@ -407,17 +449,20 @@
                             <th mat-header-cell *matHeaderCellDef colspan="3" class="tituloTabla"> Evaluación por formación complementaria
                             </th>
                         </ng-container>
+
                         <!-- nombre Column -->
                         <ng-container matColumnDef="caracteristica" >
                             <th mat-header-cell *matHeaderCellDef> Formación complementaria </th>
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                             <td mat-footer-cell *matFooterCellDef> Total </td>
                         </ng-container>
+
                         <ng-container matColumnDef="total" >
                             <th mat-header-cell *matHeaderCellDef> Absoluto </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                             <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceEvaluacionFormacionC)}} </td>
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
@@ -430,23 +475,27 @@
                         <tr mat-footer-row *matFooterRowDef="displayedColumnsGenerales"></tr>
                     </table>
                 </div>
+
                 <div class="contenedor-tabla" id="notaChart" #TABLE>
                     <!-- TABLA DE Nota -->
                     <table mat-table [dataSource]="dataSourceEvaluacionNota">
                         <ng-container matColumnDef="titulo" sticky>
-                            <th mat-header-cell *matHeaderCellDef colspan="3" class="tituloTabla"> Evaluación por nota </th>
+                            <th mat-header-cell *matHeaderCellDef colspan="3" class="tituloTabla"> Evaluación por nota obtenida </th>
                         </ng-container>
+
                         <!-- nombre Column -->
                         <ng-container matColumnDef="caracteristica" >
                             <th mat-header-cell *matHeaderCellDef> Nota </th>
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                             <td mat-footer-cell *matFooterCellDef> Total </td>
                         </ng-container>
+
                         <ng-container matColumnDef="total" >
                             <th mat-header-cell *matHeaderCellDef> Absoluto </th>
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                             <td mat-footer-cell *matFooterCellDef> {{getAbsoluto(dataSourceEvaluacionNota)}} </td>
                         </ng-container>
+
                         <ng-container matColumnDef="relativo" >
                             <th mat-header-cell *matHeaderCellDef> Relativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.relativo}}% </td>
@@ -467,7 +516,7 @@
                     <table mat-table [dataSource]="dataSourceEstaditicosEval">
 
                         <ng-container matColumnDef="titulo" sticky>
-                            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="tituloTabla"> Datos Estadísticos </th>
+                            <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="tituloTabla"> Datos estadísticos por nota obtenida </th>
                             <!-- <td mat-cell *matCellDef="let element" [attr.rowspan]="2"> {{element.caracteristica}} </td> -->
                         </ng-container>
 

@@ -7,7 +7,6 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from "file-saver/src/FileSaver";
 import { NotificationService } from '../shared/notification.service';
-import { experiences, education, skills, achievements } from "./cv-data";
 import { DocumentCreator } from "./cv-generator";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -243,9 +242,7 @@ export class DescargarMemoComponent implements OnInit {
       ]);
 
       Packer.toBlob(doc).then(blob => {
-        console.log(blob);
         saveAs(blob, `Memorando ${this.periodoVigente}.docx`);
-        console.log("Document created successfully");
       });
     }
   }

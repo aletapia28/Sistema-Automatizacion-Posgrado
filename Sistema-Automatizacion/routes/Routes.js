@@ -125,13 +125,10 @@ router.post('/registerasistente', (req, res) => {
 
 //ELIMINAR ASISTENTES
 router.post('/deleteasistant', function(req, res, next) {
-    console.log("req.body.correo");
-    console.log(req.body.correo);
     db.mysqlConnection.query('CALL EliminarAsistente(?)', [req.body.correo],
         (err, row, fields) => {
             if (!err) {
                 res.send(row);
-                console.log(row);
             } else
                 res.send(err);
         })
@@ -328,7 +325,6 @@ router.post('/registerpostulante', (req, res) => {
                             })
                             .then(postulacion => {
                                 if (!postulacion) {
-                                    console.log(req.body.cedula)
                                     Postulacion.create(userDataPost)
                                         .then(postulacion => {
                                             let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
@@ -360,7 +356,6 @@ router.post('/registerpostulante', (req, res) => {
                     })
                     .then(postulacion => {
                         if (!postulacion) {
-                            console.log(req.body.cedula)
                             Postulacion.create(userDataPost)
                                 .then(postulacion => {
                                     let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
@@ -728,7 +723,6 @@ router.post('/registerpostulanteA', (req, res) => {
                             })
                             .then(postulacion => {
                                 if (!postulacion) {
-                                    console.log(req.body.cedula)
                                     Postulacion.create(userDataPost)
                                         .then(postulacion => {
                                             let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
@@ -760,7 +754,6 @@ router.post('/registerpostulanteA', (req, res) => {
                     })
                     .then(postulacion => {
                         if (!postulacion) {
-                            console.log(req.body.cedula)
                             Postulacion.create(userDataPost)
                                 .then(postulacion => {
                                     let token = jwt.sign(postulacion.dataValues, process.env.SECRET_KEY, {
@@ -883,8 +876,6 @@ router.put('/EnviarCorreo', (req, res) => {
     transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
             console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
         }
         res.send({ response: 200 })
     });
@@ -1030,7 +1021,7 @@ router.post('/ObtenerExperiencia', function(req, res, next) {
                     "value": 0
                 },
                 {
-                    "name": "10 o más",
+                    "name": "10 o más años",
                     "value": 0
                 }
             ]
@@ -1093,7 +1084,6 @@ router.post('/ObtenerGeneroTabla', function(req, res, next) {
 
 // Obtener Edad Tabla
 router.post('/ObtenerEdadTabla', function(req, res, next) {
-    console.log(req.body.sede)
     db.mysqlConnection.query('CALL ObtenerEdadTabla(?,?,?,?)', [req.body.periodo, req.body.sede, req.body.nota, req.body.cantidad], (err, row, fields) => {
         if (!err)
             res.send(row);
@@ -1318,8 +1308,9 @@ router.post('/ObtenerEdadHistorico', function(req, res, next) {
                 minimo.push({ 'name': row[0][i].periodo, 'value': row[0][i].Minimo })
                 maximo.push({ 'name': row[0][i].periodo, 'value': row[0][i].Maximo })
             }
-            response.push({ 'name': 'Edad Mínima', 'series': minimo })
             response.push({ 'name': 'Edad Máxima', 'series': maximo })
+            response.push({ 'name': 'Edad Mínima', 'series': minimo })
+            
 
             res.send(response);
         } else

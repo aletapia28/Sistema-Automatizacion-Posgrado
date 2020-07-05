@@ -40,7 +40,6 @@ export interface Postulacion {
 }
 
 export interface Periodo {
-
 }
 
 @Component({
@@ -48,7 +47,6 @@ export interface Periodo {
   templateUrl: './vtn-importar-periodo.component.html',
   styleUrls: ['./vtn-importar-periodo.component.css']
 })
-
 
 export class VtnImportarPeriodoComponent implements OnInit {
   postul: Postulante = {
@@ -147,7 +145,6 @@ export class VtnImportarPeriodoComponent implements OnInit {
                 var corraux = y[keycorr1].split(';')
 
                 //postulante
-
                 let cedula = y[keyid]
                 let nombre = y[keyname]
                 let genero = y[keygen]
@@ -226,22 +223,17 @@ export class VtnImportarPeriodoComponent implements OnInit {
                 this.http.post<any>('/router/registerpostulante', formData).subscribe(
                   (res) => {
                     this.notificationService.success('Postulante importado');
-                  },
-                  (err) => console.log(err)
+                  }
                 );
               }
-
             };
             reader.readAsBinaryString(target.files[0]);
-
-
           } else
             this.notificationService.warning('Error al crear')
         },
         (err) => {
           this.notificationService.warning('Error')
         }
-
       );
     }
 

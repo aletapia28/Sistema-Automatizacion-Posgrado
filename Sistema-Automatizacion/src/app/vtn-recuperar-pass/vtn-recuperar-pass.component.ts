@@ -39,7 +39,6 @@ export class VtnRecuperarPassComponent implements OnInit {
           let asunto = 'Maestría en Gerencia de Proyectos: Cambio de contraseña'
           let cuerpo = `Buenas,\nEl sistema ha detectado su solicitud de cambio de contraseña.\n\nSu nueva contraseña es ${respost.password}.\n\nMuchas gracias.\n\nCualquier consulta al correo gpm@itcr.ac.cr`;
           const formData = {para: correo, asunto: asunto, texto: cuerpo}
-          console.log(formData);
           this.http.put<any>('/router/EnviarCorreo', formData).subscribe(
             (respost) => {
                this.notificationService.success(`Correo enviado a ${correo}`);

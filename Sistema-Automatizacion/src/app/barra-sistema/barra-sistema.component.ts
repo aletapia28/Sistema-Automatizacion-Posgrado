@@ -68,7 +68,7 @@ export class BarraSistemaComponent implements OnInit {
                 this.notificationService.success('Período cerrado con éxito');
                 sessionStorage.setItem('periodoVigente', 'false');
               },
-              (err) => console.log(err)
+              (err) => this.notificationService.warning('Error al cerrar el período')
             );
           } else {
             this.notificationService.warning('No existe un período vigente');
