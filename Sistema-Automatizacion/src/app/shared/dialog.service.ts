@@ -5,6 +5,7 @@ import { DescargarMemoComponent } from '../descargar-memo/descargar-memo.compone
 import { VtnRecuperarPassComponent } from '../vtn-recuperar-pass/vtn-recuperar-pass.component';
 import { VtnRepostularComponent } from '../vtn-repostular/vtn-repostular.component';
 import { AdmitidosDialogComponent } from '../admitidos-dialog/admitidos-dialog.component';
+import { MensajeriaDialogComponent } from '../mensajeria-dialog/mensajeria-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +99,21 @@ export class DialogService {
         message1: des,
         btn2: 'Cancelar',
         btn1: 'Aceptar',
+      }
+    })
+  }
+
+  openMensajeriaDialog(msg, des) {
+    return this.dialog.open(MensajeriaDialogComponent, {
+      width: "390px",
+      panelClass: 'cuerpo-dialog-container',
+      disableClose: true,
+      position: { top: "20vh" },
+      data: {
+        message: msg,
+        message1: des,
+        btn2: 'Cancelar',
+        btn1: 'Guardar',
       }
     })
   }
