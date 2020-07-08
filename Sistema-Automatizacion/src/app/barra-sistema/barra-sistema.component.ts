@@ -129,9 +129,10 @@ export class BarraSistemaComponent implements OnInit {
       this.dialog.openGenerateMemo("Formato de descarga", "Debe escoger uno de los siguientes tipos de descarga");
     else
       this.notificationService.warning('Actualmente no hay un período vigente para generar memos');
+  }
 
-
-
+  editMensajeria() {
+    this.dialog.openMensajeriaDialog("Editar información de mensajería", "");
   }
 
 }
