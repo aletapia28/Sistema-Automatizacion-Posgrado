@@ -177,7 +177,6 @@ export class VtnEditarPostulanteComponent implements OnInit {
         cursoAprovechamiento: cursoAprovechamiento, tituloTecnico: tituloTecnico, cursoAfin: cursoAfin, tituloDiplomado: tituloDiplomado, promedioGeneral: promedioGeneral,
         genero: genero, fechaNacimiento:fechaNacimiento , cedulavieja : postulante
       }
-      console.log(formData);
       this.http.put<any>('/router/EditPostulante', formData).subscribe(
         (res) => {
           this.notificationService.success('Postulante actualizado'); 
