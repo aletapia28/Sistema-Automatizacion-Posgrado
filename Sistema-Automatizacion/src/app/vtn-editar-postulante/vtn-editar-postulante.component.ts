@@ -158,13 +158,14 @@ export class VtnEditarPostulanteComponent implements OnInit {
     let cursoAfin = this.editarPosForm.get('cursoAfin').value;
     let tituloDiplomado: boolean = this.editarPosForm.get('tDiplomado').value;
     let promedioGeneral = this.editarPosForm.get('promedio').value;
+
     //conversion de titulos a integer
     let acred,ttec,tdip;
     if (acreditada == true){acred=1}else{acred=0}
     if (tituloTecnico == true){ttec=1}else{ttec=0}
     if (tituloDiplomado == true){tdip=1}else{tdip=0}
     
-
+    let postulante = sessionStorage.getItem('cedulaPostulante');
     let notanw = this.calcularnota(acred,gradoAcademico,promedioGeneral,afinidad,puestoActual,experienciaProfesion,cursoAfin,ttec,cursoAprovechamiento,tdip )
     if ((cedula.length > 0) && (nombre.length > 0) && (telefono1.length > 0) && (correo1.length > 0) && (gradoAcademico.length > 0)
       && (universidad.length > 0) && (afinidad.length > 0) && (puestoActual.length > 0) && (experienciaProfesion != null) && (cursoAprovechamiento != null)
@@ -174,8 +175,9 @@ export class VtnEditarPostulanteComponent implements OnInit {
         cedula: cedula, nombre: nombre, telefono1: telefono1, telefono2: telefono2, correo1: correo1, correo2: correo2, ingles: ingles,
         gradoAcademico: gradoAcademico, universidad: universidad, afinidad: afinidad, acreditada: acreditada, puestoActual: puestoActual, experienciaProfesion: experienciaProfesion,
         cursoAprovechamiento: cursoAprovechamiento, tituloTecnico: tituloTecnico, cursoAfin: cursoAfin, tituloDiplomado: tituloDiplomado, promedioGeneral: promedioGeneral,
-        genero: genero, fechaNacimiento:fechaNacimiento
+        genero: genero, fechaNacimiento:fechaNacimiento , cedulavieja : postulante
       }
+      console.log(formData);
       this.http.put<any>('/router/EditPostulante', formData).subscribe(
         (res) => {
           this.notificationService.success('Postulante actualizado'); 
