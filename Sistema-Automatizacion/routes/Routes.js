@@ -400,7 +400,7 @@ router.put('/EditPostulante', function (req, res, next) {
     db.mysqlConnection.query('CALL EditarPostulante(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [req.body.cedula, req.body.nombre, req.body.telefono1, req.body.telefono2, req.body.correo1, req.body.correo2,
     req.body.ingles, req.body.gradoAcademico, req.body.universidad, req.body.afinidad, req.body.acreditada, req.body.puestoActual, req.body.experienciaProfesion,
     req.body.cursoAfin, req.body.tituloTecnico, req.body.cursoAprovechamiento, req.body.tituloDiplomado, req.body.promedioGeneral, req.body.genero,
-    req.body.fechaNacimiento.slice(0, 10)
+    req.body.fechaNacimiento.slice(0, 10), req.body.cedulavieja
     ], (err, row, fields) => {
         if (!err) {
             res.send(row);
