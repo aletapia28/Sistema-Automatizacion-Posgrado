@@ -9,6 +9,8 @@ import { NotificationService } from '../shared/notification.service';
 export interface Postulante {
   cedula: String;
   nombre: String;
+  genero: String;
+  fechaNacimiento: Date;
   telefono1: String;
   telefono2: String;
   correo1: String;
@@ -25,8 +27,8 @@ export interface Postulante {
   cursoAprovechamiento: number;
   tituloDiplomado: number;
   promedioGeneral: number;
-
 }
+
 export interface Postulacion {
   periodo: String;
   cedula: String;
@@ -36,8 +38,8 @@ export interface Postulacion {
   memo: number;
 
 }
-export interface Periodo {
 
+export interface Periodo {
 }
 
 @Component({
@@ -46,11 +48,12 @@ export interface Periodo {
   styleUrls: ['./vtn-importar-periodo.component.css']
 })
 
-
 export class VtnImportarPeriodoComponent implements OnInit {
   postul: Postulante = {
     cedula: '',
     nombre: '',
+    genero: '',
+    fechaNacimiento: null,
     telefono1: '',
     telefono2: 'no indica',
     correo1: '',
@@ -107,9 +110,9 @@ export class VtnImportarPeriodoComponent implements OnInit {
   addfile(event) {
     //crear periodo
     let period = this.importarPForm.get('bimestre').value;
-    let fechain = this.importarPForm.get('fechaI').value;
-    let fechafin = this.importarPForm.get('fechaF').value;
-
+    let fechain:Date = this.importarPForm.get('fechaI').value;
+    let fechafin:Date = this.importarPForm.get('fechaF').value;
+    //fechain.
     if (period.length > 0) {
       const formData = { periodo: period, fechaInicio: fechain, fechaCierre: fechafin }
       this.http.post<any>('/router/CrearPeriodo', formData).subscribe(
@@ -135,19 +138,24 @@ export class VtnImportarPeriodoComponent implements OnInit {
               for (cont = 1; cont < size; cont++) {
 
                 y = datap[cont]
-                var keyname = '5', keyid = '1', keytel1 = '6', keytel2 = '7', keycorr1 = '9',
+                var keyname = '5', keyid = '1', keygen = '2', keyfecha = '3', keytel1 = '6', keytel2 = '7', keycorr1 = '9',
                   keyenf = '10', keyga = '11', keyuni = '12', keyaf = '14', keyacred = '15',
-                  keypact = '26', keyexp = '19', keyprom = '22', keynota = '30', keycursos = '20', keyaprov = '21', keyacred = '25'
+                  keypact = '26', keyexp = '19', keyprom = '22', keynota = '30', keycursos = '20', keyaprov = '21', keyacred = '25', keysede='31'
                 if (y[keyname] === undefined) { break; }
                 var corraux = y[keycorr1].split(';')
 
                 //postulante
-
                 let cedula = y[keyid]
                 let nombre = y[keyname]
+                let genero = y[keygen]
+                let edad = parseInt(y[keyfecha])
+                let anhoNacimiento = fechain.getFullYear() - edad
+                let fechaNacimiento = new Date() 
+                fechaNacimiento.setFullYear(anhoNacimiento);
+                fechaNacimiento.setMonth(0);
+                fechaNacimiento.setDate(1);
+
                 let telefono1 = y[keytel1]
-
-
                 //   let correo2 = y[keycorr2]
                 let afinidad = y[keyaf]
                 let gradoAcademico = y[keyga]
@@ -195,7 +203,13 @@ export class VtnImportarPeriodoComponent implements OnInit {
 
                 let periodo = period;
                 let enfasis = y[keyenf]
-                let sede = 'No aplica'
+                if(enfasis == "Empresariales"){
+                  enfasis = "Énfasis en Proyectos " + enfasis;
+                }
+                else { 
+                  enfasis = "Énfasis en Proyectos de " + enfasis;
+                }
+                let sede = y[keysede]
                 let nota = y[keynota]
                 let memo = 1
 
@@ -203,28 +217,23 @@ export class VtnImportarPeriodoComponent implements OnInit {
                   cedula: cedula, nombre: nombre, telefono1: telefono1, afinidad: afinidad, gradoAcademico: gradoAcademico, universidad: universidad,
                   promedioGeneral: promedioGeneral, cursoAprovechamiento: cursoAprovechamiento, puestoActual: puestoActual, experienciaProfesion: experienciaProfesion,
                   telefono2: telefono2, correo1: correo1, correo2: correo2, ingles: ingles, tituloDiplomado: tituloDiplomado, tituloTecnico: tituloTecnico,
-                  acreditada: acreditada, enfasis: enfasis, sede: sede, nota: nota, memo: memo, periodo: periodo, cursoAfin: cursoAfin
+                  acreditada: acreditada, enfasis: enfasis, sede: sede, nota: nota, memo: memo, periodo: periodo, cursoAfin: cursoAfin, genero: genero, fechaNacimiento: fechaNacimiento
                 }
                 //llamada al post de insertar postulante 
                 this.http.post<any>('/router/registerpostulante', formData).subscribe(
                   (res) => {
-
-                  },
-                  (err) => console.log(err)
+                    this.notificationService.success('Postulante importado');
+                  }
                 );
               }
-
             };
             reader.readAsBinaryString(target.files[0]);
-
-
           } else
             this.notificationService.warning('Error al crear')
         },
         (err) => {
           this.notificationService.warning('Error')
         }
-
       );
     }
 

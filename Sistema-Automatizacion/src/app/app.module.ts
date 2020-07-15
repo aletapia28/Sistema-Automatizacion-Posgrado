@@ -55,6 +55,14 @@ import { VtnEditarFormulaComponent } from './vtn-editar-formula/vtn-editar-formu
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { VtnRecuperarPassComponent } from './vtn-recuperar-pass/vtn-recuperar-pass.component';
 import { VtnRepostularComponent } from './vtn-repostular/vtn-repostular.component';
+import { VtnAnalisisGraficoComponent } from './vtn-analisis-grafico/vtn-analisis-grafico.component';
+import { VtnAnalisisTabularComponent } from './vtn-analisis-tabular/vtn-analisis-tabular.component';
+import { AdmitidosDialogComponent } from './admitidos-dialog/admitidos-dialog.component';
+
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { VtnHistoricosComponent } from './vtn-historicos/vtn-historicos.component';
+import { VtnPreguntasFrecuentesComponent } from './vtn-preguntas-frecuentes/vtn-preguntas-frecuentes.component';
+import { MensajeriaDialogComponent } from './mensajeria-dialog/mensajeria-dialog.component';
 
 //esto es para setear rutas para navigatebyurl en los components 
 const routes: Routes = [
@@ -91,7 +99,13 @@ const routes: Routes = [
     DescargarMemoComponent,
     VtnEditarFormulaComponent,
     VtnRecuperarPassComponent,
-    VtnRepostularComponent
+    VtnRepostularComponent,
+    VtnAnalisisGraficoComponent,
+    VtnAnalisisTabularComponent,
+    AdmitidosDialogComponent,
+    VtnHistoricosComponent,
+    VtnPreguntasFrecuentesComponent,
+    MensajeriaDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -119,10 +133,11 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     MatSnackBarModule,
     MatExpansionModule,
-    MatTableExporterModule
+    MatTableExporterModule,
+    NgxChartsModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent],
-  entryComponents:[ConfirmDialogComponent,DescargarMemoComponent,VtnRecuperarPassComponent,VtnRepostularComponent]
+  entryComponents:[ConfirmDialogComponent,DescargarMemoComponent,VtnRecuperarPassComponent,VtnRepostularComponent, AdmitidosDialogComponent, MensajeriaDialogComponent]
 })
 export class AppModule { }

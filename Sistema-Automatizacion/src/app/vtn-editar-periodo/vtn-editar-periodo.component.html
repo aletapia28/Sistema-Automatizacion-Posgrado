@@ -11,7 +11,7 @@
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Bimestre</mat-label>
                     <mat-select [(value)]="bimestreSource" placeholder="Bimestre" formControlName="bimestre" (selectionChange)="cargarFechas($event.value)">
-                        <mat-option *ngFor= "let periodo of periodos" [value]="periodo">{{periodo.periodo}}</mat-option>
+                        <mat-option *ngFor="let periodo of periodos" [value]="periodo">{{periodo.periodo}}</mat-option>
 
                     </mat-select>
                 </mat-form-field>

@@ -31,8 +31,7 @@ export class VtnEditarSuperusuarioComponent implements OnInit {
         let usuario = res[0][0];
         this.editarSupForm.get('correo').setValue(usuario.correoEnvio);
         this.editarSupForm.get('passwd').setValue(usuario.password);
-      },
-      (err) => console.log(err)
+      }
     );
   }
 
@@ -58,7 +57,7 @@ export class VtnEditarSuperusuarioComponent implements OnInit {
         (res) => {
           this.notificationService.success('Usuario actualizado'); 
         },
-        (err) => console.log(err)
+        (err) => this.notificationService.warning('Error al actualizar datos')
       );
     }
   }

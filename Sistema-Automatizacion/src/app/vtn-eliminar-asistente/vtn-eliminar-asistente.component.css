@@ -100,7 +100,7 @@ table {
 }
 
 .contenedor-tabla {
-    width: 75%;
+    width: 60vw;
     overflow-x: scroll;
     min-height: 550px;
 }

@@ -12,6 +12,8 @@ import { Postulante } from '../vtn-importar-periodo/vtn-importar-periodo.compone
 export interface Postulant {
   cedula: String;
   nombre: String;
+  genero: String;
+  fechaNacimiento: Date;
   telefono1: String;
   telefono2: String;
   correo1: String;
@@ -53,6 +55,8 @@ export class VtnImportarArchivoComponent implements OnInit {
   postul: Postulant = {
     cedula: '',
     nombre: '',
+    genero: '',
+    fechaNacimiento: null,
     telefono1: '',
     telefono2: 'No indica',
     correo1: '',
@@ -170,13 +174,16 @@ export class VtnImportarArchivoComponent implements OnInit {
       var cont, y
       for (cont = 3; cont < size; cont++) {
         y = datap[cont]
-        var keyname = '9', keyid = '11', keytel1 = '13', keytel2 = '14', keycorr1 = '15', keycorr2 = '16',
-          keying = '17', keysede = '18', keyenf = '19', keyaf = '20', keyga = '21', keyuni = '23', keyprom = '24',
-          keyacred = '25', keyaprov = '30', keyttec = '31', keyafin = '32', keytdip = '33', keypact = '37', keyexp = '38'
+        var keyname = '9',keyfecha = '10',keygen ='11',keyid = '13', keytel1 = '15', keytel2 = '16', keycorr1 = '17', keycorr2 = '18',
+          keying = '19', keysede = '20', keyenf = '21', keyaf = '22', keyga = '23', keyuni = '24', keyprom = '25',
+          keyacred = '26', keyaprov = '32', keyttec = '33', keyafin = '34', keytdip = '35', keypact = '39', keyexp = '40'
 
         //postulante
         let cedula = y[keyid]
         let nombre = y[keyname]
+        let genero = y[keygen]
+        let fecha = y[keyfecha]
+        var newf = new Date(Math.round((fecha - 25569)*86400*1000))
         let telefono1 = y[keytel1]
         let correo1 = y[keycorr1]
 
@@ -204,8 +211,8 @@ export class VtnImportarArchivoComponent implements OnInit {
         let acreditada = 0
 
         //conversiones a ints y validaciones de entradas vacias 
-        if (y[keytel2] == '') { telefono2 = 'no aplica' } else { telefono2 = y[keytel2] }
-        if (y[keycorr2] instanceof String) { correo2 = y[keycorr2] } else { correo2 = 'No indica' }
+        if (typeof y[keytel2] == 'number') { telefono2 = y[keytel2] } else { telefono2 = 'No indica' }
+        if (typeof y[keycorr2] == 'string') { correo2 = y[keycorr2] } else { correo2 = 'No indica' }
         if (y[keying] == 'No') { ingles = 0 } else { ingles = 1 }
         if (y[keytdip] == 'No') { tituloDiplomado = 0 } else { tituloDiplomado = 1 }
         if (y[keyttec] == 'No') { tituloTecnico = 0 } else { tituloTecnico = 1 }
@@ -219,15 +226,14 @@ export class VtnImportarArchivoComponent implements OnInit {
           cedula: cedula, nombre: nombre, telefono1: telefono1, afinidad: afinidad, gradoAcademico: gradoAcademico, universidad: universidad,
           promedioGeneral: promedioGeneral, cursoAprovechamiento: cursoAprovechamiento, puestoActual: puestoActual, experienciaProfesion: experienciaProfesion,
           telefono2: telefono2, correo1: correo1, correo2: correo2, ingles: ingles, tituloDiplomado: tituloDiplomado, tituloTecnico: tituloTecnico,
-          acreditada: acreditada, enfasis: enfasis, sede: sede, nota: nota, memo: memo, periodo: periodo, cursoAfin: cursoAfin
+          acreditada: acreditada, enfasis: enfasis, sede: sede, nota: nota, memo: memo, periodo: periodo, cursoAfin: cursoAfin, genero: genero, fechaNacimiento: newf
         }
 
         //llamada al post de insertar postulante 
         this.http.post<any>('/router/registerpostulanteA', formData).subscribe(
           (res) => {
             this.notificationService.success('Postulante importado');
-          },
-          (err) => console.log(err)
+          }
         );
 
       }
@@ -236,7 +242,5 @@ export class VtnImportarArchivoComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.importarAForm.value);
-    //llamada insert postulacion
   }
 }

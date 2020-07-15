@@ -15,6 +15,8 @@ import * as FileSaver from 'file-saver';
 export interface PostulanteElement {
   cedula: string;
   nombre: string;
+  genero: string;
+  fechaNacimiento: Date;
   telefono1: string;
   telefono2: string;
   correo1: string;
@@ -71,6 +73,8 @@ export class VtnPrincipalComponent {
   displayedColumns: string[] =
     ['cedula',
       'nombre',
+      'genero',
+      'fechaNacimiento',
       'telefono1',
       'telefono2',
       'correo1',
@@ -103,6 +107,28 @@ export class VtnPrincipalComponent {
 
   ngOnInit() {
 
+    const rangoEspanol = (page: number, pageSize: number, length: number) => {
+      if (length == 0 || pageSize == 0) { return ``; }
+
+      length = Math.max(length, 0);
+
+      const startIndex = page * pageSize;
+
+      // If the start index exceeds the list length, do not try and fix the end index to the end.
+      const endIndex = startIndex < length ?
+        Math.min(startIndex + pageSize, length) :
+        startIndex + pageSize;
+
+      return `${startIndex + 1} - ${endIndex} de ${length}`;
+    }
+
+    this.paginator._intl.itemsPerPageLabel = 'Postulaciones por página:';
+    this.paginator._intl.firstPageLabel = 'Primera página';
+    this.paginator._intl.previousPageLabel = 'Página Anterior';
+    this.paginator._intl.nextPageLabel = 'Siguiente página';
+    this.paginator._intl.lastPageLabel = 'Última página';
+    this.paginator._intl.getRangeLabel = rangoEspanol;
+
     this.http.get<any>('/router/getPeriodoActual').subscribe(
       (respost) => {
         let periodoActual = respost[0];
@@ -112,6 +138,7 @@ export class VtnPrincipalComponent {
           this.periodo.setValue(periodo);
           sessionStorage.setItem('periodoVigente', 'true');
           sessionStorage.setItem('periodoActual', periodo);
+          sessionStorage.setItem('periodoSeleccionado', periodo);
           this.periodo.setValue(periodo);
           const formData = { periodo: periodo }
           this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
@@ -123,12 +150,14 @@ export class VtnPrincipalComponent {
           );
         }
         else {
+          sessionStorage.setItem('periodoVigente', 'false');
           this.http.get<any>('/router/getPeriodoAnterior').subscribe(
             (respost) => {
               let periodoAnterior = respost[0];
               if (periodoAnterior.length >= 1) {
                 let periodo: string = periodoAnterior[0].periodo;
                 this.periodoShowing = periodo;
+                sessionStorage.setItem('periodoSeleccionado', periodo);
                 this.periodo.setValue(periodo);
                 const formData = { periodo: periodo }
                 this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
@@ -158,49 +187,59 @@ export class VtnPrincipalComponent {
   cargarFechas(event) {
     let periodoShow = event;
     this.periodoShowing = periodoShow;
-    const formData = { periodo: periodoShow }
+    sessionStorage.setItem('periodoSeleccionado', periodoShow);
     if (this.tipoShowing) {
-      this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
-        (respost) => {
-          this.dataSource = new MatTableDataSource(respost[0]);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-        }
-      );
+      this.onPostulantes();
     } else {
-      this.http.post<any>('/router/obtenerAdmitidos', formData).subscribe(
-        (respost) => {
-          this.dataSource = new MatTableDataSource(respost[0]);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-        }
-      );
+      this.onFilt();
     }
   }
 
   cargarPost(event) {
     let tipoPost = event;
-    const formData = { periodo: this.periodoShowing }
     if (tipoPost == 'Postulantes') {
-      this.tipoShowing = true;
-      this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
-        (respost) => {
-          this.dataSource = new MatTableDataSource(respost[0]);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-        }
-      );
+      this.onPostulantes();
     } else {
-      this.tipoShowing = false;
-      this.http.post<any>('/router/obtenerAdmitidos', formData).subscribe(
-        (respost) => {
-          this.dataSource = new MatTableDataSource(respost[0]);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-        }
-      );
+      this.onFilt();
     }
+  }
 
+  onPostulantes() {
+    const formData = { periodo: this.periodoShowing }
+    this.tipoShowing = true;
+    this.http.post<any>('/router/obtenerpostulantes', formData).subscribe(
+      (respost) => {
+        this.dataSource = new MatTableDataSource(respost[0]);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.paginator._intl.itemsPerPageLabel = 'Postulaciones por página:';
+      }
+    );
+  }
+
+  onFilt() {
+    this.dialogService.openAdmitidosDialog("Postulantes admitidos", "Elija la sede y la posible nota mínima a aceptar")
+      .afterClosed().subscribe(res => {
+        if (res) {
+          let nota = sessionStorage.getItem('notaMinima');
+          let sede = sessionStorage.getItem('sedeActual');
+          if ((nota != 'null') && (sede != 'null')) {
+            const formData = { periodo: this.periodoShowing, nota: nota, sede: sede }
+            this.tipoShowing = false;
+            this.http.post<any>('/router/obtenerAdmitidos', formData).subscribe(
+              (respost) => {
+                this.dataSource = new MatTableDataSource(respost[0]);
+                this.dataSource.sort = this.sort;
+                this.dataSource.paginator = this.paginator;
+                this.paginator._intl.itemsPerPageLabel = 'Admitidos por página:';
+              }
+            );
+          } else {
+            this.tipo.setValue('Postulantes');
+            this.onPostulantes();
+          }
+        }
+      });
   }
 
   descargarArchivo() {
@@ -209,9 +248,9 @@ export class VtnPrincipalComponent {
         if (res) {
           const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, this.periodoShowing); 
+          XLSX.utils.book_append_sheet(wb, ws, this.periodoShowing);
 
-          let nombre:string = this.periodoShowing;
+          let nombre: string = this.periodoShowing;
           nombre = nombre.replace(/ /g, '_');
           /* save to file */
           XLSX.writeFile(wb, nombre + '.xlsx');
@@ -220,7 +259,7 @@ export class VtnPrincipalComponent {
           const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
 
-          let nombre:string = this.periodoShowing + '.csv';
+          let nombre: string = this.periodoShowing + '.csv';
           nombre = nombre.replace(/ /g, '_');
           var data = XLSX.utils.sheet_to_csv(ws);
           data = data.replace(/á/g, 'a')
@@ -233,13 +272,19 @@ export class VtnPrincipalComponent {
           data = data.replace(/Í/g, 'I')
           data = data.replace(/Ó/g, 'O')
           data = data.replace(/Ú/g, 'U')
-          
+
           const blob = new Blob([data], { type: 'text/csv' });
           FileSaver.saveAs(blob, nombre);
         }
       });
   }
 
+  getFecha(fecha: string) {
+    let dia = fecha.slice(8, 10);
+    let mes = fecha.slice(5, 7);
+    let anho = fecha.slice(0, 4);
+    return (`${mes}/${dia}/${anho}`)
+  }
 }
 
 

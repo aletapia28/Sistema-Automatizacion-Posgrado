@@ -11,18 +11,38 @@
     <div class="formulario">
         <form class="memoForm" [formGroup]="memoForm">
             <mat-form-field appearance="outline" class="inputVtn">
-                <mat-label>Nombre destinario</mat-label>
-                <input matInput formControlName="destinatario" required>
+                <mat-label>MGP</mat-label>
+                <input matInput formControlName="mgp" placeholder="##-####" required>
             </mat-form-field>
+            <div class="memoFila">
+                <mat-form-field appearance="outline" class="inputVtn">
+                    <mat-label>Nombre destinario</mat-label>
+                    <textarea matInput formControlName="destinatario" required></textarea>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="inputVtn">
+                    <mat-label>Nombre remintente</mat-label>
+                    <textarea matInput formControlName="remitente" required></textarea>
+                </mat-form-field>
+            </div>
+            <div class="memoFila"> 
+                <mat-form-field class="inputVtn" appearance="outline">
+                    <mat-label>Sede</mat-label>
+                    <mat-select formControlName="sede" placeholder="Sede">
+                        <mat-option *ngFor="let sede of sedes" [value]="sede.sede">{{sede.sede}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="inputVtn" appearance="outline">
+                    <mat-label>Énfasis</mat-label>
+                    <mat-select formControlName="plan" placeholder="Énfasis">
+                        <mat-option [value]="2010">Énfasis en proyectos empresariales</mat-option>
+                        <mat-option [value]="2011">Énfasis en de TI</mat-option>
+                        <mat-option [value]="2012">Énfasis en proyectos de construcción</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <mat-form-field appearance="outline" class="inputVtn">
-                <mat-label>Nombre remintente</mat-label>
-                <input matInput formControlName="remitente" required>
-            </mat-form-field>
-            <mat-form-field class="inputVtn" appearance="outline">
-                <mat-label>Sede</mat-label>
-                <mat-select formControlName="sede" placeholder="Sede">
-                    <mat-option *ngFor="let sede of sedes" [value]="sede.sede">{{sede.sede}}</mat-option>
-                </mat-select>
+                <mat-label>Iniciales</mat-label>
+                <input matInput formControlName="iniciales" placeholder="DESTINATARIO/creador" required>
             </mat-form-field>
         </form>
     </div>

@@ -5,7 +5,7 @@
     <div class="cuerpo">
 
         <div class="cuadro">
-            <h1 class="titulo">Editar Postulante</h1>
+            <h1 class="titulo">Editar postulante</h1>
             <form class="periodo-form" (submit)="onSubmit()" [formGroup]="editarPosForm">
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Cédula</mat-label>
@@ -15,6 +15,22 @@
                 <mat-form-field appearance="outline" class="inputVtn">
                     <mat-label>Nombre</mat-label>
                     <input matInput formControlName="nombre" required>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="inputVtn">
+                    <mat-label>Género</mat-label>
+                    <mat-select formControlName="genero">
+                        <mat-option value="Femenino">Femenino</mat-option> 
+                        <mat-option value="Masculino">Masculino</mat-option>
+                        <mat-option value="Otro">Otro</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="inputVtn">
+                    <mat-label>Fecha de nacimiento</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="inputVtn">

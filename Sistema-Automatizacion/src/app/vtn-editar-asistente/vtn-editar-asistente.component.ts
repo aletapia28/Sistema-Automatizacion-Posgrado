@@ -32,8 +32,7 @@ export class VtnEditarAsistenteComponent implements OnInit {
         this.editarAForm.get('nombre').setValue(usuario.nombre);
         this.editarAForm.get('passwd').setValue(usuario.password);
         this.editarAForm.get('cedula').setValue(usuario.cedula);
-      },
-      (err) => console.log(err)
+      }
     );
   }
 
@@ -53,7 +52,7 @@ export class VtnEditarAsistenteComponent implements OnInit {
         (res) => {
           this.notificationService.success('Usuario actualizado');
         },
-        (err) => console.log(err)
+        (err) => this.notificationService.warning('Error al actualizar datos')
       );
     }
   }

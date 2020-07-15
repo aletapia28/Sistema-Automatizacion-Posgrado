@@ -68,7 +68,7 @@ export class BarraSistemaComponent implements OnInit {
                 this.notificationService.success('Período cerrado con éxito');
                 sessionStorage.setItem('periodoVigente', 'false');
               },
-              (err) => console.log(err)
+              (err) => this.notificationService.warning('Error al cerrar el período')
             );
           } else {
             this.notificationService.warning('No existe un período vigente');
@@ -95,9 +95,12 @@ export class BarraSistemaComponent implements OnInit {
   editFormula() {
     this.router.navigate(['editFor']);
   }
+  preguntasFrecuentes() {
+    this.router.navigate(['preguntasFrecuentes']);
+  }
 
   verHistoricos() {
-    // this.router.navigate(['principal'])
+    this.router.navigate(['analisisHistorico']);
   }
 
   importarPeriodo() {
@@ -113,11 +116,11 @@ export class BarraSistemaComponent implements OnInit {
   }
 
   analisisTablas() {
-
+    this.router.navigate(['analisisTabular']);
   }
 
   analisisGraficas() {
-
+    this.router.navigate(['analisisGrafico']);
   }
 
   generarMemo() {
@@ -126,9 +129,10 @@ export class BarraSistemaComponent implements OnInit {
       this.dialog.openGenerateMemo("Formato de descarga", "Debe escoger uno de los siguientes tipos de descarga");
     else
       this.notificationService.warning('Actualmente no hay un período vigente para generar memos');
+  }
 
-
-
+  editMensajeria() {
+    this.dialog.openMensajeriaDialog("Editar información de mensajería", "");
   }
 
 }

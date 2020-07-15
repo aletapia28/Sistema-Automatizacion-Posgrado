@@ -18,15 +18,17 @@
             <button mat-menu-item class="opcionMenu" [matMenuTriggerFor]="asistentes" *ngIf="show">Asistentes</button>
             <button mat-menu-item class="opcionMenu" [matMenuTriggerFor]="analisis">Análisis de datos</button>
             <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="editFormula()">Editar fórmula</button>
+            <button mat-menu-item class="opcionMenu" (click)="preguntasFrecuentes()">Preguntas frecuentes</button>
+            <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="editMensajeria()">Editar mensajería</button>
             <button mat-menu-item class="opcionMenu" (click)="signOut()">Cerrar sesión</button>
         </mat-menu>
         <mat-menu #periodos="matMenu" xPosition="before">
             <button mat-menu-item class="opcionMenu" (click)="crearPeriodo()">Crear período</button>
             <button mat-menu-item class="opcionMenu" (click)="editarPeriodo()">Editar período</button>
-            <button mat-menu-item class="opcionMenu" (click)="importarArchivo()">Importar Archivo</button>
-            <button mat-menu-item class="opcionMenu" (click)="importarPeriodo()">Importar Período</button>
+            <button mat-menu-item class="opcionMenu" (click)="importarArchivo()">Importar archivo</button>
+            <button mat-menu-item class="opcionMenu" (click)="importarPeriodo()">Importar período</button>
             <button mat-menu-item class="opcionMenu" (click)="cerrarPeriodo()">Cerrar período</button>
-        </mat-menu> 
+        </mat-menu>
         <mat-menu #asistentes="matMenu" xPosition="before">
             <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="crearUsuario()">Crear asistente</button>
             <button mat-menu-item class="opcionMenu" *ngIf="show" (click)="manejoAsistente()">Manejo de asistentes</button>

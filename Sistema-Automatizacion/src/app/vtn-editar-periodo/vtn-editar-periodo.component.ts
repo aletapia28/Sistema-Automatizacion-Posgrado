@@ -47,8 +47,6 @@ export class VtnEditarPeriodoComponent implements OnInit {
       (respost) => {
         let periodo = respost[0];
         if (periodo.length == 1) {
-          console.log(periodo[0].fechaInicio)
-          console.log(periodo[0].fechaCierre)
           this.editarPeForm.get("fechaInicio").setValue(periodo[0].fechaInicio);
           this.editarPeForm.get("fechaFinal").setValue(periodo[0].fechaCierre);
         }
@@ -65,6 +63,18 @@ export class VtnEditarPeriodoComponent implements OnInit {
         (res) => {
           if (res.affectedRows > 0) {
             this.notificationService.success('Datos actualizados');
+            this.http.get<any>('/router/getPeriodoActual').subscribe(
+              (respost) => {
+                let periodoActual = respost[0];
+                if (periodoActual.length == 1) {
+                  sessionStorage.setItem('periodoVigente', 'true');
+                  sessionStorage.setItem('periodoActual', periodoActual[0].periodo);
+                }
+                else {
+                  sessionStorage.setItem('periodoVigente', 'false');
+                }
+              }
+            );
           } else {
             this.notificationService.warning('Ocurrio un error');
           }
