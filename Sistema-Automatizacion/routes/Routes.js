@@ -2,7 +2,6 @@ const express = require("express")
 const router = express.Router()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
-const bcrypt = require("bcrypt")
 const bodyParser = require('body-parser')
 const path = require('path');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
