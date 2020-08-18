@@ -17,7 +17,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-CREATE DATABASE sistpostulacion;
 USE sistpostulacion;
 
 --
@@ -1332,13 +1331,6 @@ CREATE TABLE `asistentes` (
   `cedula` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `asistentes`
---
-
-INSERT INTO `asistentes` (`correo`, `nombre`, `cedula`) VALUES
-('asis@gmail.com', 'jose', '5875781');
-
 -- --------------------------------------------------------
 
 --
@@ -1395,7 +1387,7 @@ CREATE TABLE `correoenvio` (
 --
 
 INSERT INTO `correoenvio` (`correo`, `password`) VALUES
-('maesito4@gmail.com', 'eraolivenox1');
+('gpm.itcr1@gmail.com', 'Posgrados/2018');
 
 -- --------------------------------------------------------
 
@@ -1531,9 +1523,7 @@ CREATE TABLE `superusuario` (
 --
 
 INSERT INTO `superusuario` (`correo`, `correoEnvio`) VALUES
-('superusuario@gmail.com', 'super399@gmail.es'),
-('test', 'test@gmail.com'),
-('test@gmail.com', 'jgomezcasasola@gmail.com');
+('gpm@itcr.ac.cr', 'jgomezcasasola@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -1551,13 +1541,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`correo`, `password`) VALUES
-('asistente@aol.com', 'asistenteR'),
-('jgomezcasasola@gmail.com', 'pamekuxovu'),
-('jose@aol.commm', 'jose23'),
-('josee@gmail.com', '1234'),
-('superusuario@gmail.com', 'superusuario'),
-('test', 'testi'),
-('test@gmail.com', 'test');
+('gpm@itcr.ac.cr', 'Posgrados/2018');
 
 --
 -- Índices para tablas volcadas
