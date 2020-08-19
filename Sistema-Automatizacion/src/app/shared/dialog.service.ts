@@ -47,7 +47,6 @@ export class DialogService {
   openGenerateMemo(msg, des) {
     return this.dialog.open(DescargarMemoComponent, {
       width: "60vw",
-      height: '70vh',
       panelClass: 'cuerpo-dialog-container',
       disableClose: true,
       position: { top: "10vh" }, 
