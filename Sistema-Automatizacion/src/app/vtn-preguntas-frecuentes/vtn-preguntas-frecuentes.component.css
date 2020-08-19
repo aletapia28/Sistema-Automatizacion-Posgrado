@@ -42,6 +42,11 @@
     align-items: flex-start;
 }
 
+.texto{
+    overflow: scroll;
+    height: 50vh;
+}
+
 .componente input,
 select,
 label {
@@ -104,4 +109,30 @@ label {
 
 p{
     text-indent: 2rem;
+}
+
+
+.texto::-webkit-scrollbar {
+    width: 6px;
+  }
+.texto::-webkit-scrollbar-track {
+    background: #E2E2E2;
+    /* display: none; */
+}
+
+/* Handle */
+
+::-webkit-scrollbar-corner{
+    display: none;
+}
+.texto::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+    width: 1px;
+}
+
+/* Handle on hover */
+
+.texto::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
