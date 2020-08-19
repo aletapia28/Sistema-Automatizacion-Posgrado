@@ -1523,7 +1523,7 @@ CREATE TABLE `superusuario` (
 --
 
 INSERT INTO `superusuario` (`correo`, `correoEnvio`) VALUES
-('gpm@itcr.ac.cr', 'jgomezcasasola@gmail.com');
+('gpm@itcr.ac.cr', 'sisolano@tec.ac.cr');
 
 -- --------------------------------------------------------
 
