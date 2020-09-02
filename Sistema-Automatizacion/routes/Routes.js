@@ -687,12 +687,8 @@ router.post('/obtenerAsistente', (req, res) => {
 //edit asistente
 router.put('/editAsist', (req, res) => {
 
-
     const cipher = crypto.createCipher(algorithm, key);
     var encrypted = cipher.update(req.body.password, 'utf8', 'hex') + cipher.final('hex');
-    
-    console.log(encrypted);
-
     db.mysqlConnection.query('CALL EditarAsistente(?, ?, ?, ?)', [req.body.correo,encrypted, req.body.cedula, req.body.nombre],
         (err, row, fields) => {
             if (!err)
