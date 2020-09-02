@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http'
 import { ServicioDatosService } from '../shared/servicio-datos.service'
 import { NotificationService } from '../shared/notification.service';
+import { _countGroupLabelsBeforeOption } from '@angular/material/core';
 
 @Component({
   selector: 'app-vtn-editar-asistente',
@@ -28,7 +29,8 @@ export class VtnEditarAsistenteComponent implements OnInit {
     const formData = { correo: sessionStorage.getItem('correoAsistente') }
     this.http.post<any>('/router/obtenerAsistente', formData).subscribe(
       (res) => {
-        let usuario = res[0][0];
+        let usuario = res[0];
+        console.log(usuario);
         this.editarAForm.get('nombre').setValue(usuario.nombre);
         this.editarAForm.get('passwd').setValue(usuario.password);
         this.editarAForm.get('cedula').setValue(usuario.cedula);

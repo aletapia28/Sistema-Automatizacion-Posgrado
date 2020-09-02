@@ -28,7 +28,8 @@ export class VtnEditarSuperusuarioComponent implements OnInit {
     const formData = { correo: sessionStorage.getItem('correo') }
     this.http.post<any>('/router/obtenerSuperusuario', formData).subscribe(
       (res) => {
-        let usuario = res[0][0];
+        let usuario = res[0];
+        console.log(usuario);
         this.editarSupForm.get('correo').setValue(usuario.correoEnvio);
         this.editarSupForm.get('passwd').setValue(usuario.password);
       }

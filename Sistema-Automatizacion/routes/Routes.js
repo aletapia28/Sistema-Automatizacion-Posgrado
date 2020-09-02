@@ -6,7 +6,8 @@ const bodyParser = require('body-parser')
 const path = require('path');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 const lodash = require('lodash');
-
+var bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 const nodemailer = require('nodemailer');
 
@@ -18,6 +19,13 @@ const Asistente = require('../models/Asistente')
 const Postulacion = require('../models/Postulacion')
 const Atributo = require('../models/Atributo')
 router.use(cors())
+
+// var algorithm = "aes-192-cbc"; //algorithm to use
+var algorithm = "aes-192-cbc"; //algorithm to use
+var password = 'mgpauto/2018';
+let key = crypto.scryptSync(password, 'salt', 24); //create key    
+let iv = new Buffer('a2xhcgAAAAAAAAAA') //crypto.randomBytes(16); // generate different ciphertext everytime
+
 
 process.env.SECRET_KEY = 'secret'
 
@@ -114,7 +122,14 @@ router.get('/getallusers', function (req, res, next) {
 
 //REGISTRAR ASISTENTES
 router.post('/registerasistente', (req, res) => {
-    db.mysqlConnection.query('CALL CrearAsistente(?,?,?,?)', [req.body.correo, req.body.password, req.body.nombre, req.body.cedula], (err, row, fields) => {
+
+
+
+    const cipher = crypto.createCipher(algorithm, key);
+    var encrypted = cipher.update(req.body.password, 'utf8', 'hex') + cipher.final('hex');
+
+
+    db.mysqlConnection.query('CALL CrearAsistente(?,?,?,?)', [req.body.correo, encrypted, req.body.nombre, req.body.cedula], (err, row, fields) => {
         if (!err)
             res.send(row);
         else
@@ -489,7 +504,12 @@ router.get('/getallperiodos', function (req, res, next) {
 
 //edit superusuario
 router.put('/editSuper', (req, res) => {
-    db.mysqlConnection.query('CALL EditarSuperusuario(?, ?, ?)', [req.body.correo, req.body.password, req.body.correoEnvio],
+
+    const cipher = crypto.createCipher(algorithm, key);
+    var encrypted = cipher.update(req.body.password, 'utf8', 'hex') + cipher.final('hex');
+
+
+    db.mysqlConnection.query('CALL EditarSuperusuario(?, ?, ?)', [req.body.correo, encrypted, req.body.correoEnvio],
         (err, row, fields) => {
             if (!err)
                 res.send(row);
@@ -550,10 +570,13 @@ router.put('/updateperiodo', function (req, res, next) {
 
 //LOGIN
 router.post('/login', (req, res) => {
+
+    const cipher = crypto.createCipher(algorithm, key);
+    var encrypted = cipher.update(req.body.password, 'utf8', 'hex') + cipher.final('hex');
     User.findOne({
         where: {
             correo: req.body.correo,
-            password: req.body.password
+            password: encrypted
         }
     })
         .then(user => {
@@ -624,6 +647,14 @@ router.post('/obtenerAdmitidos', (req, res) => {
 router.post('/obtenerSuperusuario', (req, res) => {
     db.mysqlConnection.query('CALL ObtenerSuperusuario(?)', [req.body.correo], (err, row, fields) => {
         if (!err) {
+            const decipher = crypto.createDecipher(algorithm, key);
+            var decrypted = decipher.update(row[0][0].password, 'hex', 'utf8') + decipher.final('utf8'); //deciphered text
+            var row = [{
+                "correoEnvio": row[0][0].correoEnvio,
+                "password": decrypted,
+            }
+            ]
+            console.log(row);   
             res.send(row);
         } else
             console.log(err);
@@ -634,6 +665,19 @@ router.post('/obtenerSuperusuario', (req, res) => {
 router.post('/obtenerAsistente', (req, res) => {
     db.mysqlConnection.query('CALL ObtenerAsistente(?)', [req.body.correo], (err, row, fields) => {
         if (!err) {
+
+            const decipher = crypto.createDecipher(algorithm, key);
+            var decrypted = decipher.update(row[0][0].password, 'hex', 'utf8') + decipher.final('utf8'); //deciphered text
+
+
+            console.log(decrypted);
+
+            var row = [{
+                "nombre": row[0][0].nombre,
+                "password": decrypted,
+                "cedula": row[0][0].cedula
+            }
+            ]
             res.send(row);
         } else
             console.log(err);
