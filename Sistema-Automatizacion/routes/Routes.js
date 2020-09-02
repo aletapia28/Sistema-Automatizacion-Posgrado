@@ -654,7 +654,7 @@ router.post('/obtenerSuperusuario', (req, res) => {
                 "password": decrypted,
             }
             ]
-            console.log(row);   
+            console.log(row);
             res.send(row);
         } else
             console.log(err);
@@ -686,7 +686,14 @@ router.post('/obtenerAsistente', (req, res) => {
 
 //edit asistente
 router.put('/editAsist', (req, res) => {
-    db.mysqlConnection.query('CALL EditarAsistente(?, ?, ?, ?)', [req.body.correo, req.body.password, req.body.cedula, req.body.nombre],
+
+
+    const cipher = crypto.createCipher(algorithm, key);
+    var encrypted = cipher.update(req.body.password, 'utf8', 'hex') + cipher.final('hex');
+    
+    console.log(encrypted);
+
+    db.mysqlConnection.query('CALL EditarAsistente(?, ?, ?, ?)', [req.body.correo,encrypted, req.body.cedula, req.body.nombre],
         (err, row, fields) => {
             if (!err)
                 res.send(row);
@@ -962,9 +969,16 @@ router.post('/ObtenerCorreoEnvio', (req, res) => {
 router.post('/UpdatePassword', (req, res) => {
     var generatePassword = require('password-generator');
     let password = generatePassword();
-    db.mysqlConnection.query('CALL UpdatePassword(?, ?)', [req.body.correo, password], (err, row, fields) => {
-        if (!err)
-            res.json({ password: password });
+
+    const cipher = crypto.createCipher(algorithm, key);
+    var encrypted = cipher.update(password, 'utf8', 'hex') + cipher.final('hex');
+    console.log(password);
+    console.log(encrypted);
+
+    db.mysqlConnection.query('CALL UpdatePassword(?, ?)', [req.body.correo, encrypted], (err, row, fields) => {
+        if (!err) {
+            res.json({ password: password  });
+        }
         else
             console.log(err);
     })

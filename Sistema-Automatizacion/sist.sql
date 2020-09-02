@@ -51,7 +51,7 @@ BEGIN
     COMMIT;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarAsistente` (IN `newcorreo` VARCHAR(40), IN `newpassword` VARCHAR(100), IN `newcedula` VARCHAR(40), IN `newnombre` VARCHAR(40))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarAsistente` (IN `newcorreo` VARCHAR(40), IN `newpassword` VARCHAR(150), IN `newcedula` VARCHAR(40), IN `newnombre` VARCHAR(40))  NO SQL
 BEGIN
 	START TRANSACTION;
     UPDATE usuarios SET password = newpassword WHERE correo = newcorreo;
@@ -1312,7 +1312,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `UltimaPostulacion` (IN `ced` INT)  
 SELECT  enfasis, sede, nota FROM `postulaciones`as PS INNER JOIN periodos as P on PS.periodo = P.periodo
 WHERE cedula = ced ORDER BY P.FechaInicio desc LIMIT 1$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdatePassword` (IN `correoUsuario` VARCHAR(50), IN `pass` VARCHAR(30))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdatePassword` (IN `correoUsuario` VARCHAR(50), IN `pass` VARCHAR(150))  NO SQL
 UPDATE `usuarios` SET `password`= pass WHERE correo = correoUsuario$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `VerPeriodo` ()  SELECT periodo FROM periodos ORDER BY fechaInicio asc$$
