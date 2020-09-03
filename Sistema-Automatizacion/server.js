@@ -3,7 +3,7 @@ var cors = require("cors")
 //parsing datadabe json structure (raw types)
 var bodyParser = require("body-parser")
 var app = express()
-var port = process.env.PORT || 3000
+var port = process.env.PORT || 5500
 
 const path = require('path');
 const fs = require('fs');
