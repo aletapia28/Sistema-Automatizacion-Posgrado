@@ -27,16 +27,16 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `CerrarPeriodoActual` (IN `nameperiodo` VARCHAR(50))  UPDATE periodos SET fechaCierre = SUBDATE(CURRENT_DATE, 1) WHERE periodo = nameperiodo$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CerrarPeriodoActual` (IN `nameperiodo` VARCHAR(50))  UPDATE periodos SET fechaCierre = SUBDATE(CURRENT_DATE, 1) WHERE periodo = nameperiodo$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `CrearAsistente` (`newcorreo` VARCHAR(50), `newpassword` VARCHAR(100), `newnombre` VARCHAR(50), `newcedula` VARCHAR(20))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CrearAsistente` (`newcorreo` VARCHAR(50), `newpassword` VARCHAR(100), `newnombre` VARCHAR(50), `newcedula` VARCHAR(20))  BEGIN
 	START TRANSACTION;
     INSERT INTO usuarios (correo, password) VALUES (newcorreo, newpassword);
 	INSERT INTO asistentes (correo, nombre, cedula) VALUES (newcorreo, newnombre, newcedula);
     COMMIT;
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `CrearPeriodo` (IN `newperiodo` VARCHAR(50), IN `inicio` DATE, IN `cierre` DATE)  IF ((not exists( SELECT * FROM periodos
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CrearPeriodo` (IN `newperiodo` VARCHAR(50), IN `inicio` DATE, IN `cierre` DATE)  IF ((not exists( SELECT * FROM periodos
  WHERE (inicio >= periodos.fechaInicio and inicio <= periodos.fechaCierre)
  or (cierre >= periodos.fechaInicio and cierre <= periodos.fechaCierre )
  or ( inicio <= periodos.fechaInicio and  cierre >= periodos.fechaCierre)))AND (inicio <= cierre)) 
@@ -44,14 +44,14 @@ THEN INSERT INTO periodos(periodo, fechaInicio,fechaCierre) VALUES (newperiodo, 
 SELECT * FROM periodos WHERE periodos.periodo = newperiodo and periodos.fechaInicio= inicio and periodos.fechaCierre = cierre;
 END IF$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `CrearPostulacion` (IN `newperiodo` VARCHAR(20), IN `newcedula` VARCHAR(20), IN `newenfasis` VARCHAR(50), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newmemo` TINYINT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CrearPostulacion` (IN `newperiodo` VARCHAR(20), IN `newcedula` VARCHAR(20), IN `newenfasis` VARCHAR(50), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newmemo` TINYINT)  NO SQL
 BEGIN
 	START TRANSACTION;
 	INSERT INTO postulaciones (periodo,cedula,enfasis,sede,nota,memo) VALUES (newperiodo,newcedula,newenfasis,newsede, newnota, newmemo);
     COMMIT;
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `EditarAsistente` (IN `newcorreo` VARCHAR(40), IN `newpassword` VARCHAR(150), IN `newcedula` VARCHAR(40), IN `newnombre` VARCHAR(40))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarAsistente` (IN `newcorreo` VARCHAR(40), IN `newpassword` VARCHAR(150), IN `newcedula` VARCHAR(40), IN `newnombre` VARCHAR(40))  NO SQL
 BEGIN
 	START TRANSACTION;
     UPDATE usuarios SET password = newpassword WHERE correo = newcorreo;
@@ -59,7 +59,7 @@ BEGIN
     COMMIT;
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `EditarFormula` (IN `bachillerato` INT, IN `licenciatura` INT, IN `maestria` INT, IN `newdoc` INT, IN `newprom` INT, IN `newtresseis` INT, IN `newseisdies` INT, IN `newmasdies` INT, IN `newprosinp` INT, IN `newpromiemb` INT, IN `newjefatura` INT, IN `newgerencia` INT, IN `newtindep` INT, IN `newalta` INT, IN `newmedia` INT, IN `newbaja` INT, IN `newacred` INT, IN `newnoacred` INT, IN `newcaprov` INT, IN `newttec` INT, IN `newcmaest` INT, IN `newtdip` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarFormula` (IN `bachillerato` INT, IN `licenciatura` INT, IN `maestria` INT, IN `newdoc` INT, IN `newprom` INT, IN `newtresseis` INT, IN `newseisdies` INT, IN `newmasdies` INT, IN `newprosinp` INT, IN `newpromiemb` INT, IN `newjefatura` INT, IN `newgerencia` INT, IN `newtindep` INT, IN `newalta` INT, IN `newmedia` INT, IN `newbaja` INT, IN `newacred` INT, IN `newnoacred` INT, IN `newcaprov` INT, IN `newttec` INT, IN `newcmaest` INT, IN `newtdip` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     UPDATE atributos SET peso= bachillerato WHERE id = 1;
@@ -91,30 +91,30 @@ BEGIN
     COMMIT;
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `EditarMensajeria` (IN `newcorreo` VARCHAR(50), IN `newpassword` VARCHAR(150))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarMensajeria` (IN `newcorreo` VARCHAR(50), IN `newpassword` VARCHAR(150))  NO SQL
 BEGIN
 	UPDATE `correoenvio` SET `correo`=newcorreo,`password`=newpassword WHERE 1;
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `EditarNota` (IN `cedula` VARCHAR(40), IN `periodo` VARCHAR(20), IN `newnota` DOUBLE)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarNota` (IN `cedula` VARCHAR(40), IN `periodo` VARCHAR(20), IN `newnota` DOUBLE)  NO SQL
 IF (exists( SELECT * FROM postulaciones WHERE postulaciones.cedula = cedula AND postulaciones.periodo = periodo))  
 	THEN
 	UPDATE postulaciones SET nota = newnota WHERE postulaciones.cedula = cedula AND postulaciones.periodo = periodo;
 END IF$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `EditarPeriodo` (IN `newperiodo` VARCHAR(50), IN `inicio` DATE, IN `cierre` DATE)  IF ((not exists( SELECT * FROM periodos WHERE ((inicio >= periodos.fechaInicio and inicio <= periodos.fechaCierre)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarPeriodo` (IN `newperiodo` VARCHAR(50), IN `inicio` DATE, IN `cierre` DATE)  IF ((not exists( SELECT * FROM periodos WHERE ((inicio >= periodos.fechaInicio and inicio <= periodos.fechaCierre)
  or (cierre >= periodos.fechaInicio and cierre <= periodos.fechaCierre )
  or ( inicio <= periodos.fechaInicio and  cierre >= periodos.fechaCierre)) and (periodos.periodo != newperiodo)))AND (inicio <= cierre))  THEN UPDATE periodos set fechaInicio = inicio , fechaCierre = cierre where periodo = newperiodo;
 END IF$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `EditarPostulacion` (IN `newperiodo` VARCHAR(20), IN `newcedula` VARCHAR(20), IN `newenfasis` VARCHAR(50), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newmemo` TINYINT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarPostulacion` (IN `newperiodo` VARCHAR(20), IN `newcedula` VARCHAR(20), IN `newenfasis` VARCHAR(50), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newmemo` TINYINT)  NO SQL
 BEGIN
 	START TRANSACTION;
     UPDATE postulaciones SET enfasis = newenfasis, sede = newsede, nota = newnota WHERE periodo = newperiodo AND cedula = newcedula;
     COMMIT;
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `EditarPostulante`(IN `newcedula` VARCHAR(40), IN `newnombre` VARCHAR(50), IN `newtelefono1` VARCHAR(30), IN `newtelefono2` VARCHAR(30), IN `newcorreo1` VARCHAR(50), IN `newcorreo2` VARCHAR(50), IN `newingles` TINYINT, IN `newgradoAcademico` VARCHAR(15), IN `newuniversidad` VARCHAR(50), IN `newafinidad` VARCHAR(30), IN `newacreditada` TINYINT, IN `newpuestoActual` VARCHAR(60), IN `newexperienciaProfesion` INT, IN `newcursoAfin` INT, IN `newtituloTecnico` TINYINT, IN `newcursoAprovechamiento` INT, IN `newtituloDiplomado` TINYINT, IN `newpromedioGeneral` DOUBLE, IN `newgenero` VARCHAR(20), IN `newfecha` DATE, IN `newcedulavieja` VARCHAR(40))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarPostulante`(IN `newcedula` VARCHAR(40), IN `newnombre` VARCHAR(50), IN `newtelefono1` VARCHAR(30), IN `newtelefono2` VARCHAR(30), IN `newcorreo1` VARCHAR(50), IN `newcorreo2` VARCHAR(50), IN `newingles` TINYINT, IN `newgradoAcademico` VARCHAR(15), IN `newuniversidad` VARCHAR(50), IN `newafinidad` VARCHAR(30), IN `newacreditada` TINYINT, IN `newpuestoActual` VARCHAR(60), IN `newexperienciaProfesion` INT, IN `newcursoAfin` INT, IN `newtituloTecnico` TINYINT, IN `newcursoAprovechamiento` INT, IN `newtituloDiplomado` TINYINT, IN `newpromedioGeneral` DOUBLE, IN `newgenero` VARCHAR(20), IN `newfecha` DATE, IN `newcedulavieja` VARCHAR(40))
     NO SQL
 BEGIN
 	START TRANSACTION;
@@ -124,18 +124,18 @@ END$$
 
 
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `EditarSuperusuario` (`newcorreo` VARCHAR(50), `newpassword` VARCHAR(150), `newcorreoEnvio` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EditarSuperusuario` (`newcorreo` VARCHAR(50), `newpassword` VARCHAR(150), `newcorreoEnvio` VARCHAR(50))  BEGIN
 	START TRANSACTION;
     UPDATE usuarios SET password = newpassword WHERE correo = newcorreo;
     UPDATE superusuario SET correoEnvio = newcorreoEnvio WHERE correo = newcorreo;
     COMMIT;
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `EliminarAsistente` (IN `correo` VARCHAR(50))  DELETE usuarios,asistentes FROM asistentes inner JOIN usuarios on asistentes.correo = usuarios.correo WHERE asistentes.correo = correo$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarAsistente` (IN `correo` VARCHAR(50))  DELETE usuarios,asistentes FROM asistentes inner JOIN usuarios on asistentes.correo = usuarios.correo WHERE asistentes.correo = correo$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `EliminarPeriodo` (`nameperiodo` VARCHAR(50))  DELETE FROM periodos where periodo = nameperiodo$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarPeriodo` (`nameperiodo` VARCHAR(50))  DELETE FROM periodos where periodo = nameperiodo$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerAcreditacionHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAcreditacionHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
 BEGIN
     SET @periodoinic = (select fechaInicio from periodos where periodoInicial = periodos.periodo);
     SET @periodofin = (select fechaCierre from periodos where periodoFinal = periodos.periodo);
@@ -154,7 +154,7 @@ BEGIN
    
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerAcreditada` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAcreditada` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     SELECT name, 
@@ -178,7 +178,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerAcreditadaTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` INT, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAcreditadaTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` INT, IN `newcantidad` INT)  NO SQL
 BEGIN
 
     SET @cantidad= (SELECT COUNT(*) FROM (SELECT postulantes.cedula  FROM   postulantes 
@@ -213,9 +213,9 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerAdmitidos` (IN `periodo` VARCHAR(20), IN `nota` INT, IN `sede` VARCHAR(100))  SELECT * from postulantes INNER JOIN postulaciones ON postulantes.cedula = postulaciones.cedula WHERE postulaciones.periodo = periodo AND postulaciones.nota >= nota AND postulaciones.sede = sede ORDER BY postulaciones.nota DESC$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAdmitidos` (IN `periodo` VARCHAR(20), IN `nota` INT, IN `sede` VARCHAR(100))  SELECT * from postulantes INNER JOIN postulaciones ON postulantes.cedula = postulaciones.cedula WHERE postulaciones.periodo = periodo AND postulaciones.nota >= nota AND postulaciones.sede = sede ORDER BY postulaciones.nota DESC$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerAfinidad` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAfinidad` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     SELECT name, 
@@ -237,7 +237,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerAfinidadHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAfinidadHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
 BEGIN
     SET @periodoinic = (select fechaInicio from periodos where periodoInicial = periodos.periodo);
     SET @periodofin = (select fechaCierre from periodos where periodoFinal = periodos.periodo);
@@ -256,7 +256,7 @@ BEGIN
    
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerAfinidadTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` INT, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAfinidadTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` INT, IN `newcantidad` INT)  NO SQL
 BEGIN
 
     SET @cantidad= (SELECT COUNT(*) FROM (SELECT postulantes.cedula  FROM   postulantes 
@@ -288,9 +288,9 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerAsistente` (`correo` VARCHAR(50))  SELECT password, nombre, cedula FROM usuarios INNER JOIN asistentes ON usuarios.correo = asistentes.correo WHERE usuarios.correo = correo$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAsistente` (`correo` VARCHAR(50))  SELECT password, nombre, cedula FROM usuarios INNER JOIN asistentes ON usuarios.correo = asistentes.correo WHERE usuarios.correo = correo$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerAsistentes` ()  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAsistentes` ()  NO SQL
 BEGIN
 	START TRANSACTION;
     SELECT * from asistentes
@@ -301,7 +301,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerAtributos` ()  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerAtributos` ()  NO SQL
 BEGIN
 	START TRANSACTION;
     SELECT * from atributos
@@ -310,9 +310,9 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerCorreoEnvio` (`correo` VARCHAR(50))  SELECT superusuario.correoEnvio FROM superusuario where superusuario.correo = correo$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerCorreoEnvio` (`correo` VARCHAR(50))  SELECT superusuario.correoEnvio FROM superusuario where superusuario.correo = correo$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerEdad` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerEdad` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     SET @periodoyear = (SELECT YEAR(fechaInicio) from periodos where periodos.periodo = newperiodo);
@@ -342,7 +342,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerEdadHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerEdadHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
 BEGIN
     SET @periodoinic = (select fechaInicio from periodos where periodoInicial = periodos.periodo);
     SET @periodofin = (select fechaCierre from periodos where periodoFinal = periodos.periodo);
@@ -355,7 +355,7 @@ BEGIN
    
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerEdadTabla` (IN `newperiodo` VARCHAR(100), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerEdadTabla` (IN `newperiodo` VARCHAR(100), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 
     SET @cantidad= (SELECT COUNT(*) FROM (SELECT postulantes.cedula  FROM   postulantes 
@@ -395,7 +395,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerEstadisticas` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerEstadisticas` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     SET @yearp =  (SELECT YEAR(fechaInicio) from periodos where periodos.periodo = newperiodo);
@@ -409,7 +409,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerEstadisticasEval` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerEstadisticasEval` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     
@@ -421,7 +421,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerEstadisticasProm` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerEstadisticasProm` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     SET @yearp =  (SELECT YEAR(fechaInicio) from periodos where periodos.periodo = newperiodo);
@@ -435,7 +435,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerExperiencia` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerExperiencia` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     
@@ -462,7 +462,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerExperienciaHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerExperienciaHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
 BEGIN
 
     SET @periodoinic = (select fechaInicio from periodos where periodoInicial = periodos.periodo);
@@ -499,7 +499,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerExperienciaTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerExperienciaTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 
     SET @cantidad= (SELECT COUNT(*) FROM (SELECT postulantes.cedula  FROM   postulantes 
@@ -536,7 +536,7 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerFormacionComplementaria` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerFormacionComplementaria` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     SET @periodoyear = (SELECT YEAR(fechaInicio) from periodos where periodos.periodo = newperiodo);
@@ -566,7 +566,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerFormacionComplementariaTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerFormacionComplementariaTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 
     SET @cantidad= (SELECT COUNT(*) FROM (SELECT postulantes.cedula  FROM   postulantes 
@@ -605,7 +605,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerGenero` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerGenero` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     SELECT name, 
@@ -626,7 +626,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerGeneroHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerGeneroHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
 BEGIN
     SET @periodoinic = (select fechaInicio from periodos where periodoInicial = periodos.periodo);
     SET @periodofin = (select fechaCierre from periodos where periodoFinal = periodos.periodo);
@@ -645,7 +645,7 @@ BEGIN
    
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerGeneroTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerGeneroTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 
     SET @cantidad= (SELECT COUNT(*) FROM (SELECT postulantes.cedula  FROM   postulantes 
@@ -676,7 +676,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerMaximoGrado` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMaximoGrado` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     SELECT name, 
@@ -698,7 +698,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerMaximoGradoHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMaximoGradoHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
 BEGIN
     SET @periodoinic = (select fechaInicio from periodos where periodoInicial = periodos.periodo);
     SET @periodofin = (select fechaCierre from periodos where periodoFinal = periodos.periodo);
@@ -717,7 +717,7 @@ BEGIN
    
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerMaximoGradoTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMaximoGradoTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 
     SET @cantidad= (SELECT COUNT(*) FROM (SELECT postulantes.cedula  FROM   postulantes 
@@ -749,7 +749,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerMediaEval` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` INT, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMediaEval` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` INT, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     
@@ -761,7 +761,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerMediaGen` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMediaGen` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
      SET @yearp =  (SELECT YEAR(fechaInicio) from periodos where periodos.periodo = newperiodo);
@@ -775,7 +775,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerMedianaEval` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMedianaEval` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     
@@ -793,7 +793,7 @@ BEGIN
         
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerMedianaGen` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMedianaGen` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     SET @yearp =  (SELECT YEAR(fechaInicio) from periodos where periodos.periodo = newperiodo);
@@ -812,7 +812,7 @@ BEGIN
         
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerMedianaProm` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMedianaProm` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
      SET @r = 0;
@@ -829,7 +829,7 @@ BEGIN
         
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerMediaProm` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` INT, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMediaProm` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` INT, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     
@@ -842,19 +842,19 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerMemo` (IN `periodoVigente` VARCHAR(20), IN `sedeSeleccionada` VARCHAR(100))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMemo` (IN `periodoVigente` VARCHAR(20), IN `sedeSeleccionada` VARCHAR(100))  BEGIN
 	START TRANSACTION;
 	SELECT postulaciones.cedula, postulantes.nombre   FROM postulaciones  inner join postulantes on postulantes.cedula = postulaciones.cedula where postulaciones.memo = 1 and sedeSeleccionada = postulaciones.sede and periodoVigente = postulaciones.periodo ;
     UPDATE postulaciones SET memo = 0 WHERE sede = sedeSeleccionada and periodo = periodoVigente;
     COMMIT;
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerMensajeria` ()  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerMensajeria` ()  NO SQL
 BEGIN
 	SELECT * FROM correoenvio;
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerModaEval` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerModaEval` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     SELECT name, 
@@ -874,7 +874,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerModaGen` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerModaGen` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
      SET @yearp =  (SELECT YEAR(fechaInicio) from periodos where periodos.periodo = newperiodo);
@@ -895,7 +895,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerModaProm` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerModaProm` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
  
@@ -916,7 +916,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerNota` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerNota` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     
@@ -952,7 +952,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerNotaHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerNotaHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
 BEGIN
     SET @periodoinic = (select fechaInicio from periodos where periodoInicial = periodos.periodo);
     SET @periodofin = (select fechaCierre from periodos where periodoFinal = periodos.periodo);
@@ -965,7 +965,7 @@ BEGIN
    
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerNotaTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerNotaTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 
     SET @cantidad= (SELECT COUNT(*) FROM (SELECT postulantes.cedula  FROM   postulantes 
@@ -1011,7 +1011,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerPeriodosSig` (IN `periodoInicial` VARCHAR(20))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPeriodosSig` (IN `periodoInicial` VARCHAR(20))  NO SQL
 BEGIN
     SET @periodoinic = (select fechaInicio from periodos where periodoInicial = periodos.periodo);
 
@@ -1022,7 +1022,7 @@ BEGIN
    
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerPostulaciones` (IN `periodo` VARCHAR(20))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPostulaciones` (IN `periodo` VARCHAR(20))  NO SQL
 BEGIN
 	START TRANSACTION;
     SELECT * from postulantes
@@ -1034,17 +1034,17 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerPostulante` (IN `newcedula` VARCHAR(40))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPostulante` (IN `newcedula` VARCHAR(40))  NO SQL
 SELECT * FROM postulantes WHERE postulantes.cedula = newcedula$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerPostulantes` ()  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPostulantes` ()  NO SQL
 BEGIN
 	START TRANSACTION;
     SELECT * from postulantes;
     COMMIT;
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerPromedio` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPromedio` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     
@@ -1083,7 +1083,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerPromedioTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPromedioTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 
     SET @cantidad= (SELECT COUNT(*) FROM (SELECT postulantes.cedula  FROM   postulantes 
@@ -1132,7 +1132,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerPuestoActual` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPuestoActual` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     SELECT name, 
@@ -1154,7 +1154,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerPuestoActualTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPuestoActualTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 
     SET @cantidad= (SELECT COUNT(*) FROM (SELECT postulantes.cedula  FROM   postulantes 
@@ -1186,7 +1186,7 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerPuestoHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerPuestoHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
 BEGIN
     SET @periodoinic = (select fechaInicio from periodos where periodoInicial = periodos.periodo);
     SET @periodofin = (select fechaCierre from periodos where periodoFinal = periodos.periodo);
@@ -1205,9 +1205,9 @@ BEGIN
    
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerSedes` (IN `periodoVigente` VARCHAR(20))  SELECT DISTINCT postulaciones.sede   FROM postulaciones where periodoVigente = postulaciones.periodo$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSedes` (IN `periodoVigente` VARCHAR(20))  SELECT DISTINCT postulaciones.sede   FROM postulaciones where periodoVigente = postulaciones.periodo$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerSumaNota` ()  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSumaNota` ()  NO SQL
 BEGIN
 	START TRANSACTION;
     SET @periodoact = (select periodo from periodos where fechaInicio <= CURDATE() and fechaCierre >= CURDATE());
@@ -1221,9 +1221,9 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerSuperusuario` (`correo` VARCHAR(50))  SELECT correoEnvio, password FROM usuarios INNER JOIN superusuario ON usuarios.correo = superusuario.correo WHERE usuarios.correo = correo$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerSuperusuario` (`correo` VARCHAR(50))  SELECT correoEnvio, password FROM usuarios INNER JOIN superusuario ON usuarios.correo = superusuario.correo WHERE usuarios.correo = correo$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerUniversidad` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerUniversidad` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 	START TRANSACTION;
     
@@ -1247,7 +1247,7 @@ ORDER BY value DESC;
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerUniversidadHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerUniversidadHistorico` (IN `periodoInicial` VARCHAR(20), IN `periodoFinal` VARCHAR(20))  NO SQL
 BEGIN
     SET @periodoinic = (select fechaInicio from periodos where periodoInicial = periodos.periodo);
     SET @periodofin = (select fechaCierre from periodos where periodoFinal = periodos.periodo);
@@ -1266,7 +1266,7 @@ BEGIN
    
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `ObtenerUniversidadTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerUniversidadTabla` (IN `newperiodo` VARCHAR(20), IN `newsede` VARCHAR(100), IN `newnota` DOUBLE, IN `newcantidad` INT)  NO SQL
 BEGIN
 
     SET @cantidad= (SELECT COUNT(*) FROM (SELECT postulantes.cedula  FROM   postulantes 
@@ -1300,22 +1300,22 @@ BEGIN
     
 END$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `PeriodoActual` ()  select periodo from periodos where fechaInicio <= CURDATE() and fechaCierre >= CURDATE()$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PeriodoActual` ()  select periodo from periodos where fechaInicio <= CURDATE() and fechaCierre >= CURDATE()$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `PeriodoAnterior` ()  select periodo from periodos where fechaCierre < CURDATE() ORDER BY fechaCierre desc$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PeriodoAnterior` ()  select periodo from periodos where fechaCierre < CURDATE() ORDER BY fechaCierre desc$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `PeriodoEspecifico` (`nameperiodo` VARCHAR(50))  select periodo, fechaInicio, fechaCierre from periodos where periodo = nameperiodo$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PeriodoEspecifico` (`nameperiodo` VARCHAR(50))  select periodo, fechaInicio, fechaCierre from periodos where periodo = nameperiodo$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `PeriodosTranscurridos` ()  SELECT periodo FROM periodos WHERE fechaInicio <= CURDATE() ORDER BY periodos.fechaInicio DESC$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PeriodosTranscurridos` ()  SELECT periodo FROM periodos WHERE fechaInicio <= CURDATE() ORDER BY periodos.fechaInicio DESC$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `UltimaPostulacion` (IN `ced` INT)  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UltimaPostulacion` (IN `ced` INT)  NO SQL
 SELECT  enfasis, sede, nota FROM `postulaciones`as PS INNER JOIN periodos as P on PS.periodo = P.periodo
 WHERE cedula = ced ORDER BY P.FechaInicio desc LIMIT 1$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `UpdatePassword` (IN `correoUsuario` VARCHAR(50), IN `pass` VARCHAR(150))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdatePassword` (IN `correoUsuario` VARCHAR(50), IN `pass` VARCHAR(150))  NO SQL
 UPDATE `usuarios` SET `password`= pass WHERE correo = correoUsuario$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `VerPeriodo` ()  SELECT periodo FROM periodos ORDER BY fechaInicio asc$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `VerPeriodo` ()  SELECT periodo FROM periodos ORDER BY fechaInicio asc$$
 
 DELIMITER ;
 
