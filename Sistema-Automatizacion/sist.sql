@@ -29,7 +29,7 @@ DELIMITER $$
 --
 CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `CerrarPeriodoActual` (IN `nameperiodo` VARCHAR(50))  UPDATE periodos SET fechaCierre = SUBDATE(CURRENT_DATE, 1) WHERE periodo = nameperiodo$$
 
-CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `CrearAsistente` (`newcorreo` VARCHAR(50), `newpassword` VARCHAR(100), `newnombre` VARCHAR(50), `newcedula` VARCHAR(20))  BEGIN
+CREATE DEFINER=`sisAutomatizacionMGP`@`localhost` PROCEDURE `CrearAsistente` (`newcorreo` VARCHAR(50), `newpassword` VARCHAR(150), `newnombre` VARCHAR(50), `newcedula` VARCHAR(20))  BEGIN
 	START TRANSACTION;
     INSERT INTO usuarios (correo, password) VALUES (newcorreo, newpassword);
 	INSERT INTO asistentes (correo, nombre, cedula) VALUES (newcorreo, newnombre, newcedula);
@@ -1379,7 +1379,7 @@ INSERT INTO `atributos` (`id`, `nombre`, `peso`) VALUES
 
 CREATE TABLE `correoenvio` (
   `correo` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -1533,7 +1533,7 @@ INSERT INTO `superusuario` (`correo`, `correoEnvio`) VALUES
 
 CREATE TABLE `usuarios` (
   `correo` varchar(50) NOT NULL,
-  `password` varchar(100) NOT NULL
+  `password` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
