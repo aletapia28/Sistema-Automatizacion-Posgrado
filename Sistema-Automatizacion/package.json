@@ -28,7 +28,7 @@
     "bootstrap": "^3.4.1",
     "cors": "2.8.5",
     "docx": "^5.1.1",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "file-saver": "^2.0.2",
     "html2canvas": "^1.0.0-rc.5",
     "jsonwebtoken": "8.5.1",
